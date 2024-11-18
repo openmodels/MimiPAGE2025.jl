@@ -50,7 +50,10 @@ include("components/EquityWeighting.jl")
 include("components/PermafrostSiBCASA.jl")
 include("components/PermafrostJULES.jl")
 include("components/PermafrostTotal.jl")
-include("components/MarketDamageAQ.jl")
+include("components/MarketDamageAQ_CropLoss.jl")
+include("components/MarketDamageAQ_LostWorkHours.jl")
+include("components/MarketDamageAQ_AsthmaERVisits.jl")
+include("components/MarketDamageAQ_RespiratoryAdmissions.jl")
 
 
 include("models/main_model_def.jl")

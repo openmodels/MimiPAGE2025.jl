@@ -84,8 +84,18 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     nonmarketdamages = addnonmarketdamages(m)
     discontinuity = adddiscontinuity(m)
 
-    # Add MarketDamageAQ (Country version)
-    marketdamageaqcomp = addMarketDamageAQ(m)
+    # Add MarketDamageAQ_CropLoss (Country version)
+    marketdamageaq_croplosscomp = addMarketDamageAQ_CropLoss(m)
+
+    # Add MarketDamageAQ_LostWorkHours (Country version)
+    marketdamageaq_lostworkhours = addMarketDamageAQ_LostWorkHours(m)
+
+    # Add MarketDamageAQ_AsthmaERVisits (Country version)
+    marketdamageaq_asthmaervisitscomp = addMarketDamageAQ_AsthmaERVisits(m)
+
+    # Add MarketDamageAQ_RespiratoryAdmissions (Country version)
+    marketdamageaq_respiratoryadmissionscomp = addMarketDamageAQ_RespiratoryAdmissions(m)
+    
 
     add_comp!(m, TotalCosts)
     countrylevelnpv = addcountrylevelnpv(m)
@@ -222,7 +232,10 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :MarketDamagesBurke => :gdp, :GDP => :gdp)
     connect_param!(m, :MarketDamagesBurke => :pop_population, :Population => :pop_population)
     
-    connect_param!(m, :MarketDamageAQ => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
 
     connect_param!(m, :NonMarketDamages => :rtl_realizedtemperature_change, :RegionTemperature => :rtl_realizedtemperature_change)
     connect_param!(m, :NonMarketDamages => :rtl_g_landtemperature, :RegionTemperature => :rtl_g_landtemperature)
