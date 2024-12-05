@@ -22,7 +22,9 @@ include("../utils/welfare.jl")
 
     # Calculation of weighted costs
     pref_draw = Parameter{Int64}()
+    use_subnational = Parameter{Bool}()
     emuc_utilityconvexity = Variable(unit="none")
+    subnational_effect = Variable(index=[country])
 
     wact_partiallyweighted = Variable(index=[time, country], unit="\$million")
 
@@ -66,6 +68,17 @@ include("../utils/welfare.jl")
             vv.ptp_timepreference = prefs.puretp[pp.pref_draw]
             vv.emuc_utilityconvexity = prefs.eta[pp.pref_draw]
         end
+        if pp.use_subnational
+            if pp.pref_draw == -1
+                vv.subnational_effect[:] = readcountrydata_im(pp.model, "damages/subnational.csv", :iso, :pref,
+                                                           1, "effect") # 1 has eta = 1
+            else
+                vv.subnational_effect[:] = readcountrydata_im(pp.model, "damages/subnational.csv", :iso, :pref,
+                                                           pp.pref_draw, "effect")
+            end
+        else
+            vv.subnational_effect[:] = ones(dim_count(pp.model, :country))
+        end
     end
 
     function run_timestep(p, v, d, tt)
@@ -95,7 +108,7 @@ include("../utils/welfare.jl")
             v.pcdt_partiallyweighted_discounted[tt, cc] = v.pct_partiallyweighted[tt, cc] * v.dfc_consumptiondiscountrate[tt, cc]
             v.wacdt_partiallyweighted_discounted[tt, cc] = v.wact_partiallyweighted[tt, cc] * v.dfc_consumptiondiscountrate[tt, cc]
 
-            v.wit_percap_equityweightedimpact[tt, cc] = (p.cons_percap_aftercosts[tt, cc] - p.rcons_percap_dis[tt, cc]) # equivalent to emuc = 0
+            v.wit_percap_equityweightedimpact[tt, cc] = (p.cons_percap_aftercosts[tt, cc] - p.rcons_percap_dis[tt, cc]) * v.subnational_effect[cc] # equivalent to emuc = 0
             v.wit_equityweightedimpact[tt, cc] = v.wit_percap_equityweightedimpact[tt, cc] * p.pop_population[tt, cc]
             v.widt_equityweightedimpact_discounted[tt, cc] = v.wit_equityweightedimpact[tt, cc] * v.dfc_consumptiondiscountrate[tt] # apply Ramsey discounting
 
@@ -109,9 +122,10 @@ include("../utils/welfare.jl")
     end
 end
 
-function addcountrylevelnpv(model::Model)
+function addcountrylevelnpv(model::Model, use_subnational::Bool)
     countrylevel = add_comp!(model, CountryLevelNPV)
     countrylevel[:model] = model
     countrylevel[:pref_draw] = -1
+    countrylevel[:use_subnational] = use_subnational
     countrylevel
 end

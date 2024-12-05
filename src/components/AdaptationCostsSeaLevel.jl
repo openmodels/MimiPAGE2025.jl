@@ -3,6 +3,7 @@
 
     model = Parameter{Model}()
     sealevelcost_draw = Parameter{Int64}()
+    config_slrdmg = Parameter{String}()
 
     s_sealevel = Parameter(index=[time], unit="m")
     gdp = Parameter(index=[time, country], unit="\$M")
@@ -16,7 +17,12 @@
     ac_adaptivecosts = Variable(index=[time, country], unit="\$million")
 
     function init(pp, vv, dd)
-        if pp.sealevelcost_draw == -1
+        if pp.config_slrdmg == "none"
+            vv.alpha_noadapt[:] .= 0.
+            vv.beta_noadapt[:] .= 0.
+            vv.alpha_optimal[:] .= 0.
+            vv.beta_optimal[:] .= 0.
+        elseif pp.sealevelcost_draw == -1
             vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.adapts.noadapt", values -> 0.)
             vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.adapts.noadapt", values -> 0.)
             vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.adapts.optimal", values -> 0.)
@@ -42,11 +48,12 @@
     end
 end
 
-function addadaptationcosts_sealevel(model::Model)
+function addadaptationcosts_sealevel(model::Model; config_slrdmg::String="default")
     adaptationcosts = add_comp!(model, AdaptiveCostsSeaLevel)
 
     adaptationcosts[:model] = model
     adaptationcosts[:sealevelcost_draw] = -1
+    adaptationcosts[:config_slrdmg] = config_slrdmg
     adaptationcosts[:saf_slradaptfrac] = 0.5 * ones(dim_count(model, :time), dim_count(model, :country))
 
     return adaptationcosts

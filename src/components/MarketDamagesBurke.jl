@@ -78,11 +78,11 @@ include("../utils/country_tools.jl")
             #   deltay = 2 beta1 T
             delta_temp = v.marginal_offset[t, :] ./ (2 * p.impf_coeff_quadr)
         elseif p.config_marketdmg == "constoffset"
-            v.marginal_offset[t, :] = v.gamma0_burkey_intercept .+ v.gamma1_burkey_hazard * log.(p.r1_riskindex_hazard[1, :]) .+ v.gamma2_burkey_vulnerability * log.(p.r2_riskindex_vulnerability[1, :]) .+ v.gamma3_burkey_copinglack * log.(p.r3_riskindex_copinglack[1, :]) .+ v.gamma4_burkey_loggdppc * log.(p.gdp[1, :] ./ p.pop_population[1, :])
+            v.marginal_offset[t, :] = v.gamma0_burkey_intercept .+ v.gamma1_burkey_hazard * log.(p.r1_riskindex_hazard[TimestepIndex(1), :]) .+ v.gamma2_burkey_vulnerability * log.(p.r2_riskindex_vulnerability[TimestepIndex(1), :]) .+ v.gamma3_burkey_copinglack * log.(p.r3_riskindex_copinglack[TimestepIndex(1), :]) .+ v.gamma4_burkey_loggdppc * log.(p.gdp[TimestepIndex(1), :] ./ p.pop_population[TimestepIndex(1), :])
             delta_temp = v.marginal_offset[t, :] ./ (2 * p.impf_coeff_quadr)
         elseif p.config_marketdmg == "nooffset"
-            v.marginal_offset[t, :] = 0.
-            delta_temp = 0.
+            v.marginal_offset[t, :] .= 0.
+            delta_temp = v.marginal_offset[t, :]
         end
 
         for cc in d.country
@@ -153,6 +153,10 @@ function addmarketdamagesburke(model::Model, config_marketdmg::String)
     marketdamagesburke[:burkey_draw] = -1
     marketdamagesburke[:config_marketdmg] = config_marketdmg
     marketdamagesburke[:rtl_0_realizedtemperature_absolute_burke] = (get_countryinfo().Temp1980 + get_countryinfo().Temp2010) / 2
+
+    if config_marketdmg == "none"
+        marketdamagesburke[:nlag_burke] = 0.
+    end
 
     informs = CSV.read(pagedata("inform-combined.csv"), DataFrame)
     r1 = Matrix{Union{Missing, Float64}}(missing, dim_count(model, :time), dim_count(model, :country))

@@ -12,6 +12,7 @@
     cons_percap_consumption_0 = Parameter(index=[country], unit="\$/person")
     tct_per_cap_totalcostspercap = Parameter(index=[time,country], unit="\$/person")
     act_percap_adaptationcosts = Parameter(index=[time, country], unit="\$/person")
+    sealevelcost_draw = Parameter{Int64}()
 
     # incoming parameters from SeaLevelRise
     s_sealevel = Parameter(index=[time], unit="m")
@@ -41,8 +42,8 @@
 
     isatg_impactfxnsaturation = Parameter(unit="unitless")
     isat_ImpactinclSaturationandAdaptationSLR = Variable(index=[time,region])
-    isat_per_cap_SLRImpactperCapinclSaturationandAdaptation = Variable(index=[time, region], unit="\$/person")
 
+    isat_per_cap_SLRImpactperCapinclSaturationandAdaptation_regional = Variable(index=[time, region], unit="\$/person")
     rcons_per_cap_SLRRemainConsumption_regional = Variable(index=[time, region], unit="\$/person") # include?
     rgdp_per_cap_SLRRemainGDP_regional = Variable(index=[time, region], unit="\$/person")
 
@@ -51,20 +52,23 @@
     rgdp_per_cap_SLRRemainGDP = Variable(index=[time, country], unit="\$/person")
     cons_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
     gdp_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
+    d_percap_slr = Variable(index=[time, country], unit="\$/person")
+    isat_per_cap_SLRImpactperCapinclSaturationandAdaptation = Variable(index=[time, country], unit="\$/person")
 
     function run_timestep(p, v, d, t)
         ## Translate from country to region for mix-and-match
+        for cc in d.country
+            v.cons_percap_aftercosts[t, cc] = p.cons_percap_consumption[t, cc] - p.tct_per_cap_totalcostspercap[t, cc] - p.act_percap_adaptationcosts[t, cc]
 
-        v.cons_percap_aftercosts[t, r] = v.cons_percap_consumption[t, r] - v.tct_per_cap_totalcostspercap[t, r] - v.act_percap_adaptationcosts_regional[t, r]
+            if (v.cons_percap_aftercosts[t, cc] < 1.)
+                v.cons_percap_aftercosts[t, cc] = 1.
+            end
 
-        if (v.cons_percap_aftercosts[t, r] < 0.01 * v.cons_percap_consumption_0_regional[1])
-            v.cons_percap_aftercosts[t, r] = 0.01 * v.cons_percap_consumption_0_regional[1]
+            v.gdp_percap_aftercosts[t, cc] = v.cons_percap_aftercosts[t, cc] / (1 - p.save_savingsrate / 100)
         end
 
-        v.gdp_percap_aftercosts[t,r] = v.cons_percap_aftercosts[t, r] / (1 - p.save_savingsrate / 100)
-
-        v.cons_percap_aftercosts_regional = countrytoregion(p.model, weighted_mean, p.cons_percap_aftercosts[t, :], p.pop_population)
-        v.gdp_percap_aftercosts_regional = countrytoregion(p.model, weighted_mean, p.gdp_percap_aftercosts[:], p.pop_population)
+        v.cons_percap_aftercosts_regional[t, :] = countrytoregion(p.model, weighted_mean, v.cons_percap_aftercosts[t, :], p.pop_population[t, :])
+        v.gdp_percap_aftercosts_regional[t, :] = countrytoregion(p.model, weighted_mean, v.gdp_percap_aftercosts[t, :], p.pop_population[t, :])
 
         for r in d.region
             if (p.s_sealevel[t] - p.atl_adjustedtolerablelevelofsealevelrise[t,r]) < 0
@@ -95,16 +99,17 @@
                     v.i_regionalimpactSLR[t,r])
             end
 
-            v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t,r] = (v.isat_ImpactinclSaturationandAdaptationSLR[t,r] / 100) * v.gdp_percap_aftercosts_regional[t,r]
-            v.rcons_per_cap_SLRRemainConsumption_regional[t,r] = v.cons_percap_aftercosts_regional[t,r] - v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t,r]
+            v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation_regional[t,r] = (v.isat_ImpactinclSaturationandAdaptationSLR[t,r] / 100) * v.gdp_percap_aftercosts_regional[t,r]
+            v.rcons_per_cap_SLRRemainConsumption_regional[t,r] = max.(v.cons_percap_aftercosts_regional[t,r] - v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation_regional[t,r], 1.)
             v.rgdp_per_cap_SLRRemainGDP_regional[t,r] = v.rcons_per_cap_SLRRemainConsumption_regional[t,r] / (1 - p.save_savingsrate / 100)
 
         end
 
         ## Translate from region to country for mix-and-match
-        v.isat_per_cap_ImpactinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_ImpactinclSaturationandAdaptation_regional[t, :])
-        v.rcons_per_cap_SLRRemainConsumption[t, :] = v.cons_percap_aftercosts[t, :] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :]
-        v.rgdp_per_cap_NonMarketRemainGDP[t, :] = v.rcons_per_cap_SLRRemainConsumption[t, :] / (1 - p.save_savingsrate / 100)
+        v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation_regional[t, :])
+        v.d_percap_slr[t, :] = v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t, :]
+        v.rcons_per_cap_SLRRemainConsumption[t, :] = v.cons_percap_aftercosts[t, :] - v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t, :]
+        v.rgdp_per_cap_SLRRemainGDP[t, :] = v.rcons_per_cap_SLRRemainConsumption[t, :] / (1 - p.save_savingsrate / 100)
     end
 end
 
@@ -115,8 +120,10 @@ end
 function addslrdamages_regional(model::Model)
     SLRDamagescomp = add_comp!(model, SLRDamages_regional, :SLRDamages)
 
+    SLRDamagescomp[:model] = model
+    SLRDamagescomp[:sealevelcost_draw] = 0
     SLRDamagescomp[:wincf_weightsfactor_sea] = readpagedata(model, "data/wincf_weightsfactor_sea.csv")
-    SLRDamagescomp[:impmax_maxSLRforadaptpolicySLR] = readpagedata(model, "data/impmax_sealevel.csv")
+    SLRDamagescomp[:impmax_maxSLRforadaptpolicySLR] = readpagedata(model, "data/regional/impmax_sealevel.csv")
 
     return SLRDamagescomp
 end

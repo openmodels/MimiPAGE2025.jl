@@ -1,5 +1,6 @@
 import Mimi.add_save!
-include("main_model.jl")
+include("../../src/main_model.jl")
+include("../../src/mcs.jl")
 
 mcnum = 10000
 
@@ -11,7 +12,7 @@ model[:EquityWeighting, :td_totaldiscountedimpacts]
 df = getdataframe(model, :NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
 df[df.country .== "KOR", :]
 
-mcs = getsim()
+mcs = getsim(model)
 add_save!(mcs, (:CountryLevelNPV, :wit_percap_equityweightedimpact))
 add_save!(mcs, (:CountryLevelNPV, :tct_percap_totalcosts_total))
 add_save!(mcs, (:CountryLevelNPV, :act_percap_adaptationcosts))

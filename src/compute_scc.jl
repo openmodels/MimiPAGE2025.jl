@@ -30,10 +30,10 @@ end
 """
 Applies undiscounting factor to get the SCC, discounted to the emissions year instead of the base year.
 """
-function undiscount_scc(m::Model, year::Int)
+function undiscount_scc(m::Model, year::Int, cc_focus::Int)
     df = m[:EquityWeighting, :df_utilitydiscountfactor]
-    consfocus0 = m[:GDP, :cons_percap_consumption_0][1]
-    consfocus = m[:GDP, :cons_percap_consumption][:, 1]
+    consfocus0 = m[:GDP, :cons_percap_consumption_0][cc_focus]
+    consfocus = m[:GDP, :cons_percap_consumption][:, cc_focus]
     emuc = m[:EquityWeighting, :emuc_utilityconvexity]
     sccii = getpageindexfromyear(year)
 
@@ -113,6 +113,9 @@ function compute_scc(
         end
     end
 
+    run(m)
+    cc_focus = argmin(abs.(m[:GDP, :cons_percap_consumption_0] .- median(m[:GDP, :cons_percap_consumption_0])))
+
     # note here that we use `pulse_size` as the `delta` keyword argument for
     # the marginal model so we can normalize to $ per ton
     mm = get_marginal_model(m, year=year, pulse_size=pulse_size)   # Returns a marginal model that has already been run
@@ -120,16 +123,16 @@ function compute_scc(
     if n === nothing
         # Run the "best guess" social cost calculation
         run(mm)
-        scc = mm[:EquityWeighting, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year)
+        scc = mm[:EquityWeighting, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
         tds = getdataframe(mm, :CountryLevelNPV, :td_totaldiscountedimpacts)
-        tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year)
+        tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
         scc_disaggregated = tds
     elseif n < 1
         error("Invalid `n` value, only values >=1 allowed.")
     else
         # Run a Monte Carlo simulation
 
-        simdef = getsim()   # get the default simulation, need to remove :emuc_utilityconvexity and :ptp_timepreference RVs if user specified values for these
+        simdef = getsim(m)   # get the default simulation, need to remove :emuc_utilityconvexity and :ptp_timepreference RVs if user specified values for these
         if !prefrange
             Mimi.delete_transform!(simdef, :pref_draw)
         end
@@ -142,10 +145,10 @@ function compute_scc(
 
         function mc_scc_calculation(sim_inst::SimulationInstance, trialnum::Int, ntimesteps::Int, ignore::Nothing)
             marginal = sim_inst.models[1]
-            marg_damages = marginal[:EquityWeighting, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year)
+            marg_damages = marginal[:EquityWeighting, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
             scc_results[trialnum] = marg_damages
             tds = getdataframe(marginal, :CountryLevelNPV, :td_totaldiscountedimpacts)
-            tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year)
+            tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
             push!(scc_disaggregated_results, tds)
         end
 

@@ -12,15 +12,18 @@
     gdp = Parameter(index=[time, country], unit="\$M")
     pop_population = Parameter(index=[time, country], unit="million person")
 
+    area = Parameter(index=[country], unit="km2")
     rtl_0_realizedtemperature_absolute = Parameter(index=[country], unit="degreeC")
     rtl_0_realizedtemperature_change = Parameter(index=[country], unit="degreeC")
 
+    burkey_draw = Parameter{Int64}()
+
     # incoming parameters from Climate
-    rtl_realizedtemperature_regional = Parameter(index=[time, region], unit="degreeC")
+    rtl_realizedtemperature_regional = Variable(index=[time, region], unit="degreeC")
 
     # tolerability and impact variables from PAGE damages that Burke damages also require
-    rcons_per_cap_SLRRemainConsumption_regional = Parameter(index=[time, region], unit="\$/person")
-    rgdp_per_cap_SLRRemainGDP_regional = Parameter(index=[time, region], unit="\$/person")
+    rcons_per_cap_SLRRemainConsumption_regional = Variable(index=[time, region], unit="\$/person")
+    rgdp_per_cap_SLRRemainGDP_regional = Variable(index=[time, region], unit="\$/person")
     save_savingsrate = Parameter(unit="%", default=15.)
     wincf_weightsfactor_market = Parameter(index=[region], unit="")
     ipow_MarketIncomeFxnExponent = Parameter(default=0.0)
@@ -50,20 +53,20 @@
     ## Country-level outputs for mix-and-match
     rcons_per_cap_MarketRemainConsumption = Variable(index=[time, country], unit="\$/person")
     rgdp_per_cap_MarketRemainGDP = Variable(index=[time, country], unit="\$/person")
-    isat_per_cap_ImpactinclSaturationandAdaptation = Variable(index=[time,country], unit="\$/person")
+    isat_per_cap_ImpactperCapinclSaturationandAdaptation = Variable(index=[time,country], unit="\$/person")
 
     function run_timestep(p, v, d, t)
         ## Translate from country to region for mix-and-match
-        rtl_realizedtemperature_change = v.rtl_realizedtemperature_absolute[t, :] + p.rtl_0_realizedtemperature_change - p.rtl_0_realizedtemperature_absolute
-        rtl_realizedtemperature_regional[t, :] = countrytoregion(model, weighted_mean, p.rtl_realizedtemperature_change, p.area)
+        rtl_realizedtemperature_change = p.rtl_realizedtemperature_absolute[t, :] + p.rtl_0_realizedtemperature_change - p.rtl_0_realizedtemperature_absolute
+        v.rtl_realizedtemperature_regional[t, :] = countrytoregion(model, weighted_mean, rtl_realizedtemperature_change, p.area)
 
-        rcons_per_cap_SLRRemainConsumption_regional[t, :] = countrytoregion(model, weighted_mean, p.rcons_per_cap_SLRRemainConsumption[t, :], p.pop_population)
-        rgdp_per_cap_SLRRemainGDP_regional[t, :] = countrytoregion(model, weighted_mean, p.rgdp_per_cap_SLRRemainGDP[t, :], p.pop_population)
+        v.rcons_per_cap_SLRRemainConsumption_regional[t, :] = countrytoregion(model, weighted_mean, p.rcons_per_cap_SLRRemainConsumption[t, :], p.pop_population[t, :])
+        v.rgdp_per_cap_SLRRemainGDP_regional[t, :] = countrytoregion(model, weighted_mean, p.rgdp_per_cap_SLRRemainGDP[t, :], p.pop_population[t, :])
 
         for r in d.region
 
             # calculate the regional temperature impact relative to baseline year and add it to baseline absolute value
-            v.i_burke_regionalimpact[t,r] = (rtl_realizedtemperature_regional[t,r] - p.rtl_0_realizedtemperature[r]) + p.rtl_abs_0_realizedabstemperature[r]
+            v.i_burke_regionalimpact[t,r] = (v.rtl_realizedtemperature_regional[t,r] - p.rtl_0_realizedtemperature[r]) + p.rtl_abs_0_realizedabstemperature[r]
 
 
             # calculate the log change, depending on the number of lags specified
@@ -76,7 +79,7 @@
 
             # calculate impacts at actual GDP
             v.igdp_ImpactatActualGDPperCap[t,r] = v.iref_ImpactatReferenceGDPperCap[t,r] *
-                (rgdp_per_cap_SLRRemainGDP_regional[t,r] / p.GDP_per_cap_focus_0_FocusRegionEU)^p.ipow_MarketIncomeFxnExponent
+                (v.rgdp_per_cap_SLRRemainGDP_regional[t,r] / p.GDP_per_cap_focus_0_FocusRegionEU)^p.ipow_MarketIncomeFxnExponent
 
             # send impacts down a logistic path if saturation threshold is exceeded
             if v.igdp_ImpactatActualGDPperCap[t,r] < p.isatg_impactfxnsaturation
@@ -90,15 +93,15 @@
                     p.isatg_impactfxnsaturation)))
             end
 
-            v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r] = (v.isat_ImpactinclSaturationandAdaptation_regional[t,r] / 100) * rgdp_per_cap_SLRRemainGDP_regional[t,r]
-            v.rcons_per_cap_MarketRemainConsumption_regional[t,r] = rcons_per_cap_SLRRemainConsumption_regional[t,r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r]
+            v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r] = (v.isat_ImpactinclSaturationandAdaptation_regional[t,r] / 100) * v.rgdp_per_cap_SLRRemainGDP_regional[t,r]
+            v.rcons_per_cap_MarketRemainConsumption_regional[t,r] = v.rcons_per_cap_SLRRemainConsumption_regional[t,r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r]
             v.rgdp_per_cap_MarketRemainGDP_regional[t,r] = v.rcons_per_cap_MarketRemainConsumption_regional[t,r] / (1 - p.save_savingsrate / 100)
         end
 
         ## Translate from region to country for mix-and-match
-        v.isat_per_cap_ImpactinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_ImpactinclSaturationandAdaptation_regional[t, :])
-        v.rcons_per_cap_MarketRemainConsumption[t, :] = p.rcons_per_cap_SLRRemainConsumption[t, :] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :]
-        v.rgdp_per_cap_MarketRemainGDP[t, :] = v.rcons_per_cap_MarketRemainConsumption[t,r] / (1 - p.save_savingsrate / 100)
+        v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t, :])
+        v.rcons_per_cap_MarketRemainConsumption[t, :] = max.(p.rcons_per_cap_SLRRemainConsumption[t, :] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :], 1.)
+        v.rgdp_per_cap_MarketRemainGDP[t, :] = v.rcons_per_cap_MarketRemainConsumption[t, :] / (1 - p.save_savingsrate / 100)
     end
 end
 
@@ -109,13 +112,15 @@ end
 function addmarketdamagesburke_regional(model::Model)
     marketdamagesburkecomp = add_comp!(model, MarketDamagesBurke_regional, :MarketDamagesBurke)
 
-    marketdamagesburke[:model] = model
+    marketdamagesburkecomp[:model] = model
     marketdamagesburkecomp[:rtl_abs_0_realizedabstemperature] = readpagedata(model, "data/rtl_abs_0_realizedabstemperature.csv")
     marketdamagesburkecomp[:rtl_0_realizedtemperature] = readpagedata(model, "data/rtl_0_realizedtemperature.csv")
 
     ## Parameters for mix-and-match
-    climtemp[:rtl_0_realizedtemperature_absolute] = get_countryinfo().Temp2010
-    climtemp[:rtl_0_realizedtemperature_change] = regiontocountry(model, readpagedata(model, "data/rtl_0_realizedtemperature.csv"))
+    marketdamagesburkecomp[:rtl_0_realizedtemperature_absolute] = get_countryinfo().Temp2010
+    marketdamagesburkecomp[:rtl_0_realizedtemperature_change] = regiontocountry(model, readpagedata(model, "data/rtl_0_realizedtemperature.csv"))
+    marketdamagesburkecomp[:area] = readcountrydata_i_const(model, get_countryinfo(), :ISO3, :LandArea)
+    marketdamagesburkecomp[:burkey_draw] = -1
 
     # fix the current bug which implements the regional weights from SLR and discontinuity also for market and non-market damages (where weights should be uniformly one)
     marketdamagesburkecomp[:wincf_weightsfactor_market] = readpagedata(model, "data/wincf_weightsfactor_market.csv")

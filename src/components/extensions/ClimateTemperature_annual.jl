@@ -4,7 +4,7 @@
     year = Index()
 
     # Basic parameters
-    area = Parameter(index=[region], unit="km2")
+    area_oageice = Parameter(index=[region], unit="km2")
     area_e_eartharea = Parameter(unit="km2", default=5.1e8)
     ampf_amplification = Parameter(index=[region])
 
@@ -82,9 +82,9 @@ function calc_temp(p, v, d, tt, annual_year)
     v.rt_g_globaltemperature_ann[yr] = v.pt_g_preliminarygmst_ann[yr] + g_variationtemp
 
     # Land average temperature
-    v.rtl_g_landtemperature_ann[yr] = sum(v.rtl_realizedtemperature_ann[yr, :]' .* p.area') / sum(p.area)
+    v.rtl_g_landtemperature_ann[yr] = sum(v.rtl_realizedtemperature_ann[yr, :]' .* p.area_oageice') / sum(p.area_oageice)
 
     # Ocean average temperature
-    v.rto_g_oceantemperature_ann[yr] = (p.area_e_eartharea * v.rt_g_globaltemperature_ann[yr] - sum(p.area) * v.rtl_g_landtemperature_ann[yr]) / (p.area_e_eartharea - sum(p.area))
+    v.rto_g_oceantemperature_ann[yr] = (p.area_e_eartharea * v.rt_g_globaltemperature_ann[yr] - sum(p.area_oageice) * v.rtl_g_landtemperature_ann[yr]) / (p.area_e_eartharea - sum(p.area_oageice))
 
 end
