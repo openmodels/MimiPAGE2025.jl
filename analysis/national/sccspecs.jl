@@ -75,7 +75,7 @@ outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
 CSV.write("allscc-subnational.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
 
 ## Only subsets of damages
-for onlydamage in ["market", "nonmarket", "slr", "discont"]
+for onlydamage in ["nonmarket", "slr", "discont"] # "market",
     if onlydamage == "market"
         model = getpage(use_rffsp=true, config_nonmarketdmg="none", config_slrdmg="none", config_discontinuity="none")
     elseif onlydamage == "nonmarket"

@@ -80,7 +80,7 @@ include("../utils/country_tools.jl")
         elseif p.config_marketdmg == "constoffset"
             v.marginal_offset[t, :] = v.gamma0_burkey_intercept .+ v.gamma1_burkey_hazard * log.(p.r1_riskindex_hazard[TimestepIndex(1), :]) .+ v.gamma2_burkey_vulnerability * log.(p.r2_riskindex_vulnerability[TimestepIndex(1), :]) .+ v.gamma3_burkey_copinglack * log.(p.r3_riskindex_copinglack[TimestepIndex(1), :]) .+ v.gamma4_burkey_loggdppc * log.(p.gdp[TimestepIndex(1), :] ./ p.pop_population[TimestepIndex(1), :])
             delta_temp = v.marginal_offset[t, :] ./ (2 * p.impf_coeff_quadr)
-        elseif p.config_marketdmg == "nooffset"
+        elseif p.config_marketdmg in ["nooffset", "none"]
             v.marginal_offset[t, :] .= 0.
             delta_temp = v.marginal_offset[t, :]
         end

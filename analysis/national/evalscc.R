@@ -10,7 +10,7 @@ baseline <- read.csv("data/bycountry.csv")
 
 get.result.row <- function(df) {
     df2 <- df %>% filter(country == 'global')
-    df3 <- df %>% filter(country != 'global') %>% group_by(country) %>% summarize(scc=median(scc)) %>%
+    df3 <- df %>% filter(country != 'global') %>% group_by(country) %>% summarize(scc=median(scc, na.rm=T)) %>%
         left_join(baseline, by=c('country'='ISO3'))
 
     ## plot(density(df3$scc / df3$Pop2015))
@@ -50,6 +50,13 @@ get.result.row <- function(df) {
     pardf <- data.frame()
     for (mcii in unique(df4$mc)) {
         df5 <- df4 %>% filter(mc == mcii & country != 'global') %>% left_join(baseline, by=c('country'='ISO3'))
+        if (sum(df5$scc > 0) < 3) {
+            pardf <- rbind(pardf, data.frame(median=NA, mean=NA, stddev=NA,
+                                             alpha1=NA, alpha1.se=NA, betam1=NA,
+                                             beta.se=NA, gammam1=NA, gamma.se=NA, rsqr=NA))
+            next
+        }
+
         df5$GDPpc2015 <- df5$GDP2015 / df5$Pop2015
 
         df5$logscc <- log(df5$scc)
@@ -100,6 +107,7 @@ get.displays <- function(alts, levels) {
     pdf2.diff <- data.frame()
     basedf <- NULL
     for (ii in 1:length(alts)) {
+        print(levels[ii])
         altdf <- read.csv(alts[ii])
         pdf1.raw <- rbind(pdf1.raw, cbind(subset(altdf, country == 'global'), group=levels[ii]))
         rows <- get.result.row(altdf)
@@ -153,7 +161,8 @@ get.displays <- function(alts, levels) {
 
     pdf3 <- rbind(cbind(pdf2.long, calc="raw"),
                   cbind(pdf2.diff.long, calc="diff")) %>% group_by(calc, group, variable) %>%
-        summarize(mu=mean(value), med=median(value), ci25=quantile(value, .25), ci75=quantile(value, .75))
+        summarize(mu=mean(value), med=median(value, na.rm=T),
+                  ci25=quantile(value, .25, na.rm=T), ci75=quantile(value, .75, na.rm=T))
     pdf3$label <- factor(ifelse(pdf3$variable == "alpha1", "alpha_1", ifelse(pdf3$variable == "betam1", "beta - 1", "gamma - 1")),
                          levels=c("alpha_1", "beta - 1", "gamma - 1"))
 
@@ -164,7 +173,7 @@ get.displays <- function(alts, levels) {
         geom_point(aes(y=med, colour=calc), position=position_dodge(width=.9)) +
         geom_hline(data=data.frame(label=c('alpha_1', 'beta - 1', 'gamma - 1'), value=c(0, 0, 0)), aes(yintercept=value), linetype='dashed') +
         scale_colour_manual(breaks=c('raw', 'diff'), values=c('#000000', '#800000')) +
-        scale_y_continuous(breaks=breaks_extended(3)) +
+        scale_y_continuous(breaks=breaks_extended(3)) # + scale_x_discrete(limits=rev(levels[c(1, 5, 2, 3, 4)])) + <-- XXX: when plotting partial damages
         theme_bw() + theme(panel.spacing=unit(.7, "lines")) + guides(colour='none') + ylab("Coefficient values")
     gp2
 
@@ -217,10 +226,19 @@ disp.subn <- get.displays(c("output/allscc.csv", "output/allscc-subnational.csv"
                           c('National', 'Subnational'))
 ggsave("sccfig-subn.pdf", width=8, height=1.5)
 
-prevtbl <- read.csv("output/scc-options.csv")
-write.csv(rbind(disp.year, prevtbl[4:nrow(prevtbl),]), "scc-options.csv", row.names=F)
+disp.part <- get.displays(c("output/allscc.csv", "output/allscc-onlydmg-nonmarket.csv",
+                            "output/allscc-onlydmg-slr.csv"), #"output/allscc-onlydmg-market.csv", "output/allscc-onlydmg-discont.csv"),
+                          c('Combined', 'Non-market-only', 'SLR-only'))#, 'Market-only', 'Discontinuity-only'))
+## Note: After ran function by hand, added back both so I could get the tables
+ggsave("sccfig-part.pdf", width=8, height=2)
 
 write.csv(rbind(disp.year, disp.scen, disp.mktd, disp.othd, disp.macu, disp.down), "scc-options.csv", row.names=F)
+
+prevtbl <- read.csv("output/scc-options.csv")
+write.csv(rbind(disp.year, prevtbl[4:nrow(prevtbl),]), "output/scc-options.csv", row.names=F)
+
+prevtbl <- read.csv("output/scc-options.csv")
+write.csv(rbind(prevtbl, disp.part), "output/scc-options.csv", row.names=F)
 
 for (filepath in c("output/allscc.csv", "output/allscc-2050.csv", "output/allscc-2100.csv")) {
     df <- read.csv(filepath)
