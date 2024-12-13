@@ -59,7 +59,7 @@ macs = myloadcsv("data/macs.csv")
 
     fracabatedcarbon = Variable(index=[time, country], unit="portion") # portion abated
     loggdpcost = Variable(index=[time, country], unit="log diff") # log difference
-    tc_totalcost = Variable(index=[time, country], unit="\$million")
+    tc_totalcost_national = Variable(index=[time, country], unit="\$million")
     tc_totalcost_region = Variable(index=[time, region], unit="\$million")
 
     function init(pp, vv, dd)
@@ -152,8 +152,8 @@ macs = myloadcsv("data/macs.csv")
             ac_500_inf_gdp .* price2frac(pp.carbonprice[tt, :], 500, Inf) # log difference
         vv.loggdpcost[tt,:] = min.(0, vv.loggdpcost[tt,:])
 
-        vv.tc_totalcost[tt,:] = pp.gdp[tt,:] .* (1 .- exp.(vv.loggdpcost[tt,:]))
-        vv.tc_totalcost_region[tt, :] = countrytoregion(pp.model, sum, vv.tc_totalcost[tt,:])
+        vv.tc_totalcost_national[tt,:] = pp.gdp[tt,:] .* (1 .- exp.(vv.loggdpcost[tt,:]))
+        vv.tc_totalcost_region[tt, :] = countrytoregion(pp.model, sum, vv.tc_totalcost_national[tt,:])
     end
 end
 

@@ -1,5 +1,6 @@
 import Mimi.add_save!
-include("main_model.jl")
+include("../../src/main_model.jl")
+include("../../src/mcs.jl")
 
 mcnum = 10000
 
@@ -11,7 +12,7 @@ model[:EquityWeighting, :td_totaldiscountedimpacts]
 df = getdataframe(model, :NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
 df[df.country .== "KOR", :]
 
-mcs = getsim()
+mcs = getsim(model)
 add_save!(mcs, (:CountryLevelNPV, :wit_percap_equityweightedimpact))
 add_save!(mcs, (:CountryLevelNPV, :tct_percap_totalcosts_total))
 add_save!(mcs, (:CountryLevelNPV, :act_percap_adaptationcosts))
@@ -25,18 +26,6 @@ add_save!(mcs, (:Discontinuity, :isat_per_cap_DiscImpactperCapinclSaturation))
 
 output_path = "output"
 res = run(mcs, model, mcnum; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)
-
-outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-CSV.write("allscc-drupp.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
-
-outs = compute_scc(model, year=2020, prefrange=false, seed=20240528, n=mcnum);
-CSV.write("allscc-nodrupp.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
-
-outs = compute_scc(model, year=2050, prefrange=false, seed=20240528, n=mcnum);
-CSV.write("allscc-nodrupp-2050.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
-
-outs = compute_scc(model, year=2100, prefrange=false, seed=20240528, n=mcnum);
-CSV.write("allscc-nodrupp-2100.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
 
 model = getpage("RCP2.6 & SSP1")
 run(model)

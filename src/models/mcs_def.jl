@@ -1,6 +1,6 @@
-import Mimi.add_RV!, Mimi.add_transform!
+import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp
 
-function getsim()
+function getsim(model::Model)
     mcs = @defsim begin
 
         ## NOTE: some assignment to global variables can probably be avoided now
@@ -71,10 +71,6 @@ function getsim()
         GlobalTemperature.tcr_transientresponse = TriangularDist(0.8, 2.7, 1.8)   # from PAGE-ICE v6.2 documentation
         GlobalTemperature.alb_emulator_rand = TriangularDist(-1., 1., 0.)
 
-        # RegionTemperature
-        rv(prcile) = Uniform(0, 1)
-        RegionTemperature_prcile = prcile
-
         # SeaLevelRise
         SeaLevelRise.s0_initialSL = TriangularDist(0.17, 0.21, 0.19)        # taken from PAGE-ICE v6.20 default
         SeaLevelRise.sltemp_SLtemprise = TriangularDist(0.7, 3., 1.5)       # median sensitivity to GMST changes
@@ -112,15 +108,11 @@ function getsim()
 
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
-        CountryLevelNPV.pref_draw = pref_draw
+        CountryLevelNPV_pref_draw = pref_draw
 
         # EquityWeighting
         EquityWeighting.civvalue_civilizationvalue = TriangularDist(1e10, 1e11, 5e10)
-        EquityWeighting.pref_draw = pref_draw
-
-        # RFFSPScenario
-        rv(rffsp_draw) = DiscreteUniform(1, 9400)
-        RFFSPScenario_rffsp_draw = rffsp_draw
+        EquityWeighting_pref_draw = pref_draw
 
         ############################################################################
         # Define random variables (RVs) - for SHARED parameters
@@ -252,6 +244,22 @@ function getsim()
 
     end # de
 
+    if has_comp(model, :RFFSPScenario)
+        # RFFSPScenario
+        add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
+        add_transform!(mcs, :RFFSPScenario_rffsp_draw, :(=), :rffsp_draw)
+    else
+        add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
+    end
+
+    if has_comp(model, :RegionTemperature)
+        # RegionTemperature
+        add_RV!(mcs, :prcile, Uniform(0, 1))
+        add_transform!(mcs, :RegionTemperature_prcile, :(=), :prcile)
+    else
+        add_RV!(mcs, :prcile, Uniform(0, 1))
+    end
+
     # for (ii, country) in enumerate(get_countryinfo().ISO3)
     #     rv_name1 = Symbol("rateuniforms_$country")
     #     add_RV!(mcs, rv_name1, Uniform(0,1))
@@ -318,7 +326,7 @@ end
 
 function do_monte_carlo_runs(samplesize::Int, m::Model, output_path::String=joinpath(@__DIR__, "../output"))
     # get simulation
-    mcs = getsim()
+    mcs = getsim(m)
 
     # Run
     res = run(mcs, m, samplesize; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)
