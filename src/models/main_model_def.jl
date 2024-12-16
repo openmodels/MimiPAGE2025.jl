@@ -79,6 +79,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     marketdamagesburke = addmarketdamagesburke(m)
     nonmarketdamages = addnonmarketdamages(m)
     discontinuity = adddiscontinuity(m)
+    capital = addcapital(m)
 
     # Total costs component
     add_comp!(m, TotalCosts)
