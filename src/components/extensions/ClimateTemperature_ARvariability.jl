@@ -9,7 +9,7 @@ arests = CSV.read(joinpath(@__DIR__, "../../../data/other/arestimates.csv"), Dat
     year = Index()
 
     # Basic parameters
-    area = Parameter(index=[region], unit="km2")
+    area_pageice = Parameter(index=[region], unit="km2")
     area_e_eartharea = Parameter(unit="km2", default=5.1e8)
     ampf_amplification = Parameter(index=[region])
 
@@ -129,10 +129,10 @@ function calc_temp(p, v, d, tt, annual_year)
     end
 
     # Land average temperature
-    v.rtl_g_landtemperature_ann[yr] = sum(v.rtl_realizedtemperature_ann[yr, :]' .* p.area') / sum(p.area)
+    v.rtl_g_landtemperature_ann[yr] = sum(v.rtl_realizedtemperature_ann[yr, :]' .* p.area_pageice') / sum(p.area_pageice)
 
     # Ocean average temperature
-    v.rto_g_oceantemperature_ann[yr] = (p.area_e_eartharea * v.rt_g_globaltemperature_ann[yr] - sum(p.area) * v.rtl_g_landtemperature_ann[yr]) / (p.area_e_eartharea - sum(p.area))
+    v.rto_g_oceantemperature_ann[yr] = (p.area_e_eartharea * v.rt_g_globaltemperature_ann[yr] - sum(p.area_pageice) * v.rtl_g_landtemperature_ann[yr]) / (p.area_e_eartharea - sum(p.area_pageice))
 
 end
 

@@ -37,7 +37,6 @@ include("../utils/country_tools.jl")
     rcons_per_cap_NonMarketRemainConsumption = Parameter(index=[time, country], unit="\$/person")
 
     function run_timestep(p, v, d, t)
-
         v.idis_lossfromdisc[t] = max(0, p.rt_g_globaltemperature[t] - p.tdis_tolerabilitydisc)
 
         if is_first(t)
@@ -82,10 +81,13 @@ include("../utils/country_tools.jl")
     end
 end
 
-function adddiscontinuity(model::Model)
+function adddiscontinuity(model::Model; config_discontinuity::String="default")
     discontinuity = add_comp!(model, Discontinuity)
 
     discontinuity[:model] = model
+    if config_discontinuity == "none"
+        discontinuity[:tdis_tolerabilitydisc] = Inf
+    end
 
     discontinuity
 end

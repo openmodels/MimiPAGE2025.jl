@@ -1,7 +1,8 @@
 @defcomp AbatementCosts begin
     region = Index()
+    country = Index()
 
-   # From the AbatementCostParameters
+    # From the AbatementCostParameters
     zc_zerocostemissions = Parameter(index=[time, region], unit="%")
     q0_absolutecutbacksatnegativecost = Parameter(index=[time, region], unit="Mtonne")
     blo = Parameter(index=[time, region], unit="per Mtonne")
@@ -21,6 +22,13 @@
     mc_marginalcost = Variable(index=[time, region], unit="\$/tonne")
     tcq0 = Variable(index=[time, region], unit="\$million")
     tc_totalcost = Variable(index=[time, region], unit="\$million")
+
+    # For mix-and-match
+    model = Parameter{Model}()
+    gdp = Parameter(index=[time, region], unit="\$M")
+    gdp_national = Parameter(index=[time, country], unit="\$M")
+    tc_totalcost_national = Variable(index=[time, country], unit="\$million")
+    mac_draw = Parameter{Int64}()
 
     function run_timestep(p, v, d, t)
 
@@ -46,6 +54,8 @@
                 v.tc_totalcost[t,r] = (p.ahi[t,r] / p.bhi[t,r]) * (exp(p.bhi[t,r] * (v.cbe_absoluteemissionreductions[t,r] - p.q0_absolutecutbacksatnegativecost[t,r])) - 1) - p.ahi[t,r] * (v.cbe_absoluteemissionreductions[t,r] - p.q0_absolutecutbacksatnegativecost[t,r]) + v.tcq0[t,r]
             end
         end
+
+        v.tc_totalcost_national[t, :] = regiontocountry(p.model, v.tc_totalcost[t, :] ./ p.gdp[t, :]) .* p.gdp_national[t, :]
     end
 end
 
@@ -64,6 +74,9 @@ function addabatementcosts(model::Model, class::Symbol)
     else
         error("Unknown class of abatement costs.")
     end
+
+    abatementcostscomp[:model] = model
+    abatementcostscomp[:mac_draw] = 0
 
     return abatementcostscomp
 end

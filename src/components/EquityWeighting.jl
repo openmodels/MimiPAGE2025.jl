@@ -23,7 +23,9 @@ include("../utils/welfare.jl")
 
     # Calculation of weighted costs
     pref_draw = Parameter{Int64}()
+    use_subnational = Parameter{Bool}()
     emuc_utilityconvexity = Variable(unit="none")
+    subnational_effect = Variable(index=[country])
 
     wtct_percap_weightedcosts = Variable(index=[time, country], unit="\$/person")
     eact_percap_weightedadaptationcosts = Variable(index=[time, country], unit="\$/person")
@@ -85,12 +87,23 @@ include("../utils/welfare.jl")
             vv.ptp_timepreference = 0.5
             vv.emuc_utilityconvexity = 1.01 # equations need to be rederived for emuc = 1
         else
-            prefs = CSV.read("../data/preferences/druppetal2018.csv", DataFrame)
+            prefs = CSV.read(pagedata("preferences/druppetal2018.csv"), DataFrame)
             vv.ptp_timepreference = prefs.puretp[pp.pref_draw]
             vv.emuc_utilityconvexity = prefs.eta[pp.pref_draw]
             if vv.emuc_utilityconvexity == 1.0
                 vv.emuc_utilityconvexity += (rand() - 0.5) / 5 # -.1 to .1
             end
+        end
+        if pp.use_subnational
+            if pp.pref_draw == -1
+                vv.subnational_effect[:] = readcountrydata_im(pp.model, "damages/subnational.csv", :iso, :pref,
+                                                           1, "effect") # 1 has eta = 1
+            else
+                vv.subnational_effect[:] = readcountrydata_im(pp.model, "damages/subnational.csv", :iso, :pref,
+                                                           pp.pref_draw, "effect")
+            end
+        else
+            vv.subnational_effect[:] = ones(dim_count(pp.model, :country))
         end
 
         vv.cc_focus = argmin(abs.(pp.cons_percap_consumption_0 .- median(pp.cons_percap_consumption_0)))
@@ -156,7 +169,7 @@ include("../utils/welfare.jl")
                 v.wacdt_partiallyweighted_discounted[tt, cc] = v.wact_partiallyweighted[tt, cc] * v.df_utilitydiscountfactor[tt]
 
                 ## Equity weighted impacts (end of page 28, Hope 2009)
-                v.wit_percap_equityweightedimpact[tt, cc] = ((p.cons_percap_consumption_0[v.cc_focus]^v.emuc_utilityconvexity) / (1 - v.emuc_utilityconvexity)) * (p.cons_percap_aftercosts[tt, cc]^(1 - v.emuc_utilityconvexity) - p.rcons_percap_dis[tt, cc]^(1 - v.emuc_utilityconvexity))
+                v.wit_percap_equityweightedimpact[tt, cc] = ((p.cons_percap_consumption_0[v.cc_focus]^v.emuc_utilityconvexity) / (1 - v.emuc_utilityconvexity)) * (p.cons_percap_aftercosts[tt, cc]^(1 - v.emuc_utilityconvexity) - p.rcons_percap_dis[tt, cc]^(1 - v.emuc_utilityconvexity)) * v.subnational_effect[cc]
                 v.wit_equityweightedimpact[tt, cc] = v.wit_percap_equityweightedimpact[tt, cc] * p.pop_population[tt, cc]
                 v.widt_equityweightedimpact_discounted[tt, cc] = v.wit_equityweightedimpact[tt, cc] * v.df_utilitydiscountfactor[tt]
             end
@@ -185,9 +198,10 @@ include("../utils/welfare.jl")
     end
 end
 
-function addequityweighting(model::Model)
+function addequityweighting(model::Model, use_subnational::Bool)
     equityweighting = add_comp!(model, EquityWeighting)
     equityweighting[:model] = model
     equityweighting[:pref_draw] = -1
+    equityweighting[:use_subnational] = use_subnational
     equityweighting
 end

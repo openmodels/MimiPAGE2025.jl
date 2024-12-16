@@ -38,6 +38,11 @@ function countrytoregion(model::Model, combine::F, bycountry...) where {F <: Fun
     result
 end
 
+function weighted_mean(xx::Union{Vector{Float64}, Vector{Union{Missing, Float64}}}, ww::Union{Vector{Float64}, Vector{Union{Missing, Float64}}})
+    valid = .!(ismissing.(xx) .|| ismissing.(ww))
+    sum(xx[valid] .* ww[valid]) / sum(ww[valid])
+end
+
 function regiontocountry(model::Model, byregion)
     countrymapping = get_countrymapping()
     countries = dim_keys(model, :country)
@@ -94,7 +99,12 @@ end
 function datapath(filepath::String)
     # Handle relative paths
     if filepath[1] ∉ ['.', '/'] && !isfile(filepath)
-        filepath = joinpath(@__DIR__, "..", "..", filepath)
+        filepathcheck = joinpath(@__DIR__, "..", "..", filepath)
+        if !isfile(filepathcheck)
+            filepath = joinpath(@__DIR__, "..", "..", "data", filepath)
+        else
+            filepath = filepathcheck
+        end
     end
 
     filepath

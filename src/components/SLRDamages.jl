@@ -6,6 +6,7 @@
 
     model = Parameter{Model}()
     sealevelcost_draw = Parameter{Int64}()
+    config_slrdmg = Parameter{String}()
 
     # incoming parameters from SeaLevelRise
     s_sealevel = Parameter(index=[time], unit="m")
@@ -39,7 +40,12 @@
     rgdp_per_cap_SLRRemainGDP = Variable(index=[time, country], unit="\$/person")
 
     function init(pp, vv, dd)
-        if pp.sealevelcost_draw == -1
+        if pp.config_slrdmg == "none"
+            vv.alpha_noadapt[:] .= 0.
+            vv.beta_noadapt[:] .= 0.
+            vv.alpha_optimal[:] .= 0.
+            vv.beta_optimal[:] .= 0.
+        elseif pp.sealevelcost_draw == -1
             vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.noadapt", values -> 0.)
             vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.noadapt", values -> 0.)
             vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.optimal", values -> 0.)
@@ -84,11 +90,12 @@ end
 # Still need this function in order to set the parameters than depend on
 # readpagedata, which takes model as an input. These cannot be set using
 # the default keyword arg for now.
-function addslrdamages(model::Model)
+function addslrdamages(model::Model, config_slrdmg::String="default")
     SLRDamagescomp = add_comp!(model, SLRDamages)
 
     SLRDamagescomp[:model] = model
     SLRDamagescomp[:sealevelcost_draw] = -1
+    SLRDamagescomp[:config_slrdmg] = config_slrdmg
     SLRDamagescomp[:saf_slradaptfrac] = 0.5 * ones(dim_count(model, :time), dim_count(model, :country))
 
     return SLRDamagescomp
