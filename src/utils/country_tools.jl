@@ -215,7 +215,7 @@ end
 
 function readcountrydata_im(model::Model, df::DataFrame, isocol, mccol, mc, valuecol::String, aggregator=mean; allowmissing=false)
     if mc == nothing
-        df2 = combine(groupby(df[!, [isocol, valuecol]], isocol), valuecol => mean)
+        df2 = combine(groupby(df[!, [String(isocol), valuecol]], isocol), valuecol => mean)
         rename!(df2, names(df2)[2] => valuecol)
     else
         df2 = df[df[!, mccol] .== mc, :]

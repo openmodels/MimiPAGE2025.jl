@@ -8,6 +8,7 @@ include("../utils/country_tools.jl")
     y_year_0 = Parameter(unit="year")
 
     rand_discontinuity = Parameter(unit="unitless", default=.5)
+    save_savingsrate = Parameter(unit="%", default=15.)
 
     irefeqdis_eqdiscimpact = Variable(index=[country], unit="%")
     wincf_weightsfactor_sea = Parameter(index=[region], unit="")
@@ -33,8 +34,9 @@ include("../utils/country_tools.jl")
     isat_satdiscimpact = Variable(index=[time,country], unit="%")
 
     isat_per_cap_DiscImpactperCapinclSaturation = Variable(index=[time,country], unit="\$/person")
-    rcons_per_cap_DiscRemainConsumption = Variable(index=[time, country], unit="\$/person")
     rcons_per_cap_NonMarketRemainConsumption = Parameter(index=[time, country], unit="\$/person")
+    rcons_per_cap_DiscRemainConsumption = Variable(index=[time, country], unit="\$/person")
+    rgdp_per_cap_DiscRemainGDP = Variable(index=[time, country], unit="\$/person")
 
     function run_timestep(p, v, d, t)
         v.idis_lossfromdisc[t] = max(0, p.rt_g_globaltemperature[t] - p.tdis_tolerabilitydisc)
@@ -77,6 +79,7 @@ include("../utils/country_tools.jl")
             end
             v.isat_per_cap_DiscImpactperCapinclSaturation[t,cc] = (v.isat_satdiscimpact[t,cc] / 100) * p.rgdp_per_cap_NonMarketRemainGDP[t,cc]
             v.rcons_per_cap_DiscRemainConsumption[t,cc] = p.rcons_per_cap_NonMarketRemainConsumption[t,cc] - v.isat_per_cap_DiscImpactperCapinclSaturation[t,cc]
+            v.rgdp_per_cap_DiscRemainGDP[t,cc] = v.rcons_per_cap_DiscRemainConsumption[t,cc] / (1 - p.save_savingsrate / 100)
         end
     end
 end

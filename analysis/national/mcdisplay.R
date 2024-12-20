@@ -91,6 +91,36 @@ ggplot(pdf, aes(as.numeric(time), mu)) +
                         values=c('#1b9e77', '#e7298a', '#7570b3', '#d95f02'))
 ggsave("../../output/figures/damages-xtype-kor.pdf", width=6.5, height=4)
 
+get.xts <- function(filename, mufunc=mean) {
+    df <- read.csv(file.path("output", filename))
+    names(df)[3] <- 'var'
+    df %>% filter(country %in% c('IND', 'CHN', 'USA', 'IDN', 'PAK', 'NGA', 'BRA', 'DEU', 'RUS')) %>% group_by(country, time) %>%
+        summarize(mu=mufunc(var),
+                  ci25=quantile(var, .25),
+                  ci75=quantile(var, .75))
+}
+
+df1 <- get.xts("MarketDamagesBurke_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")
+df2 <- get.xts("NonMarketDamages_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")
+df3 <- get.xts("SLRDamages_d_percap_slr.csv")
+df4 <- get.xts("Discontinuity_isat_per_cap_DiscImpactperCapinclSaturation.csv")
+df4$time <- as.numeric(df4$time)
+
+pdf <- rbind(cbind(df1, group='Market Damages'),
+             cbind(df2, group='Non-market Damages'),
+             cbind(df3, group='SLR Damages'),
+             cbind(df4, group='Discontinuity Damages'))
+
+ggplot(pdf, aes(as.numeric(time), mu)) +
+    facet_wrap(~ country, scales="free_y", nrow=3, ncol=3) +
+    geom_ribbon(aes(ymin=ci25, ymax=ci75, group=group), alpha=.5) +
+    geom_line(aes(colour=group)) +
+    theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Damages ($ / person)") +
+    scale_colour_manual(NULL, breaks=c('Non-market Damages', 'Discontinuity Damages', 'SLR Damages', 'Market Damages'),
+                        values=c('#1b9e77', '#e7298a', '#7570b3', '#d95f02'))
+ggsave("../../output/figures/damages-xtype-9.pdf", width=9, height=6.5)
+
+
 library(PBSmapping)
 
 byisos <- read.csv("../../data/bycountry.csv")

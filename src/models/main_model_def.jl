@@ -314,6 +314,10 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :Discontinuity => :rcons_per_cap_NonMarketRemainConsumption, :NonMarketDamages => :rcons_per_cap_NonMarketRemainConsumption)
     connect_param!(m, :Discontinuity => :isatg_saturationmodification, :GDP => :isatg_impactfxnsaturation)
 
+    capital[:rgdp_percap_impacts] = discontinuity[:rgdp_per_cap_DiscRemainGDP]
+    capital[:pop_population] = population[:pop_population]
+    capital[:gdp_baseline] = gdp[:gdp]
+
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
     connect_param!(m, :TotalCosts => :abatement_costs_percap_peryear, :TotalAbatementCosts => :tct_percap_totalcostspercap)

@@ -19,6 +19,7 @@ function getsim(model::Model)
         MarketDamagesBurke.save_savingsrate = RV_save_savingsrate
         NonMarketDamages.save_savingsrate = RV_save_savingsrate
         SLRDamages.save_savingsrate = RV_save_savingsrate
+        Discontinuity.save_savingsrate = RV_save_savingsrate
 
         # each component should have the same value for its tcal_CalibrationTemp
         # so we use an RV here because in the model this is not an explicitly
