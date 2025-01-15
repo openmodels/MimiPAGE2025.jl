@@ -91,6 +91,67 @@ ggplot(pdf, aes(as.numeric(time), mu)) +
                         values=c('#1b9e77', '#e7298a', '#7570b3', '#d95f02'))
 ggsave("../../output/figures/damages-xtype-kor.pdf", width=6.5, height=4)
 
+get.xts <- function(filename, mufunc=mean) {
+    df <- read.csv(file.path("output", filename))
+    names(df)[3] <- 'var'
+    df %>% filter(country %in% c('IND', 'CHN', 'USA', 'IDN', 'PAK', 'NGA', 'BRA', 'DEU', 'RUS')) %>% group_by(country, time) %>%
+        summarize(mu=mufunc(var),
+                  ci25=quantile(var, .25),
+                  ci75=quantile(var, .75))
+}
+
+df1 <- get.xts("MarketDamagesBurke_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")
+df2 <- get.xts("NonMarketDamages_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")
+df3 <- get.xts("SLRDamages_d_percap_slr.csv")
+df4 <- get.xts("Discontinuity_isat_per_cap_DiscImpactperCapinclSaturation.csv")
+df4$time <- as.numeric(df4$time)
+
+pdf <- rbind(cbind(df1, group='Market Damages'),
+             cbind(df2, group='Non-market Damages'),
+             cbind(df3, group='SLR Damages'),
+             cbind(df4, group='Discontinuity Damages'))
+
+ggplot(pdf, aes(as.numeric(time), mu)) +
+    facet_wrap(~ country, scales="free_y", nrow=3, ncol=3) +
+    geom_ribbon(aes(ymin=ci25, ymax=ci75, group=group), alpha=.5) +
+    geom_line(aes(colour=group)) +
+    theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Damages ($ / person)") +
+    scale_colour_manual(NULL, breaks=c('Non-market Damages', 'Discontinuity Damages', 'SLR Damages', 'Market Damages'),
+                        values=c('#1b9e77', '#e7298a', '#7570b3', '#d95f02'))
+ggsave("../../output/figures/damages-xtype-9.pdf", width=9, height=6.5)
+
+## XXX: I need to divide each by its associated GDP. Current calcs don't work.
+
+df1 <- get.xts("CountryLevelNPV_wit_percap_equityweightedimpact.csv")
+df2 <- get.xts("GDP_cons_percap_consumption.csv")
+df3 <- get.xts("../wit_percap_equityweightedimpact-ssp126.csv")
+df4 <- get.xts("../wit_percap_equityweightedimpact-1p5.csv")
+df5 <- get.xts("../wit_percap_equityweightedimpact-2p0.csv")
+df6 <- get.xts("../wit_percap_equityweightedimpact-2p5.csv")
+
+pdf <- df1 %>% left_join(df2, by=c('country', 'time'), suffix=c('.wit', '')) %>%
+    left_join(df3, by=c('country', 'time'), suffix=c('', '.126')) %>%
+    left_join(df4, by=c('country', 'time'), suffix=c('', '.1p5')) %>%
+    left_join(df5, by=c('country', 'time'), suffix=c('', '.2p0')) %>%
+    left_join(df6, by=c('country', 'time'), suffix=c('.gdp', '.2p5'))
+
+ggplot(pdf, aes(time)) +
+    facet_wrap(~ country, scales="free_y", nrow=3, ncol=3) +
+    geom_line(aes(y=mu.wit / mu.gdp, colour='RFF-SPs')) +
+    geom_line(aes(y=mu.1p5 / mu.gdp, colour='1.5 deg. target')) +
+    geom_line(aes(y=mu.2p0 / mu.gdp, colour='2 deg. target')) +
+    geom_line(aes(y=mu.2p5 / mu.gdp, colour='2.5 deg. target')) +
+    scale_x_continuous(NULL, expand=c(0, 0)) + scale_y_continuous("Total damages (% GDP)", labels=scales::percent) +
+    scale_colour_discrete(NULL) +
+    theme_bw()
+ggsave("../../output/figures/damages-xscen-9.pdf", width=9, height=6.5)
+
+pdf$rfffrac <- pdf$mu.wit / pdf$mu.gdp
+pdf$p15frac <- pdf$mu.1p5 / pdf$mu.gdp
+pdf$p20frac <- pdf$mu.2p0 / pdf$mu.gdp
+pdf$p25frac <- pdf$mu.2p5 / pdf$mu.gdp
+subset(pdf, time == 2100)
+
 library(PBSmapping)
 
 byisos <- read.csv("../../data/bycountry.csv")
@@ -174,9 +235,9 @@ gdf$baseline <- 0.85 # 1980 - 2012 under AR5 / 1.5 report
 
 ggplot(df2, aes(time, mu - baseline)) +
     geom_line(aes(colour="Other", group=country)) +
-    geom_ribbon(data=subset(df2, country == 'KOR'), aes(ymin=ci25 - baseline, ymax=ci75 - baseline), alpha=.5, fill='#beaed4') +
-    geom_line(data=subset(df2, country == 'KOR'), aes(colour="South Korea"), linewidth=2) +
+    ## geom_ribbon(data=subset(df2, country == 'KOR'), aes(ymin=ci25 - baseline, ymax=ci75 - baseline), alpha=.5, fill='#beaed4') +
+    ## geom_line(data=subset(df2, country == 'KOR'), aes(colour="South Korea"), linewidth=2) +
     geom_line(data=gdf, aes(colour="Global Mean"), linewidth=2) +
     theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Change from 1980 - 2010 (° C)") +
     scale_colour_manual(NULL, breaks=c('Global Mean', 'Other', 'South Korea'), values=c('#1b9e77', '#80808080', '#7570b3'))
-ggsave("../../output/figures/t_global_kor.png", width=6.5, height=4)
+ggsave("../../output/figures/t_global_nokor.png", width=6.5, height=4)
