@@ -8,7 +8,7 @@ include("../utils/country_tools.jl")
     y_year_0 = Parameter(unit="year")
 
     rand_discontinuity = Parameter(unit="unitless", default=.5)
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
 
     irefeqdis_eqdiscimpact = Variable(index=[country], unit="%")
     wincf_weightsfactor_sea = Parameter(index=[region], unit="")
@@ -79,7 +79,7 @@ include("../utils/country_tools.jl")
             end
             v.isat_per_cap_DiscImpactperCapinclSaturation[t,cc] = (v.isat_satdiscimpact[t,cc] / 100) * p.rgdp_per_cap_NonMarketRemainGDP[t,cc]
             v.rcons_per_cap_DiscRemainConsumption[t,cc] = p.rcons_per_cap_NonMarketRemainConsumption[t,cc] - v.isat_per_cap_DiscImpactperCapinclSaturation[t,cc]
-            v.rgdp_per_cap_DiscRemainGDP[t,cc] = v.rcons_per_cap_DiscRemainConsumption[t,cc] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_DiscRemainGDP[t,cc] = v.rcons_per_cap_DiscRemainConsumption[t,cc] / (1 - p.save_savingsrate[cc] / 100)
         end
     end
 end

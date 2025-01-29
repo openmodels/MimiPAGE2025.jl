@@ -2,7 +2,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=false,
-                   use_capital::Bool=true)
+                   config_capital::String="constant")
     # add all the components
     scenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -22,11 +22,13 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     # Socio-Economics
     population = addpopulation(m)
+    macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
     gdp = addgdp(m)
 
     gdp[:pop0_initpopulation_region] = population[:pop0_initpopulation_region]
+    gdp[:save_savingsrate] = macroparams[:save_savingsrate]
 
-    if use_capital
+    if config_capital == "full"
         capital = addcapital(m)
         finalgdp_ref = capital[:gdp_capital]
         finalgdp_pair = :Capital => :gdp_capital
@@ -34,8 +36,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         finalcons_pair = :Capital => :cons_percap_capital_consumption
     else
         finalgdp_ref = gdp[:gdp]
-        finalgdp_pair = :GDP => :gdp_region
-        finalgdp_region_pair = :GDP => :gdp
+        finalgdp_pair = :GDP => :gdp
+        finalgdp_region_pair = :GDP => :gdp_region
         finalcons_pair = :GDP => :cons_percap_consumption
     end
 
@@ -308,6 +310,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         connect_param!(m, :SLRDamages => :imp_actualreductionSLR, :AdaptiveCostsSeaLevel => :imp_adaptedimpacts) # For mix-and-match
         connect_param!(m, :SLRDamages => :isatg_impactfxnsaturation, :GDP => :isatg_impactfxnsaturation) # For mix-and-match
     end
+    slrdamages[:save_savingsrate] = macroparams[:save_savingsrate]
 
     connect_param!(m, :MarketDamagesBurke => :rtl_realizedtemperature_absolute, regtemp_comp => :rtl_realizedtemperature_absolute)
     connect_param!(m, :MarketDamagesBurke => :rgdp_per_cap_SLRRemainGDP, :SLRDamages => :rgdp_per_cap_SLRRemainGDP)
@@ -315,6 +318,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :MarketDamagesBurke => :isatg_impactfxnsaturation, :GDP => :isatg_impactfxnsaturation)
     connect_param!(m, :MarketDamagesBurke => :gdp, finalgdp_pair)
     connect_param!(m, :MarketDamagesBurke => :pop_population, :Population => :pop_population)
+    marketdamagesburke[:save_savingsrate] = macroparams[:save_savingsrate]
 
     connect_param!(m, :NonMarketDamages => :rtl_realizedtemperature_change, regtemp_comp => :rtl_realizedtemperature_change)
     connect_param!(m, :NonMarketDamages => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
@@ -327,11 +331,13 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     if config_nonmarketdmg == "pageice"
         connect_param!(m, :NonMarketDamages => :pop_population, :Population => :pop_population)
     end
+    nonmarketdamages[:save_savingsrate] = macroparams[:save_savingsrate]
 
     connect_param!(m, :Discontinuity => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
     connect_param!(m, :Discontinuity => :rgdp_per_cap_NonMarketRemainGDP, :NonMarketDamages => :rgdp_per_cap_NonMarketRemainGDP)
     connect_param!(m, :Discontinuity => :rcons_per_cap_NonMarketRemainConsumption, :NonMarketDamages => :rcons_per_cap_NonMarketRemainConsumption)
     connect_param!(m, :Discontinuity => :isatg_saturationmodification, :GDP => :isatg_impactfxnsaturation)
+    discontinuity[:save_savingsrate] = macroparams[:save_savingsrate]
 
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
@@ -377,7 +383,8 @@ end
 function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
-                 config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=false)
+                 config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=false,
+                 config_capital::String="constant")
     m = Model()
     set_dimension!(m, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
     set_dimension!(m, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
@@ -385,7 +392,8 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
 
     buildpage(m, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
-              config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational)
+              config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
+              config_capital=config_capital)
 
     # next: add vector and panel example
     initpage(m)
