@@ -50,7 +50,7 @@ get.result.row <- function(df) {
     pardf <- data.frame()
     for (mcii in unique(df4$mc)) {
         df5 <- df4 %>% filter(mc == mcii & country != 'global') %>% left_join(baseline, by=c('country'='ISO3'))
-        if (sum(df5$scc > 0) < 3) {
+        if (sum(!is.na(df5$scc) & df5$scc > 0) < 3) {
             pardf <- rbind(pardf, data.frame(median=NA, mean=NA, stddev=NA,
                                              alpha1=NA, alpha1.se=NA, betam1=NA,
                                              beta.se=NA, gammam1=NA, gamma.se=NA, rsqr=NA))
@@ -173,7 +173,7 @@ get.displays <- function(alts, levels) {
         geom_point(aes(y=med, colour=calc), position=position_dodge(width=.9)) +
         geom_hline(data=data.frame(label=c('alpha_1', 'beta - 1', 'gamma - 1'), value=c(0, 0, 0)), aes(yintercept=value), linetype='dashed') +
         scale_colour_manual(breaks=c('raw', 'diff'), values=c('#000000', '#800000')) +
-        scale_y_continuous(breaks=breaks_extended(3)) # + scale_x_discrete(limits=rev(levels[c(1, 5, 2, 3, 4)])) + <-- XXX: when plotting partial damages
+        scale_y_continuous(breaks=breaks_extended(3)) + # + scale_x_discrete(limits=rev(levels[c(1, 5, 2, 3, 4)])) + <-- XXX: when plotting partial damages
         theme_bw() + theme(panel.spacing=unit(.7, "lines")) + guides(colour='none') + ylab("Coefficient values")
     gp2
 
@@ -231,6 +231,11 @@ disp.part <- get.displays(c("output/allscc.csv", "output/allscc-onlydmg-nonmarke
                           c('Combined', 'Non-market-only', 'SLR-only'))#, 'Market-only', 'Discontinuity-only'))
 ## Note: After ran function by hand, added back both so I could get the tables
 ggsave("sccfig-part.pdf", width=8, height=2)
+
+disp.capx <- get.displays(c("output/allscc.csv", "output/allscc-capital-constant.csv",
+                            "output/allscc-capital-inferred.csv", "output/allscc-capital-full.csv"),
+                          c('Old', 'Constant', 'Inferred', 'Full'))
+ggsave("sccfig-capx.pdf", width=8, height=2)
 
 write.csv(rbind(disp.year, disp.scen, disp.mktd, disp.othd, disp.macu, disp.down), "scc-options.csv", row.names=F)
 

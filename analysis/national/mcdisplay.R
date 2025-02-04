@@ -121,7 +121,7 @@ ggplot(pdf, aes(as.numeric(time), mu)) +
 ggsave("../../output/figures/damages-xtype-9.pdf", width=9, height=6.5)
 
 
-library(PBSmapping)
+source("~/projects/research-common/R/myPBSmapping.R")
 
 byisos <- read.csv("../../data/bycountry.csv")
 byaggs <- read.csv("../../data/aggregates.csv")

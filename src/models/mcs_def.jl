@@ -255,11 +255,11 @@ function getsim(model::Model)
 
     if has_comp(model, :Capital)
         # Capital
-        add_RV!(mcs, :capital_draw, DiscreteUniform(0, 1000))
-        add_transform!(mcs, :MacroParameters, :(=), :capital_draw)
-        add_transform!(mcs, :Capital, :(=), :capital_draw)
+        add_RV!(mcs, :capital_draw, DiscreteUniform(1, 1000))
+        add_transform!(mcs, :MacroParameters_capital_draw, :(=), :capital_draw)
+        add_transform!(mcs, :Capital_capital_draw, :(=), :capital_draw)
     else
-        add_RV!(mcs, :capital_draw, DiscreteUniform(0, 1000))
+        add_RV!(mcs, :capital_draw, DiscreteUniform(1, 1000))
     end
 
     # for (ii, country) in enumerate(get_countryinfo().ISO3)

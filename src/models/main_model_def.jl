@@ -30,6 +30,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     if config_capital == "full"
         capital = addcapital(m)
+        capital[:save_savingsrate] = macroparams[:save_savingsrate]
         finalgdp_ref = capital[:gdp_capital]
         finalgdp_pair = :Capital => :gdp_capital
         finalgdp_region_pair = :Capital => :gdp_capital_region
@@ -245,7 +246,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :GDP => :pop_population_region, :Population => :pop_population_region)
     gdp[:grw_gdpgrowthrate] = socioscenario[:grw_gdpgrowthrate]
 
-    if use_capital
+    if config_capital == "full"
         capital[:pop_population] = population[:pop_population]
         capital[:gdp_baseline] = gdp[:gdp]
         capital[:rgdp_percap_impacts] = discontinuity[:rgdp_per_cap_DiscRemainGDP]
