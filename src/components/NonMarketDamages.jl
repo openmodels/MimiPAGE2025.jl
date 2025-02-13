@@ -25,7 +25,7 @@ include("../utils/country_tools.jl")
     rcons_per_cap_MarketRemainConsumption = Parameter(index=[time, country], unit="\$/person")
     rgdp_per_cap_MarketRemainGDP = Parameter(index=[time, country], unit="\$/person")
 
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     wincf_weightsfactor_nonmarket = Parameter(index=[region], unit="")
     w_NonImpactsatCalibrationTemp = Parameter(unit="%GDP", default=0.487 * 1.25 * 3*3) # 125% of negative of mkt_t2 coefficient from Howard & Sterner 2017
     ipow_NonMarketIncomeFxnExponent = Parameter(unit="unitless", default=0.)
@@ -51,7 +51,7 @@ include("../utils/country_tools.jl")
             v.isat_ImpactinclSaturationandAdaptation[t, :] .= 0.
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :] .= 0.
             v.rcons_per_cap_NonMarketRemainConsumption[t, :] .= p.rcons_per_cap_MarketRemainConsumption[t, :]
-            v.rgdp_per_cap_NonMarketRemainGDP[t, :] .= v.rcons_per_cap_NonMarketRemainConsumption[t, :] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_NonMarketRemainGDP[t, :] .= v.rcons_per_cap_NonMarketRemainConsumption[t, :] / (1 - p.save_savingsrate[:] / 100)
         else
             impmax_maxtempriseforadaptpolicyNM_country = regiontocountry(p.model, p.impmax_maxtempriseforadaptpolicyNM)
             atl_adjustedtolerableleveloftemprise_country = regiontocountry(p.model, p.atl_adjustedtolerableleveloftemprise[t, :])
@@ -82,9 +82,9 @@ include("../utils/country_tools.jl")
                     v.isat_ImpactinclSaturationandAdaptation[t,cc] = v.igdp_ImpactatActualGDPperCap[t,cc]
                 else
                     v.isat_ImpactinclSaturationandAdaptation[t,cc] = p.isatg_impactfxnsaturation +
-                        ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+                        ((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) *
                         ((v.igdp_ImpactatActualGDPperCap[t,cc] - p.isatg_impactfxnsaturation) /
-                         (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+                         (((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) +
                           (v.igdp_ImpactatActualGDPperCap[t,cc] -
                            p.isatg_impactfxnsaturation)))
                 end
@@ -99,7 +99,7 @@ include("../utils/country_tools.jl")
 
                 v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t,cc] = (v.isat_ImpactinclSaturationandAdaptation[t,cc] / 100) * p.rgdp_per_cap_MarketRemainGDP[t,cc]
                 v.rcons_per_cap_NonMarketRemainConsumption[t,cc] = p.rcons_per_cap_MarketRemainConsumption[t,cc] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t,cc]
-                v.rgdp_per_cap_NonMarketRemainGDP[t,cc] = v.rcons_per_cap_NonMarketRemainConsumption[t,cc] / (1 - p.save_savingsrate / 100)
+                v.rgdp_per_cap_NonMarketRemainGDP[t,cc] = v.rcons_per_cap_NonMarketRemainConsumption[t,cc] / (1 - p.save_savingsrate[cc] / 100)
             end
         end
     end

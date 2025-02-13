@@ -21,7 +21,7 @@
     act_percap_adaptationcosts = Parameter(index=[time, country], unit="\$/person")
 
     # component parameters
-    save_savingsrate = Parameter(unit="%", default=15.00) # pp33 PAGE09 documentation, "savings rate".
+    save_savingsrate = Parameter(index=[country], unit="%") # pp33 PAGE09 documentation, "savings rate".
 
     alpha_noadapt = Variable(index=[country])
     beta_noadapt = Variable(index=[country])
@@ -75,13 +75,13 @@
                 v.cons_percap_aftercosts[t, cc] = 0.01 * p.cons_percap_consumption_0[cc]
             end
 
-            v.gdp_percap_aftercosts[t,cc] = v.cons_percap_aftercosts[t, cc] / (1 - p.save_savingsrate / 100)
+            v.gdp_percap_aftercosts[t,cc] = v.cons_percap_aftercosts[t, cc] / (1 - p.save_savingsrate[cc] / 100)
 
             v.rcons_per_cap_SLRRemainConsumption[t,cc] = v.cons_percap_aftercosts[t,cc] - v.d_percap_slr[t, cc]
             if (v.rcons_per_cap_SLRRemainConsumption[t, cc] < 0.01 * p.cons_percap_consumption_0[cc])
                 v.rcons_per_cap_SLRRemainConsumption[t,cc] = 0.01 * p.cons_percap_consumption_0[cc]
             end
-            v.rgdp_per_cap_SLRRemainGDP[t,cc] = v.rcons_per_cap_SLRRemainConsumption[t,cc] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_SLRRemainGDP[t,cc] = v.rcons_per_cap_SLRRemainConsumption[t,cc] / (1 - p.save_savingsrate[cc] / 100)
         end
     end
 end

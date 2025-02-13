@@ -11,14 +11,7 @@ function getsim(model::Model)
         # Define random variables (RVs) - for UNSHARED parameters
         ############################################################################
 
-        # each component should have the same value for its save_savingsrate,
-        # so we use an RV here because in the model this is not an explicitly
-        # shared parameter, then assign to components
-        rv(RV_save_savingsrate) = TriangularDist(10, 20, 15)
-        GDP.save_savingsrate = RV_save_savingsrate
-        MarketDamagesBurke.save_savingsrate = RV_save_savingsrate
-        NonMarketDamages.save_savingsrate = RV_save_savingsrate
-        SLRDamages.save_savingsrate = RV_save_savingsrate
+        MacroParameters.save_constant = TriangularDist(10, 20, 15)
 
         # each component should have the same value for its tcal_CalibrationTemp
         # so we use an RV here because in the model this is not an explicitly
@@ -258,6 +251,15 @@ function getsim(model::Model)
         add_transform!(mcs, :RegionTemperature_prcile, :(=), :prcile)
     else
         add_RV!(mcs, :prcile, Uniform(0, 1))
+    end
+
+    if has_comp(model, :Capital)
+        # Capital
+        add_RV!(mcs, :capital_draw, DiscreteUniform(1, 1000))
+        add_transform!(mcs, :MacroParameters_capital_draw, :(=), :capital_draw)
+        add_transform!(mcs, :Capital_capital_draw, :(=), :capital_draw)
+    else
+        add_RV!(mcs, :capital_draw, DiscreteUniform(1, 1000))
     end
 
     # for (ii, country) in enumerate(get_countryinfo().ISO3)

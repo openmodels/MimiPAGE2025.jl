@@ -25,7 +25,7 @@ include("../utils/country_tools.jl")
     y_year            = Parameter(index=[time], unit="year")
     grw_gdpgrowthrate = Parameter(index=[time, country], unit="%/year") # From p.32 of Hope 2009
     gdp0_initgdp      = Parameter(index=[country], unit="\$M") # GDP in y_year_0
-    save_savingsrate  = Parameter(unit="%", default=15.00) # pp33 PAGE09 documentation, "savings rate".
+    save_savingsrate  = Parameter(index=[country], unit="%")
     pop0_initpopulation = Parameter(index=[country], unit="million person")
     pop0_initpopulation_region = Parameter(index=[region], unit="million person")
     pop_population    = Parameter(index=[time, country], unit="million person")
@@ -41,12 +41,12 @@ include("../utils/country_tools.jl")
             v.gdp0_initgdp_region[rr] = byregion[rr]
         end
 
-        v.isatg_impactfxnsaturation = p.isat0_initialimpactfxnsaturation * (1 - p.save_savingsrate / 100)
+        v.isatg_impactfxnsaturation = p.isat0_initialimpactfxnsaturation * (1 - mean(p.save_savingsrate) / 100)
         for cc in d.country
-            v.cons_percap_consumption_0[cc] = (p.gdp0_initgdp[cc] / p.pop0_initpopulation[cc]) * (1 - p.save_savingsrate / 100)
+            v.cons_percap_consumption_0[cc] = (p.gdp0_initgdp[cc] / p.pop0_initpopulation[cc]) * (1 - p.save_savingsrate[cc] / 100)
         end
         for rr in d.region
-            v.cons_percap_consumption_0_region[rr] = (v.gdp0_initgdp_region[rr] / p.pop0_initpopulation_region[rr]) * (1 - p.save_savingsrate / 100)
+            v.cons_percap_consumption_0_region[rr] = (v.gdp0_initgdp_region[rr] / p.pop0_initpopulation_region[rr]) * (1 - mean(p.save_savingsrate) / 100)
         end
     end
 
@@ -75,13 +75,13 @@ include("../utils/country_tools.jl")
                 v.gdp[t, cc] = v.gdp[t - 1, cc] * (1 + (p.grw_gdpgrowthrate[t, cc] / 100))^(p.y_year[t] - p.y_year[t - 1])
             end
 
-            v.cons_consumption[t, cc] = v.gdp[t, cc] * (1 - p.save_savingsrate / 100)
+            v.cons_consumption[t, cc] = v.gdp[t, cc] * (1 - p.save_savingsrate[cc] / 100)
             v.cons_percap_consumption[t, cc] = v.cons_consumption[t, cc] / p.pop_population[t, cc]
         end
 
         v.gdp_region[t, :] = countrytoregion(p.model, sum, v.gdp[t, :])
         for r in d.region
-            v.cons_consumption_region[t, r] = v.gdp_region[t, r] * (1 - p.save_savingsrate / 100)
+            v.cons_consumption_region[t, r] = v.gdp_region[t, r] * (1 - mean(p.save_savingsrate) / 100)
             v.cons_percap_consumption_region[t, r] = v.cons_consumption_region[t, r] / p.pop_population_region[t, r]
         end
     end

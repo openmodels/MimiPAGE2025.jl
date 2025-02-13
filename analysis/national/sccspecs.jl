@@ -89,3 +89,12 @@ for onlydamage in ["nonmarket", "slr", "discont"] # "market",
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
     CSV.write("allscc-onlydmg-$(onlydamage).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
 end
+
+## Different capital models
+capitals = ["constant", "inferred", "full"]
+for capital in capitals
+    model = getpage(use_rffsp=true, config_capital=capital)
+    run(model)
+    outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
+    CSV.write("allscc-capital-$(capital).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+end
