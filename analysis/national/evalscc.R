@@ -230,7 +230,7 @@ disp.part <- get.displays(c("output/allscc.csv", "output/allscc-onlydmg-nonmarke
                             "output/allscc-onlydmg-slr.csv"), #"output/allscc-onlydmg-market.csv", "output/allscc-onlydmg-discont.csv"),
                           c('Combined', 'Non-market-only', 'SLR-only'))#, 'Market-only', 'Discontinuity-only'))
 ## Note: After ran function by hand, added back both so I could get the tables
-ggsave("sccfig-part.pdf", width=8, height=2)
+ggsave("output/figures/sccfig-part.pdf", width=8, height=2)
 
 disp.capx <- get.displays(c("output/allscc.csv", "output/allscc-capital-constant.csv",
                             "output/allscc-capital-inferred.csv", "output/allscc-capital-full.csv"),
