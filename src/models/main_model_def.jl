@@ -358,12 +358,12 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=false)
-    m = Model()
-    set_dimension!(m, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
-    set_dimension!(m, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
-    set_dimension!(m, :country, get_countryinfo().ISO3)
+    model = MimiFAIRv2.get_model(end_year=2200)
+    set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
+    set_dimension!(model, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
+    set_dimension!(model, :country, get_countryinfo().ISO3)
 
-    buildpage(m, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
+    buildpage(model, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational)
 
