@@ -91,27 +91,3 @@ function calc_domar_distribute_method2(scaleby, isos, totimpacts2)
     domar_loss2 = leftjoin(DataFrame(ISO=isos), totimpacts2)
     return domar_loss2.tradeloss
 end
-
-logscalebys = [0.0]
-for year in unique(results2.Year)
-    results2_year = results2[results2.Year .== year, :]
-    dimpact = results2_year.dimpact
-
-    output = calc_domar_distribute_method1(year, results2_year.ISO, dimpact)
-
-    thisglobal = output.global
-    thisglobal[!, :yy] = thisglobal.domar_change .* thisglobal.global_gdp
-    if thisglobal.yy > 0
-        logscaleby = log(thisglobal.yy) - log(thisglobal.global_loss)
-        if logscaleby >= 0
-            push!(logscalebys, logscaleby)
-        end
-    end
-
-    mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=logscalebys))
-    smoothscalebys = exp.(predict(mod, DataFrame(years=unique(results2.Year)))) .* exp(var(residuals(mod)) / 2)
-
-    losses = calc_domar_distribute_method2(smoothscalebys[ii], results2_year.ISO, output.totimpacts2)
-
-    PROCESS_LOSSES(losses)
-end
