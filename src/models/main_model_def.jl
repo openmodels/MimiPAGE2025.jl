@@ -145,6 +145,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     # Total costs component
     add_comp!(m, TotalCosts)
+    trade = addtrade(m)
 
     # Equity weighting and Total Costs
     countrylevelnpv = addcountrylevelnpv(m, use_subnational)
@@ -313,6 +314,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :Discontinuity => :rcons_per_cap_NonMarketRemainConsumption, :NonMarketDamages => :rcons_per_cap_NonMarketRemainConsumption)
     connect_param!(m, :Discontinuity => :isatg_saturationmodification, :GDP => :isatg_impactfxnsaturation)
 
+
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
     connect_param!(m, :TotalCosts => :abatement_costs_percap_peryear, :TotalAbatementCosts => :tct_percap_totalcostspercap)
@@ -320,7 +322,10 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :TotalCosts => :slr_damages_percap_peryear, :SLRDamages => :d_percap_slr)
     connect_param!(m, :TotalCosts => :market_damages_percap_peryear, :MarketDamagesBurke => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
     connect_param!(m, :TotalCosts => :non_market_damages_percap_peryear, :NonMarketDamages => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
-    connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+
+    connect_param!(m, :Trade => :total_damages_peryear, :TotalCosts => :total_damages_peryear)
+    trade[:gdp] = gdp[:gdp]
 
     connect_param!(m, :CountryLevelNPV => :pop_population, :Population => :pop_population)
     connect_param!(m, :CountryLevelNPV => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
@@ -358,7 +363,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=false)
-    model = MimiFAIRv2.get_model(end_year=2200)
+    model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
     set_dimension!(model, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
     set_dimension!(model, :country, get_countryinfo().ISO3)
@@ -368,9 +373,9 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational)
 
     # next: add vector and panel example
-    initpage(m)
+    initpage(model)
 
-    return m
+    return model
 end
 
 get_model = getpage

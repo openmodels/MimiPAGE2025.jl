@@ -3,15 +3,20 @@ using Statistics
 using LinearAlgebra
 using GLM
 
-function calc_domar_change(TT, labels, isos, dimpact)
+trade_comtrade = CSV.read(pagedata("trade/uncomtrade.csv"), DataFrame)
+trade_labels = CSV.read(pagedata("trade/labels.csv"), DataFrame)
+TTdf = CSV.read(pagedata("trade/TT.csv"), DataFrame)
+trade_TT = Matrix(TTdf[!, 2:ncol(TTdf)])
+
+function calc_domar_change(isos::AbstractVector{<:AbstractString}, dimpact::Vector{Float64})
     # Match up known impacts to IO countries
     replace!(isos, "SDN" => "SUD")
     replace!(isos, "PSX" => "PSE")
-    labels2 = leftjoin(labels, DataFrame(V1=isos, dimpact=dimpact), on=:V1)
-    labels2[labels2.V1 .== "ANT", :dimpact] .= labels2[labels2.V1 .== "NLD", :dimpact]
+    labels2 = leftjoin(trade_labels, DataFrame(ISO=isos, dimpact=dimpact), on=:ISO)
+    labels2[labels2.ISO .== "ANT", :dimpact] .= labels2[labels2.ISO .== "NLD", :dimpact]
 
     # Calculate Domar weights
-    total_sales = vec(sum(TT, dims=1)) + labels2.FD
+    total_sales = vec(sum(trade_TT, dims=1)) + labels2.FD
     labels2[!, :gdp] = labels2.FD + labels2.VA
     global_gdp = sum(labels2.gdp)
     weights = total_sales / global_gdp
@@ -26,68 +31,64 @@ function calc_domar_change(TT, labels, isos, dimpact)
     return total_trade_effect
 end
 
-function calc_domar_distribute_method1(TT, labels, isos, dimpact)
-    domar_change = calc_domar_change(TT, labels, isos, dimpact)
+function calc_domar_distribute_method1(isos::AbstractVector{<:AbstractString}, dimpact::Vector{Float64})
+    domar_change = calc_domar_change(isos, dimpact)
 
     # Distribute domar loss
     dirimpacts = DataFrame(ISO=isos, dimpact=dimpact)
     totimpacts = DataFrame()
 
     for iso in isos
-        comtrade_iso = comtrade[comtrade.ReporterISO .== iso .&& comtrade.PartnerISO .!= "W00", :]
+        println(iso)
+        comtrade_iso = trade_comtrade[trade_comtrade.reporterISO .== iso .&& trade_comtrade.partnerISO .!= "W00", :]
         if nrow(comtrade_iso) == 0
             continue
         end
 
-        results2_iso = results2[results2.ISO .== iso, :]
+        maxgrow = max(0, dimpact[findfirst(isequal.(isos, iso))])
 
-        maxgrow = max(0, dimpact[findfirst(isequal.(isos), iso)])
-
-        calcdf = leftjoin(comtrade_iso, dirimpacts, on=:PartnerISO => :ISO)
+        calcdf = leftjoin(comtrade_iso, dirimpacts, on=:partnerISO => :ISO)
 
         # Limit any growth to the growth of the country
-        calcdf[!, :cif_lost] = calcdf.Cifvalue .* max.(-calcdf.dimpact, -maxgrow)
-        calcdf[!, :fob_lost] = calcdf.Fobvalue .* max.(-calcdf.dimpact, -maxgrow)
+        calcdf[!, :cif_lost] = Union{Missing, Float64}[calcdf.cifvalue .* max.(-calcdf.dimpact, -maxgrow)...]
+        calcdf[!, :fob_lost] = Union{Missing, Float64}[calcdf.fobvalue .* max.(-calcdf.dimpact, -maxgrow)...]
 
         # Fill in missing values with preference based on direction
-        calcdf[calcdf.FlowDesc .== "Export", :fob_lost] .= coalesce.(
-            calcdf[calcdf.FlowDesc .== "Export", :fob_lost],
-            calcdf[calcdf.FlowDesc .== "Export", :cif_lost]
+        calcdf[calcdf.flowDesc .== "Export", :fob_lost] .= coalesce.(
+            calcdf[calcdf.flowDesc .== "Export", :fob_lost],
+            calcdf[calcdf.flowDesc .== "Export", :cif_lost]
         )
-        calcdf[calcdf.FlowDesc .== "Export", :Fobvalue] .= coalesce.(
-            calcdf[calcdf.FlowDesc .== "Export", :fob_lost],
-            calcdf[calcdf.FlowDesc .== "Export", :Cifvalue]
+        calcdf[calcdf.flowDesc .== "Export", :fobvalue] .= coalesce.(
+            calcdf[calcdf.flowDesc .== "Export", :fob_lost],
+            calcdf[calcdf.flowDesc .== "Export", :cifvalue]
         )
-        calcdf[calcdf.FlowDesc .== "Import", :cif_lost] .= coalesce.(
-            calcdf[calcdf.FlowDesc .== "Import", :fob_lost],
-            calcdf[calcdf.FlowDesc .== "Import", :cif_lost]
+        calcdf[calcdf.flowDesc .== "Import", :cif_lost] .= coalesce.(
+            calcdf[calcdf.flowDesc .== "Import", :fob_lost],
+            calcdf[calcdf.flowDesc .== "Import", :cif_lost]
         )
-        calcdf[calcdf.FlowDesc .== "Import", :Cifvalue] .= coalesce.(
-            calcdf[calcdf.FlowDesc .== "Import", :fob_lost],
-            calcdf[calcdf.FlowDesc .== "Import", :Fobvalue]
+        calcdf[calcdf.flowDesc .== "Import", :cifvalue] .= coalesce.(
+            calcdf[calcdf.flowDesc .== "Import", :fob_lost],
+            calcdf[calcdf.flowDesc .== "Import", :fobvalue]
         )
 
-        fracloss_import = sum(skipmissing(calcdf[calcdf.FlowDesc .== "Import", :cif_lost])) /
-                        sum(skipmissing(calcdf[calcdf.FlowDesc .== "Import", :Cifvalue]))
-        fracloss_export = sum(skipmissing(calcdf[calcdf.FlowDesc .== "Export", :fob_lost])) /
-                        sum(skipmissing(calcdf[calcdf.FlowDesc .== "Export", :Fobvalue]))
+        fracloss_import = sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cif_lost])) /
+                        sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cifvalue]))
+        fracloss_export = sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fob_lost])) /
+                        sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fobvalue]))
 
         append!(totimpacts, DataFrame(ISO=iso, fracloss_import=fracloss_import, fracloss_export=fracloss_export))
     end
 
-    totimpacts2 = leftjoin(totimpacts, df_gdp3, on="ISO" => "Country Code")
-
     return (
-        global=DataFrame(domar_change=domar_change,
-                         global_gdp=sum(skipmissing(totimpacts2.GDP_2019_est)),
-                         global_loss=sum(replace(totimpacts2.fracloss_export, missing => 0) .* totimpacts2.GDP_2019_est)),
-        totimpacts2=totimpacts2
+        domar_change=domar_change,
+        totimpacts2=totimpacts
     )
 end
 
-function calc_domar_distribute_method2(scaleby, isos, totimpacts2)
-    totimpacts2[!, :tradeloss] = totimpacts2.fracloss_export .* scaleby
+function calc_domar_distribute_method2(scaleby::Float64, isos::AbstractVector{<:AbstractString}, totimpacts2::DataFrame)
+    totimpacts2[!, :tradeloss] = totimpacts2.fracloss_export * scaleby
 
     domar_loss2 = leftjoin(DataFrame(ISO=isos), totimpacts2)
     return domar_loss2.tradeloss
 end
+

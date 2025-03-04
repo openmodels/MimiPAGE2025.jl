@@ -4,25 +4,33 @@ include("../utils/trade.jl")
     country = Index()
 
     model = Parameter{Model}()
-    isat_local_ofgdp = Parameter(index=[time, country])
+    total_damages_peryear = Parameter(index=[time, country], unit="\$million")
+    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp0_initgdp = Parameter(index=[country], unit="\$M") # GDP in y_year_0
 
     logscalebys = Variable(index=[time])
+    isat_local_ofgdp = Variable(index=[time, country])
     isat_after_ofgdp = Variable(index=[time, country])
 
     function run_timestep(pp, vv, dd, tt)
-        output = calc_domar_distribute_method1(get_time(tt), dim_keys(pp.model, :country), pp.isat_local_ofgdp)
+        vv.isat_local_ofgdp[tt, :] = pp.total_damages_peryear[tt, :] ./ pp.gdp[tt, :]
+        println(dim_keys(pp.model, :country)[ismissing.(vv.isat_local_ofgdp[tt, :])])
 
-        thisglobal = output.global
-        thisglobal[!, :yy] = thisglobal.domar_change .* thisglobal.global_gdp
-        if thisglobal.yy > 0
-            logscaleby = log(thisglobal.yy) - log(thisglobal.global_loss)
+        output = calc_domar_distribute_method1(dim_keys(pp.model, :country), Vector{Float64}(vv.isat_local_ofgdp[tt, :]))
+
+        global_gdp = sum(pp.gdp0_initgdp)
+        global_loss = sum(replace(output.totimpacts2.fracloss_export, missing => 0) .* pp.gdp0_initgdp)
+
+        yy = output.domar_change * global_gdp
+        if yy > 0
+            logscaleby = log(yy) - log(global_loss)
             if logscaleby >= 0
                 pp.logscalebys[tt] = logscaleby
             end
         end
 
         mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; pp.logscalebys]))
-        smoothscaleby = exp.(predict(mod, DataFrame(years=get_time(tt)))) .* exp(var(residuals(mod)) / 2)
+        smoothscaleby = exp.(predict(mod, DataFrame(years=gettime(tt)))) .* exp(var(residuals(mod)) / 2)
 
         vv.isat_after_ofgdp[tt, :] = calc_domar_distribute_method2(smoothscaleby, dim_keys(pp.model, :country), output.totimpacts2)
     end
