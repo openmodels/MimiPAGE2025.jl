@@ -249,7 +249,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     if config_capital == "full"
         capital[:pop_population] = population[:pop_population]
         capital[:gdp_baseline] = gdp[:gdp]
-        capital[:rgdp_percap_impacts] = discontinuity[:rgdp_per_cap_DiscRemainGDP]
+        capital[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
     end
 
     for (abatementcostparameters, abatementcosts, er_parameter) in allabatement_comps
