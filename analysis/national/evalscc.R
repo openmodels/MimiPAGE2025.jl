@@ -173,7 +173,7 @@ get.displays <- function(alts, levels) {
         geom_point(aes(y=med, colour=calc), position=position_dodge(width=.9)) +
         geom_hline(data=data.frame(label=c('alpha_1', 'beta - 1', 'gamma - 1'), value=c(0, 0, 0)), aes(yintercept=value), linetype='dashed') +
         scale_colour_manual(breaks=c('raw', 'diff'), values=c('#000000', '#800000')) +
-        scale_y_continuous(breaks=breaks_extended(3)) # + scale_x_discrete(limits=rev(levels[c(1, 5, 2, 3, 4)])) + <-- XXX: when plotting partial damages
+        scale_y_continuous(breaks=breaks_extended(3)) + # + scale_x_discrete(limits=rev(levels[c(1, 5, 2, 3, 4)])) + <-- XXX: when plotting partial damages
         theme_bw() + theme(panel.spacing=unit(.7, "lines")) + guides(colour='none') + ylab("Coefficient values")
     gp2
 
