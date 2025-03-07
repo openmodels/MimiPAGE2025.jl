@@ -27,6 +27,56 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     gdp[:pop0_initpopulation_region] = population[:pop0_initpopulation_region]
     gdp[:save_savingsrate] = macroparams[:save_savingsrate]
+    
+    
+    # Add Cromar Mortality Component
+    add_comp!(m, cromar_mortality_damages, :CromarMortality)
+    
+    cromar_coeffs = load(joinpath(@__DIR__, "..", "data", "CromarMortality_damages_coefficients.csv")) |> DataFrame
+    cromar_mapping_raw = load(joinpath(@__DIR__, "..", "data", "Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
+    country_β_mortality = zeros(length(cromar_mapping_raw.ISO3))
+
+    for r = 1:length(cromar_mapping_raw.cromar_region)
+        r_index = findall(x -> x == cromar_mapping_raw.cromar_region[r], cromar_mapping_raw.cromar_region)
+        β_index = findfirst(x -> x == cromar_mapping_raw.cromar_region[r], cromar_coeffs[!, "Cromar Region Name"])
+        country_β_mortality[r_index] .= cromar_coeffs[β_index, "Pooled Beta"]
+    end
+
+    cromar_indices = indexin(get_countryinfo().ISO3, cromar_mapping_raw.ISO3)
+    country_β_mortality = country_β_mortality[cromar_indices]
+
+    
+    update_param!(m, :CromarMortality, :β_mortality, country_β_mortality)
+    
+    
+    # baseline_mortality_rate 
+    baseline_mortality_data = load(joinpath(@__DIR__, "..", "data", "Mortality_cdr_spp_country_extensions_annual.csv")) |> DataFrame
+
+    # Ensure we're selecting the correct scenario (SSP2 as proxy for SSP4, SSP1 for SSP5)
+    mortality_SSP_map = Dict("SSP1" => "SSP1", "SSP2" => "SSP2", "SSP3" => "SSP3", "SSP4" => "SSP2", "SSP5" => "SSP1")
+
+    SSP = "SSP2"  # Change this if necessary, based on your model settings
+
+    mortality_data_filtered = baseline_mortality_data |>
+        @filter(_.year in 2020:2300 && _.scenario == mortality_SSP_map[SSP]) |>
+        DataFrame |>
+        @select(:year, :ISO, :cdr) |>  # cdr = crude death rate
+        DataFrame |>
+        @orderby(:ISO) |>
+        DataFrame |>
+        i -> unstack(i, :year, :ISO, :cdr) |>
+        DataFrame |>
+        i -> select!(i, Not(:year))
+
+    # Ensure country ordering matches model countries
+    names(mortality_data_filtered) == get_countryinfo().ISO3 ? nothing : error("Mismatch between mortality data countries and model countries.")
+
+    update_param!(m, :CromarMortality, :baseline_mortality_rate, vcat(fill(NaN, (length(2020:2300), size(mortality_data_filtered)[2])), mortality_data_filtered |> Matrix))
+    
+    connect_param!(m, :CromarMortality => :temperature, :GlobalTemperature => :rt_g_globaltemperature)
+    connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
+    connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
+
 
     if config_capital == "full"
         capital = addcapital(m)
