@@ -1,0 +1,1647 @@
+df$c05 <- cooling.scenario(df$year, 0.5, 2035)#
+df$c10 <- cooling.scenario(df$year, 1, 2030)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2025)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+?optim
+?optimize
+year
+delta2050
+linyear
+linyear = 2050
+soln <- optimize(function(rate) {#
+        delta2050.hat <- 2 * ((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) -#
+            (2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))#
+        abs(delta2050.hat - delta2050)#
+    }
+soln
+}
+soln <- optimize(function(rate) {#
+        delta2050.hat <- 2 * ((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) -#
+            (2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))#
+        abs(delta2050.hat - delta2050)#
+    }, 0, 1)
+?optimize
+soln <- optimize(function(rate) {#
+        delta2050.hat <- 2 * ((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) -#
+            (2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+soln
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        delta2050.hat <- 2 * ((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) -#
+            (2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    delta[year > 2025] <- (2 * ((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) -#
+                           2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2035)#
+df$c10 <- cooling.scenario(df$year, 1, 2030)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2025)
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+cooling.scenario(df$year, 0.5, 2050)
+cooling.scenario(df$year, 0.5, 2100)
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2100) #cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2050) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+delta2050 = 1.5
+linyear = 2050
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        delta2050.hat <- 2 * ((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) -#
+            (2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+soln
+rate = soln$minimum#
+    delta[year > 2025] <- (2 * ((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) -#
+                           2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))[year > 2025]
+delta
+2 * ((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear)))
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 + y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    delta[year > 2025] <- (2 * ((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) -#
+                           2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2100) #cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2050) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 + y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+soln
+rate = 1
+y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))
+y0
+rate = .02
+y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))
+y0
+delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 + y0)
+delta2050.hat
+(((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0)
+delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)
+delta2050.hat
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    delta[year > 2025] <- (2 * ((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) -#
+                           2 * ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2100) #cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2050) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+delta2050
+linyear
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+osln
+soln
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- (exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))#
+    delta[year > 2025] <- 2 * ((((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) - y0) / (1 - y0))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2100) #cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2050) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+delta2050 = 0.5
+linyear = 2100
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+soln
+rate = soln$minimum#
+    y0 <- (exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))
+y0
+year = seq(2025, 2100, by=10)
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- (exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))#
+    delta[year > 2025] <- 2 * ((((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) - y0) / (1 - y0))[year > 2025]#
+    delta
+year = seq(2020, 2100, by=10)
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- ((exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear)))#
+        delta2050.hat <- 2 * (((exp(rate * (2050 - linyear)) - 1) / exp(rate * (2050 - linyear))) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- (exp(rate * (2025 - linyear)) - 1) / exp(rate * (2025 - linyear))#
+    delta[year > 2025] <- 2 * ((((exp(rate * (year - linyear)) - 1) / exp(rate * (year - linyear))) - y0) / (1 - y0))[year > 2025]#
+    delta
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2100) #cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2050) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2065)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+delta2050
+delta2050 = 1
+linyear = 2030
+linyear = 2050
+linyear = 2060
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+soln
+?optimize
+delta2050 = 0.5
+linyear = 2100
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+soln
+rate = .21
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)
+delta2050.hat
+rate = .19
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)
+delta2050.hat
+rate = .021
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)
+rate = .019
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))
+rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]
+df$c05 = delta
+delta
+year = df$year
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    ## D = 2 (exp(r*(2050 - 2025)) - 1) / exp(r*(2050 - 2025))#
+    ## D exp(r*(2050 - 2025)) = 2 exp(r*(2050 - 2025)) - 2#
+    ## (D - 2) exp(r*(2050 - 2025)) = -2#
+    ## r = log(-2 / (D - 2)) / (2050 - 2025)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]
+df$c05 = delta
+rate
+rate = 0.018
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]
+df$c10 = delta
+rate = 0.022
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]
+df$c15 = delta
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1., 2100) #cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2100) #cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df
+cooling.scenario(df$year, .5, 2100)
+cooling.scenario(df$year, 1.5, 2100)
+y0
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]
+y0
+delta205
+delta2050
+linyear
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    print(y0)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1., 2100) #cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2100) #cooling.scenario(df$year, 1.5, 2030)
+df$c05 <- cooling.scenario(df$year, 0.5, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)
+year = 2050
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+year
+delta <- rep(0, length(year))
+rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+rate
+rate = 0.03
+y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+y0
+delta2050 = 0.01
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+delta2050 = 0.5
+delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 2 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    print(soln$objective)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 2 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta#
+}#
+#
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c10 <- cooling.scenario(df$year, 1, 2060)
+df$c10 <- cooling.scenario(df$year, 1, 2030)
+df$c10 <- cooling.scenario(df$year, 1, 2030)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c10 <- cooling.scenario(df$year, 1, 2050)
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2060)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2025)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2020)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2010)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 1, 2040)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, .6, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, .7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.4, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 1900)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.8, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.6, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, .8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+cooling.scenario <- function(year, delta2050, linyear) {#
+    delta <- rep(0, length(year))#
+    ## Assume reaches 2 asymptotically#
+    soln <- optimize(function(rate) {#
+        y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+        delta2050.hat <- 1.5 * (exp(rate * (2050 - linyear)) / (exp(rate * (2050 - linyear)) + 1) - y0) / (1 - y0)#
+        abs(delta2050.hat - delta2050)#
+    }, c(0, 1))#
+    print(soln$objective)#
+    rate = soln$minimum#
+    y0 <- exp(rate * (2025 - linyear)) / (exp(rate * (2025 - linyear)) + 1)#
+    delta[year > 2025] <- 1.5 * ((exp(rate * (year - linyear)) / (exp(rate * (year - linyear)) + 1) - y0) / (1 - y0))[year > 2025]#
+    delta#
+}
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2100)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2200)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.3, 2050)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.3, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2100)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2110)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2090)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.8, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.6, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.6, 2050)#
+df$c15 <- cooling.scenario(df$year, 1., 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.6, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.2, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.45, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.45, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.4, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2000)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 1995)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2010)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2020)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.5, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.75, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.2, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.5° Scenario")) +#
+    geom_line(aes(y=c10, colour="1.0° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(expand=c(0, 0)) +#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)")#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenario)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(colour=scenario)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(colour=scenlabel, linetype="Climate Scenario")) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario", linetype="Cooling Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario", linetype="Cooling Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario", linetype="Cooling Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    theme_bw()
+df$scenlabel <- ifelse(df$scenario == 'ssp126', "SSP1-2.6", "SSP3-7.0")#
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(colour=scenlabel, linetype="Climate Scenario")) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario", linetype="Cooling Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario", linetype="Cooling Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario", linetype="Cooling Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    theme_bw()
+df$scenlabel <- ifelse(df$scenario == 'ssp126', "SSP1-2.6", "SSP3-7.0")#
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), value=c('dashed', 'solid'))#
+    theme_bw()
+df$scenlabel <- ifelse(df$scenario == 'ssp126', "SSP1-2.6", "SSP3-7.0")#
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), value=c('dashed', 'solid')) +#
+    theme_bw()
+df$scenlabel <- ifelse(df$scenario == 'ssp126', "SSP1-2.6", "SSP3-7.0")#
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.5, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), values=c('dashed', 'solid')) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.4, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), values=c('dashed', 'solid')) +#
+    theme_bw()
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.3, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), values=c('dashed', 'solid')) +#
+    theme_bw()
+df$scenlabel <- ifelse(df$scenario == 'ssp126', "SSP1-2.6", "SSP3-7.0")#
+df$c05 <- cooling.scenario(df$year, 0.1, 2080)#
+df$c10 <- cooling.scenario(df$year, 0.7, 2050)#
+df$c15 <- cooling.scenario(df$year, 1.4, 2030)#
+#
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.5° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenarios:", breaks=c("SSP1-2.6", "SSP3-7.0"), values=c('dashed', 'solid')) +#
+    theme_bw()
+ggplot(df, aes(year, p50, group=scenlabel)) +#
+    coord_cartesian(xlim=c(1995, 2100), ylim=c(0, 4)) +#
+    geom_line(aes(linetype=scenlabel)) + geom_ribbon(aes(ymin=p10, ymax=p90), alpha=.5) +#
+    geom_line(aes(y=c05, colour="0.1° Scenario")) +#
+    geom_line(aes(y=c10, colour="0.7° Scenario")) +#
+    geom_line(aes(y=c15, colour="1.4° Scenario")) +#
+    geom_hline(yintercept=0) +#
+    scale_x_continuous(NULL, expand=c(0, 0)) + ylab("Warming from pre-industrial (°C)") +#
+    scale_linetype_manual("Climate Scenario:", breaks=c("SSP1-2.6", "SSP3-7.0"), values=c('dashed', 'solid')) +#
+    scale_colour_discrete("Cooling Scenario:") +#
+    theme_bw()
+df <- data.frame(TT=seq(0, 6, length.out=100))#
+df$dice <- 0.267 * df$TT^2#
+df$has.non <- 0.7438 * df$TT^2#
+df$has.tot <- 1.0038 * df$TT^2#
+df.has.pro <- 1.145 * df$TT^2#
+#
+library(ggplot2)#
+#
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw()
+df
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw()
+df$has.pro <- 1.145 * df$TT^2#
+#
+library(ggplot2)#
+#
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw()
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", colour=c('#1b9e77', '#d95f02', '#7570b3', '#e7298a'))
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f02', '#7570b3', '#e7298a'))
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f02FF', '#7570b3FF', '#e7298aFF'))
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f0200', '#7570b300', '#e7298a00'))
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f0200', '#7570b300', '#e7298a00')) +#
+    ylab("Damages (% of GDP)") + xlab("Temperature change relative to pre-industrial (C)")
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f02', '#7570b300', '#e7298a00')) +#
+    ylab("Damages (% of GDP)") + xlab("Temperature change relative to pre-industrial (C)")
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f02', '#7570b3', '#e7298a00')) +#
+    ylab("Damages (% of GDP)") + xlab("Temperature change relative to pre-industrial (C)")
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f02', '#7570b3', '#e7298a')) +#
+    ylab("Damages (% of GDP)") + xlab("Temperature change relative to pre-industrial (C)")
+ggplot(df, aes(TT)) +#
+    geom_line(aes(y=dice, colour="DICE-2013R")) +#
+    geom_line(aes(y=has.non, colour="Howard & Sterner, non-catastrophic")) +#
+    geom_line(aes(y=has.tot, colour="Howard & Sterner, plus catastrophic")) +#
+    geom_line(aes(y=has.pro, colour="Howard & Sterner, plus productivity")) +#
+    theme_bw() + scale_colour_manual("Damage Function:", values=c('#1b9e77', '#d95f0200', '#7570b300', '#e7298a00')) +#
+    ylab("Damages (% of GDP)") + xlab("Temperature change relative to pre-industrial (C)")
+install.packages("Rcpp")
+unlink("~/.R/Makevars")#
+unlink("~/.Renviron")
+file.edit("~/.Renviron")
+install.packages("Rcpp")
+setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/capital/")#
+#
+allres <- data.frame()#
+for (filename in list.files("fits")) {#
+    print(filename)#
+    load(file.path("fits", filename))#
+#
+    years <- 1990:2020#
+    saverate <- la$saverate0 + la$dsaveratedt * which(years == 2015)#
+    capshare <- la$shares0[, 1] + which(years == 2015) * (la$sharesT[, 1] - la$shares0[, 1]) / length(years)#
+    procap0 <- la$procap_model[, which(years == 2015)]#
+#
+    isores <- data.frame(ISO=substring(filename, 1, 3), mc=1:4000, procap0, saverate, deprrate=la$deprrate, capshare)#
+    allres <- rbind(allres, isores)#
+}#
+#
+library(dplyr)#
+#
+sumres <- allres %>% group_by(ISO) %>% summarize(procap0.sd=sd(procap0), procap0=mean(procap0),#
+                                                 saverate.sd=sd(saverate), saverate=mean(saverate),#
+                                                 deprrate.sd=sd(deprrate), deprrate=mean(deprrate),#
+                                                 capshare.sd=sd(capshare), capshare=mean(capshare))
+library(ggplot2)#
+mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])
+library(reshape2)
+library(ggplot2)#
+mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])
+ggplot(mdf, aes(value)) +#
+    facet_wrap(~ variable, scales='free') +#
+    geom_histogram() + scale_x_log10() + theme_bw()
+outres <- as.character(subset(allres, mc <= 1000)[1:10,])
+outres
+head(allres)
+quantile(allres$procap0)
+outres$procap0 <- round(outres$procap0)
+outres <- subset(allres, mc <= 1000)#
+outres$procap0 <- round(outres$procap0)
+head(outres)
+for (cc in 4:6) {#
+    print(quantile(outres[, cc]))#
+    outres <- round(outres[, cc], 4)#
+}
+outres <- subset(allres, mc <= 1000)#
+outres$procap0 <- round(outres$procap0)#
+for (cc in 4:6) {#
+    print(quantile(outres[, cc]))#
+    outres[, cc] <- round(outres[, cc, drop=T], 4)#
+}
+outres <- subset(allres, mc <= 1000)#
+outres$procap0 <- round(outres$procap0)#
+for (cc in 4:6) {#
+    print(quantile(outres[, cc]))#
+    outres[, cc] <- round(outres[, cc, drop=T], 6)#
+}
+quantile(allres[, -1:-2])
+quantile(allres[, 4])
+quantile(allres[, 5])
+quantile(outres[, 4])
+quantile(outres[, 5])
+quantile(outres[, 6])
+write.csv(allres, "../../data/other/capital.csv", row.names=F)
+write.csv(outres, "../../data/other/capital.csv", row.names=F)
+setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/capital/")#
+#
+source("utils2.R")
+load.solowdata()
+head(df2)
+range(df2$denom)
+allres <- data.frame()#
+for (filename in list.files("fits")) {#
+    print(filename)#
+    load(file.path("fits", filename))#
+#
+    years <- 1990:2020#
+    saverate <- la$saverate0 + la$dsaveratedt * which(years == 2015)#
+    capshare <- la$shares0[, 1] + which(years == 2015) * (la$sharesT[, 1] - la$shares0[, 1]) / length(years)#
+    procap0 <- la$procap_model[, which(years == 2015)] * df2$denom[df2$ISO == substring(filename, 1, 3)][1]#
+#
+    isores <- data.frame(ISO=substring(filename, 1, 3), mc=1:4000, procap0, saverate, deprrate=la$deprrate, capshare)#
+    allres <- rbind(allres, isores)#
+}
+library(dplyr)#
+#
+sumres <- allres %>% group_by(ISO) %>% summarize(procap0.sd=sd(procap0), procap0=mean(procap0),#
+                                                 saverate.sd=sd(saverate), saverate=mean(saverate),#
+                                                 deprrate.sd=sd(deprrate), deprrate=mean(deprrate),#
+                                                 capshare.sd=sd(capshare), capshare=mean(capshare))
+library(ggplot2)#
+library(reshape2)#
+#
+mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])#
+mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 Produced Capital",#
+                                                        'saverate'="Savings Rate (portion)",
+)
+)
+mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 Produced Capital",#
+                                                        'saverate'="Savings Rate (portion)",#
+                                                        'deprrate'="Depreciation Rate (portion)",#
+                                                        'capshare'="Capital Share (unitless)"))
+mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])#
+mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 Produced Capital",#
+                                                        'saverate'="Savings Rate (portion)",#
+                                                        'deprrate'="Depreciation Rate (portion)",#
+                                                        'capshare'="Capital Share (unitless)")[[col]])
+ggplot(mdf, aes(value)) +#
+    facet_wrap(~ variable, scales='free') +#
+    geom_histogram() + scale_x_log10() + theme_bw()
+mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])#
+mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 Produced Capital (USD)",#
+                                                        'saverate'="Savings Rate (portion)",#
+                                                        'deprrate'="Depreciation Rate (portion)",#
+                                                        'capshare'="Capital Share (unitless)")[[col]])
+ggplot(mdf, aes(value)) +#
+    facet_wrap(~ variable, scales='free') +#
+    geom_histogram() + scale_x_log10() + theme_bw()
+outres <- subset(allres, mc <= 1000)#
+outres$procap0 <- round(outres$procap0)#
+for (cc in 4:6) {#
+    print(quantile(outres[, cc]))#
+    outres[, cc] <- round(outres[, cc, drop=T], 6)#
+}#
+write.csv(outres, "../../data/other/capital.csv", row.names=F)
+outres <- subset(allres, mc <= 1000)#
+outres$procap0 <- round(outres$procap0 / 1e6)#
+for (cc in 4:6) {#
+    print(quantile(outres[, cc]))#
+    outres[, cc] <- round(outres[, cc, drop=T], 6)#
+}#
+write.csv(outres, "../../data/other/capital.csv", row.names=F)

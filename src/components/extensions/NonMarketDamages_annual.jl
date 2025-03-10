@@ -28,7 +28,7 @@
     rcons_per_cap_MarketRemainConsumption_ann = Parameter(index=[year, region], unit="\$/person")
     rgdp_per_cap_MarketRemainGDP_ann = Parameter(index=[year, region], unit="\$/person")
 
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     wincf_weightsfactor_nonmarket = Parameter(index=[region], unit="")
     w_NonImpactsatCalibrationTemp = Parameter(unit="%GDP", default=0.6333333333333333)
     ipow_NonMarketIncomeFxnExponent = Parameter(unit="unitless", default=0.)
@@ -162,9 +162,9 @@ function calc_nonmarketdamages(p, v, d, t, annual_year, r)
         v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] = v.igdp_ImpactatActualGDPperCap_ann[yr,r]
     else
         v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] = p.isatg_impactfxnsaturation +
-        ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+        ((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) *
         ((v.igdp_ImpactatActualGDPperCap_ann[yr,r] - p.isatg_impactfxnsaturation) /
-         (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+         (((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) +
           (v.igdp_ImpactatActualGDPperCap_ann[yr,r] -
            p.isatg_impactfxnsaturation)))
     end
@@ -178,7 +178,7 @@ function calc_nonmarketdamages(p, v, d, t, annual_year, r)
 
     v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_ann[yr,r] = (v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] / 100) * p.rgdp_per_cap_MarketRemainGDP_ann[yr,r]
     v.rcons_per_cap_NonMarketRemainConsumption_ann[yr,r] = p.rcons_per_cap_MarketRemainConsumption_ann[yr,r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_ann[yr,r]
-    v.rgdp_per_cap_NonMarketRemainGDP_ann[yr,r] = v.rcons_per_cap_NonMarketRemainConsumption_ann[yr,r] / (1 - p.save_savingsrate / 100)
+    v.rgdp_per_cap_NonMarketRemainGDP_ann[yr,r] = v.rcons_per_cap_NonMarketRemainConsumption_ann[yr,r] / (1 - mean(p.save_savingsrate) / 100)
     if v.rgdp_per_cap_NonMarketRemainGDP_ann[yr,r] < 0
         v.rgdp_per_cap_NonMarketRemainGDP_ann[yr,r] = 0
     end

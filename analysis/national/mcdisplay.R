@@ -152,7 +152,7 @@ pdf$p20frac <- pdf$mu.2p0 / pdf$mu.gdp
 pdf$p25frac <- pdf$mu.2p5 / pdf$mu.gdp
 subset(pdf, time == 2100)
 
-library(PBSmapping)
+source("~/projects/research-common/R/myPBSmapping.R")
 
 byisos <- read.csv("../../data/bycountry.csv")
 byaggs <- read.csv("../../data/aggregates.csv")

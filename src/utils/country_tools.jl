@@ -186,9 +186,9 @@ function readcountrydata_i_const(model::Model, filepath::String, isocol::Union{S
     readcountrydata_i_const(model, myloadcsv(filepath), isocol, valuecol, aggregator)
 end
 
-function readcountrydata_i_const(model::Model, df2::DataFrame, isocol::Union{String, Symbol}, valuecol::Union{String, Symbol}, aggregator=mean)
+function readcountrydata_i_const(model::Model, df2::DataFrame, isocol::Union{String, Symbol}, valuecol::Union{String, Symbol}, aggregator=mean; allowmissing=false)
     # Collect information for country
-    [getcountryvalue(country, df2[!, isocol], df2[!, valuecol], aggregator) for country in dim_keys(model, :country)]
+    [getcountryvalue(country, df2[!, isocol], df2[!, valuecol], aggregator; allowmissing=allowmissing) for country in dim_keys(model, :country)]
 end
 
 function readcountrydata_i_dist(model::Model, filepath::String, isocol, ptestcol, row2dist, uniforms, aggregator=mean)
@@ -213,15 +213,15 @@ function readcountrydata_i_dist(model::Model, filepath::String, isocol, ptestcol
     readcountrydata_i_const(model, df, isocol, "__value__", aggregator)
 end
 
-function readcountrydata_im(model::Model, df::DataFrame, isocol, mccol, mc, valuecol::String, aggregator=mean)
+function readcountrydata_im(model::Model, df::DataFrame, isocol, mccol, mc, valuecol::String, aggregator=mean; allowmissing=false)
     if mc == nothing
-        df2 = combine(groupby(df[!, [isocol, valuecol]], isocol), valuecol => mean)
+        df2 = combine(groupby(df[!, [String(isocol), valuecol]], isocol), valuecol => mean)
         rename!(df2, names(df2)[2] => valuecol)
     else
         df2 = df[df[!, mccol] .== mc, :]
     end
 
-    readcountrydata_i_const(model, df2, isocol, valuecol, aggregator)
+    readcountrydata_i_const(model, df2, isocol, valuecol, aggregator; allowmissing=allowmissing)
 end
 
 function readcountrydata_im_ft(model::Model, filepath::String, isocol, mccol, mc, row2value::Function, aggregator=mean)

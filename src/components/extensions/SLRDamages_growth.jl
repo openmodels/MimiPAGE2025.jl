@@ -15,7 +15,7 @@
     # component parameters
     impmax_maxSLRforadaptpolicySLR = Parameter(index=[region], unit="m")
 
-    save_savingsrate = Parameter(unit="%", default=15.00) # pp33 PAGE09 documentation, "savings rate".
+    save_savingsrate = Parameter(index=[country], unit="%") # pp33 PAGE09 documentation, "savings rate".
     wincf_weightsfactor_sea = Parameter(index=[region], unit="")
     W_SatCalibrationSLR = Parameter(default=1.0) # pp33 PAGE09 documentation, "Sea level impact at calibration sea level rise"
     ipow_SLRIncomeFxnExponent = Parameter(default=-0.30)
@@ -70,7 +70,7 @@
                 v.cons_percap_aftercosts[t, r] = p.cbabs_pcconsumptionbound
             end
 
-            v.gdp_percap_aftercosts[t,r] = v.cons_percap_aftercosts[t, r] / (1 - p.save_savingsrate / 100)
+            v.gdp_percap_aftercosts[t,r] = v.cons_percap_aftercosts[t, r] / (1 - mean(p.save_savingsrate) / 100)
 
             if (p.s_sealevel[t] - p.atl_adjustedtolerablelevelofsealevelrise[t,r]) < 0
                 v.i_regionalimpactSLR[t,r] = 0
@@ -88,9 +88,9 @@
                 v.isat_ImpactinclSaturationandAdaptationSLR[t,r] = v.igdp_ImpactatActualGDPperCapSLR[t,r]
             else
                 v.isat_ImpactinclSaturationandAdaptationSLR[t,r] = p.isatg_impactfxnsaturation +
-                    ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+                    ((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) *
                     ((v.igdp_ImpactatActualGDPperCapSLR[t,r] - p.isatg_impactfxnsaturation) /
-                    (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+                    (((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) +
                     (v.igdp_ImpactatActualGDPperCapSLR[t,r] - p.isatg_impactfxnsaturation)))
             end
             if v.i_regionalimpactSLR[t,r] < p.impmax_maxSLRforadaptpolicySLR[r]
@@ -102,7 +102,7 @@
 
             v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t,r] = (v.isat_ImpactinclSaturationandAdaptationSLR[t,r] / 100) * v.gdp_percap_aftercosts[t,r]
             v.rcons_per_cap_SLRRemainConsumption[t,r] = v.cons_percap_aftercosts[t,r] - v.isat_per_cap_SLRImpactperCapinclSaturationandAdaptation[t,r]
-            v.rgdp_per_cap_SLRRemainGDP[t,r] = v.rcons_per_cap_SLRRemainConsumption[t,r] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_SLRRemainGDP[t,r] = v.rcons_per_cap_SLRRemainConsumption[t,r] / (1 - mean(p.save_savingsrate) / 100)
 
         end
 

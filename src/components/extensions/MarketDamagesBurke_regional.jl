@@ -24,7 +24,7 @@
     # tolerability and impact variables from PAGE damages that Burke damages also require
     rcons_per_cap_SLRRemainConsumption_regional = Variable(index=[time, region], unit="\$/person")
     rgdp_per_cap_SLRRemainGDP_regional = Variable(index=[time, region], unit="\$/person")
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     wincf_weightsfactor_market = Parameter(index=[region], unit="")
     ipow_MarketIncomeFxnExponent = Parameter(default=0.0)
     GDP_per_cap_focus_0_FocusRegionEU = Parameter(unit="\$/person", default=34298.93698672955)
@@ -86,22 +86,22 @@
                 v.isat_ImpactinclSaturationandAdaptation_regional[t,r] = v.igdp_ImpactatActualGDPperCap[t,r]
             else
                 v.isat_ImpactinclSaturationandAdaptation_regional[t,r] = p.isatg_impactfxnsaturation +
-                    ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+                    ((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) *
                     ((v.igdp_ImpactatActualGDPperCap[t,r] - p.isatg_impactfxnsaturation) /
-                    (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+                    (((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) +
                     (v.igdp_ImpactatActualGDPperCap[t,r] -
                     p.isatg_impactfxnsaturation)))
             end
 
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r] = (v.isat_ImpactinclSaturationandAdaptation_regional[t,r] / 100) * v.rgdp_per_cap_SLRRemainGDP_regional[t,r]
             v.rcons_per_cap_MarketRemainConsumption_regional[t,r] = v.rcons_per_cap_SLRRemainConsumption_regional[t,r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r]
-            v.rgdp_per_cap_MarketRemainGDP_regional[t,r] = v.rcons_per_cap_MarketRemainConsumption_regional[t,r] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_MarketRemainGDP_regional[t,r] = v.rcons_per_cap_MarketRemainConsumption_regional[t,r] / (1 - mean(p.save_savingsrate) / 100)
         end
 
         ## Translate from region to country for mix-and-match
         v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t, :])
         v.rcons_per_cap_MarketRemainConsumption[t, :] = max.(p.rcons_per_cap_SLRRemainConsumption[t, :] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :], 1.)
-        v.rgdp_per_cap_MarketRemainGDP[t, :] = v.rcons_per_cap_MarketRemainConsumption[t, :] / (1 - p.save_savingsrate / 100)
+        v.rgdp_per_cap_MarketRemainGDP[t, :] = v.rcons_per_cap_MarketRemainConsumption[t, :] / (1 - p.save_savingsrate[:] / 100)
     end
 end
 
