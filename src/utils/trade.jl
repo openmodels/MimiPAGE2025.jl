@@ -31,17 +31,18 @@ function calc_domar_change(isos::AbstractVector{<:AbstractString}, dimpact::Vect
     return total_trade_effect
 end
 
-function calc_domar_distribute_method1(isos::AbstractVector{<:AbstractString}, dimpact::Vector{Float64})
+function calc_domar_distribute_method(isos::AbstractVector{<:AbstractString}, dimpact::Vector{Float64})
     domar_change = calc_domar_change(isos, dimpact)
 
     # Distribute domar loss
     dirimpacts = DataFrame(ISO=isos, dimpact=dimpact)
-    totimpacts = DataFrame()
+    totimpacts = DataFrame(ISO=AbstractString[], fracloss_import=Union{Float64, Missing}[],
+                           fracloss_export=Union{Float64, Missing}[])
 
     for iso in isos
-        println(iso)
         comtrade_iso = trade_comtrade[trade_comtrade.reporterISO .== iso .&& trade_comtrade.partnerISO .!= "W00", :]
         if nrow(comtrade_iso) == 0
+            append!(totimpacts, DataFrame(ISO=iso, fracloss_import=missing, fracloss_export=missing))
             continue
         end
 
@@ -83,12 +84,5 @@ function calc_domar_distribute_method1(isos::AbstractVector{<:AbstractString}, d
         domar_change=domar_change,
         totimpacts2=totimpacts
     )
-end
-
-function calc_domar_distribute_method2(scaleby::Float64, isos::AbstractVector{<:AbstractString}, totimpacts2::DataFrame)
-    totimpacts2[!, :tradeloss] = totimpacts2.fracloss_export * scaleby
-
-    domar_loss2 = leftjoin(DataFrame(ISO=isos), totimpacts2)
-    return domar_loss2.tradeloss
 end
 
