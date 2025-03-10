@@ -32,8 +32,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     # Add Cromar Mortality Component
     add_comp!(m, cromar_mortality_damages, :CromarMortality)
     
-    cromar_coeffs = load(joinpath(@__DIR__, "..", "data", "CromarMortality_damages_coefficients.csv")) |> DataFrame
-    cromar_mapping_raw = load(joinpath(@__DIR__, "..", "data", "Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
+    cromar_coeffs = load(joinpath(@__DIR__, "../data", "CromarMortality_damages_coefficients.csv")) |> DataFrame
+    cromar_mapping_raw = load(joinpath(@__DIR__, "../data", "Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
     country_β_mortality = zeros(length(cromar_mapping_raw.ISO3))
 
     for r = 1:length(cromar_mapping_raw.cromar_region)
@@ -50,7 +50,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     
     
     # baseline_mortality_rate 
-    baseline_mortality_data = load(joinpath(@__DIR__, "..", "data", "Mortality_cdr_spp_country_extensions_annual.csv")) |> DataFrame
+    baseline_mortality_data = load(joinpath(@__DIR__, "../data", "Mortality_cdr_spp_country_extensions_annual.csv")) |> DataFrame
 
     # Ensure we're selecting the correct scenario (SSP2 as proxy for SSP4, SSP1 for SSP5)
     mortality_SSP_map = Dict("SSP1" => "SSP1", "SSP2" => "SSP2", "SSP3" => "SSP3", "SSP4" => "SSP2", "SSP5" => "SSP1")
