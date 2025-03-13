@@ -40,49 +40,71 @@ function calc_domar_distribute_method(isos::AbstractVector{<:AbstractString}, di
                            fracloss_export=Union{Float64, Missing}[])
 
     for iso in isos
-        comtrade_iso = trade_comtrade[trade_comtrade.reporterISO .== iso .&& trade_comtrade.partnerISO .!= "W00", :]
-        if nrow(comtrade_iso) == 0
-            append!(totimpacts, DataFrame(ISO=iso, fracloss_import=missing, fracloss_export=missing))
-            continue
-        end
-
         maxgrow = max(0, dimpact[findfirst(isequal.(isos, iso))])
 
-        calcdf = leftjoin(comtrade_iso, dirimpacts, on=:partnerISO => :ISO)
+        if iso ∈ aggregates
+            # aggisos = get_aggregateinfo().ISO[get_aggregateinfo().Aggregate .== iso]
+            # fracloss_imports = Union{Float64, Missing}[]
+            # fracloss_exports = Union{Float64, Missing}[]
+            # for aggiso in aggisos
+            #     fracloss_import, fracloss_export = calc_domar_distribute_iso(iso, maxgrow, dirimpacts)
+            #     push!(fracloss_imports, fracloss_import)
+            #     push!(fracloss_exports, fracloss_export)
+            # end
+            # fracloss_import = mean(skipmissing(fracloss_imports))
+            # fracloss_export = mean(skipmissing(fracloss_exports))
 
-        # Limit any growth to the growth of the country
-        calcdf[!, :cif_lost] = Union{Missing, Float64}[calcdf.cifvalue .* max.(-calcdf.dimpact, -maxgrow)...]
-        calcdf[!, :fob_lost] = Union{Missing, Float64}[calcdf.fobvalue .* max.(-calcdf.dimpact, -maxgrow)...]
-
-        # Fill in missing values with preference based on direction
-        calcdf[calcdf.flowDesc .== "Export", :fob_lost] .= coalesce.(
-            calcdf[calcdf.flowDesc .== "Export", :fob_lost],
-            calcdf[calcdf.flowDesc .== "Export", :cif_lost]
-        )
-        calcdf[calcdf.flowDesc .== "Export", :fobvalue] .= coalesce.(
-            calcdf[calcdf.flowDesc .== "Export", :fob_lost],
-            calcdf[calcdf.flowDesc .== "Export", :cifvalue]
-        )
-        calcdf[calcdf.flowDesc .== "Import", :cif_lost] .= coalesce.(
-            calcdf[calcdf.flowDesc .== "Import", :fob_lost],
-            calcdf[calcdf.flowDesc .== "Import", :cif_lost]
-        )
-        calcdf[calcdf.flowDesc .== "Import", :cifvalue] .= coalesce.(
-            calcdf[calcdf.flowDesc .== "Import", :fob_lost],
-            calcdf[calcdf.flowDesc .== "Import", :fobvalue]
-        )
-
-        fracloss_import = sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cif_lost])) /
-                        sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cifvalue]))
-        fracloss_export = sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fob_lost])) /
-                        sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fobvalue]))
+            # None of the aggregated ISOs are currently present in UNComtrade
+            fracloss_import = missing
+            fracloss_export = missing
+        else
+            fracloss_import, fracloss_export = calc_domar_distribute_iso(iso, maxgrow, dirimpacts)
+        end
 
         append!(totimpacts, DataFrame(ISO=iso, fracloss_import=fracloss_import, fracloss_export=fracloss_export))
     end
 
-    return (
-        domar_change=domar_change,
-        totimpacts2=totimpacts
-    )
+    # Fill in missing entries
+    totimpacts.fracloss_import[ismissing.(totimpacts.fracloss_import)] .= mean(skipmissing(totimpacts.fracloss_import))
+    totimpacts.fracloss_export[ismissing.(totimpacts.fracloss_export)] .= mean(skipmissing(totimpacts.fracloss_export))
+
+    return (domar_change=domar_change, totimpacts2=totimpacts)
 end
 
+function calc_domar_distribute_iso(iso::AbstractString, maxgrow::Float64, dirimpacts::DataFrame)
+    comtrade_iso = trade_comtrade[trade_comtrade.reporterISO .== iso .&& trade_comtrade.partnerISO .!= "W00", :]
+    if nrow(comtrade_iso) == 0
+        return (missing, missing)
+    end
+
+    calcdf = leftjoin(comtrade_iso, dirimpacts, on=:partnerISO => :ISO)
+
+    # Limit any growth to the growth of the country
+    calcdf[!, :cif_lost] = Union{Missing, Float64}[calcdf.cifvalue .* max.(-calcdf.dimpact, -maxgrow)...]
+    calcdf[!, :fob_lost] = Union{Missing, Float64}[calcdf.fobvalue .* max.(-calcdf.dimpact, -maxgrow)...]
+
+    # Fill in missing values with preference based on direction
+    calcdf[calcdf.flowDesc .== "Export", :fob_lost] .= coalesce.(
+        calcdf[calcdf.flowDesc .== "Export", :fob_lost],
+        calcdf[calcdf.flowDesc .== "Export", :cif_lost]
+    )
+    calcdf[calcdf.flowDesc .== "Export", :fobvalue] .= coalesce.(
+        calcdf[calcdf.flowDesc .== "Export", :fobvalue],
+        calcdf[calcdf.flowDesc .== "Export", :cifvalue]
+    )
+    calcdf[calcdf.flowDesc .== "Import", :cif_lost] .= coalesce.(
+        calcdf[calcdf.flowDesc .== "Import", :cif_lost],
+        calcdf[calcdf.flowDesc .== "Import", :fob_lost]
+    )
+    calcdf[calcdf.flowDesc .== "Import", :cifvalue] .= coalesce.(
+        calcdf[calcdf.flowDesc .== "Import", :cifvalue],
+        calcdf[calcdf.flowDesc .== "Import", :fobvalue]
+    )
+
+    fracloss_import = sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cif_lost])) /
+        sum(skipmissing(calcdf[calcdf.flowDesc .== "Import", :cifvalue]))
+    fracloss_export = sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fob_lost])) /
+        sum(skipmissing(calcdf[calcdf.flowDesc .== "Export", :fobvalue]))
+
+    return (fracloss_import, fracloss_export)
+end
