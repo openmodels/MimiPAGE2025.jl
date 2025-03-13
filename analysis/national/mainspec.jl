@@ -4,28 +4,36 @@ include("../../src/mcs.jl")
 
 mcnum = 10000
 
-model = getpage(use_rffsp=true)
-run(model)
+for scenario in ["RFFSP", "RCP4.5 & SSP2"]
+    if scenario == "RFFSP"
+        model = getpage(use_rffsp=true)
+        output_path = "output"
+    else
+        model = getpage(scenario)
+        output_path = "output-" * scenario
+    end
 
-model[:EquityWeighting, :td_totaldiscountedimpacts]
+    run(model)
 
-df = getdataframe(model, :NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
-df[df.country .== "KOR", :]
+    model[:EquityWeighting, :td_totaldiscountedimpacts]
 
-mcs = getsim(model)
-add_save!(mcs, (:CountryLevelNPV, :wit_percap_equityweightedimpact))
-add_save!(mcs, (:CountryLevelNPV, :tct_percap_totalcosts_total))
-add_save!(mcs, (:CountryLevelNPV, :act_percap_adaptationcosts))
-add_save!(mcs, (:MarketDamagesBurke, :i1log_impactlogchange))
-add_save!(mcs, (:MarketDamagesBurke, :isat_per_cap_ImpactperCapinclSaturationandAdaptation))
-add_save!(mcs, (:NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation))
-add_save!(mcs, (:RegionTemperature, :rtl_realizedtemperature_absolute))
-add_save!(mcs, (:RegionTemperature, :rtl_realizedtemperature_change))
-add_save!(mcs, (:SLRDamages, :d_percap_slr))
-add_save!(mcs, (:Discontinuity, :isat_per_cap_DiscImpactperCapinclSaturation))
+    df = getdataframe(model, :NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
+    df[df.country .== "KOR", :]
 
-output_path = "output"
-res = run(mcs, model, mcnum; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)
+    mcs = getsim(model)
+    add_save!(mcs, (:CountryLevelNPV, :wit_percap_equityweightedimpact))
+    add_save!(mcs, (:CountryLevelNPV, :tct_percap_totalcosts_total))
+    add_save!(mcs, (:CountryLevelNPV, :act_percap_adaptationcosts))
+    add_save!(mcs, (:MarketDamagesBurke, :i1log_impactlogchange))
+    add_save!(mcs, (:MarketDamagesBurke, :isat_per_cap_ImpactperCapinclSaturationandAdaptation))
+    add_save!(mcs, (:NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation))
+    add_save!(mcs, (:RegionTemperature, :rtl_realizedtemperature_absolute))
+    add_save!(mcs, (:RegionTemperature, :rtl_realizedtemperature_change))
+    add_save!(mcs, (:SLRDamages, :d_percap_slr))
+    add_save!(mcs, (:Discontinuity, :isat_per_cap_DiscImpactperCapinclSaturation))
+
+    res = run(mcs, model, mcnum; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)
+end
 
 model = getpage("RCP2.6 & SSP1")
 run(model)
