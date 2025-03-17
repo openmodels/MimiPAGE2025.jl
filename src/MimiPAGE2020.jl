@@ -1,4 +1,5 @@
 module MimiPAGE2020
+using MimiFAIRv2
 
 using Mimi
 using Random

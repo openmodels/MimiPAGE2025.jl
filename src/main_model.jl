@@ -1,4 +1,6 @@
 using Mimi
+using MimiFAIRv2
+
 using Random
 
 import Random
@@ -50,6 +52,7 @@ include("components/CarbonPriceInfer.jl")
 include("components/AbatementCostsCO2.jl")
 include("components/TotalAbatementCosts.jl")
 include("components/TotalAdaptationCosts.jl")
+include("components/Trade.jl")
 include("components/Population.jl")
 include("components/TotalCosts.jl")
 include("components/CountryLevelNPV.jl")
