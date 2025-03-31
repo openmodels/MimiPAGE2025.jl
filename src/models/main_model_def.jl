@@ -301,9 +301,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :MarketDamagesBurke => :pop_population, :Population => :pop_population)
 
     if use_trade
-        trade[:save_savingsrate] = macroparams[:save_savingsrate]
         trade[:gdp_baseline] = gdp[:gdp]
-        connect_param!(m, :Trade => :gdp, finalgdp_pair)
+        connect_param!(m, :Trade => :gdp, :GDP => :gdp)
         trade[:pop_population] = population[:pop_population]
         trade[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
     end
