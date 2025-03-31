@@ -24,7 +24,7 @@ include("../utils/country_tools.jl")
     impf_coeff_lin = Parameter(default=-0.00829990966469437) # rescaled coefficients from Burke
     impf_coeff_quadr = Parameter(default=-0.000500003403703578)
     tcal_burke = Parameter(default=21.) # calibration temperature for the impact function
-    nlag_burke = Parameter(default=1.) # Yumashev et al. (2019) allow for one or two lags
+    nlag_burke = Parameter(default=2.) # Yumashev et al. (2019) allow for one or two lags
 
     marginal_offset = Variable(index=[time, country])
     i1log_impactlogchange = Variable(index=[time, country]) # intermediate variable for computation

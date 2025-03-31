@@ -43,7 +43,7 @@ include("../utils/country_tools.jl")
     end
 
     function run_timestep(pp, vv, dd, tt)
-        vv.grw_gdpgrowthrate[tt, :] = vv.popgrw_populationgrowth[tt, :] .* vv.gpcgrw_gdppcgrowthrate[tt, :]
+        vv.grw_gdpgrowthrate[tt, :] = vv.popgrw_populationgrowth[tt, :] .+ vv.gpcgrw_gdppcgrowthrate[tt, :]
 
         ## Emit = Emit_SSP * (GDP_RFF / GDP_SSP)
         ## grow Emit = grow Emit_SSP + grow GDP_RFF - grow GDP_SSP

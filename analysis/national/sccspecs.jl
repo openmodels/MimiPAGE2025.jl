@@ -6,8 +6,10 @@ model = getpage(use_rffsp=true)
 run(model)
 
 ## Main specification
-outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+if !isfile("allscc.csv")
+    outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
+    CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+end
 
 ## Experiment: Alternative preferences
 outs = compute_scc(model, year=2020, prefrange=false, seed=20240528, n=mcnum);
@@ -68,11 +70,17 @@ for dsmethod in dsmethods
     CSV.write("allscc-downscale-$(dsmethod).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
 end
 
-## Experiment: Subnational scaling
-model = getpage(use_rffsp=true, use_subnational=true)
+## Experiment: Drop subnational scaling
+model = getpage(use_rffsp=true, use_subnational=false)
 run(model)
 outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-CSV.write("allscc-subnational.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+CSV.write("allscc-nosubnational.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+
+## Experiment: Drop trade
+model = getpage(use_rffsp=true, use_trade=false)
+run(model)
+outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
+CSV.write("allscc-notrade.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
 
 ## Only subsets of damages
 for onlydamage in ["nonmarket", "slr", "discont"] # "market",

@@ -64,7 +64,7 @@
                     (v.i_regionalimpact[t,r] / p.tcal_CalibrationTemp)^p.pow_NonMarketExponent - v.i_regionalimpact[t,r] * p.iben_NonMarketInitialBenefit)
 
             v.igdp_ImpactatActualGDPperCap[t,r] = v.iref_ImpactatReferenceGDPperCap[t,r] *
-                (rgdp_per_cap_MarketRemainGDP_regional[r] / p.GDP_per_cap_focus_0_FocusRegionEU)^p.ipow_NonMarketIncomeFxnExponent
+                (max(rgdp_per_cap_MarketRemainGDP_regional[r], 0) / p.GDP_per_cap_focus_0_FocusRegionEU)^p.ipow_NonMarketIncomeFxnExponent
 
             if v.igdp_ImpactatActualGDPperCap[t,r] < p.isatg_impactfxnsaturation
                 v.isat_ImpactinclSaturationandAdaptation[t,r] = v.igdp_ImpactatActualGDPperCap[t,r]

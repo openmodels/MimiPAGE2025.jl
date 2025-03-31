@@ -6,6 +6,8 @@ library(reshape2)
 library(cowplot)
 library(scales)
 
+outdir <- "analysis/national"
+
 baseline <- read.csv("data/bycountry.csv")
 
 get.result.row <- function(df) {
@@ -191,46 +193,46 @@ get.displays <- function(alts, levels) {
     pdf1 %>% left_join(pdf2, by='group')
 }
 
-df <- read.csv("output/allscc.csv")
+df <- read.csv(file.path(outdir, "allscc.csv"))
 df %>% filter(country == 'global') %>% summarize(mu=median(scc, na.rm=T), ci25=quantile(scc, .25, na.rm=T), ci75=quantile(scc, .75, na.rm=T))
 df %>% filter(country == 'KOR') %>% summarize(mu=median(scc, na.rm=T), ci25=quantile(scc, .25, na.rm=T), ci75=quantile(scc, .75, na.rm=T))
 
-df <- read.csv("output/allscc-nodrupp.csv")
+df <- read.csv(file.path(outdir, "allscc-nodrupp.csv"))
 df %>% filter(country == 'KOR') %>% summarize(mu=median(scc, na.rm=T), ci25=quantile(scc, .25, na.rm=T), ci75=quantile(scc, .75, na.rm=T))
 
-disp.year <- get.displays(c("output/allscc.csv", "output/allscc-2050.csv", "output/allscc-2100.csv"),
+disp.year <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-2050-v2.csv"), file.path(outdir, "allscc-2100-v2.csv")),
                           c('2020', '2050', '2100'))
 ggsave("sccfig-year.pdf", width=8, height=2)
 
-disp.scen <- get.displays(c("output/allscc.csv", "output/allscc-ssp126.csv", "output/allscc-ssp245.csv", "output/allscc-ssp585.csv"),
+disp.scen <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-ssp126.csv"), file.path(outdir, "allscc-ssp245.csv"), file.path(outdir, "allscc-ssp585.csv")),
                           c('RFFSP', 'SSP1-2.6', 'SSP2-4.5', 'SSP5-8.5'))
 ggsave("sccfig-scen.pdf", width=8, height=2)
 
-disp.mktd <- get.displays(c("output/allscc.csv", "output/allscc-marketdmg-pageice.csv", "output/allscc-marketdmg-nooffset.csv", "output/allscc-marketdmg-constoffset.csv"),
+disp.mktd <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-marketdmg-pageice.csv"), file.path(outdir, "allscc-marketdmg-nooffset.csv"), file.path(outdir, "allscc-marketdmg-constoffset.csv")),
                           c('Adaptive', 'PAGE-ICE', 'No offset', 'Constant offset'))
 ggsave("sccfig-mktd.pdf", width=8, height=2)
 
-disp.othd <- get.displays(c("output/allscc.csv", "output/allscc-otherdmg-pageice.csv", "output/allscc-otherdmg-pinational.csv", "output/allscc-otherdmg-pinonmarket.csv", "output/allscc-otherdmg-pislr.csv"),
+disp.othd <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-otherdmg-pageice.csv"), file.path(outdir, "allscc-otherdmg-pinational.csv"), file.path(outdir, "allscc-otherdmg-pinonmarket.csv"), file.path(outdir, "allscc-otherdmg-pislr.csv")),
                           c('Adaptive', 'PAGE-ICE', 'National PAGE-ICE', 'PAGE-ICE Non-Market', 'PAGE-ICE SLR'))
 ggsave("sccfig-othd.pdf", width=8, height=2)
 
-disp.macu <- get.displays(c("output/allscc.csv", "output/allscc-mac-pageice.csv"),
+disp.macu <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-mac-pageice.csv")),
              c('Updated', 'PAGE-ICE'))
 ggsave("sccfig-macu.pdf", width=8, height=1.5)
 
-disp.down <- get.displays(c("output/allscc.csv", "output/allscc-downscale-pageice.csv"),
+disp.down <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-downscale-pageice.csv")),
                           c('Updated', 'PAGE-ICE'))
 ggsave("sccfig-down.pdf", width=8, height=1.5)
 
-disp.subn <- get.displays(c("output/allscc.csv", "output/allscc-subnational.csv"),
+disp.subn <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-subnational.csv")),
                           c('National', 'Subnational'))
 ggsave("sccfig-subn.pdf", width=8, height=1.5)
 
-disp.part <- get.displays(c("output/allscc.csv", "output/allscc-onlydmg-nonmarket.csv",
-                            "output/allscc-onlydmg-slr.csv"), #"output/allscc-onlydmg-market.csv", "output/allscc-onlydmg-discont.csv"),
+disp.part <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-onlydmg-nonmarket.csv"),
+                            file.path(outdir, "allscc-onlydmg-slr.csv")), #file.path(outdir, "allscc-onlydmg-market.csv"), file.path(outdir, "allscc-onlydmg-discont.csv")),
                           c('Combined', 'Non-market-only', 'SLR-only'))#, 'Market-only', 'Discontinuity-only'))
 ## Note: After ran function by hand, added back both so I could get the tables
-ggsave("output/figures/sccfig-part.pdf", width=8, height=2)
+ggsave(file.path(outdir, "figures/sccfig-part.pdf"), width=8, height=2)
 
 disp.capx <- get.displays(c("output/allscc.csv", "output/allscc-capital-constant.csv",
                             "output/allscc-capital-inferred.csv", "output/allscc-capital-full.csv"),
@@ -239,19 +241,19 @@ ggsave("sccfig-capx.pdf", width=8, height=2)
 
 write.csv(rbind(disp.year, disp.scen, disp.mktd, disp.othd, disp.macu, disp.down), "scc-options.csv", row.names=F)
 
-prevtbl <- read.csv("output/scc-options.csv")
-write.csv(rbind(disp.year, prevtbl[4:nrow(prevtbl),]), "output/scc-options.csv", row.names=F)
+prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
+write.csv(rbind(disp.year, prevtbl[4:nrow(prevtbl),]), file.path(outdir, "scc-options.csv"), row.names=F)
 
-prevtbl <- read.csv("output/scc-options.csv")
-write.csv(rbind(prevtbl, disp.part), "output/scc-options.csv", row.names=F)
+prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
+write.csv(rbind(prevtbl, disp.part), file.path(outdir, "scc-options.csv"), row.names=F)
 
-for (filepath in c("output/allscc.csv", "output/allscc-2050.csv", "output/allscc-2100.csv")) {
+for (filepath in c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-2050.csv"), file.path(outdir, "allscc-2100.csv"))) {
     df <- read.csv(filepath)
     df2 <- df %>% filter(country == 'global')
     print(c(filepath, mean(df2$scc == 0)))
 }
 
-prevtbl <- read.csv("output/scc-options.csv")
+prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
 
 disptbl <- prevtbl[c(-2:-4, -8, -12, -15, -18, -20:-21),]
 disptbl$group[1] <- "Default Updated"
