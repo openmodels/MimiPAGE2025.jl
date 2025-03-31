@@ -1,4 +1,5 @@
-function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
+function buildpage(m::Model, scenario::String; use_fair::Bool=true,
+                   use_permafrost::Bool=true, use_seaice::Bool=true, use_rffsp::Bool=false,
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
@@ -49,21 +50,35 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         abateco2[:gdp] = finalgdp_ref
     end
 
-    if config_downscaling == "mcpr"
-        glotemp = addglobaltemperature(m, use_seaice)
+    if use_fair
+        if use_seaice
+            pretemp_static = addglobaltemperature(m, false, :PreGlobalTemperature_static)
+            pretemp_seaice = addglobaltemperature(m, true, :PreGlobalTemperature_seaice)
+        end
+        glotemp = addfairgrounds(m)
+
         regtemp = addregiontemperature(m)
 
         regtemp_comp = :RegionTemperature
-        glotemp_comp = :GlobalTemperature
-        regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
-    elseif config_downscaling == "pageice"
-        climtemp = addclimatetemperature_pageice(m, use_seaice)
-        glotemp = climtemp
-        regtemp = climtemp
-        regtemp_comp = :GlobalTemperature
-        glotemp_comp = :GlobalTemperature
+        glotemp_comp = :FaIRGrounds
+        regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature_post]
     else
-        throw(ArgumentError("Unknown downscaling configuration: $config_downscaling"))
+        if config_downscaling == "mcpr"
+            glotemp = addglobaltemperature(m, use_seaice)
+            regtemp = addregiontemperature(m)
+
+            regtemp_comp = :RegionTemperature
+            glotemp_comp = :GlobalTemperature
+            regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
+        elseif config_downscaling == "pageice"
+            climtemp = addclimatetemperature_pageice(m, use_seaice)
+            glotemp = climtemp
+            regtemp = climtemp
+            regtemp_comp = :GlobalTemperature
+            glotemp_comp = :GlobalTemperature
+        else
+            throw(ArgumentError("Unknown downscaling configuration: $config_downscaling"))
+        end
     end
     if use_permafrost
         permafrost_sibcasa = add_comp!(m, PermafrostSiBCASA)
@@ -171,7 +186,20 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     equityweighting = addequityweighting(m, use_subnational)
 
     # connect parameters together
-    connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+    if use_fair
+        if use_seaice
+            connect_param!(m, :PreGlobalTemperature_static => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+            connect_param!(m, :PreGlobalTemperature_seaice => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+
+            connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_static, :PreGlobalTemperature_static => :rt_g_globaltemperature)
+            connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_seaice, :PreGlobalTemperature_seaice => :rt_g_globaltemperature)
+        end
+
+        glotemp[:e_globalCO2emissions] = co2emit[:e_globalCO2emissions]
+        glotemp[:e_globalCH4emissions] = co2emit[:e_globalCH4emissions]
+    else
+        connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+    end
 
     if use_permafrost
         permafrost_sibcasa[:rt_g] = glotemp[:rt_g_globaltemperature]

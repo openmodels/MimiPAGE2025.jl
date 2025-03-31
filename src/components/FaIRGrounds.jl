@@ -11,7 +11,13 @@ using MimiFAIRv2
 
     e_globalCO2emissions = Parameter(index=[time], unit="Mtonne/year")
     e_globalCH4emissions = Parameter(index=[time], unit="Mtonne/year")
-    rt_g_globaltemperature_pre = Parameter(index=[time], unit="degreeC")
+    e_globalN2Oemissions = Parameter(index=[time], unit="???")
+    e_globalSF6emissions = Parameter(index=[time], unit="???")
+    exf_excessforcing = Parameter(index=[time], unit="W/m2")
+    e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
+
+    rt_g_globaltemperature_pre_static = Parameter(index=[time], unit="degreeC")
+    rt_g_globaltemperature_pre_seaice = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature_post = Variable(index=[time], unit="degreeC")
 
     ## Can I take in F from fairmodel? Then feed that into GlobalTemperature
@@ -39,6 +45,10 @@ using MimiFAIRv2
 
         fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
         fair_ch4 = pp.fairmi[:ch4_cycle, :E_ch4]
+        fair_n2o = ...
+        fair_sf6 = ...
+        fair_excess = ...
+        fair_sulphate = ...
 
         for ii in TIMESTEPS(is_first(tt) ? p.y_year_0 : p.y_year[tt-1], p.y_year[tt])
             fair_co2[ii] = E_co2
@@ -47,11 +57,17 @@ using MimiFAIRv2
 
         update_param!(pp.fairmi, :co2_cycle, :E_co2, fair_co2)
         update_param!(pp.fairmi, :ch4_cycle, :E_ch4, fair_ch4)
+        update_param!(pp.fairmi, ... fair_n2o ...)
+        update_param!(pp.fairmi, ... fair_sf6 ...)
+        update_param!(pp.fairmi, ... fair_excess ...)
+        update_param!(pp.fairmi, ... fair_sulphate ...)
 
         while TIMECHECK(pp.y_year[tt])
             run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
             advance(vv.clock)
         end
+
+        rt_g_globaltemperature_post[tt] = pp.fairmi[:temperature, :T][TIME2INDEX(pp.y_year[tt])] + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
     end
 end
 
@@ -60,6 +76,9 @@ function addfairgrounds(model::Model)
 
     fairmodel = MimiFAIRv2.get_model(end_year=2300)
     fairgrounds[:fairmi] = build(fairmodel)
+
+    fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))
+    fairgrounds[:rt_g_globaltemperature_pre_seaice] = zeros(dim_count(model, :time))
 
     return fairgrounds
 end
