@@ -2,7 +2,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="constant", use_trade::Bool=true)
+                   config_capital::String="full", use_trade::Bool=true)
     # add all the components
     scenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -332,9 +332,16 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         trade[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
     end
 
+    if use_trade
+        trade[:gdp_baseline] = gdp[:gdp]
+        connect_param!(m, :Trade => :gdp, :GDP => :gdp)
+        trade[:pop_population] = population[:pop_population]
+        trade[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
+    end
+
     connect_param!(m, :NonMarketDamages => :rtl_realizedtemperature_change, regtemp_comp => :rtl_realizedtemperature_change)
     connect_param!(m, :NonMarketDamages => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
-connect_param!(m, :NonMarketDamages => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :NonMarketDamages => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
     if use_trade
         connect_param!(m, :NonMarketDamages => :rgdp_per_cap_MarketRemainGDP, :Trade => :rgdp_per_cap_TradeRemainGDP)
         connect_param!(m, :NonMarketDamages => :rcons_per_cap_MarketRemainConsumption, :Trade => :rcons_per_cap_TradeRemainConsumption)

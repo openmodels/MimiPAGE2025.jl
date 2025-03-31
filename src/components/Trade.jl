@@ -25,15 +25,15 @@ include("../utils/trade.jl")
         rgdp_impacts = pp.rgdp_percap_impacts[tt, :] .* pp.pop_population[tt, :]
         vv.isat_local_ofgdp[tt, :] = (pp.gdp_baseline[tt, :] .- rgdp_impacts) ./ pp.gdp[tt, :]
 
-        output = calc_domar_distribute_method(dim_keys(pp.model, :country), Vector{Float64}(-vv.isat_local_ofgdp[tt, :]))
+        output = calc_domar_distribute_method(pp.model, Vector{Float64}(-vv.isat_local_ofgdp[tt, :]))
 
         global_gdp = sum(pp.gdp0_initgdp)
         vv.global_loss[tt] = sum(replace(output.totimpacts2.fracloss_export, missing => 0) .* pp.gdp0_initgdp)
         vv.domar_change[tt] = output.domar_change
 
         domar_loss = -output.domar_change * global_gdp
-        if domar_loss > 0
-            vv.logscalebys[tt] = log(domar_loss) - log(vv.global_loss[tt])
+        if domar_loss / vv.global_loss[tt] > 0.01 && domar_loss / vv.global_loss[tt] < 100
+            vv.logscalebys[tt] = log(domar_loss / vv.global_loss[tt])
         end
 
         mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[:]]))
