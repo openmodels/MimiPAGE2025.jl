@@ -58,6 +58,8 @@ include("components/PermafrostSiBCASA.jl")
 include("components/PermafrostJULES.jl")
 include("components/PermafrostTotal.jl")
 include("components/cromar_mortality_damages.jl")
+#include("components/PerCapitaGDP.jl")
+include("components/VSL.jl")
 
 
 include("models/main_model_def.jl")

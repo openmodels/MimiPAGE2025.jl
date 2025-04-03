@@ -9,9 +9,9 @@ using Mimi
 
    	β_mortality             = Parameter(index=[country]) # Coefficient relating global temperature to change in mortality rates.
     baseline_mortality_rate = Parameter(index=[time, country], unit = "deaths/1000 persons/yr") # Crude death rate in a given country (deaths per 1,000 population).
- 	temperature             = Parameter(index=[time], unit="degC") # Global average surface temperature anomaly relative to pre-industrial (°C).
+ 	temperature             = Parameter(index=[time], unit="degreeC") # Global average surface temperature anomaly relative to pre-industrial (°C).
 
-    population              = Parameter(index=[time, country], unit="million") # Population in a given country (millions of persons).
+    population              = Parameter(index=[time, country], unit="million person") # Population in a given country (millions of persons).
     vsl                     = Parameter(index=[time, country], unit="US\$2005/yr") # Value of a statistical life ($).
 
     mortality_change        = Variable(index=[time, country])  # Change in a country's baseline mortality rate due to combined effects of cold and heat (with positive values indicating increasing mortality rates).
@@ -37,4 +37,58 @@ using Mimi
             v.mortality_costs[t,c] = p.vsl[t,c] * v.excess_deaths[t,c]
         end
     end
+end
+
+
+
+
+function addcromarmortality(m::Model)
+    add_comp!(m, cromar_mortality_damages, :CromarMortality)
+    
+    cromar_coeffs = load(pagedata("mortality/CromarMortality_damages_coefficients.csv")) |> DataFrame
+    cromar_mapping_raw = load(pagedata("mortality/Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
+    country_β_mortality = zeros(length(cromar_mapping_raw.ISO3))
+
+    for r = 1:length(cromar_mapping_raw.cromar_region)
+        r_index = findall(x -> x == cromar_mapping_raw.cromar_region[r], cromar_mapping_raw.cromar_region)
+        β_index = findfirst(x -> x == cromar_mapping_raw.cromar_region[r], cromar_coeffs[!, "Cromar Region Name"])
+        country_β_mortality[r_index] .= cromar_coeffs[β_index, "Pooled Beta"]
+    end
+
+    # cromar_indices = indexin(get_countryinfo().ISO3, cromar_mapping_raw.ISO3)
+    # country_β_mortality = country_β_mortality[cromar_indices]
+    
+    country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=country_β_mortality), :iso, :beta)
+
+    
+    update_param!(m, :CromarMortality, :β_mortality, country_β_mortality2)
+    
+    
+    # baseline_mortality_rate 
+    baseline_mortality_data = load(pagedata("mortality/Mortality_cdr_spp_country_extensions_annual.csv")) |> DataFrame
+
+    # Ensure we're selecting the correct scenario (SSP2 as proxy for SSP4, SSP1 for SSP5)
+    mortality_SSP_map = Dict("SSP1" => "SSP1", "SSP2" => "SSP2", "SSP3" => "SSP3", "SSP4" => "SSP2", "SSP5" => "SSP1")
+
+    SSP = "SSP2"  # Change this if necessary, based on your model settings
+
+    mortality_data_filtered = baseline_mortality_data |>
+        @filter(_.year in 2020:2300 && _.scenario == mortality_SSP_map[SSP]) |>
+        DataFrame |>
+        @select(:year, :ISO, :cdf) |>  # cdr = crude death rate
+        DataFrame
+        
+        # |>
+        # @orderby(:ISO) |>
+        # DataFrame |>
+        # i -> unstack(i, :year, :ISO, :cdf) |>
+        # DataFrame |>
+        # i -> select!(i, Not(:year))
+
+    mortality_data_filtered2 = readcountrydata_it_const(m, mortality_data_filtered, :ISO, :year, "cdf")
+    
+    # Ensure country ordering matches model countries
+    # names(mortality_data_filtered) == get_countryinfo().ISO3 ? nothing : error("Mismatch between mortality data countries and model countries.")
+
+    update_param!(m, :CromarMortality, :baseline_mortality_rate, mortality_data_filtered2) #vcat(fill(NaN, (length(2020:2300), size(mortality_data_filtered)[2])), mortality_data_filtered |> Matrix))
 end
