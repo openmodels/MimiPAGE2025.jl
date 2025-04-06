@@ -55,7 +55,9 @@ function addcromarmortality(m::Model)
         country_β_mortality[r_index] .= cromar_coeffs[β_index, "Pooled Beta"]
     end
 
-    # cromar_indices = indexin(get_countryinfo().ISO3, cromar_mapping_raw.ISO3)
+
+    
+    # cromar_indices = indexin(get_countryinfo().ISO3, cromar_mapping_raw.ISO3). ##Dont need this right now. 
     # country_β_mortality = country_β_mortality[cromar_indices]
     
     country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=country_β_mortality), :iso, :beta)
