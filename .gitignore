@@ -4,3 +4,7 @@ docs/Manifest.toml
 .vscode
 output/*
 Manifest.toml
+.DS_Store
+.Rhistory
+.DS_Store
+.Rhistory

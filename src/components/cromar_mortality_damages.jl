@@ -42,23 +42,20 @@ end
 
 
 
-function addcromarmortality(m::Model)
+function addcromarmortality(m::Model, SSP::String = "SSP2")
     add_comp!(m, cromar_mortality_damages, :CromarMortality)
     
     cromar_coeffs = load(pagedata("mortality/CromarMortality_damages_coefficients.csv")) |> DataFrame
     cromar_mapping_raw = load(pagedata("mortality/Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
-    country_β_mortality = zeros(length(cromar_mapping_raw.ISO3))
-
-    for r = 1:length(cromar_mapping_raw.cromar_region)
-        r_index = findall(x -> x == cromar_mapping_raw.cromar_region[r], cromar_mapping_raw.cromar_region)
-        β_index = findfirst(x -> x == cromar_mapping_raw.cromar_region[r], cromar_coeffs[!, "Cromar Region Name"])
-        country_β_mortality[r_index] .= cromar_coeffs[β_index, "Pooled Beta"]
-    end
-
-
     
-    # cromar_indices = indexin(get_countryinfo().ISO3, cromar_mapping_raw.ISO3). ##Dont need this right now. 
-    # country_β_mortality = country_β_mortality[cromar_indices]
+
+    rename!(cromar_coeffs, "Cromar Region Name" => "cromar_region")
+    cromar_mapping_with_beta = leftjoin(cromar_mapping_raw, cromar_coeffs[:, ["cromar_region", "Pooled Beta"]], on = :cromar_region)
+    
+    country_β_mortality = cromar_mapping_with_beta[!, "Pooled Beta"]
+
+
+
     
     country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=country_β_mortality), :iso, :beta)
 
@@ -71,8 +68,6 @@ function addcromarmortality(m::Model)
 
     # Ensure we're selecting the correct scenario (SSP2 as proxy for SSP4, SSP1 for SSP5)
     mortality_SSP_map = Dict("SSP1" => "SSP1", "SSP2" => "SSP2", "SSP3" => "SSP3", "SSP4" => "SSP2", "SSP5" => "SSP1")
-
-    SSP = "SSP2"  # Change this if necessary, based on your model settings
 
     mortality_data_filtered = baseline_mortality_data |>
         @filter(_.year in 2020:2300 && _.scenario == mortality_SSP_map[SSP]) |>

@@ -20,16 +20,6 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
     
-    # TAKY: Added this section for Socioeconomic 
-#=    
-    # Add Socioeconomics component BEFORE the FAIR model to allow for emissions feedbacks after damages_first year
-    if use_rffsp
-        add_comp!(m, MimiRFFSPs.SPs, :Socioeconomic, first = damages_first, before = :ch4_cycle)
-    else
-        add_comp!(m, MimiSSPs.SSPs, :Socioeconomic, first = damages_first, before = :ch4_cycle)
-    end
-=#    
-    
     # Socio-Economics
     population = addpopulation(m)
     macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
@@ -169,11 +159,6 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         throw(ArgumentError("Unknown Non-market damages configuration: $config_nonmarketdmg"))
     end
     discontinuity = adddiscontinuity(m; config_discontinuity)
-
-
-    # Add PerCapitaGDP component
-	# addpercapitaGDP(m)
-	
 	
     # Add VSL Component
     vsl = addVSL(m, :epa)
