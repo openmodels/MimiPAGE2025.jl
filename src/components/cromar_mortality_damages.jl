@@ -5,11 +5,11 @@ using Mimi
 
 @defcomp cromar_mortality_damages begin
 
-    country                 = Index() # Index for countries in the regions used for the Cromar et al. temperature-mortality damage functions.
+    country                 = Index() # Index for countries used in the PAGE
 
-   	β_mortality             = Parameter(index=[country]) # Coefficient relating global temperature to change in mortality rates.
+    β_mortality             = Parameter(index=[country]) # Coefficient relating global temperature to change in mortality rates.
     baseline_mortality_rate = Parameter(index=[time, country], unit = "deaths/1000 persons/yr") # Crude death rate in a given country (deaths per 1,000 population).
- 	temperature             = Parameter(index=[time], unit="degreeC") # Global average surface temperature anomaly relative to pre-industrial (°C).
+    temperature             = Parameter(index=[time], unit="degreeC") # Global average surface temperature anomaly relative to pre-industrial (°C).
 
     population              = Parameter(index=[time, country], unit="million person") # Population in a given country (millions of persons).
     vsl                     = Parameter(index=[time, country], unit="US\$2005/yr") # Value of a statistical life ($).
@@ -52,11 +52,6 @@ function addcromarmortality(m::Model, SSP::String = "SSP2")
     rename!(cromar_coeffs, "Cromar Region Name" => "cromar_region")
     cromar_mapping_with_beta = leftjoin(cromar_mapping_raw, cromar_coeffs[:, ["cromar_region", "Pooled Beta"]], on = :cromar_region)
     
-    country_β_mortality = cromar_mapping_with_beta[!, "Pooled Beta"]
-
-
-
-    
     country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=country_β_mortality), :iso, :beta)
 
     
@@ -74,18 +69,9 @@ function addcromarmortality(m::Model, SSP::String = "SSP2")
         DataFrame |>
         @select(:year, :ISO, :cdf) |>  # cdr = crude death rate
         DataFrame
-        
-        # |>
-        # @orderby(:ISO) |>
-        # DataFrame |>
-        # i -> unstack(i, :year, :ISO, :cdf) |>
-        # DataFrame |>
-        # i -> select!(i, Not(:year))
+
 
     mortality_data_filtered2 = readcountrydata_it_const(m, mortality_data_filtered, :ISO, :year, "cdf")
     
-    # Ensure country ordering matches model countries
-    # names(mortality_data_filtered) == get_countryinfo().ISO3 ? nothing : error("Mismatch between mortality data countries and model countries.")
-
-    update_param!(m, :CromarMortality, :baseline_mortality_rate, mortality_data_filtered2) #vcat(fill(NaN, (length(2020:2300), size(mortality_data_filtered)[2])), mortality_data_filtered |> Matrix))
+    update_param!(m, :CromarMortality, :baseline_mortality_rate, mortality_data_filtered2)
 end
