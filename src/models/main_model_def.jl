@@ -79,7 +79,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     end
     co2cycle = addco2cycle(m, use_permafrost)
     add_comp!(m, co2forcing)
-    ch4emit = add_comp!(m, ch4emissions)
+    ch4emit = addch4emissions(m)
     ch4cycle = addch4cycle(m, use_permafrost)
     add_comp!(m, ch4forcing)
     n2oemit = add_comp!(m, n2oemissions)
@@ -105,6 +105,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     addabatementcostparameters(m, :N2O)
     addabatementcostparameters(m, :Lin)
 
+    connect_param!(m, :AbatementCostParametersCH4 => :e0_baselineemissions, :ch4emissions => :e0_baselineCH4emissions_region)
+
     set_param!(m, :q0propmult_cutbacksatnegativecostinfinalyear, 0.8833333333333333)
     set_param!(m, :qmax_minus_q0propmult_maxcutbacksatpositivecostinfinalyear, 1.1166666666666666)
     set_param!(m, :c0mult_mostnegativecostinfinalyear, 0.9333333333333334)
@@ -124,6 +126,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     addabatementcosts(m, :N2O)
     addabatementcosts(m, :Lin)
     addtotalabatementcosts(m)
+
+    connect_param!(m, :AbatementCostsCH4 => :e0_baselineemissions, :ch4emissions => :e0_baselineCH4emissions_region)
 
     # Adaptation Costs
     if config_slrdmg in ["none", "national"]
@@ -210,7 +214,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
-    ch4emit[:er_CH4emissionsgrowth] = scenario[:er_CH4emissionsgrowth]
+    ch4emit[:er_CH4emissionsgrowth_region] = scenario[:er_CH4emissionsgrowth]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)

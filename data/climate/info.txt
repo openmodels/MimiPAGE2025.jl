@@ -1,0 +1,2 @@
+ch4emit: in gigagram per year from PRIMAP-hist
+(https://zenodo.org/records/13752654), HISTTP, no_rounding, category 0
