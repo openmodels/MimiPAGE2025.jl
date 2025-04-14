@@ -19,7 +19,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
-    
+
     # Socio-Economics
     population = addpopulation(m)
     macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
@@ -162,15 +162,15 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         throw(ArgumentError("Unknown Non-market damages configuration: $config_nonmarketdmg"))
     end
     discontinuity = adddiscontinuity(m; config_discontinuity)
-	
+
     # Add VSL Component
     vsl = addVSL(m, :epa)
 
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
 
-    # Total costs component
-    add_comp!(m, TotalCosts)
+    # Add MarketDamageAQ_CropLoss (Country version)
+    marketdamageaq_croplosscomp = addMarketDamageAQ_CropLoss(m)
 
     # Equity weighting and Total Costs
     countrylevelnpv = addcountrylevelnpv(m, use_subnational)
@@ -178,6 +178,23 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     # connect parameters together
     connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+
+    # Add MarketDamageAQ_LostWorkHours (Country version)
+    marketdamageaq_lostworkhours = addMarketDamageAQ_LostWorkHours(m)
+
+    # Add MarketDamageAQ_AsthmaERVisits (Country version)
+    marketdamageaq_asthmaervisitscomp = addMarketDamageAQ_AsthmaERVisits(m)
+
+    # Add MarketDamageAQ_RespiratoryAdmissions (Country version)
+    marketdamageaq_respiratoryadmissionscomp = addMarketDamageAQ_RespiratoryAdmissions(m)
+
+
+    add_comp!(m, TotalCosts)
+    countrylevelnpv = addcountrylevelnpv(m)
+    equityweighting = addequityweighting(m)
+
+    connect_param!(m, :GlobalTemperature => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
+    regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
 
     if use_permafrost
         permafrost_sibcasa[:rt_g] = glotemp[:rt_g_globaltemperature]
@@ -191,9 +208,6 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     end
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
-
-        
-
 
     if config_abatement == "national"
         co2emit[:baselineemit] = abateco2[:baselineemit]
@@ -332,6 +346,11 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :MarketDamagesBurke => :gdp, finalgdp_pair)
     connect_param!(m, :MarketDamagesBurke => :pop_population, :Population => :pop_population)
     marketdamagesburke[:save_savingsrate] = macroparams[:save_savingsrate]
+
+    connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
 
     if use_trade
         trade[:save_savingsrate] = macroparams[:save_savingsrate]
