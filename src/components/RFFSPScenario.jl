@@ -38,8 +38,8 @@ include("../utils/country_tools.jl")
             df = df[df.num .== pp.rffsp_draw, :]
         end
 
-        vv.popgrw_populationgrowth[:, :] = readcountrydata_it_const(pp.model, df, :ISO, :period, "pop.grow")
-        vv.gpcgrw_gdppcgrowthrate[:, :] = readcountrydata_it_const(pp.model, df, :ISO, :period, "gdppc.grow")
+        vv.popgrw_populationgrowth[:, :] = readcountrydata_it_const(pp.model, df, :ISO, :period, "pop.grow") * 100
+        vv.gpcgrw_gdppcgrowthrate[:, :] = readcountrydata_it_const(pp.model, df, :ISO, :period, "gdppc.grow") * 100
     end
 
     function run_timestep(pp, vv, dd, tt)
