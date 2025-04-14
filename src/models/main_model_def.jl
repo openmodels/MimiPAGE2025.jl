@@ -19,7 +19,7 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
-
+    
     # Socio-Economics
     population = addpopulation(m)
     macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
@@ -162,6 +162,12 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         throw(ArgumentError("Unknown Non-market damages configuration: $config_nonmarketdmg"))
     end
     discontinuity = adddiscontinuity(m; config_discontinuity)
+	
+    # Add VSL Component
+    vsl = addVSL(m, :epa)
+
+    # Add Cromar Mortality Component
+    cromarmortality = addcromarmortality(m)
 
     # Total costs component
     add_comp!(m, TotalCosts)
@@ -185,6 +191,9 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     end
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
+
+        
+
 
     if config_abatement == "national"
         co2emit[:baselineemit] = abateco2[:baselineemit]
@@ -243,8 +252,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     connect_param!(m, :SeaLevelRise => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
 
+    # Connect Socioeconomic component parameters
     population[:popgrw_populationgrowth] = socioscenario[:popgrw_populationgrowth]
-
     connect_param!(m, :GDP => :pop_population, :Population => :pop_population)
     connect_param!(m, :GDP => :pop_population_region, :Population => :pop_population_region)
     gdp[:grw_gdpgrowthrate] = socioscenario[:grw_gdpgrowthrate]
@@ -355,6 +364,14 @@ connect_param!(m, :NonMarketDamages => :rt_g_globaltemperature, glotemp_comp => 
     connect_param!(m, :Discontinuity => :rcons_per_cap_NonMarketRemainConsumption, :NonMarketDamages => :rcons_per_cap_NonMarketRemainConsumption)
     connect_param!(m, :Discontinuity => :isatg_saturationmodification, :GDP => :isatg_impactfxnsaturation)
     discontinuity[:save_savingsrate] = macroparams[:save_savingsrate]
+
+    connect_param!(m, :VSL => :population, :Population => :pop_population)
+    connect_param!(m, :VSL => :gdp, :GDP => :gdp)
+
+
+    connect_param!(m, :CromarMortality => :temperature, :GlobalTemperature => :rt_g_globaltemperature)
+    connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
+    connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
 
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
