@@ -52,7 +52,7 @@ function addcromarmortality(m::Model, SSP::String = "SSP2")
     rename!(cromar_coeffs, "Cromar Region Name" => "cromar_region")
     cromar_mapping_with_beta = leftjoin(cromar_mapping_raw, cromar_coeffs[:, ["cromar_region", "Pooled Beta"]], on = :cromar_region)
     
-    country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=country_β_mortality), :iso, :beta)
+    country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=cromar_mapping_with_beta), :iso, :beta)
 
     
     update_param!(m, :CromarMortality, :β_mortality, country_β_mortality2)
