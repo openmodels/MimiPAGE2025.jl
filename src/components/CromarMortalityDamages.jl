@@ -3,7 +3,7 @@ using Mimi
 # Calculate temperature mortality damages
 # Cromar et al. 2021
 
-@defcomp cromar_mortality_damages begin
+@defcomp CromarMortalityDamages begin
 
     country                 = Index() # Index for countries used in the PAGE
 
@@ -15,7 +15,7 @@ using Mimi
     vsl                     = Parameter(index=[time, country], unit="US\$2005/yr") # Value of a statistical life ($).
 
     mortality_change        = Variable(index=[time, country])  # Change in a country's baseline mortality rate due to combined effects of cold and heat (with positive values indicating increasing mortality rates).
-   	mortality_costs         = Variable(index=[time, country], unit="US\$2005/yr")  # Costs of temperature mortality based on the VSL ($).
+    mortality_costs         = Variable(index=[time, country], unit="US\$2005/yr")  # Costs of temperature mortality based on the VSL ($).
     excess_death_rate       = Variable(index=[time, country], unit = "deaths/1000 persons/yr")  # Change in a country's baseline death rate due to combined effects of cold and heat (additional deaths per 1,000 population).
     excess_deaths           = Variable(index=[time, country], unit="persons")  # Additional deaths that occur in a country due to the combined effects of cold and heat (individual persons).
 
@@ -43,22 +43,19 @@ end
 
 
 function addcromarmortality(m::Model, SSP::String = "SSP2")
-    add_comp!(m, cromar_mortality_damages, :CromarMortality)
-    
+    add_comp!(m, CromarMortalityDamages, :CromarMortality)
+
     cromar_coeffs = load(pagedata("mortality/CromarMortality_damages_coefficients.csv")) |> DataFrame
     cromar_mapping_raw = load(pagedata("mortality/Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
-    
 
     rename!(cromar_coeffs, "Cromar Region Name" => "cromar_region")
     cromar_mapping_with_beta = leftjoin(cromar_mapping_raw, cromar_coeffs[:, ["cromar_region", "Pooled Beta"]], on = :cromar_region)
-    
-    country_β_mortality2 = readcountrydata_i_const(m, DataFrame(iso=cromar_mapping_raw.ISO3, beta=cromar_mapping_with_beta), :iso, :beta)
 
-    
+    country_β_mortality2 = readcountrydata_i_const(m, cromar_mapping_with_beta, :ISO3, "Pooled Beta")
+
     update_param!(m, :CromarMortality, :β_mortality, country_β_mortality2)
-    
-    
-    # baseline_mortality_rate 
+
+    # baseline_mortality_rate
     baseline_mortality_data = load(pagedata("mortality/Mortality_cdr_spp_country_extensions_annual.csv")) |> DataFrame
 
     # Ensure we're selecting the correct scenario (SSP2 as proxy for SSP4, SSP1 for SSP5)
@@ -66,12 +63,10 @@ function addcromarmortality(m::Model, SSP::String = "SSP2")
 
     mortality_data_filtered = baseline_mortality_data |>
         @filter(_.year in 2020:2300 && _.scenario == mortality_SSP_map[SSP]) |>
-        DataFrame |>
         @select(:year, :ISO, :cdf) |>  # cdr = crude death rate
         DataFrame
 
-
     mortality_data_filtered2 = readcountrydata_it_const(m, mortality_data_filtered, :ISO, :year, "cdf")
-    
+
     update_param!(m, :CromarMortality, :baseline_mortality_rate, mortality_data_filtered2)
 end
