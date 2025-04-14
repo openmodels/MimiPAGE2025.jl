@@ -1,27 +1,25 @@
 using MimiFAIRv2
+import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
 
 @defcomp FaIRGrounds begin
     country = Index()
 
     fairmi = Parameter{ModelInstance}()
-    clock = Variable{Clock}()
+    clock = Variable{Any}()
 
     y_year = Parameter(index=[time], unit="year")
     y_year_0 = Parameter(unit="year")
 
     e_globalCO2emissions = Parameter(index=[time], unit="Mtonne/year")
     e_globalCH4emissions = Parameter(index=[time], unit="Mtonne/year")
-    e_globalN2Oemissions = Parameter(index=[time], unit="???")
-    e_globalSF6emissions = Parameter(index=[time], unit="???")
-    exf_excessforcing = Parameter(index=[time], unit="W/m2")
-    e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
+    e_globalN2Oemissions = Parameter(index=[time], unit="Mtonne/year")
+    # e_globalLGemissions = Parameter(index=[time], unit="Mtonne/year")
+    # exf_excessforcing = Parameter(index=[time], unit="W/m2")
+    # e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
 
     rt_g_globaltemperature_pre_static = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature_pre_seaice = Parameter(index=[time], unit="degreeC")
-    rt_g_globaltemperature_post = Variable(index=[time], unit="degreeC")
-
-    ## Can I take in F from fairmodel? Then feed that into GlobalTemperature
-    ## Probably need two GlobalTemperature components, with with SAF and one without.
+    rt_g_globaltemperature = Variable(index=[time], unit="degreeC")
 
     function init(pp, vv, dd)
         # Based on Base.run(mi::ModelInstance, ...)
@@ -29,52 +27,56 @@ using MimiFAIRv2
 
         vv.clock = Clock(time_keys)
 
-        dim_val_named_tuple = NamedTuple(name => (name == :time ? timesteps(clock) : collect(values(dim))) for (name, dim) in dim_dict(pp.fairmi.md))
+        dim_val_named_tuple = NamedTuple(name => (name == :time ? timesteps(vv.clock) : collect(values(dim))) for (name, dim) in dim_dict(pp.fairmi.md))
 
-        init(pp.fairmi, dim_val_named_tuple)
+        Mimi.init(pp.fairmi, dim_val_named_tuple)
 
-        while TIMECHECK(pp.y_year_0)
-            run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
-            advance(vv.clock)
+        while gettime(vv.clock) <= pp.y_year_0
+            Mimi.run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
+            Mimi.advance(vv.clock)
         end
     end
 
     function run_timestep(pp, vv, dd, tt)
-        E_co2 = pp.e_globalCO2emissions / 1000 / 3.67 # GtC yr⁻¹
-        E_ch4 = pp.e_globalCH4emissions # TgCH₄ yr⁻¹
+        fairtime = dim_keys(pp.fairmi, :time)
+        if !is_first(tt)
+            E_co2 = pp.e_globalCO2emissions[tt-1] / 1000 / 3.67 # GtC yr⁻¹
+            E_ch4 = pp.e_globalCH4emissions[tt-1] # TgCH₄ yr⁻¹
+            E_n2o = pp.e_globalN2Oemissions[tt-1] * 0.6367 # TgN yr⁻¹ (2 * 14.01 / 44.01)
 
-        fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
-        fair_ch4 = pp.fairmi[:ch4_cycle, :E_ch4]
-        fair_n2o = ...
-        fair_sf6 = ...
-        fair_excess = ...
-        fair_sulphate = ...
+            fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
+            fair_ch4 = pp.fairmi[:ch4_cycle, :E_ch4]
+            fair_n2o = pp.fairmi[:n2o_cycle, :E_n2o]
 
-        for ii in TIMESTEPS(is_first(tt) ? p.y_year_0 : p.y_year[tt-1], p.y_year[tt])
-            fair_co2[ii] = E_co2
-            fair_ch4[ii] = E_ch4
+            for ii in findfirst(fairtime .== (is_first(tt) ? pp.y_year_0 : pp.y_year[tt-1]))+1:findfirst(fairtime .== pp.y_year[tt])
+                fair_co2[ii] = E_co2
+                fair_ch4[ii] = E_ch4
+                fair_n2o[ii] = E_n2o
+            end
+
+            update_param!(pp.fairmi, :co2_cycle, :E_co2, fair_co2)
+            update_param!(pp.fairmi, :ch4_cycle, :E_ch4, fair_ch4)
+            update_param!(pp.fairmi, :n2o_cycle, :E_n2o, fair_n2o)
         end
 
-        update_param!(pp.fairmi, :co2_cycle, :E_co2, fair_co2)
-        update_param!(pp.fairmi, :ch4_cycle, :E_ch4, fair_ch4)
-        update_param!(pp.fairmi, ... fair_n2o ...)
-        update_param!(pp.fairmi, ... fair_sf6 ...)
-        update_param!(pp.fairmi, ... fair_excess ...)
-        update_param!(pp.fairmi, ... fair_sulphate ...)
-
-        while TIMECHECK(pp.y_year[tt])
-            run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
-            advance(vv.clock)
+        dim_val_named_tuple = NamedTuple(name => (name == :time ? timesteps(vv.clock) : collect(values(dim))) for (name, dim) in dim_dict(pp.fairmi.md))
+        while gettime(vv.clock) <= pp.y_year[tt]
+            Mimi.run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
+            Mimi.advance(vv.clock)
         end
 
-        rt_g_globaltemperature_post[tt] = pp.fairmi[:temperature, :T][TIME2INDEX(pp.y_year[tt])] + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
+        vv.rt_g_globaltemperature[tt] = pp.fairmi[:temperature, :T][findfirst(fairtime .== pp.y_year[tt])] + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
     end
 end
 
-function addfairgrounds(model::Model)
+function addfairgrounds(model::Model, scenario::String)
     fairgrounds = add_comp!(model, FaIRGrounds)
 
-    fairmodel = MimiFAIRv2.get_model(end_year=2300)
+    mapping = Dict("Zero Emissions & SSP1"=>"ssp119", "1.5 degC Target"=>"ssp119", "RCP1.9 & SSP1"=>"ssp119", "2 degC Target"=>"ssp126", "RCP2.6 & SSP1"=>"ssp126",
+                   "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585")
+
+
+    fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
     fairgrounds[:fairmi] = build(fairmodel)
 
     fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))

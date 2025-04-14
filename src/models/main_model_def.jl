@@ -5,18 +5,18 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
                    config_capital::String="full", use_trade::Bool=true)
     # add all the components
-    scenario = addrcpsspscenario(m, scenario)
+    sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
         socioscenario = addrffspscenario(m)
-        socioscenario[:grw_gdpgrowthrate_rcp] = scenario[:grw_gdpgrowthrate]
-        socioscenario[:er_CO2emissionsgrowth_rcp] = scenario[:er_CO2emissionsgrowth]
-        socioscenario[:er_CH4emissionsgrowth_rcp] = scenario[:er_CH4emissionsgrowth]
-        socioscenario[:er_N2Oemissionsgrowth_rcp] = scenario[:er_N2Oemissionsgrowth]
-        socioscenario[:er_LGemissionsgrowth_rcp] = scenario[:er_LGemissionsgrowth]
-        socioscenario[:pse_sulphatevsbase_rcp] = scenario[:pse_sulphatevsbase]
+        socioscenario[:grw_gdpgrowthrate_rcp] = sspscenario[:grw_gdpgrowthrate]
+        socioscenario[:er_CO2emissionsgrowth_rcp] = sspscenario[:er_CO2emissionsgrowth]
+        socioscenario[:er_CH4emissionsgrowth_rcp] = sspscenario[:er_CH4emissionsgrowth]
+        socioscenario[:er_N2Oemissionsgrowth_rcp] = sspscenario[:er_N2Oemissionsgrowth]
+        socioscenario[:er_LGemissionsgrowth_rcp] = sspscenario[:er_LGemissionsgrowth]
+        socioscenario[:pse_sulphatevsbase_rcp] = sspscenario[:pse_sulphatevsbase]
         socioscenario_comp = :RFFSPScenario
     else
-        socioscenario = scenario
+        socioscenario = sspscenario
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
@@ -55,13 +55,13 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
             pretemp_static = addglobaltemperature(m, false, :PreGlobalTemperature_static)
             pretemp_seaice = addglobaltemperature(m, true, :PreGlobalTemperature_seaice)
         end
-        glotemp = addfairgrounds(m)
+        glotemp = addfairgrounds(m, scenario)
 
         regtemp = addregiontemperature(m)
 
         regtemp_comp = :RegionTemperature
         glotemp_comp = :FaIRGrounds
-        regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature_post]
+        regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
     else
         if config_downscaling == "mcpr"
             glotemp = addglobaltemperature(m, use_seaice)
@@ -196,7 +196,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         end
 
         glotemp[:e_globalCO2emissions] = co2emit[:e_globalCO2emissions]
-        glotemp[:e_globalCH4emissions] = co2emit[:e_globalCH4emissions]
+        glotemp[:e_globalCH4emissions] = ch4emit[:e_globalCH4emissions]
+        glotemp[:e_globalN2Oemissions] = n2oemit[:e_globalN2Oemissions]
     else
         connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
     end
@@ -218,7 +219,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         co2emit[:baselineemit] = abateco2[:baselineemit]
         co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
     elseif config_abatement == "pageice"
-        co2emit[:er_CO2emissionsgrowth] = scenario[:er_CO2emissionsgrowth]
+        co2emit[:er_CO2emissionsgrowth] = sspscenario[:er_CO2emissionsgrowth]
     end
 
     connect_param!(m, :CO2Cycle => :e_globalCO2emissions, :co2emissions => :e_globalCO2emissions)
@@ -229,7 +230,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
-    ch4emit[:er_CH4emissionsgrowth] = scenario[:er_CH4emissionsgrowth]
+    ch4emit[:er_CH4emissionsgrowth] = sspscenario[:er_CH4emissionsgrowth]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -241,7 +242,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :ch4forcing => :c_CH4concentration, :CH4Cycle => :c_CH4concentration)
     connect_param!(m, :ch4forcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
-    n2oemit[:er_N2Oemissionsgrowth] = scenario[:er_N2Oemissionsgrowth]
+    n2oemit[:er_N2Oemissionsgrowth] = sspscenario[:er_N2Oemissionsgrowth]
 
     connect_param!(m, :n2ocycle => :e_globalN2Oemissions, :n2oemissions => :e_globalN2Oemissions)
     connect_param!(m, :n2ocycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -250,7 +251,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :n2oforcing => :c_CH4concentration, :CH4Cycle => :c_CH4concentration)
     connect_param!(m, :n2oforcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
-    lgemit[:er_LGemissionsgrowth] = scenario[:er_LGemissionsgrowth]
+    lgemit[:er_LGemissionsgrowth] = sspscenario[:er_LGemissionsgrowth]
 
     connect_param!(m, :LGcycle => :e_globalLGemissions, :LGemissions => :e_globalLGemissions)
     connect_param!(m, :LGcycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -258,14 +259,14 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     connect_param!(m, :LGforcing => :c_LGconcentration, :LGcycle => :c_LGconcentration)
 
-    sulfemit[:pse_sulphatevsbase] = scenario[:pse_sulphatevsbase]
+    sulfemit[:pse_sulphatevsbase] = sspscenario[:pse_sulphatevsbase]
     sulfemit[:area_region] = regtemp[:area_region]
 
     connect_param!(m, :TotalForcing => :f_CO2forcing, :co2forcing => :f_CO2forcing)
     connect_param!(m, :TotalForcing => :f_CH4forcing, :ch4forcing => :f_CH4forcing)
     connect_param!(m, :TotalForcing => :f_N2Oforcing, :n2oforcing => :f_N2Oforcing)
     connect_param!(m, :TotalForcing => :f_lineargasforcing, :LGforcing => :f_LGforcing)
-    totalforcing[:exf_excessforcing] = scenario[:exf_excessforcing]
+    totalforcing[:exf_excessforcing] = sspscenario[:exf_excessforcing]
     connect_param!(m, :TotalForcing => :fs_sulfateforcing, :SulphateForcing => :fs_sulphateforcing)
     totalforcing[:area_region] = regtemp[:area_region]
 
@@ -432,7 +433,7 @@ function initpage(m::Model)
     set_leftover_params!(m, p)
 end
 
-function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
+function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
@@ -443,7 +444,8 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
     set_dimension!(model, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
     set_dimension!(model, :country, get_countryinfo().ISO3)
 
-    buildpage(model, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
+    buildpage(model, scenario; use_fair=use_fair, use_permafrost=use_permafrost, use_seaice=use_seaice,
+              use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
               config_capital=config_capital, use_trade=use_trade)
