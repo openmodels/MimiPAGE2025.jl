@@ -16,6 +16,9 @@ include("../utils/country_tools.jl")
     pop0_initpopulation_region = Variable(index=[region], unit="million person") # Population in y_year_0
     pop_population = Variable(index=[time, country], unit="million person")
     pop_population_region = Variable(index=[time, region], unit="million person")
+    
+    logpop0 = Variable(index=[time, country], unit="log(million person)")  # log population (needed for PM2.5)
+
 
     function init(p, v, d)
         byregion = countrytoregion(p.model, sum, p.pop0_initpopulation)
@@ -32,6 +35,8 @@ include("../utils/country_tools.jl")
             else
                 v.pop_population[tt, cc] = v.pop_population[tt - 1, cc] * (1 + p.popgrw_populationgrowth[tt, cc] / 100)^(p.y_year[tt] - p.y_year[tt - 1])
             end
+            # Compute log-population for PM2.5 component
+            v.logpop0[tt, cc] = log(v.pop_population[tt, cc] + 1e-6)  # add small value to avoid log(0)
         end
 
         v.pop_population_region[tt, :] = countrytoregion(p.model, sum, v.pop_population[tt, :])
