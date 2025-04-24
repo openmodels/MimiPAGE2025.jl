@@ -1,7 +1,8 @@
 using Mimi
-using MimiFAIRv2
+#using MimiFAIRv2
 
 using Random
+using Chain
 
 import Random
 
@@ -62,6 +63,7 @@ include("components/PermafrostJULES.jl")
 include("components/PermafrostTotal.jl")
 include("components/CromarMortalityDamages.jl")
 include("components/VSL.jl")
+include("components/PM25Pollution.jl")
 
 
 include("models/main_model_def.jl")

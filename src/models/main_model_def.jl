@@ -172,6 +172,24 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
+    
+    # PM2.5 Pollution Component
+    pm25pollution = add_pm25_pollution(m)
+    
+    
+    # Connect inputs to the PM2.5 pollution component
+    connect_param!(m, :pm25_pollution => :logco20,       :co2emissions => :logco20)
+    connect_param!(m, :pm25_pollution => :logch40,       :ch4emissions => :logch40)
+    connect_param!(m, :pm25_pollution => :logco20xyear0, :co2emissions => :logco20xyear0)
+    connect_param!(m, :pm25_pollution => :logch40xyear0, :ch4emissions => :logch40xyear0)
+    connect_param!(m, :pm25_pollution => :logpop0,       :Population => :logpop0)
+    connect_param!(m, :pm25_pollution => :loggdppc0,     :GDP => :loggdppc0)
+    connect_param!(m, :pm25_pollution => :loggdppc02,    :GDP => :loggdppc02)
+    
+    connect_param!(m, :pm25_pollution => :laglogpm0,    :pm25_pollution => :logpm_self)
+    connect_param!(m, :pm25_pollution => :lag2logpm0,   :pm25_pollution => :logpm_self)
+
+
 
     # Total costs component
     add_comp!(m, TotalCosts)
@@ -418,12 +436,48 @@ connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discont
     return m
 end
 
+
 function initpage(m::Model)
     p = load_parameters(m)
     p["y_year_0"] = 2015.
     p["y_year"] = Mimi.dim_keys(m.md, :time)
     set_leftover_params!(m, p)
 end
+
+#=
+function initpage(m::Model)
+    p = load_parameters(m)  # Load existing parameters
+    p["y_year_0"] = 2015.
+    p["y_year"] = Mimi.dim_keys(m.md, :time)
+
+    # Add logco20 and other required parameters
+    p["logco20"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["logch40"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["logco20xyear0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["logch40xyear0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["logpop0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["loggdppc0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["loggdppc02"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["laglogpm0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["lag2logpm0"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+    p["logpm0_data"] = fill(0.0, length(Mimi.dim_keys(m.md, :time)), length(Mimi.dim_keys(m.md, :region)))
+
+    # Add scalar regression coefficients
+    p["β_co2"] = 0.0
+    p["β_ch4"] = 0.0
+    p["β_co2_year"] = 0.0
+    p["β_ch4_year"] = 0.0
+    p["β_pop"] = 0.0
+    p["β_gdppc"] = 0.0
+    p["β_gdppc2"] = 0.0
+    p["β_lag1"] = 0.0
+    p["β_lag2"] = 0.0
+
+    set_leftover_params!(m, p)  # Set leftover parameters
+end
+
+=#
+
 
 function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
@@ -442,7 +496,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, us
               config_capital=config_capital, use_trade=use_trade)
 
     # next: add vector and panel example
-    initpage(model)
+    initpage(model)              
 
     return model
 end

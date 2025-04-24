@@ -19,6 +19,11 @@ include("../utils/country_tools.jl")
     cons_percap_consumption_0_region = Variable(index=[region], unit="\$/person")
     yagg_periodspan = Variable(index=[time], unit="year")
     gdp0_initgdp_region = Variable(index=[region], unit="\$M")
+    
+    # === Variables needed for PM2.5 pollution ===
+    loggdppc0  = Variable(index=[time, country], unit="log(\$/person)")
+    loggdppc02 = Variable(index=[time, country], unit="(log(\$/person))^2")
+
 
     # Parameters
     y_year_0          = Parameter(unit="year")
@@ -77,6 +82,10 @@ include("../utils/country_tools.jl")
 
             v.cons_consumption[t, cc] = v.gdp[t, cc] * (1 - p.save_savingsrate[cc] / 100)
             v.cons_percap_consumption[t, cc] = v.cons_consumption[t, cc] / p.pop_population[t, cc]
+            
+            # === Compute GDP per capita log and log-squared for PM2.5 component ===
+            v.loggdppc0[t, cc] = log(v.gdp[t, cc] / p.pop_population[t, cc] + 1e-6)
+            v.loggdppc02[t, cc] = v.loggdppc0[t, cc]^2
         end
 
         v.gdp_region[t, :] = countrytoregion(p.model, sum, v.gdp[t, :])
