@@ -16,6 +16,7 @@ include("compute_scc.jl")
 
 include("components/RCPSSPScenario.jl")
 include("components/RFFSPScenario.jl")
+include("components/FaIRGrounds.jl")
 include("components/CO2emissions.jl")
 include("components/extensions/CO2emissions_regional.jl")
 include("components/CO2cycle.jl")
