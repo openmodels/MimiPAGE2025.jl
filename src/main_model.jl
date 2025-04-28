@@ -1,5 +1,5 @@
 using Mimi
-#using MimiFAIRv2
+using MimiFAIRv2
 
 using Random
 import Random
