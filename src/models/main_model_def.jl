@@ -460,7 +460,6 @@ function initpage(m::Model)
     set_leftover_params!(m, p)
 end
 
-
 function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
