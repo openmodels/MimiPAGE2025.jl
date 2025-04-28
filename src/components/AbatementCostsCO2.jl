@@ -118,7 +118,6 @@ macs = myloadcsv("data/macs.csv")
         rawfractargetabated = -rawtonnesabated ./ vv.baselineemit[tt,:] # fraction abated
         # Regularize so not over 1 and goes to 1 as p -> inf
         regfractargetabated = rawfractargetabated ./ (exp.(-pp.carbonprice[tt, :] / 500) + rawfractargetabated)
-        regfractargetabated[rawfractargetabated .> 1.] .= rawfractargetabated[rawfractargetabated .> 1.]
 
         # Use autoreg factor to approach target
         if is_first(tt)

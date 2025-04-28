@@ -43,6 +43,7 @@ function addch4emissions(model::Model)
     ch4emit = add_comp!(model, ch4emissions)
 
     ch4emit[:model] = model
+
     baselineemits = CSV.read(pagedata("climate/ch4emit.csv"), DataFrame)
     baselineemits2 = DataFrame(iso=baselineemits[!, 1], value=vec(mean(Matrix(baselineemits[!, 2:12]), dims=2)) / 1000) # Convert kt to Mt
     e0_baselineCH4emissions = readcountrydata_i_const(model, baselineemits2, :iso, :value, sum; allowmissing=true)

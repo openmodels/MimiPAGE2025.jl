@@ -3,7 +3,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="full", use_trade::Bool=true)
+                   config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -189,22 +189,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     cromarmortality = addcromarmortality(m)
 
     # PM2.5 Pollution Component
-    pm25pollution = add_pm25_pollution(m)
-
-
-    # Connect inputs to the PM2.5 pollution component
-    connect_param!(m, :pm25_pollution => :logco20,       :co2emissions => :logco20)
-    connect_param!(m, :pm25_pollution => :logch40,       :ch4emissions => :logch40)
-    connect_param!(m, :pm25_pollution => :logco20xyear0, :co2emissions => :logco20xyear0)
-    connect_param!(m, :pm25_pollution => :logch40xyear0, :ch4emissions => :logch40xyear0)
-    connect_param!(m, :pm25_pollution => :logpop0,       :Population => :logpop0)
-    connect_param!(m, :pm25_pollution => :loggdppc0,     :GDP => :loggdppc0)
-    connect_param!(m, :pm25_pollution => :loggdppc02,    :GDP => :loggdppc02)
-
-    connect_param!(m, :pm25_pollution => :laglogpm0,    :pm25_pollution => :logpm_self)
-    connect_param!(m, :pm25_pollution => :lag2logpm0,   :pm25_pollution => :logpm_self)
-
-
+    pm25pollution = add_pm25_pollution(m, pm25_useekc, pm25_scenario)
 
     # Total costs component
     add_comp!(m, TotalCosts)
@@ -243,9 +228,6 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
 
-
-
-
     if config_abatement == "national"
         co2emit[:baselineemit] = abateco2[:baselineemit]
         co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
@@ -261,7 +243,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
-    ch4emit[:er_CH4emissionsgrowth] = sspscenario[:er_CH4emissionsgrowth]
+    ch4emit[:er_CH4emissionsgrowth_region] = sspscenario[:er_CH4emissionsgrowth]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -426,8 +408,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :VSL => :population, :Population => :pop_population)
     connect_param!(m, :VSL => :gdp, :GDP => :gdp)
 
-
-    connect_param!(m, :CromarMortality => :temperature, :GlobalTemperature => :rt_g_globaltemperature)
+    cromarmortality[:temperature] = glotemp[:rt_g_globaltemperature]
     connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
     connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
 
@@ -438,7 +419,13 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :TotalCosts => :slr_damages_percap_peryear, :SLRDamages => :d_percap_slr)
     connect_param!(m, :TotalCosts => :market_damages_percap_peryear, :MarketDamagesBurke => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
     connect_param!(m, :TotalCosts => :non_market_damages_percap_peryear, :NonMarketDamages => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
-connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+    connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+
+    # PM2.5 pollution component
+    pm25pollution[:e_countryCO2emissions] = co2emit[:e_countryCO2emissions]
+    pm25pollution[:e_countryCH4emissions] = ch4emit[:e_regionalCH4emissions]
+    pm25pollution[:gdp] = finalgdp_ref
+    pm25pollution[:pop_population] = population[:pop_population]
 
     connect_param!(m, :CountryLevelNPV => :pop_population, :Population => :pop_population)
     connect_param!(m, :CountryLevelNPV => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
@@ -478,7 +465,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                 config_capital::String="full", use_trade::Bool=true)
+                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
@@ -489,7 +476,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
               use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
-              config_capital=config_capital, use_trade=use_trade)
+              config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc)
 
     # next: add vector and panel example
     initpage(model)

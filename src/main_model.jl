@@ -2,8 +2,6 @@ using Mimi
 #using MimiFAIRv2
 
 using Random
-using Chain
-
 import Random
 
 export getpage
