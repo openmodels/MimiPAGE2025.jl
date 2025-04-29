@@ -189,7 +189,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     cromarmortality = addcromarmortality(m)
 
     # PM2.5 Pollution Component
-    pm25pollution = add_pm25_pollution(m, pm25_useekc, pm25_scenario)
+    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
     # Total costs component
     add_comp!(m, TotalCosts)

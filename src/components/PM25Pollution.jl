@@ -20,7 +20,7 @@ using Interpolations
 
 include("../utils/interpol.jl")
 
-@defcomp pm25_pollution begin
+@defcomp PM25Pollution begin
     country = Index()
     time = Index()
 
@@ -80,8 +80,8 @@ include("../utils/interpol.jl")
     pm_total = Variable(index=[time, country], unit="μg/m^3")  # PM2.5 from exported emissions
 
     function init(p, v, d)
-        pm25_self_params = CSV.read("../data/pollution/mvrnorm_SELF_Contribution$(p.scenario_suffix).csv", DataFrame)
-        pm25_export_params = CSV.read("../data/pollution/mvrnorm_EXPORT_Contribution$(p.scenario_suffix).csv", DataFrame)
+        pm25_self_params = CSV.read(pagedata("pollution/mvrnorm_SELF_Contribution$(p.scenario_suffix).csv"), DataFrame)
+        pm25_export_params = CSV.read(pagedata("pollution/mvrnorm_EXPORT_Contribution$(p.scenario_suffix).csv"), DataFrame)
 
         if p.pm25_draw == 0
             values = mean.(eachcol(pm25_self_params))
@@ -162,13 +162,13 @@ include("../utils/interpol.jl")
     end
 end
 
-function add_pm25_pollution(model::Model, useekc::Bool, scenario::Symbol)
-    pm25pollution = add_comp!(model, pm25_pollution)
+function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
+    pm25pollution = add_comp!(model, PM25Pollution)
     pm25pollution[:pm25_draw] = 0
 
-    mapping = CSV.read("../data/pollution/GAINS_4letter_regions_mapping.csv", DataFrame)
+    mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv"), DataFrame)
 
-    pm25_self_fixeds_regional = CSV.read("../data/pollution/fixedeffects_SELF_Contribution.csv", DataFrame)
+    pm25_self_fixeds_regional = CSV.read(pagedata("pollution/fixedeffects_SELF_Contribution.csv"), DataFrame)
     pm25_self_fixeds = leftjoin(mapping, pm25_self_fixeds_regional, on=:REGION_4LETTER => :idx)
 
     lininterp_self = LinearInterpolation(parse.(Int64, pm25_self_fixeds_regional.idx[pm25_self_fixeds_regional.fe .== "factor(IDYEARS)"]),
@@ -176,7 +176,7 @@ function add_pm25_pollution(model::Model, useekc::Bool, scenario::Symbol)
     pm25pollution[:yearfe_self] = lininterp_self(dim_keys(model, :time))
     pm25pollution[:trendfe_self] = readcountrydata_i_const(model, pm25_self_fixeds, :ISO3, :effect)
 
-    pm25_export_fixeds_regional = CSV.read("../data/pollution/fixedeffects_EXPORT_Contribution.csv", DataFrame)
+    pm25_export_fixeds_regional = CSV.read(pagedata("pollution/fixedeffects_EXPORT_Contribution.csv"), DataFrame)
     pm25_export_fixeds = leftjoin(mapping, pm25_export_fixeds_regional, on=:REGION_4LETTER => :idx)
 
     lininterp_export = LinearInterpolation(parse.(Int64, pm25_export_fixeds_regional.idx[pm25_export_fixeds_regional.fe .== "factor(IDYEARS)"]),
@@ -184,7 +184,7 @@ function add_pm25_pollution(model::Model, useekc::Bool, scenario::Symbol)
     pm25pollution[:yearfe_export] = lininterp_export(dim_keys(model, :time))
     pm25pollution[:trendfe_export] = readcountrydata_i_const(model, pm25_export_fixeds, :ISO3, :effect)
 
-    export_pattern = CSV.read("../data/pollution/export_pattern.csv", DataFrame)
+    export_pattern = CSV.read(pagedata("pollution/export_pattern.csv"), DataFrame)
 
     pattern_matrix = zeros(dim_count(model, :country), dim_count(model, :country)) # sink x source
     for ii in 1:nrow(export_pattern)
@@ -195,7 +195,7 @@ function add_pm25_pollution(model::Model, useekc::Bool, scenario::Symbol)
 
     pm25pollution[:export_pattern] = pattern_matrix
 
-    baseline = CSV.read("../data/pollution/baseline.csv", DataFrame)
+    baseline = CSV.read(pagedata("pollution/baseline.csv"), DataFrame)
     baseline2 = leftjoin(mapping, baseline, on=:REGION_4LETTER)
     baseline2 = baseline2[.!ismissing.(baseline2.IDYEARS), :]
 
