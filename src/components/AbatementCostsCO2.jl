@@ -113,12 +113,12 @@ macs = myloadcsv("data/macs.csv")
             ac_500_inf_co2 .* price2frac(pp.carbonprice[tt, :], 500, Inf) # MtCO2
 
         # Calculate baseline emissions
-        vv.baselineemit[tt, :] = pp.e0_baselineCO2emissions_country .* regiontocountry(pp.model, pp.bau_co2emissions[tt, :]) / 100
+        vv.baselineemit[tt, :] = max.(pp.e0_baselineCO2emissions_country, 0.05) .* regiontocountry(pp.model, pp.bau_co2emissions[tt, :]) / 100
+        # 0.05 is just below the lowest mean value
 
         rawfractargetabated = -rawtonnesabated ./ vv.baselineemit[tt,:] # fraction abated
         # Regularize so not over 1 and goes to 1 as p -> inf
         regfractargetabated = rawfractargetabated ./ (exp.(-pp.carbonprice[tt, :] / 500) + rawfractargetabated)
-        regfractargetabated[rawfractargetabated .> 1.] .= rawfractargetabated[rawfractargetabated .> 1.]
 
         # Use autoreg factor to approach target
         if is_first(tt)
@@ -134,6 +134,9 @@ macs = myloadcsv("data/macs.csv")
             # -> G (2v - v^2) + (1 - v)^2 y
             autoreg = (1 .- invtau).^(yp_yearsperiod / 5)
             vv.fracabatedcarbon[tt,:] = regfractargetabated .* (1 .- autoreg) .+ autoreg .* vv.fracabatedcarbon[tt-1,:]
+            if any(vv.fracabatedcarbon[tt,:] .> 1)
+                println(vv.fracabatedcarbon[tt,vv.fracabatedcarbon[tt,:] .> 1])
+            end
         end
 
         ac_0_20_gdp = vv.ac_0_20_gdp + vv.ac_0_20xyear_gdp * (2050 - gettime(tt))
