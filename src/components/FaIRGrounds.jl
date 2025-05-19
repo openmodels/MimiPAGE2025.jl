@@ -6,7 +6,7 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
 
     fairmi = Parameter{ModelInstance}()
     prepare_instance = Parameter{Function}()
-    fair_draw = Parameter{Int64}(default=0)
+    fair_draw = Parameter{Int64}()
 
     clock = Variable{Any}()
 
@@ -84,6 +84,7 @@ function addfairgrounds(model::Model, scenario::String)
 
     fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
     fairgrounds[:fairmi] = build(fairmodel)
+    fairgrounds[:fair_draw] = 0
     fairgrounds[:prepare_instance] = (mi, ii) -> nothing
 
     fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))

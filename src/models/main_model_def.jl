@@ -20,7 +20,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
-    
+
     # Socio-Economics
     population = addpopulation(m)
     macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
@@ -181,7 +181,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         throw(ArgumentError("Unknown Non-market damages configuration: $config_nonmarketdmg"))
     end
     discontinuity = adddiscontinuity(m; config_discontinuity)
-	
+
     # Add VSL Component
     vsl = addVSL(m, :epa)
 
@@ -225,7 +225,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
 
-        
+
 
 
     if config_abatement == "national"
@@ -243,7 +243,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
-    ch4emit[:er_CH4emissionsgrowth] = sspscenario[:er_CH4emissionsgrowth]
+    ch4emit[:er_CH4emissionsgrowth_region] = sspscenario[:er_CH4emissionsgrowth]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -408,8 +408,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :VSL => :population, :Population => :pop_population)
     connect_param!(m, :VSL => :gdp, :GDP => :gdp)
 
-
-    connect_param!(m, :CromarMortality => :temperature, :GlobalTemperature => :rt_g_globaltemperature)
+    connect_param!(m, :CromarMortality => :temperature, glotemp_comp => :rt_g_globaltemperature)
     connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
     connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
 

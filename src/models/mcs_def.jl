@@ -1,4 +1,4 @@
-import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp
+import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp, Mimi.add_save!
 
 function getsim(model::Model, samplesize::Int)
     mcs = @defsim begin
@@ -58,11 +58,6 @@ function getsim(model::Model, samplesize::Int)
         # SulphateForcing
         SulphateForcing.d_sulphateforcingbase = TriangularDist(-0.8, -0.2, -0.4)
         SulphateForcing.ind_slopeSEforcing_indirect = TriangularDist(-0.8, 0, -0.4)
-
-        # GlobalTemperature
-        GlobalTemperature.frt_warminghalflife = TriangularDist(10, 55, 20)        # from PAGE-ICE v6.2 documentation
-        GlobalTemperature.tcr_transientresponse = TriangularDist(0.8, 2.7, 1.8)   # from PAGE-ICE v6.2 documentation
-        GlobalTemperature.alb_emulator_rand = TriangularDist(-1., 1., 0.)
 
         # SeaLevelRise
         SeaLevelRise.s0_initialSL = TriangularDist(0.17, 0.21, 0.19)        # taken from PAGE-ICE v6.20 default
@@ -226,7 +221,6 @@ function getsim(model::Model, samplesize::Int)
              EquityWeighting.act_percap_adaptationcosts, # without equity
              CO2Cycle.c_CO2concentration,
              TotalForcing.ft_totalforcing,
-             GlobalTemperature.rt_g_globaltemperature,
              GDP.cons_percap_consumption,
              Population.pop_population,
              SeaLevelRise.s_sealevel,
@@ -245,9 +239,23 @@ function getsim(model::Model, samplesize::Int)
         add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
     end
 
+    # GlobalTemperature.frt_warminghalflife = TriangularDist(10, 55, 20)        # from PAGE-ICE v6.2 documentation
+    # GlobalTemperature.tcr_transientresponse = TriangularDist(0.8, 2.7, 1.8)   # from PAGE-ICE v6.2 documentation
+    # GlobalTemperature.alb_emulator_rand = TriangularDist(-1., 1., 0.)
+    add_RV!(mcs, :frt_warminghalflife, TriangularDist(10, 55, 20))
+    add_RV!(mcs, :tcr_transientresponse, TriangularDist(0.8, 2.7, 1.8))
+    add_RV!(mcs, :alb_emulator_rand, TriangularDist(-1., 1., 0.))
+    if has_comp(model, :GlobalTemperature)
+        add_transform!(mcs, :GlobalTemperature_frt_warminghalflife, :(=), :frt_warminghalflife)
+        add_transform!(mcs, :GlobalTemperature_tcr_transientresponse, :(=), :tcr_transientresponse)
+        add_transform!(mcs, :GlobalTemperature_alb_emulator_rand, :(=), :alb_emulator_rand)
+        add_save!(mcs, (:GlobalTemperature, :rt_g_globaltemperature))
+    end
+
     if has_comp(model, :FaIRGrounds)
         add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
         add_transform!(mcs, :FaIRGrounds_fair_draw, :(=), :fair_draw)
+        add_save!(mcs, (:FaIRGrounds, :rt_g_globaltemperature))
     else
         add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
     end
@@ -279,8 +287,9 @@ function getsim(model::Model, samplesize::Int)
     # end
 
     if has_comp(model, :FaIRGrounds)
-        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(samplesize; end_year=max(dim_keys(model, :time)),
+        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(samplesize; end_year=maximum(dim_keys(model, :time)),
                                                             delete_downloaded_data=false)
+        disconnect_param!(model, :FaIRGrounds, :prepare_instance)
         update_param!(model, :FaIRGrounds, :prepare_instance, prepare_instance)
     end
 
