@@ -5,6 +5,9 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     country = Index()
 
     fairmi = Parameter{ModelInstance}()
+    prepare_instance = Parameter{Function}()
+    fair_draw = Parameter{Int64}(default=0)
+
     clock = Variable{Any}()
 
     y_year = Parameter(index=[time], unit="year")
@@ -22,6 +25,10 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     rt_g_globaltemperature = Variable(index=[time], unit="degreeC")
 
     function init(pp, vv, dd)
+        if pp.fair_draw != 0
+            pp.prepare_instance(pp.fairmi, pp.fair_draw)
+        end
+
         # Based on Base.run(mi::ModelInstance, ...)
         time_keys::Vector{Int} = dim_keys(pp.fairmi.md, :time)
 
@@ -75,9 +82,9 @@ function addfairgrounds(model::Model, scenario::String)
     mapping = Dict("Zero Emissions & SSP1"=>"ssp119", "1.5 degC Target"=>"ssp119", "RCP1.9 & SSP1"=>"ssp119", "2 degC Target"=>"ssp126", "RCP2.6 & SSP1"=>"ssp126",
                    "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585")
 
-
     fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
     fairgrounds[:fairmi] = build(fairmodel)
+    fairgrounds[:prepare_instance] = (mi, ii) -> nothing
 
     fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))
     fairgrounds[:rt_g_globaltemperature_pre_seaice] = zeros(dim_count(model, :time))

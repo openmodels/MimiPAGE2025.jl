@@ -1,6 +1,6 @@
 import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp
 
-function getsim(model::Model)
+function getsim(model::Model, samplesize::Int)
     mcs = @defsim begin
 
         ## NOTE: some assignment to global variables can probably be avoided now
@@ -245,6 +245,13 @@ function getsim(model::Model)
         add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
     end
 
+    if has_comp(model, :FaIRGrounds)
+        add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
+        add_transform!(mcs, :FaIRGrounds_fair_draw, :(=), :fair_draw)
+    else
+        add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
+    end
+
     if has_comp(model, :RegionTemperature)
         # RegionTemperature
         add_RV!(mcs, :prcile, Uniform(0, 1))
@@ -270,6 +277,12 @@ function getsim(model::Model)
     #     add_RV!(mcs, rv_name2, Uniform(0,1))
     #     add_transform!(mcs, :AbatementCostsCO2, :baselineco2_uniforms, :(=), rv_name2, [country])
     # end
+
+    if has_comp(model, :FaIRGrounds)
+        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(samplesize; end_year=max(dim_keys(model, :time)),
+                                                            delete_downloaded_data=false)
+        update_param!(model, :FaIRGrounds, :prepare_instance, prepare_instance)
+    end
 
     return mcs
 end
@@ -317,7 +330,6 @@ function reformat_RV_outputs(samplesize::Int; output_path::String=joinpath(@__DI
     df
 end
 
-
 function do_monte_carlo_runs(samplesize::Int, scenario::String="RCP4.5 & SSP2", output_path::String=joinpath(@__DIR__, "../output"))
     # get a model
     m = getpage(scenario)
@@ -328,7 +340,7 @@ end
 
 function do_monte_carlo_runs(samplesize::Int, m::Model, output_path::String=joinpath(@__DIR__, "../output"))
     # get simulation
-    mcs = getsim(m)
+    mcs = getsim(m, samplesize)
 
     # Run
     res = run(mcs, m, samplesize; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)
