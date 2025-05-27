@@ -6,9 +6,9 @@
     e_regionalN2Oemissions = Variable(index=[time,region], unit="Mtonne/year")
     er_N2Oemissionsgrowth = Parameter(index=[time,region], unit="%")
 
-    # read in counterfactual GDP in absence of growth effects (gdp_leveleffects) and actual GDP
+    # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
     gdp_region = Parameter(index=[time, region], unit="\$M")
-    gdp_leveleffect_region = Parameter(index=[time, region], unit="\$M")
+    gdp_baseline_region = Parameter(index=[time, region], unit="\$M")
     emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
     function run_timestep(p, v, d, t)
@@ -20,7 +20,7 @@
 
             # rescale emissions based on GDP deviation from original scenario pathway
             if p.emfeed_emissionfeedback
-                v.e_countryCO2emissions[t, r] = v.e_countryCO2emissions[t, r] * (p.gdp_region[t, r] / p.gdp_leveleffect_region[t, r])
+                v.e_countryCO2emissions[t, r] = v.e_countryCO2emissions[t, r] * (p.gdp_region[t, r] / p.gdp_baseline_region[t, r])
             end
         end
 

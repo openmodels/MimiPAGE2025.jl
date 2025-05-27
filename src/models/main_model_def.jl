@@ -33,11 +33,13 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         capital = addcapital(m)
         capital[:save_savingsrate] = macroparams[:save_savingsrate]
         finalgdp_ref = capital[:gdp_capital]
+        finalgdp_region_ref = capital[:gdp_capital_region]
         finalgdp_pair = :Capital => :gdp_capital
         finalgdp_region_pair = :Capital => :gdp_capital_region
         finalcons_pair = :Capital => :cons_percap_capital_consumption
     else
         finalgdp_ref = gdp[:gdp]
+        finalgdp_region_ref = gdp[:gdp_region]
         finalgdp_pair = :GDP => :gdp
         finalgdp_region_pair = :GDP => :gdp_region
         finalcons_pair = :GDP => :cons_percap_consumption
@@ -225,15 +227,14 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
 
-
-
-
     if config_abatement == "national"
         co2emit[:baselineemit] = abateco2[:baselineemit]
         co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
     elseif config_abatement == "pageice"
         co2emit[:er_CO2emissionsgrowth] = sspscenario[:er_CO2emissionsgrowth]
     end
+    co2emit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
+    co2emit[:gdp_baseline] = gdp[:gdp]
 
     connect_param!(m, :CO2Cycle => :e_globalCO2emissions, :co2emissions => :e_globalCO2emissions)
     connect_param!(m, :CO2Cycle => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
@@ -244,6 +245,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
     ch4emit[:er_CH4emissionsgrowth_region] = sspscenario[:er_CH4emissionsgrowth]
+    ch4emit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
+    ch4emit[:gdp_baseline] = gdp[:gdp]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -256,6 +259,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :ch4forcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
     n2oemit[:er_N2Oemissionsgrowth] = sspscenario[:er_N2Oemissionsgrowth]
+    n2oemit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region]
+    n2oemit[:gdp_baseline_region] = gdp[:gdp_region]
 
     connect_param!(m, :n2ocycle => :e_globalN2Oemissions, :n2oemissions => :e_globalN2Oemissions)
     connect_param!(m, :n2ocycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -265,6 +270,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :n2oforcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
     lgemit[:er_LGemissionsgrowth] = sspscenario[:er_LGemissionsgrowth]
+    lgemit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region]
+    lgemit[:gdp_baseline_region] = gdp[:gdp_region]
 
     connect_param!(m, :LGcycle => :e_globalLGemissions, :LGemissions => :e_globalLGemissions)
     connect_param!(m, :LGcycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)

@@ -115,6 +115,7 @@ include("../utils/country_tools.jl")
             v.rgdp_per_cap_MarketRemainGDP[t, cc] = v.rcons_per_cap_MarketRemainConsumption[t, cc] / (1 - p.save_savingsrate[cc] / 100)
         end
 
+        v.rgdp_per_cap_MarketRemainGDP_region[t, :] = countrytoregion(p.model, sum, v.rgdp_per_cap_MarketRemainGDP[t, :])
     end
 end
 
