@@ -18,18 +18,24 @@ include("../utils/country_tools.jl")
 
     e_globalCH4emissions = Variable(index=[time], unit="Mtonne/year")
 
-    function init(pp, vv, dd)
-        vv.e0_baselineCH4emissions_region[:] = countrytoregion(pp.model, sum, pp.e0_baselineCH4emissions)
-    end
+    # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
+    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
     function run_timestep(p, v, d, t)
         # eq.4 in Hope (2006) - regional CH4 emissions as % change from baseline
-        for r in d.region
-            v.e_regionalCH4emissions_region[t,r] = p.er_CH4emissionsgrowth_region[t,r] * v.e0_baselineCH4emissions_region[r] / 100
+        er_CH4emissionsgrowth = regiontocountry(p.model, p.er_CH4emissionsgrowth_region[t, :])
+        for cc in d.country
+            v.e_regionalCH4emissions[t, cc] = er_CH4emissionsgrowth[cc] * p.e0_baselineCH4emissions[cc] / 100
+
+            # rescale emissions based on GDP deviation from original scenario pathway
+            if p.emfeed_emissionfeedback
+                v.e_regionalCH4emissions[t, cc] = v.e_regionalCH4emissions[t, cc] * (p.gdp[t, cc] / p.gdp_baseline[t, cc])
+            end
         end
 
-        er_CH4emissionsgrowth = regiontocountry(p.model, p.er_CH4emissionsgrowth_region[t, :])
-        v.e_regionalCH4emissions[t, :] = er_CH4emissionsgrowth .* p.e0_baselineCH4emissions[:] / 100
+        vv.e0_baselineCH4emissions_region[:] = countrytoregion(pp.model, sum, pp.e0_baselineCH4emissions)
 
         # eq. 5 in Hope (2006) - global CH4 emissions are sum of regional emissions
         v.e_globalCH4emissions[t] = sum(v.e_regionalCH4emissions[t, :])
