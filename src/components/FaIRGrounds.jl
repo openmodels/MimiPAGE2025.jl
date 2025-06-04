@@ -20,6 +20,8 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     # exf_excessforcing = Parameter(index=[time], unit="W/m2")
     # e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
 
+    biascorrection = Variable()
+
     rt_g_globaltemperature_pre_static = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature_pre_seaice = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature = Variable(index=[time], unit="degreeC")
@@ -42,6 +44,11 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
             Mimi.run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
             Mimi.advance(vv.clock)
         end
+
+        ## Calculate bias correction
+        fairtime = dim_keys(pp.fairmi, :time)
+        calctemp = mean(pp.fairmi[:temperature, :T][findfirst(fairtime .== 1995):findfirst(fairtime .== 2014)])
+        vv.biascorrection = 0.85 - calctemp
     end
 
     function run_timestep(pp, vv, dd, tt)
@@ -72,7 +79,7 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
             Mimi.advance(vv.clock)
         end
 
-        vv.rt_g_globaltemperature[tt] = pp.fairmi[:temperature, :T][findfirst(fairtime .== pp.y_year[tt])] + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
+        vv.rt_g_globaltemperature[tt] = pp.fairmi[:temperature, :T][findfirst(fairtime .== pp.y_year[tt])] + vv.biascorrection + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
     end
 end
 
