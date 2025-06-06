@@ -20,6 +20,9 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     # exf_excessforcing = Parameter(index=[time], unit="W/m2")
     # e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
 
+    perm_tot_e_co2 = Parameter(index=[time], unit="Mtonne")
+    perm_tot_ce_ch4 = Parameter(index=[time], unit="Mtonne")
+
     biascorrection = Variable()
 
     rt_g_globaltemperature_pre_static = Parameter(index=[time], unit="degreeC")
@@ -54,8 +57,8 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     function run_timestep(pp, vv, dd, tt)
         fairtime = dim_keys(pp.fairmi, :time)
         if !is_first(tt)
-            E_co2 = pp.e_globalCO2emissions[tt-1] / 1000 / 3.67 # GtC yr⁻¹
-            E_ch4 = pp.e_globalCH4emissions[tt-1] # TgCH₄ yr⁻¹
+            E_co2 = (pp.e_globalCO2emissions[tt-1] + pp.perm_tot_e_co2[tt]) / 1000 / 3.67 # GtC yr⁻¹
+            E_ch4 = (pp.e_globalCH4emissions[tt-1] + pp.perm_tot_ce_ch4[tt] - pp.perm_tot_ce_ch4[tt-1]) # TgCH₄ yr⁻¹
             E_n2o = pp.e_globalN2Oemissions[tt-1] * 0.6367 # TgN yr⁻¹ (2 * 14.01 / 44.01)
 
             fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
