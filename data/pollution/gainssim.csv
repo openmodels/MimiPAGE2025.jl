@@ -1,0 +1,2044 @@
+"IDSCENARIOS","IDYEARS","REGION_4LETTER","REGION_4LETTER_LABEL","PM25_ANTHROP","PM25_SELF","PM25_EXPORT","AP_CONTROL_COSTS_MEUR2015"
+"Baseline_CLE",2020,"AFGH","Afghanistan",42.63,41.789,1.828,49
+"Baseline_CLE",2020,"ALBA","Albania",16.5,9.293,0.742,113
+"Baseline_CLE",2020,"ARGE","Argentina",3.37,2.908,0.336,1869
+"Baseline_CLE",2020,"ARME","Armenia",10.04,12.935,0.505,24
+"Baseline_CLE",2020,"AUST","Austria",9.37,4.291,3.243,1866
+"Baseline_CLE",2020,"AUTR","Australia",2.43,2.228,0.076,5823
+"Baseline_CLE",2020,"AZER","Azerbaijan",7.19,4.873,1.325,526
+"Baseline_CLE",2020,"BANG","Bangladesh",53.66,25.601,1.595,191
+"Baseline_CLE",2020,"BELA","Belarus",9.17,4.252,1.539,475
+"Baseline_CLE",2020,"BELG","Belgium",9.87,3.666,2.853,2359
+"Baseline_CLE",2020,"BHUT","Bhutan",9.92,3.978,0.44,9
+"Baseline_CLE",2020,"BOHE","Bosnia and Herzegovina",24.3,18.638,12.109,431
+"Baseline_CLE",2020,"BOLV","Bolivia (Plurinational State of)",2.34,2.229,0.004,110
+"Baseline_CLE",2020,"BRAZ","Brazil",6.01,5.945,1.377,9679
+"Baseline_CLE",2020,"BRUN","Brunei Darussalam",4.56,2.713,0.085,24
+"Baseline_CLE",2020,"BULG","Bulgaria",13.02,7.188,2.25,873
+"Baseline_CLE",2020,"CAMB","Cambodia",7.01,4.296,0.238,13
+"Baseline_CLE",2020,"CANA","Canada",7.21,5.469,0.218,10459
+"Baseline_CLE",2020,"CARB","Caribbean",3.82,3.663,0.179,595
+"Baseline_CLE",2020,"CEAM","Central America",6.6,6.498,0.025,665
+"Baseline_CLE",2020,"CHIL","Chile",18.02,17.922,0.203,1496
+"Baseline_CLE",2020,"CHIN","China",30.65,29.268,20.538,161313
+"Baseline_CLE",2020,"COLO","Colombia",6.92,6.714,0.032,1243
+"Baseline_CLE",2020,"CROA","Croatia",14.09,6.442,2.506,377
+"Baseline_CLE",2020,"CYPR","Cyprus",7.57,1.166,0.011,110
+"Baseline_CLE",2020,"CZRE","Czech Republic",13.1,7.009,5.301,2222
+"Baseline_CLE",2020,"DENM","Denmark",5.99,1.867,0.706,1267
+"Baseline_CLE",2020,"EAFR","Eastern Africa (excl Kenya, Tanzania)",8.44,7.43,0.67,705
+"Baseline_CLE",2020,"ECUA","Ecuador",3.28,3.135,0.007,439
+"Baseline_CLE",2020,"EGYP","Egypt",12.82,10.859,1.382,864
+"Baseline_CLE",2020,"ESTO","Estonia",5.25,2.354,0.135,219
+"Baseline_CLE",2020,"FINL","Finland",3.48,1.492,0.332,1740
+"Baseline_CLE",2020,"FRAN","France",7.71,4.942,9.121,9456
+"Baseline_CLE",2020,"GEOR","Georgia",7.27,8.83,0.369,135
+"Baseline_CLE",2020,"GERM","Germany",8.17,4.39,16.845,13787
+"Baseline_CLE",2020,"GREE","Greece",11.97,6.335,1.431,1176
+"Baseline_CLE",2020,"HUNG","Hungary",13.26,5.648,3.744,990
+"Baseline_CLE",2020,"ICEL","Iceland",2.65,1.801,0.022,51
+"Baseline_CLE",2020,"INDI","India",38.22,32.925,44.649,22872
+"Baseline_CLE",2020,"INDO","Indonesia",31.34,31.085,2.994,7275
+"Baseline_CLE",2020,"IRAN","Iran",21.39,20.122,2.241,3476
+"Baseline_CLE",2020,"IREL","Ireland",3.57,1.711,0.305,950
+"Baseline_CLE",2020,"ISRA","Israel",16.37,13.393,1.466,1483
+"Baseline_CLE",2020,"ITAL","Italy",12.6,9.215,5.762,7761
+"Baseline_CLE",2020,"JAPA","Japan",7.63,6.269,0.048,16922
+"Baseline_CLE",2020,"KAZA","Kazakhstan",20.97,24.512,3.296,1773
+"Baseline_CLE",2020,"KENY","Kenya",8.67,8.013,0.361,184
+"Baseline_CLE",2020,"KORN","North Korea",14.43,5.69,1.391,38
+"Baseline_CLE",2020,"KORS","Republic of Korea",23.85,14.214,1.098,6974
+"Baseline_CLE",2020,"KOSO","Kosovo",34.8,24.975,4.151,113
+"Baseline_CLE",2020,"KYRG","Kyrgyzstan",9.76,8.706,1.321,45
+"Baseline_CLE",2020,"LAOS","Laos",5.28,1.837,0.342,19
+"Baseline_CLE",2020,"LATV","Latvia",8.72,4.936,0.336,180
+"Baseline_CLE",2020,"LITH","Lithuania",7.57,2.795,0.67,462
+"Baseline_CLE",2020,"LUXE","Luxembourg",7.75,1.349,0.116,276
+"Baseline_CLE",2020,"MACE","TFYR Macedonia",17.94,10.397,1.92,136
+"Baseline_CLE",2020,"MALA","Malaysia",21.5,20.457,6.967,2024
+"Baseline_CLE",2020,"MALT","Malta",8.02,1.484,0,81
+"Baseline_CLE",2020,"MEXI","Mexico",10.83,10.542,0.056,4192
+"Baseline_CLE",2020,"MIDE","Middle East",10.45,8.188,5.303,3626
+"Baseline_CLE",2020,"MOLD","Republic of Moldova",12.71,5.987,0.394,233
+"Baseline_CLE",2020,"MONG","Mongolia",8.62,8.315,0.117,118
+"Baseline_CLE",2020,"MONT","Montenegro",19.19,12.38,0.86,57
+"Baseline_CLE",2020,"MYAN","Myanmar",8,5.328,0.285,30
+"Baseline_CLE",2020,"NAFR","Northern Africa (excl Egypt)",9.91,9.332,0.432,1416
+"Baseline_CLE",2020,"NEPA","Nepal",35.54,20.226,1.673,132
+"Baseline_CLE",2020,"NETH","Netherlands",9.47,3.024,2.479,3286
+"Baseline_CLE",2020,"NIGE","Nigeria",22.33,21.942,1.3,298
+"Baseline_CLE",2020,"NORW","Norway",3.01,1.478,0.297,793
+"Baseline_CLE",2020,"NZEL","New Zealand",1.52,1.363,0,700
+"Baseline_CLE",2020,"PAKI","Pakistan",45.57,40.051,6.077,334
+"Baseline_CLE",2020,"PARA","Paraguay",3.96,2.964,0.021,101
+"Baseline_CLE",2020,"PERU","Peru",8.75,8.477,0.167,364
+"Baseline_CLE",2020,"PHIL","Philippines",9.36,9.28,0.508,1576
+"Baseline_CLE",2020,"POLA","Poland",15.63,11.299,16.577,6659
+"Baseline_CLE",2020,"PORT","Portugal",6.44,4.175,0.137,941
+"Baseline_CLE",2020,"ROMA","Romania",14.41,9.083,5.478,1767
+"Baseline_CLE",2020,"RSAF","Remaining Southern Africa",5.56,4.93,0.728,586
+"Baseline_CLE",2020,"RUSS","Russian Federation",8.25,6.326,7.411,9576
+"Baseline_CLE",2020,"SAAR","Saudi Arabia",8.06,4.8,1.722,3104
+"Baseline_CLE",2020,"SAFR","South Africa",9.46,8.907,0.645,3734
+"Baseline_CLE",2020,"SERB","Serbia",20.12,12.988,19.743,671
+"Baseline_CLE",2020,"SING","Singapore",10.13,2.469,0.423,757
+"Baseline_CLE",2020,"SKRE","Slovakia",10.72,3.299,1.607,509
+"Baseline_CLE",2020,"SLOV","Slovenia",12.25,5.714,0.911,409
+"Baseline_CLE",2020,"SPAI","Spain",7.57,5.337,1.415,6804
+"Baseline_CLE",2020,"SRIL","Sri Lanka",7.78,7.16,0.006,123
+"Baseline_CLE",2020,"SWED","Sweden",4.16,1.485,0.573,1407
+"Baseline_CLE",2020,"SWIT","Switzerland",8.04,4.203,0.684,1410
+"Baseline_CLE",2020,"TAIW","Taiwan",14.69,12.665,0.057,2639
+"Baseline_CLE",2020,"TAJI","Tajikistan",13.23,13.206,1.223,70
+"Baseline_CLE",2020,"TANZ","United Republic of Tanzania",6.45,5.963,0.488,201
+"Baseline_CLE",2020,"THAI","Thailand",10.19,8.726,2.721,4009
+"Baseline_CLE",2020,"TKME","Turkmenistan",6.55,5.174,0.649,30
+"Baseline_CLE",2020,"TURK","Turkey",19.09,16.414,7.237,5892
+"Baseline_CLE",2020,"UKRA","Ukraine",9.24,5.069,8.938,1924
+"Baseline_CLE",2020,"UNKI","United Kingdom",6.04,3.925,5.067,7034
+"Baseline_CLE",2020,"URUG","Uruguay",3.15,2.673,0.19,76
+"Baseline_CLE",2020,"USAM","United States of America",5.78,5.468,1.844,67244
+"Baseline_CLE",2020,"UZBE","Uzbekistan",12.46,8.686,5.121,578
+"Baseline_CLE",2020,"VENE","Venezuela (Bolivarian Republic of)",5.34,5.128,0.153,786
+"Baseline_CLE",2020,"VIET","Vietnam",20.08,16.756,3.321,2705
+"Baseline_CLE",2020,"WAFR","Western Africa (excl Nigeria)",8.19,7.255,0.363,964
+"Baseline_CLE",2025,"AFGH","Afghanistan",47.01,46.152,1.993,61
+"Baseline_CLE",2025,"ALBA","Albania",13.91,8.59,0.823,143
+"Baseline_CLE",2025,"ARGE","Argentina",3.5,3.033,0.386,2107
+"Baseline_CLE",2025,"ARME","Armenia",9.63,12.216,0.445,52
+"Baseline_CLE",2025,"AUST","Austria",7.57,3.227,2.449,2155
+"Baseline_CLE",2025,"AUTR","Australia",2.35,2.092,0.067,6968
+"Baseline_CLE",2025,"AZER","Azerbaijan",7.24,5.196,1.266,508
+"Baseline_CLE",2025,"BANG","Bangladesh",55.8,26.294,1.692,207
+"Baseline_CLE",2025,"BELA","Belarus",7.97,3.719,1.486,560
+"Baseline_CLE",2025,"BELG","Belgium",8.59,3.206,2.561,3073
+"Baseline_CLE",2025,"BHUT","Bhutan",11.16,4.866,0.478,13
+"Baseline_CLE",2025,"BOHE","Bosnia and Herzegovina",18.67,14.01,6.704,431
+"Baseline_CLE",2025,"BOLV","Bolivia (Plurinational State of)",2.48,2.367,0.004,166
+"Baseline_CLE",2025,"BRAZ","Brazil",5.79,5.729,1.322,11893
+"Baseline_CLE",2025,"BRUN","Brunei Darussalam",4.93,2.91,0.097,29
+"Baseline_CLE",2025,"BULG","Bulgaria",11.23,6.448,2.455,1105
+"Baseline_CLE",2025,"CAMB","Cambodia",7.37,4.618,0.249,10
+"Baseline_CLE",2025,"CANA","Canada",6.67,4.981,0.209,12211
+"Baseline_CLE",2025,"CARB","Caribbean",3.87,3.705,0.188,718
+"Baseline_CLE",2025,"CEAM","Central America",6.84,6.739,0.025,915
+"Baseline_CLE",2025,"CHIL","Chile",16.42,16.308,0.176,1604
+"Baseline_CLE",2025,"CHIN","China",26.93,25.35,17.867,184962
+"Baseline_CLE",2025,"COLO","Colombia",6.63,6.4,0.028,1851
+"Baseline_CLE",2025,"CROA","Croatia",12.25,5.921,2.405,660
+"Baseline_CLE",2025,"CYPR","Cyprus",7.1,0.942,0.003,114
+"Baseline_CLE",2025,"CZRE","Czech Republic",10.85,5.893,4.239,2365
+"Baseline_CLE",2025,"DENM","Denmark",5.24,1.684,0.602,1728
+"Baseline_CLE",2025,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.08,6.142,0.533,875
+"Baseline_CLE",2025,"ECUA","Ecuador",3.3,3.16,0.008,609
+"Baseline_CLE",2025,"EGYP","Egypt",14.94,12.995,1.657,1091
+"Baseline_CLE",2025,"ESTO","Estonia",4.37,1.711,0.087,241
+"Baseline_CLE",2025,"FINL","Finland",3.16,1.297,0.25,1940
+"Baseline_CLE",2025,"FRAN","France",7.21,4.738,8.285,13641
+"Baseline_CLE",2025,"GEOR","Georgia",6.77,7.715,0.385,215
+"Baseline_CLE",2025,"GERM","Germany",6.92,3.666,13.481,15759
+"Baseline_CLE",2025,"GREE","Greece",9.32,4.338,1.007,1396
+"Baseline_CLE",2025,"HUNG","Hungary",11.72,5.444,3.67,1306
+"Baseline_CLE",2025,"ICEL","Iceland",2.88,2.022,0.025,58
+"Baseline_CLE",2025,"INDI","India",39.97,34.318,47.468,40304
+"Baseline_CLE",2025,"INDO","Indonesia",37.14,36.878,4.388,9493
+"Baseline_CLE",2025,"IRAN","Iran",24.31,23.077,2.346,4882
+"Baseline_CLE",2025,"IREL","Ireland",3.02,1.336,0.277,1506
+"Baseline_CLE",2025,"ISRA","Israel",16.38,13.284,1.395,2085
+"Baseline_CLE",2025,"ITAL","Italy",11.43,8.345,5.234,9441
+"Baseline_CLE",2025,"JAPA","Japan",6.85,5.608,0.041,16083
+"Baseline_CLE",2025,"KENY","Kenya",7.08,6.524,0.295,234
+"Baseline_CLE",2025,"KORS","Republic of Korea",22.77,13.99,1.02,11194
+"Baseline_CLE",2025,"KOSO","Kosovo",28.77,22.173,3.302,133
+"Baseline_CLE",2025,"LAOS","Laos",5.64,2.134,0.385,17
+"Baseline_CLE",2025,"LATV","Latvia",7.13,3.779,0.272,308
+"Baseline_CLE",2025,"LITH","Lithuania",6.6,2.449,0.585,511
+"Baseline_CLE",2025,"LUXE","Luxembourg",6.6,1.086,0.087,348
+"Baseline_CLE",2025,"MACE","TFYR Macedonia",14.72,8.996,1.121,190
+"Baseline_CLE",2025,"MALA","Malaysia",24.33,23.113,7.456,2508
+"Baseline_CLE",2025,"MALT","Malta",7.72,1.273,0,37
+"Baseline_CLE",2025,"MEXI","Mexico",9.88,9.608,0.056,5864
+"Baseline_CLE",2025,"MIDE","Middle East",11.34,9.098,5.307,5455
+"Baseline_CLE",2025,"MOLD","Republic of Moldova",11.24,5.226,0.357,102
+"Baseline_CLE",2025,"MONG","Mongolia",20.15,19.834,0.143,313
+"Baseline_CLE",2025,"MONT","Montenegro",15.8,10.821,0.486,48
+"Baseline_CLE",2025,"MYAN","Myanmar",8.3,5.414,0.293,27
+"Baseline_CLE",2025,"NAFR","Northern Africa (excl Egypt)",11.34,10.762,0.482,1711
+"Baseline_CLE",2025,"NEPA","Nepal",37.56,21.377,1.764,216
+"Baseline_CLE",2025,"NETH","Netherlands",8.32,2.729,2.149,4421
+"Baseline_CLE",2025,"NIGE","Nigeria",17.01,16.648,1.02,426
+"Baseline_CLE",2025,"NORW","Norway",2.6,1.157,0.244,910
+"Baseline_CLE",2025,"NZEL","New Zealand",1.41,1.223,0,876
+"Baseline_CLE",2025,"PAKI","Pakistan",47.96,42.202,6.577,770
+"Baseline_CLE",2025,"PARA","Paraguay",4.13,3.164,0.022,137
+"Baseline_CLE",2025,"PERU","Peru",9.38,9.123,0.167,473
+"Baseline_CLE",2025,"PHIL","Philippines",9.41,9.331,0.528,1867
+"Baseline_CLE",2025,"POLA","Poland",12.16,8.454,12.31,7759
+"Baseline_CLE",2025,"PORT","Portugal",6.35,4.147,0.114,1384
+"Baseline_CLE",2025,"ROMA","Romania",13.21,8.705,5.198,1813
+"Baseline_CLE",2025,"RSAF","Remaining Southern Africa",4.91,4.49,0.683,759
+"Baseline_CLE",2025,"RUSS","Russian Federation",8.25,6.434,7.624,12896
+"Baseline_CLE",2025,"SAAR","Saudi Arabia",8.13,4.847,1.63,4598
+"Baseline_CLE",2025,"SAFR","South Africa",7.73,7.208,0.414,3858
+"Baseline_CLE",2025,"SERB","Serbia",16.67,10.942,11.79,755
+"Baseline_CLE",2025,"SING","Singapore",11.5,2.379,0.41,973
+"Baseline_CLE",2025,"SKRE","Slovakia",8.8,2.674,1.573,699
+"Baseline_CLE",2025,"SLOV","Slovenia",12.36,6.827,0.979,521
+"Baseline_CLE",2025,"SPAI","Spain",6.52,4.263,1.155,8569
+"Baseline_CLE",2025,"SRIL","Sri Lanka",7.55,6.877,0.006,148
+"Baseline_CLE",2025,"SWED","Sweden",3.5,1.103,0.467,2050
+"Baseline_CLE",2025,"SWIT","Switzerland",7.39,4.063,0.651,1561
+"Baseline_CLE",2025,"TAIW","Taiwan",14.77,12.765,0.061,3762
+"Baseline_CLE",2025,"TANZ","United Republic of Tanzania",5.61,5.225,0.424,259
+"Baseline_CLE",2025,"THAI","Thailand",10.48,8.993,2.877,4794
+"Baseline_CLE",2025,"TURK","Turkey",15.98,13.338,6.625,7861
+"Baseline_CLE",2025,"UKRA","Ukraine",8.07,4.223,6.797,2063
+"Baseline_CLE",2025,"UNKI","United Kingdom",5.34,3.401,4.085,8349
+"Baseline_CLE",2025,"URUG","Uruguay",3.36,2.869,0.195,98
+"Baseline_CLE",2025,"USAM","United States of America",5.46,5.151,1.767,68334
+"Baseline_CLE",2025,"VENE","Venezuela (Bolivarian Republic of)",6.06,5.838,0.176,932
+"Baseline_CLE",2025,"VIET","Vietnam",20.48,17.308,3.438,3634
+"Baseline_CLE",2025,"WAFR","Western Africa (excl Nigeria)",7.03,6.266,0.309,1240
+"Baseline_CLE",2030,"AFGH","Afghanistan",54.19,53.35,2.246,78
+"Baseline_CLE",2030,"ALBA","Albania",12.37,8.287,0.842,202
+"Baseline_CLE",2030,"ARGE","Argentina",3.22,2.753,0.37,2509
+"Baseline_CLE",2030,"ARME","Armenia",9.81,13.078,0.469,67
+"Baseline_CLE",2030,"AUST","Austria",6.05,2.39,1.821,2156
+"Baseline_CLE",2030,"AUTR","Australia",2.25,1.976,0.051,6404
+"Baseline_CLE",2030,"AZER","Azerbaijan",7.43,5.641,1.313,564
+"Baseline_CLE",2030,"BANG","Bangladesh",53.26,26.904,1.7,255
+"Baseline_CLE",2030,"BELA","Belarus",7.73,3.931,1.508,737
+"Baseline_CLE",2030,"BELG","Belgium",7.29,2.785,2.262,2883
+"Baseline_CLE",2030,"BHUT","Bhutan",11.85,6.062,0.583,20
+"Baseline_CLE",2030,"BOHE","Bosnia and Herzegovina",15.38,11.68,4.782,504
+"Baseline_CLE",2030,"BOLV","Bolivia (Plurinational State of)",2.82,2.704,0.004,203
+"Baseline_CLE",2030,"BRAZ","Brazil",5.76,5.693,1.299,13514
+"Baseline_CLE",2030,"BRUN","Brunei Darussalam",5.31,3.174,0.11,34
+"Baseline_CLE",2030,"BULG","Bulgaria",8.65,4.485,1.382,830
+"Baseline_CLE",2030,"CAMB","Cambodia",7.94,5.126,0.263,11
+"Baseline_CLE",2030,"CANA","Canada",6.4,4.831,0.204,13972
+"Baseline_CLE",2030,"CARB","Caribbean",4.01,3.852,0.192,815
+"Baseline_CLE",2030,"CEAM","Central America",7.1,7.001,0.024,1168
+"Baseline_CLE",2030,"CHIL","Chile",16.07,15.962,0.17,1776
+"Baseline_CLE",2030,"CHIN","China",24.34,22.57,15.917,177487
+"Baseline_CLE",2030,"COLO","Colombia",6.39,6.143,0.029,2278
+"Baseline_CLE",2030,"CROA","Croatia",8.7,3.446,1.611,735
+"Baseline_CLE",2030,"CYPR","Cyprus",6.74,0.864,0.003,112
+"Baseline_CLE",2030,"CZRE","Czech Republic",8.99,4.951,3.459,2251
+"Baseline_CLE",2030,"DENM","Denmark",4.66,1.604,0.567,1828
+"Baseline_CLE",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.48,6.581,0.54,1001
+"Baseline_CLE",2030,"ECUA","Ecuador",3.33,3.182,0.008,868
+"Baseline_CLE",2030,"EGYP","Egypt",15.88,14.029,1.75,1289
+"Baseline_CLE",2030,"ESTO","Estonia",3.78,1.291,0.067,256
+"Baseline_CLE",2030,"FINL","Finland",3,1.224,0.214,1883
+"Baseline_CLE",2030,"FRAN","France",6.03,3.844,6.873,14732
+"Baseline_CLE",2030,"GEOR","Georgia",6.57,7.593,0.356,254
+"Baseline_CLE",2030,"GERM","Germany",5.82,3.04,10.768,14677
+"Baseline_CLE",2030,"GREE","Greece",7.96,3.575,0.81,1351
+"Baseline_CLE",2030,"HUNG","Hungary",10.36,5.241,3.344,1399
+"Baseline_CLE",2030,"ICEL","Iceland",2.92,2.055,0.026,52
+"Baseline_CLE",2030,"INDI","India",35.38,29.627,40.044,56247
+"Baseline_CLE",2030,"INDO","Indonesia",41.18,40.922,4.85,11050
+"Baseline_CLE",2030,"IRAN","Iran",25.56,24.5,2.351,5629
+"Baseline_CLE",2030,"IREL","Ireland",2.58,1.058,0.23,1631
+"Baseline_CLE",2030,"ISRA","Israel",15.57,12.579,1.22,2167
+"Baseline_CLE",2030,"ITAL","Italy",8.88,6.003,4.12,9605
+"Baseline_CLE",2030,"JAPA","Japan",6.47,5.295,0.037,14730
+"Baseline_CLE",2030,"KENY","Kenya",7.67,7.116,0.309,270
+"Baseline_CLE",2030,"KORS","Republic of Korea",21.76,13.433,0.97,11271
+"Baseline_CLE",2030,"KOSO","Kosovo",23.82,19.222,2.063,224
+"Baseline_CLE",2030,"LAOS","Laos",6.13,2.641,0.521,20
+"Baseline_CLE",2030,"LATV","Latvia",5.95,2.925,0.241,367
+"Baseline_CLE",2030,"LITH","Lithuania",5.67,1.989,0.494,558
+"Baseline_CLE",2030,"LUXE","Luxembourg",5.55,0.983,0.072,293
+"Baseline_CLE",2030,"MACE","TFYR Macedonia",12.89,8.617,1.017,178
+"Baseline_CLE",2030,"MALA","Malaysia",26.75,25.493,7.832,2739
+"Baseline_CLE",2030,"MALT","Malta",7.6,1.193,0,37
+"Baseline_CLE",2030,"MEXI","Mexico",9.43,9.174,0.049,7513
+"Baseline_CLE",2030,"MIDE","Middle East",11.07,9.008,4.529,6240
+"Baseline_CLE",2030,"MOLD","Republic of Moldova",10.27,4.743,0.328,135
+"Baseline_CLE",2030,"MONG","Mongolia",14.81,14.528,0.14,236
+"Baseline_CLE",2030,"MONT","Montenegro",13.14,9.177,0.164,58
+"Baseline_CLE",2030,"MYAN","Myanmar",8.31,5.852,0.309,28
+"Baseline_CLE",2030,"NAFR","Northern Africa (excl Egypt)",12.75,12.164,0.508,2016
+"Baseline_CLE",2030,"NEPA","Nepal",37.72,24.048,1.927,304
+"Baseline_CLE",2030,"NETH","Netherlands",7.26,2.523,1.9,4296
+"Baseline_CLE",2030,"NIGE","Nigeria",17.61,17.227,1.037,516
+"Baseline_CLE",2030,"NORW","Norway",2.38,1.007,0.215,865
+"Baseline_CLE",2030,"NZEL","New Zealand",1.33,1.14,0,926
+"Baseline_CLE",2030,"PAKI","Pakistan",49.01,43.668,6.701,934
+"Baseline_CLE",2030,"PARA","Paraguay",4.45,3.505,0.023,180
+"Baseline_CLE",2030,"PERU","Peru",10.5,10.244,0.181,600
+"Baseline_CLE",2030,"PHIL","Philippines",9.91,9.831,0.549,2064
+"Baseline_CLE",2030,"POLA","Poland",9.51,6.312,9.498,7770
+"Baseline_CLE",2030,"PORT","Portugal",5.49,3.327,0.095,1456
+"Baseline_CLE",2030,"ROMA","Romania",11.82,7.999,4.909,2317
+"Baseline_CLE",2030,"RSAF","Remaining Southern Africa",5.29,4.974,0.725,873
+"Baseline_CLE",2030,"RUSS","Russian Federation",7.82,6.049,7.103,13762
+"Baseline_CLE",2030,"SAAR","Saudi Arabia",7.25,4.332,1.347,5191
+"Baseline_CLE",2030,"SAFR","South Africa",7.13,6.571,0.287,4015
+"Baseline_CLE",2030,"SERB","Serbia",13.9,9.141,6.21,951
+"Baseline_CLE",2030,"SING","Singapore",11.78,2.031,0.356,1102
+"Baseline_CLE",2030,"SKRE","Slovakia",7.21,2.087,1.203,662
+"Baseline_CLE",2030,"SLOV","Slovenia",11.29,6.838,0.936,533
+"Baseline_CLE",2030,"SPAI","Spain",5.55,3.285,0.98,8962
+"Baseline_CLE",2030,"SRIL","Sri Lanka",7.51,6.958,0.006,174
+"Baseline_CLE",2030,"SWED","Sweden",3.14,0.946,0.435,1973
+"Baseline_CLE",2030,"SWIT","Switzerland",6.28,3.505,0.552,1597
+"Baseline_CLE",2030,"TAIW","Taiwan",14.9,12.918,0.063,4923
+"Baseline_CLE",2030,"TANZ","United Republic of Tanzania",6.28,5.891,0.447,298
+"Baseline_CLE",2030,"THAI","Thailand",10.78,9.258,2.927,5419
+"Baseline_CLE",2030,"TURK","Turkey",13.84,11.144,5.938,8436
+"Baseline_CLE",2030,"UKRA","Ukraine",7.79,4.265,6.635,2498
+"Baseline_CLE",2030,"UNKI","United Kingdom",4.51,2.783,3.279,7972
+"Baseline_CLE",2030,"URUG","Uruguay",3.64,3.159,0.199,123
+"Baseline_CLE",2030,"USAM","United States of America",5.03,4.727,1.623,71971
+"Baseline_CLE",2030,"VENE","Venezuela (Bolivarian Republic of)",6.59,6.364,0.187,1097
+"Baseline_CLE",2030,"VIET","Vietnam",21.3,18.352,3.566,4356
+"Baseline_CLE",2030,"WAFR","Western Africa (excl Nigeria)",7.63,6.844,0.323,1432
+"Baseline_MTFR",2030,"AFGH","Afghanistan",14.39,14.073,0.724,5347
+"Baseline_MTFR",2030,"ALBA","Albania",10,5.53,0.424,419
+"Baseline_MTFR",2030,"ARGE","Argentina",1.58,1.317,0.197,6162
+"Baseline_MTFR",2030,"ARME","Armenia",9.07,6.171,0.266,222
+"Baseline_MTFR",2030,"AUST","Austria",4.95,1.697,1.376,2586
+"Baseline_MTFR",2030,"AUTR","Australia",1.16,1.082,0.026,9549
+"Baseline_MTFR",2030,"AZER","Azerbaijan",5.08,2.351,0.762,1045
+"Baseline_MTFR",2030,"BANG","Bangladesh",19.61,10.838,0.793,5921
+"Baseline_MTFR",2030,"BELA","Belarus",5.17,2.172,0.827,1658
+"Baseline_MTFR",2030,"BELG","Belgium",6.26,2.043,1.712,3230
+"Baseline_MTFR",2030,"BHUT","Bhutan",4.02,1.629,0.111,253
+"Baseline_MTFR",2030,"BOHE","Bosnia and Herzegovina",13.28,9.604,4.378,915
+"Baseline_MTFR",2030,"BOLV","Bolivia (Plurinational State of)",1.28,1.218,0.002,966
+"Baseline_MTFR",2030,"BRAZ","Brazil",2.59,2.525,0.68,25174
+"Baseline_MTFR",2030,"BRUN","Brunei Darussalam",2.7,1.738,0.072,190
+"Baseline_MTFR",2030,"BULG","Bulgaria",6.7,3.029,0.932,1143
+"Baseline_MTFR",2030,"CAMB","Cambodia",2.58,1.511,0.103,1331
+"Baseline_MTFR",2030,"CANA","Canada",3.35,2.399,0.123,17755
+"Baseline_MTFR",2030,"CARB","Caribbean",2.08,1.934,0.088,2754
+"Baseline_MTFR",2030,"CEAM","Central America",4.52,4.443,0.016,3307
+"Baseline_MTFR",2030,"CHIL","Chile",10.2,10.125,0.129,2970
+"Baseline_MTFR",2030,"CHIN","China",15.06,14.38,10.72,239851
+"Baseline_MTFR",2030,"COLO","Colombia",2.62,2.485,0.009,5655
+"Baseline_MTFR",2030,"CROA","Croatia",7.27,2.543,1.148,1084
+"Baseline_MTFR",2030,"CYPR","Cyprus",5.13,0.609,0.002,165
+"Baseline_MTFR",2030,"CZRE","Czech Republic",7.46,3.751,2.625,3007
+"Baseline_MTFR",2030,"DENM","Denmark",3.9,1.181,0.453,2134
+"Baseline_MTFR",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",2.31,1.953,0.18,35822
+"Baseline_MTFR",2030,"ECUA","Ecuador",1.62,1.511,0.003,1589
+"Baseline_MTFR",2030,"EGYP","Egypt",6.38,5.237,0.716,6520
+"Baseline_MTFR",2030,"ESTO","Estonia",2.91,0.88,0.048,403
+"Baseline_MTFR",2030,"FINL","Finland",2.43,0.893,0.149,2524
+"Baseline_MTFR",2030,"FRAN","France",5.12,3.087,5.632,17912
+"Baseline_MTFR",2030,"GEOR","Georgia",7.07,5.039,0.222,482
+"Baseline_MTFR",2030,"GERM","Germany",5.36,3.047,12.889,18483
+"Baseline_MTFR",2030,"GREE","Greece",6.48,2.631,0.515,2092
+"Baseline_MTFR",2030,"HUNG","Hungary",8.24,3.722,2.518,1844
+"Baseline_MTFR",2030,"ICEL","Iceland",2.5,1.644,0.022,72
+"Baseline_MTFR",2030,"INDI","India",14.25,12.031,17.307,127796
+"Baseline_MTFR",2030,"INDO","Indonesia",13.79,13.59,1.241,29686
+"Baseline_MTFR",2030,"IRAN","Iran",8.88,8.492,0.953,16119
+"Baseline_MTFR",2030,"IREL","Ireland",2.16,0.806,0.178,1881
+"Baseline_MTFR",2030,"ISRA","Israel",6.74,5.387,0.474,2953
+"Baseline_MTFR",2030,"ITAL","Italy",7.91,5.178,3.159,11514
+"Baseline_MTFR",2030,"JAPA","Japan",4.22,3.344,0.024,17798
+"Baseline_MTFR",2030,"KENY","Kenya",2.76,2.549,0.132,6419
+"Baseline_MTFR",2030,"KORS","Republic of Korea",13.43,7.998,0.582,12703
+"Baseline_MTFR",2030,"KOSO","Kosovo",23.23,16.957,3.551,364
+"Baseline_MTFR",2030,"LAOS","Laos",2.18,0.727,0.119,1789
+"Baseline_MTFR",2030,"LATV","Latvia",4.51,2.093,0.187,544
+"Baseline_MTFR",2030,"LITH","Lithuania",4.3,1.386,0.331,772
+"Baseline_MTFR",2030,"LUXE","Luxembourg",5.03,0.832,0.049,321
+"Baseline_MTFR",2030,"MACE","TFYR Macedonia",11.01,6.105,0.682,408
+"Baseline_MTFR",2030,"MALA","Malaysia",8.87,8.27,2.567,9185
+"Baseline_MTFR",2030,"MALT","Malta",7.04,0.894,0,48
+"Baseline_MTFR",2030,"MEXI","Mexico",4.57,4.397,0.027,13015
+"Baseline_MTFR",2030,"MIDE","Middle East",3.52,2.638,1.647,15118
+"Baseline_MTFR",2030,"MOLD","Republic of Moldova",7.33,3.165,0.218,547
+"Baseline_MTFR",2030,"MONG","Mongolia",8.78,8.658,0.083,1159
+"Baseline_MTFR",2030,"MONT","Montenegro",10.95,6.851,0.117,99
+"Baseline_MTFR",2030,"MYAN","Myanmar",3.26,2.246,0.16,4212
+"Baseline_MTFR",2030,"NAFR","Northern Africa (excl Egypt)",4.94,4.397,0.205,10884
+"Baseline_MTFR",2030,"NEPA","Nepal",14.46,8.474,0.8,3943
+"Baseline_MTFR",2030,"NETH","Netherlands",6.46,2.193,1.643,4778
+"Baseline_MTFR",2030,"NIGE","Nigeria",5.02,4.85,0.436,46011
+"Baseline_MTFR",2030,"NORW","Norway",1.94,0.655,0.112,1086
+"Baseline_MTFR",2030,"NZEL","New Zealand",0.69,0.633,0,1405
+"Baseline_MTFR",2030,"PAKI","Pakistan",15.78,13.621,2.434,17124
+"Baseline_MTFR",2030,"PARA","Paraguay",2.2,1.712,0.014,787
+"Baseline_MTFR",2030,"PERU","Peru",4.57,4.351,0.102,2754
+"Baseline_MTFR",2030,"PHIL","Philippines",3.49,3.406,0.201,9000
+"Baseline_MTFR",2030,"POLA","Poland",7.51,4.616,6.902,10412
+"Baseline_MTFR",2030,"PORT","Portugal",4.4,2.405,0.056,1902
+"Baseline_MTFR",2030,"ROMA","Romania",9.3,6.064,3.591,3342
+"Baseline_MTFR",2030,"RSAF","Remaining Southern Africa",1.58,1.393,0.273,18148
+"Baseline_MTFR",2030,"RUSS","Russian Federation",4.57,2.955,2.678,32260
+"Baseline_MTFR",2030,"SAAR","Saudi Arabia",2.13,0.999,0.426,10275
+"Baseline_MTFR",2030,"SAFR","South Africa",3.5,3.251,0.164,9228
+"Baseline_MTFR",2030,"SERB","Serbia",12.78,8.552,11.76,1493
+"Baseline_MTFR",2030,"SING","Singapore",4.02,1.099,0.215,1334
+"Baseline_MTFR",2030,"SKRE","Slovakia",5.81,1.444,0.741,975
+"Baseline_MTFR",2030,"SLOV","Slovenia",8.46,4.606,0.665,660
+"Baseline_MTFR",2030,"SPAI","Spain",4.46,2.276,0.645,11221
+"Baseline_MTFR",2030,"SRIL","Sri Lanka",2.27,1.996,0.002,1581
+"Baseline_MTFR",2030,"SWED","Sweden",2.78,0.85,0.373,2250
+"Baseline_MTFR",2030,"SWIT","Switzerland",5.49,3.025,0.469,1698
+"Baseline_MTFR",2030,"TAIW","Taiwan",8.22,6.891,0.038,6419
+"Baseline_MTFR",2030,"TANZ","United Republic of Tanzania",1.74,1.587,0.166,9378
+"Baseline_MTFR",2030,"THAI","Thailand",3.67,2.962,0.885,14034
+"Baseline_MTFR",2030,"TURK","Turkey",8.52,5.807,2.297,13894
+"Baseline_MTFR",2030,"UKRA","Ukraine",5.54,2.78,4.472,5399
+"Baseline_MTFR",2030,"UNKI","United Kingdom",3.76,2.145,2.386,9802
+"Baseline_MTFR",2030,"URUG","Uruguay",1.33,1.062,0.096,512
+"Baseline_MTFR",2030,"USAM","United States of America",3.01,2.809,0.93,101901
+"Baseline_MTFR",2030,"VENE","Venezuela (Bolivarian Republic of)",2.81,2.654,0.09,4074
+"Baseline_MTFR",2030,"VIET","Vietnam",8.23,6.489,1.346,11425
+"Baseline_MTFR",2030,"WAFR","Western Africa (excl Nigeria)",2.37,2.051,0.11,32664
+"Decarb_CLE",2030,"AFGH","Afghanistan",32.95,32.305,1.441,40
+"Decarb_CLE",2030,"ALBA","Albania",12.04,8.594,0.819,177
+"Decarb_CLE",2030,"ARGE","Argentina",2.94,2.526,0.328,2329
+"Decarb_CLE",2030,"ARME","Armenia",19.94,15.997,0.683,20
+"Decarb_CLE",2030,"AUST","Austria",5.21,2.053,1.546,1723
+"Decarb_CLE",2030,"AUTR","Australia",1.87,1.793,0.037,4989
+"Decarb_CLE",2030,"AZER","Azerbaijan",10.56,6.911,1.765,233
+"Decarb_CLE",2030,"BANG","Bangladesh",36.57,20.53,1.459,202
+"Decarb_CLE",2030,"BELA","Belarus",7.38,3.986,1.418,572
+"Decarb_CLE",2030,"BELG","Belgium",6.59,2.51,2.005,2297
+"Decarb_CLE",2030,"BHUT","Bhutan",9.86,5.296,0.511,13
+"Decarb_CLE",2030,"BOHE","Bosnia and Herzegovina",14.79,11.479,2.783,338
+"Decarb_CLE",2030,"BOLV","Bolivia (Plurinational State of)",2.3,2.207,0.002,163
+"Decarb_CLE",2030,"BRAZ","Brazil",5.46,5.396,1.193,12666
+"Decarb_CLE",2030,"BRUN","Brunei Darussalam",4.2,2.374,0.076,31
+"Decarb_CLE",2030,"BULG","Bulgaria",7.26,3.612,1.092,635
+"Decarb_CLE",2030,"CAMB","Cambodia",6.2,3.792,0.211,8
+"Decarb_CLE",2030,"CANA","Canada",6.46,4.947,0.206,10961
+"Decarb_CLE",2030,"CARB","Caribbean",2.75,2.597,0.128,552
+"Decarb_CLE",2030,"CEAM","Central America",3.85,3.76,0.012,676
+"Decarb_CLE",2030,"CHIL","Chile",13.71,13.604,0.15,1328
+"Decarb_CLE",2030,"CHIN","China",21.73,20.931,14.244,132427
+"Decarb_CLE",2030,"COLO","Colombia",5.58,5.385,0.023,1699
+"Decarb_CLE",2030,"CROA","Croatia",7.28,2.705,1.312,597
+"Decarb_CLE",2030,"CYPR","Cyprus",5.93,0.74,0.003,93
+"Decarb_CLE",2030,"CZRE","Czech Republic",7.49,4.082,2.729,1649
+"Decarb_CLE",2030,"DENM","Denmark",4.2,1.447,0.522,1515
+"Decarb_CLE",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",4.23,3.612,0.293,939
+"Decarb_CLE",2030,"ECUA","Ecuador",2.89,2.757,0.006,737
+"Decarb_CLE",2030,"EGYP","Egypt",13.84,12.385,1.536,1149
+"Decarb_CLE",2030,"ESTO","Estonia",3.47,1.128,0.059,201
+"Decarb_CLE",2030,"FINL","Finland",2.74,1.021,0.175,1497
+"Decarb_CLE",2030,"FRAN","France",5.45,3.428,6.34,11074
+"Decarb_CLE",2030,"GEOR","Georgia",13.65,10.625,0.716,133
+"Decarb_CLE",2030,"GERM","Germany",5.07,2.596,9.186,10963
+"Decarb_CLE",2030,"GREE","Greece",7.08,3.199,0.702,1059
+"Decarb_CLE",2030,"HUNG","Hungary",8.67,4.336,2.847,1122
+"Decarb_CLE",2030,"ICEL","Iceland",2.89,2.028,0.025,41
+"Decarb_CLE",2030,"INDI","India",28.18,23.562,31.039,46200
+"Decarb_CLE",2030,"INDO","Indonesia",36.67,36.431,3.81,9643
+"Decarb_CLE",2030,"IRAN","Iran",21.98,21.212,1.922,4788
+"Decarb_CLE",2030,"IREL","Ireland",2.39,0.921,0.207,1351
+"Decarb_CLE",2030,"ISRA","Israel",12.78,10.266,0.65,1468
+"Decarb_CLE",2030,"ITAL","Italy",7.77,5.085,3.549,6170
+"Decarb_CLE",2030,"JAPA","Japan",6.21,5.128,0.033,11858
+"Decarb_CLE",2030,"KENY","Kenya",4.72,4.375,0.188,252
+"Decarb_CLE",2030,"KORS","Republic of Korea",20.65,13.263,0.956,9059
+"Decarb_CLE",2030,"KOSO","Kosovo",24.16,20.262,1.246,101
+"Decarb_CLE",2030,"LAOS","Laos",4.8,1.934,0.298,13
+"Decarb_CLE",2030,"LATV","Latvia",5.24,2.481,0.212,289
+"Decarb_CLE",2030,"LITH","Lithuania",4.97,1.684,0.425,459
+"Decarb_CLE",2030,"LUXE","Luxembourg",4.99,0.889,0.058,243
+"Decarb_CLE",2030,"MACE","TFYR Macedonia",12.67,9.129,0.985,158
+"Decarb_CLE",2030,"MALA","Malaysia",23.35,22.308,6.754,2358
+"Decarb_CLE",2030,"MALT","Malta",7.35,1.151,0,32
+"Decarb_CLE",2030,"MEXI","Mexico",7.86,7.639,0.038,4341
+"Decarb_CLE",2030,"MIDE","Middle East",9.36,7.834,3.38,5204
+"Decarb_CLE",2030,"MOLD","Republic of Moldova",9.99,5.154,0.353,127
+"Decarb_CLE",2030,"MONG","Mongolia",11.88,11.642,0.092,161
+"Decarb_CLE",2030,"MONT","Montenegro",13.27,9.992,0.157,51
+"Decarb_CLE",2030,"MYAN","Myanmar",6.32,4.381,0.26,19
+"Decarb_CLE",2030,"NAFR","Northern Africa (excl Egypt)",11.41,10.865,0.408,1790
+"Decarb_CLE",2030,"NEPA","Nepal",25.66,15.139,1.294,234
+"Decarb_CLE",2030,"NETH","Netherlands",6.57,2.278,1.661,3535
+"Decarb_CLE",2030,"NIGE","Nigeria",6.13,5.839,0.45,482
+"Decarb_CLE",2030,"NORW","Norway",2.4,1.079,0.179,954
+"Decarb_CLE",2030,"NZEL","New Zealand",1.15,1.095,0,782
+"Decarb_CLE",2030,"PAKI","Pakistan",37.35,33.308,5.488,637
+"Decarb_CLE",2030,"PARA","Paraguay",3.23,2.363,0.014,141
+"Decarb_CLE",2030,"PERU","Peru",8.07,7.837,0.144,483
+"Decarb_CLE",2030,"PHIL","Philippines",7.03,6.946,0.468,1741
+"Decarb_CLE",2030,"POLA","Poland",7.63,4.803,6.931,5535
+"Decarb_CLE",2030,"PORT","Portugal",4.96,2.851,0.079,1083
+"Decarb_CLE",2030,"ROMA","Romania",9.59,6.238,3.921,1857
+"Decarb_CLE",2030,"RSAF","Remaining Southern Africa",3.63,3.391,0.521,801
+"Decarb_CLE",2030,"RUSS","Russian Federation",7.69,5.928,7.305,11317
+"Decarb_CLE",2030,"SAAR","Saudi Arabia",5.47,3.351,0.911,4273
+"Decarb_CLE",2030,"SAFR","South Africa",5.67,5.248,0.211,2620
+"Decarb_CLE",2030,"SERB","Serbia",13.33,9.376,5.131,556
+"Decarb_CLE",2030,"SING","Singapore",9.48,1.317,0.26,985
+"Decarb_CLE",2030,"SKRE","Slovakia",6.11,1.825,1.075,546
+"Decarb_CLE",2030,"SLOV","Slovenia",9.58,5.764,0.769,403
+"Decarb_CLE",2030,"SPAI","Spain",5.15,2.931,0.889,7009
+"Decarb_CLE",2030,"SRIL","Sri Lanka",5,4.557,0.004,133
+"Decarb_CLE",2030,"SWED","Sweden",2.96,0.919,0.401,1607
+"Decarb_CLE",2030,"SWIT","Switzerland",5.58,3.133,0.517,1062
+"Decarb_CLE",2030,"TAIW","Taiwan",13.68,12.063,0.054,3358
+"Decarb_CLE",2030,"TANZ","United Republic of Tanzania",3.8,3.562,0.29,282
+"Decarb_CLE",2030,"THAI","Thailand",8.9,7.695,2.341,4642
+"Decarb_CLE",2030,"TURK","Turkey",12.28,9.33,4.033,5988
+"Decarb_CLE",2030,"UKRA","Ukraine",7.23,3.853,5.279,1643
+"Decarb_CLE",2030,"UNKI","United Kingdom",4.12,2.511,3.102,6567
+"Decarb_CLE",2030,"URUG","Uruguay",3.21,2.77,0.172,102
+"Decarb_CLE",2030,"USAM","United States of America",4.96,4.661,1.545,60564
+"Decarb_CLE",2030,"VENE","Venezuela (Bolivarian Republic of)",5.44,5.257,0.148,928
+"Decarb_CLE",2030,"VIET","Vietnam",17.83,15.404,3.08,3683
+"Decarb_CLE",2030,"WAFR","Western Africa (excl Nigeria)",4.8,4.379,0.217,1346
+"Decarb_MTFR",2030,"AFGH","Afghanistan",8.37,8.151,0.393,2138
+"Decarb_MTFR",2030,"ALBA","Albania",5.36,2.846,0.221,397
+"Decarb_MTFR",2030,"ARGE","Argentina",1.26,1.065,0.135,5465
+"Decarb_MTFR",2030,"ARME","Armenia",5.65,5.902,0.235,313
+"Decarb_MTFR",2030,"AUST","Austria",3.63,1.362,0.998,2124
+"Decarb_MTFR",2030,"AUTR","Australia",1,0.92,0.018,7423
+"Decarb_MTFR",2030,"AZER","Azerbaijan",4.17,2.259,0.548,3253
+"Decarb_MTFR",2030,"BANG","Bangladesh",14.8,7.631,0.554,3975
+"Decarb_MTFR",2030,"BELA","Belarus",3.46,1.229,0.482,2224
+"Decarb_MTFR",2030,"BELG","Belgium",4.4,1.541,1.204,2608
+"Decarb_MTFR",2030,"BHUT","Bhutan",3.16,1.427,0.096,202
+"Decarb_MTFR",2030,"BOHE","Bosnia and Herzegovina",6.08,3.743,0.842,930
+"Decarb_MTFR",2030,"BOLV","Bolivia (Plurinational State of)",0.9,0.852,0.001,843
+"Decarb_MTFR",2030,"BRAZ","Brazil",1.95,1.886,0.484,22829
+"Decarb_MTFR",2030,"BRUN","Brunei Darussalam",1.93,1.134,0.044,158
+"Decarb_MTFR",2030,"BULG","Bulgaria",4.54,2.171,0.48,902
+"Decarb_MTFR",2030,"CAMB","Cambodia",1.8,0.975,0.074,647
+"Decarb_MTFR",2030,"CANA","Canada",2.64,1.915,0.097,14727
+"Decarb_MTFR",2030,"CARB","Caribbean",1.09,0.951,0.048,2206
+"Decarb_MTFR",2030,"CEAM","Central America",1.61,1.55,0.005,2572
+"Decarb_MTFR",2030,"CHIL","Chile",7.46,7.4,0.11,2262
+"Decarb_MTFR",2030,"CHIN","China",12.26,11.636,8.038,186179
+"Decarb_MTFR",2030,"COLO","Colombia",2.28,2.169,0.007,4306
+"Decarb_MTFR",2030,"CROA","Croatia",4.64,1.753,0.768,818
+"Decarb_MTFR",2030,"CYPR","Cyprus",4.36,0.404,0.001,145
+"Decarb_MTFR",2030,"CZRE","Czech Republic",5.26,2.944,1.776,2350
+"Decarb_MTFR",2030,"DENM","Denmark",2.83,0.851,0.292,1794
+"Decarb_MTFR",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1.12,0.887,0.06,9761
+"Decarb_MTFR",2030,"ECUA","Ecuador",1.29,1.195,0.003,1361
+"Decarb_MTFR",2030,"EGYP","Egypt",4.94,3.998,0.54,5612
+"Decarb_MTFR",2030,"ESTO","Estonia",2.33,0.666,0.03,341
+"Decarb_MTFR",2030,"FINL","Finland",1.99,0.652,0.106,1976
+"Decarb_MTFR",2030,"FRAN","France",3.97,2.38,4.09,14461
+"Decarb_MTFR",2030,"GEOR","Georgia",3.93,4.665,0.201,506
+"Decarb_MTFR",2030,"GERM","Germany",3.51,1.736,5.916,13720
+"Decarb_MTFR",2030,"GREE","Greece",5.25,2.27,0.38,1662
+"Decarb_MTFR",2030,"HUNG","Hungary",5.94,3.178,1.862,1566
+"Decarb_MTFR",2030,"ICEL","Iceland",2.48,1.627,0.022,59
+"Decarb_MTFR",2030,"INDI","India",10,8.592,11.968,92815
+"Decarb_MTFR",2030,"INDO","Indonesia",10.29,10.093,0.924,26622
+"Decarb_MTFR",2030,"IRAN","Iran",7.13,6.845,0.733,13617
+"Decarb_MTFR",2030,"IREL","Ireland",1.78,0.62,0.119,1510
+"Decarb_MTFR",2030,"ISRA","Israel",4.93,4.009,0.275,1998
+"Decarb_MTFR",2030,"ITAL","Italy",6.11,3.769,2.182,8075
+"Decarb_MTFR",2030,"JAPA","Japan",3.38,2.616,0.018,14274
+"Decarb_MTFR",2030,"KENY","Kenya",1.93,1.827,0.072,2261
+"Decarb_MTFR",2030,"KORS","Republic of Korea",10.52,6.114,0.46,10350
+"Decarb_MTFR",2030,"KOSO","Kosovo",8.9,6.505,0.392,347
+"Decarb_MTFR",2030,"LAOS","Laos",1.53,0.484,0.075,846
+"Decarb_MTFR",2030,"LATV","Latvia",3.4,1.577,0.129,456
+"Decarb_MTFR",2030,"LITH","Lithuania",3.07,0.966,0.191,619
+"Decarb_MTFR",2030,"LUXE","Luxembourg",3.51,0.697,0.041,267
+"Decarb_MTFR",2030,"MACE","TFYR Macedonia",5.37,3.184,0.374,447
+"Decarb_MTFR",2030,"MALA","Malaysia",7.31,6.809,2.127,7937
+"Decarb_MTFR",2030,"MALT","Malta",6.21,0.438,0,43
+"Decarb_MTFR",2030,"MEXI","Mexico",3.18,3.055,0.016,8875
+"Decarb_MTFR",2030,"MIDE","Middle East",2.42,1.752,1.054,12271
+"Decarb_MTFR",2030,"MOLD","Republic of Moldova",4.7,1.829,0.128,666
+"Decarb_MTFR",2030,"MONG","Mongolia",7.17,7.071,0.049,825
+"Decarb_MTFR",2030,"MONT","Montenegro",5.48,3.131,0.063,126
+"Decarb_MTFR",2030,"MYAN","Myanmar",2.1,1.381,0.097,2170
+"Decarb_MTFR",2030,"NAFR","Northern Africa (excl Egypt)",3.07,2.547,0.138,8775
+"Decarb_MTFR",2030,"NEPA","Nepal",9.12,5.09,0.469,1731
+"Decarb_MTFR",2030,"NETH","Netherlands",4.55,1.562,1.066,3964
+"Decarb_MTFR",2030,"NIGE","Nigeria",1.98,1.848,0.178,9540
+"Decarb_MTFR",2030,"NORW","Norway",1.73,0.59,0.088,1177
+"Decarb_MTFR",2030,"NZEL","New Zealand",0.57,0.512,0,1228
+"Decarb_MTFR",2030,"PAKI","Pakistan",10.04,8.578,1.441,10527
+"Decarb_MTFR",2030,"PARA","Paraguay",1.22,0.868,0.006,625
+"Decarb_MTFR",2030,"PERU","Peru",3.07,2.865,0.079,2181
+"Decarb_MTFR",2030,"PHIL","Philippines",2.4,2.318,0.154,5699
+"Decarb_MTFR",2030,"POLA","Poland",4.96,3.035,4.003,7820
+"Decarb_MTFR",2030,"PORT","Portugal",3.93,2.035,0.046,1516
+"Decarb_MTFR",2030,"ROMA","Romania",6.9,4.778,2.412,2635
+"Decarb_MTFR",2030,"RSAF","Remaining Southern Africa",0.83,0.686,0.124,6015
+"Decarb_MTFR",2030,"RUSS","Russian Federation",3.8,2.387,2.163,29538
+"Decarb_MTFR",2030,"SAAR","Saudi Arabia",1.69,0.816,0.309,8545
+"Decarb_MTFR",2030,"SAFR","South Africa",2.47,2.332,0.125,6305
+"Decarb_MTFR",2030,"SERB","Serbia",5.86,3.337,2.182,1315
+"Decarb_MTFR",2030,"SING","Singapore",3.15,0.715,0.162,1154
+"Decarb_MTFR",2030,"SKRE","Slovakia",4.18,1.35,0.593,843
+"Decarb_MTFR",2030,"SLOV","Slovenia",5.2,2.51,0.365,554
+"Decarb_MTFR",2030,"SPAI","Spain",3.89,1.799,0.505,9121
+"Decarb_MTFR",2030,"SRIL","Sri Lanka",1.59,1.37,0.001,883
+"Decarb_MTFR",2030,"SWED","Sweden",2.32,0.751,0.276,1865
+"Decarb_MTFR",2030,"SWIT","Switzerland",3.86,2.047,0.346,1421
+"Decarb_MTFR",2030,"TAIW","Taiwan",6.11,4.929,0.029,4444
+"Decarb_MTFR",2030,"TANZ","United Republic of Tanzania",1.08,1.002,0.092,3653
+"Decarb_MTFR",2030,"THAI","Thailand",2.55,2.011,0.586,10293
+"Decarb_MTFR",2030,"TURK","Turkey",6.25,3.939,1.253,10202
+"Decarb_MTFR",2030,"UKRA","Ukraine",3.45,1.258,1.653,5369
+"Decarb_MTFR",2030,"UNKI","United Kingdom",2.96,1.732,1.874,8169
+"Decarb_MTFR",2030,"URUG","Uruguay",1.07,0.871,0.064,435
+"Decarb_MTFR",2030,"USAM","United States of America",2.37,2.199,0.674,86203
+"Decarb_MTFR",2030,"VENE","Venezuela (Bolivarian Republic of)",2.22,2.102,0.07,3436
+"Decarb_MTFR",2030,"VIET","Vietnam",6.3,5.006,1.034,7659
+"Decarb_MTFR",2030,"WAFR","Western Africa (excl Nigeria)",1.63,1.447,0.076,12102
+"Baseline_CLE",2035,"AFGH","Afghanistan",60.42,59.573,2.468,193
+"Baseline_CLE",2035,"ALBA","Albania",10.21,6.704,0.768,243
+"Baseline_CLE",2035,"ARGE","Argentina",3.31,2.831,0.38,2834
+"Baseline_CLE",2035,"ARME","Armenia",10.15,14.107,0.477,82
+"Baseline_CLE",2035,"AUST","Austria",5.12,1.969,1.512,1889
+"Baseline_CLE",2035,"AUTR","Australia",1.96,1.686,0.047,6186
+"Baseline_CLE",2035,"AZER","Azerbaijan",7.74,6.296,1.366,617
+"Baseline_CLE",2035,"BANG","Bangladesh",53.78,27.463,1.708,278
+"Baseline_CLE",2035,"BELA","Belarus",7.17,3.722,1.492,750
+"Baseline_CLE",2035,"BELG","Belgium",6.38,2.379,1.913,2356
+"Baseline_CLE",2035,"BHUT","Bhutan",13.28,7.448,0.7,27
+"Baseline_CLE",2035,"BOHE","Bosnia and Herzegovina",11.74,8.498,1.994,418
+"Baseline_CLE",2035,"BOLV","Bolivia (Plurinational State of)",3.15,3.039,0.004,222
+"Baseline_CLE",2035,"BRAZ","Brazil",5.87,5.806,1.323,14551
+"Baseline_CLE",2035,"BRUN","Brunei Darussalam",5.49,3.273,0.116,36
+"Baseline_CLE",2035,"BULG","Bulgaria",7.17,3.404,1.122,799
+"Baseline_CLE",2035,"CAMB","Cambodia",8.35,5.598,0.27,11
+"Baseline_CLE",2035,"CANA","Canada",6.3,4.838,0.202,13342
+"Baseline_CLE",2035,"CARB","Caribbean",4.07,3.914,0.191,886
+"Baseline_CLE",2035,"CEAM","Central America",7.16,7.059,0.023,1435
+"Baseline_CLE",2035,"CHIL","Chile",15.91,15.801,0.169,1923
+"Baseline_CLE",2035,"CHIN","China",22.96,21.289,14.721,146464
+"Baseline_CLE",2035,"COLO","Colombia",6.52,6.27,0.029,2407
+"Baseline_CLE",2035,"CROA","Croatia",6.96,2.608,1.307,781
+"Baseline_CLE",2035,"CYPR","Cyprus",6.55,0.714,0.003,99
+"Baseline_CLE",2035,"CZRE","Czech Republic",7.25,3.836,2.609,1959
+"Baseline_CLE",2035,"DENM","Denmark",4.13,1.427,0.497,1644
+"Baseline_CLE",2035,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.89,6.973,0.537,1127
+"Baseline_CLE",2035,"ECUA","Ecuador",3.61,3.459,0.008,1042
+"Baseline_CLE",2035,"EGYP","Egypt",17.24,15.393,1.878,1449
+"Baseline_CLE",2035,"ESTO","Estonia",3.45,1.105,0.059,240
+"Baseline_CLE",2035,"FINL","Finland",2.83,1.119,0.192,1758
+"Baseline_CLE",2035,"FRAN","France",5.39,3.374,5.897,13483
+"Baseline_CLE",2035,"GEOR","Georgia",6.75,8.016,0.371,280
+"Baseline_CLE",2035,"GERM","Germany",5.15,2.736,9.525,12185
+"Baseline_CLE",2035,"GREE","Greece",7.23,3.038,0.652,1272
+"Baseline_CLE",2035,"HUNG","Hungary",8.15,3.871,2.705,1429
+"Baseline_CLE",2035,"ICEL","Iceland",3.03,2.159,0.026,52
+"Baseline_CLE",2035,"INDI","India",35.49,29.631,39.346,62757
+"Baseline_CLE",2035,"INDO","Indonesia",45.88,45.621,5.188,11816
+"Baseline_CLE",2035,"IRAN","Iran",27.24,26.208,2.43,6184
+"Baseline_CLE",2035,"IREL","Ireland",2.27,0.815,0.198,1459
+"Baseline_CLE",2035,"ISRA","Israel",15.41,12.334,1.157,2067
+"Baseline_CLE",2035,"ITAL","Italy",7.74,4.979,3.515,8438
+"Baseline_CLE",2035,"JAPA","Japan",6.28,5.139,0.034,13468
+"Baseline_CLE",2035,"KENY","Kenya",8.34,7.78,0.321,305
+"Baseline_CLE",2035,"KORS","Republic of Korea",21.27,13.172,0.941,10020
+"Baseline_CLE",2035,"KOSO","Kosovo",19.25,15.459,1.521,181
+"Baseline_CLE",2035,"LAOS","Laos",6.05,2.575,0.391,22
+"Baseline_CLE",2035,"LATV","Latvia",4.96,2.216,0.207,392
+"Baseline_CLE",2035,"LITH","Lithuania",4.63,1.341,0.384,561
+"Baseline_CLE",2035,"LUXE","Luxembourg",4.8,0.813,0.057,218
+"Baseline_CLE",2035,"MACE","TFYR Macedonia",10.92,7.344,0.885,198
+"Baseline_CLE",2035,"MALA","Malaysia",28.59,27.178,8.156,2790
+"Baseline_CLE",2035,"MALT","Malta",7.66,1.159,0,40
+"Baseline_CLE",2035,"MEXI","Mexico",9.69,9.454,0.048,9465
+"Baseline_CLE",2035,"MIDE","Middle East",11.81,9.749,4.448,6966
+"Baseline_CLE",2035,"MOLD","Republic of Moldova",9.18,4.016,0.287,164
+"Baseline_CLE",2035,"MONG","Mongolia",10.38,10.111,0.142,180
+"Baseline_CLE",2035,"MONT","Montenegro",10.61,7.386,0.14,70
+"Baseline_CLE",2035,"MYAN","Myanmar",8.76,6.27,0.32,28
+"Baseline_CLE",2035,"NAFR","Northern Africa (excl Egypt)",14.17,13.568,0.54,2253
+"Baseline_CLE",2035,"NEPA","Nepal",40.02,26.806,2.056,347
+"Baseline_CLE",2035,"NETH","Netherlands",6.58,2.412,1.758,3767
+"Baseline_CLE",2035,"NIGE","Nigeria",17.9,17.509,1.064,594
+"Baseline_CLE",2035,"NORW","Norway",2.28,0.956,0.206,765
+"Baseline_CLE",2035,"NZEL","New Zealand",1.18,0.989,0,935
+"Baseline_CLE",2035,"PAKI","Pakistan",50.04,44.646,6.776,1249
+"Baseline_CLE",2035,"PARA","Paraguay",4.81,3.848,0.023,211
+"Baseline_CLE",2035,"PERU","Peru",11.54,11.284,0.186,691
+"Baseline_CLE",2035,"PHIL","Philippines",10.56,10.477,0.568,2128
+"Baseline_CLE",2035,"POLA","Poland",6.99,4.138,7.002,7702
+"Baseline_CLE",2035,"PORT","Portugal",4.98,2.805,0.08,1372
+"Baseline_CLE",2035,"ROMA","Romania",9.77,6.292,4.092,2352
+"Baseline_CLE",2035,"RSAF","Remaining Southern Africa",5.71,5.426,0.758,988
+"Baseline_CLE",2035,"RUSS","Russian Federation",7.57,5.818,6.854,14048
+"Baseline_CLE",2035,"SAAR","Saudi Arabia",7.31,4.421,1.297,5765
+"Baseline_CLE",2035,"SAFR","South Africa",7.09,6.51,0.247,3964
+"Baseline_CLE",2035,"SERB","Serbia",11.05,7.123,4.366,750
+"Baseline_CLE",2035,"SING","Singapore",13.48,3.219,0.499,1146
+"Baseline_CLE",2035,"SKRE","Slovakia",6.11,1.847,1.066,654
+"Baseline_CLE",2035,"SLOV","Slovenia",9.88,6.064,0.79,442
+"Baseline_CLE",2035,"SPAI","Spain",5.16,2.851,0.872,8248
+"Baseline_CLE",2035,"SRIL","Sri Lanka",7.75,7.172,0.006,188
+"Baseline_CLE",2035,"SWED","Sweden",2.92,0.882,0.385,1687
+"Baseline_CLE",2035,"SWIT","Switzerland",5.51,3.056,0.466,1603
+"Baseline_CLE",2035,"TAIW","Taiwan",15.79,13.759,0.071,6149
+"Baseline_CLE",2035,"TANZ","United Republic of Tanzania",6.91,6.526,0.463,335
+"Baseline_CLE",2035,"THAI","Thailand",10.93,9.5,2.966,5728
+"Baseline_CLE",2035,"TURK","Turkey",12.58,9.79,5.624,8659
+"Baseline_CLE",2035,"UKRA","Ukraine",7.58,4.317,7.149,2962
+"Baseline_CLE",2035,"UNKI","United Kingdom",4.18,2.59,2.942,7065
+"Baseline_CLE",2035,"URUG","Uruguay",3.96,3.463,0.204,139
+"Baseline_CLE",2035,"USAM","United States of America",4.64,4.34,1.497,70660
+"Baseline_CLE",2035,"VENE","Venezuela (Bolivarian Republic of)",7.28,7.049,0.2,1199
+"Baseline_CLE",2035,"VIET","Vietnam",21.67,18.936,3.546,4618
+"Baseline_CLE",2035,"WAFR","Western Africa (excl Nigeria)",8.18,7.386,0.33,1616
+"Decarb_CLE",2035,"AFGH","Afghanistan",30.86,30.309,1.263,65
+"Decarb_CLE",2035,"ALBA","Albania",9.18,6.132,0.739,195
+"Decarb_CLE",2035,"ARGE","Argentina",2.79,2.382,0.309,2272
+"Decarb_CLE",2035,"ARME","Armenia",22.1,18.336,0.814,24
+"Decarb_CLE",2035,"AUST","Austria",4.32,1.639,1.181,1320
+"Decarb_CLE",2035,"AUTR","Australia",1.49,1.406,0.033,3972
+"Decarb_CLE",2035,"AZER","Azerbaijan",9.81,6.232,1.646,270
+"Decarb_CLE",2035,"BANG","Bangladesh",33.63,19.451,1.333,170
+"Decarb_CLE",2035,"BELA","Belarus",6.23,3.351,1.301,452
+"Decarb_CLE",2035,"BELG","Belgium",5.66,2.112,1.655,1665
+"Decarb_CLE",2035,"BHUT","Bhutan",9.37,5.031,0.477,10
+"Decarb_CLE",2035,"BOHE","Bosnia and Herzegovina",10.31,7.478,1.627,308
+"Decarb_CLE",2035,"BOLV","Bolivia (Plurinational State of)",2.3,2.211,0.002,142
+"Decarb_CLE",2035,"BRAZ","Brazil",5.35,5.28,1.148,12272
+"Decarb_CLE",2035,"BRUN","Brunei Darussalam",3.53,1.92,0.061,28
+"Decarb_CLE",2035,"BULG","Bulgaria",5.52,2.378,0.84,549
+"Decarb_CLE",2035,"CAMB","Cambodia",5.92,3.81,0.198,9
+"Decarb_CLE",2035,"CANA","Canada",6.01,4.675,0.186,7769
+"Decarb_CLE",2035,"CARB","Caribbean",2.56,2.413,0.107,468
+"Decarb_CLE",2035,"CEAM","Central America",3.74,3.655,0.011,661
+"Decarb_CLE",2035,"CHIL","Chile",12.26,12.163,0.138,1091
+"Decarb_CLE",2035,"CHIN","China",19.48,18.716,12.414,85140
+"Decarb_CLE",2035,"COLO","Colombia",5,4.828,0.02,1318
+"Decarb_CLE",2035,"CROA","Croatia",5.47,1.72,0.932,509
+"Decarb_CLE",2035,"CYPR","Cyprus",5.62,0.569,0.002,69
+"Decarb_CLE",2035,"CZRE","Czech Republic",5.93,3.103,2.108,1343
+"Decarb_CLE",2035,"DENM","Denmark",3.64,1.256,0.443,1197
+"Decarb_CLE",2035,"EAFR","Eastern Africa (excl Kenya, Tanzania)",4.26,3.68,0.278,889
+"Decarb_CLE",2035,"ECUA","Ecuador",2.67,2.544,0.005,731
+"Decarb_CLE",2035,"EGYP","Egypt",13.7,12.36,1.485,1084
+"Decarb_CLE",2035,"ESTO","Estonia",3.08,0.953,0.051,159
+"Decarb_CLE",2035,"FINL","Finland",2.51,0.905,0.138,1208
+"Decarb_CLE",2035,"FRAN","France",4.82,2.965,5.325,8381
+"Decarb_CLE",2035,"GEOR","Georgia",13.9,11.017,0.731,130
+"Decarb_CLE",2035,"GERM","Germany",4.38,2.269,7.982,7818
+"Decarb_CLE",2035,"GREE","Greece",6.33,2.673,0.533,819
+"Decarb_CLE",2035,"HUNG","Hungary",6.64,3.151,2.227,983
+"Decarb_CLE",2035,"ICEL","Iceland",3.03,2.163,0.026,32
+"Decarb_CLE",2035,"INDI","India",25.68,21.625,27.613,38104
+"Decarb_CLE",2035,"INDO","Indonesia",32.55,32.319,2.912,7023
+"Decarb_CLE",2035,"IRAN","Iran",20.06,19.42,1.693,3961
+"Decarb_CLE",2035,"IREL","Ireland",2.11,0.718,0.173,1080
+"Decarb_CLE",2035,"ISRA","Israel",11.94,9.549,0.501,929
+"Decarb_CLE",2035,"ITAL","Italy",6.64,4.032,2.895,4147
+"Decarb_CLE",2035,"JAPA","Japan",5.71,4.703,0.027,7369
+"Decarb_CLE",2035,"KENY","Kenya",4.81,4.482,0.18,232
+"Decarb_CLE",2035,"KORS","Republic of Korea",19.43,12.717,0.894,5399
+"Decarb_CLE",2035,"KOSO","Kosovo",16.5,13.199,0.862,84
+"Decarb_CLE",2035,"LAOS","Laos",4.24,1.861,0.251,11
+"Decarb_CLE",2035,"LATV","Latvia",4.21,1.813,0.179,265
+"Decarb_CLE",2035,"LITH","Lithuania",3.88,1.095,0.313,405
+"Decarb_CLE",2035,"LUXE","Luxembourg",4.23,0.722,0.046,161
+"Decarb_CLE",2035,"MACE","TFYR Macedonia",9.55,6.548,0.736,158
+"Decarb_CLE",2035,"MALA","Malaysia",20.88,19.995,5.565,1588
+"Decarb_CLE",2035,"MALT","Malta",7.44,1.098,0,30
+"Decarb_CLE",2035,"MEXI","Mexico",7.19,6.996,0.034,4333
+"Decarb_CLE",2035,"MIDE","Middle East",8.75,7.409,2.977,4311
+"Decarb_CLE",2035,"MOLD","Republic of Moldova",7.77,3.643,0.265,136
+"Decarb_CLE",2035,"MONG","Mongolia",5.3,5.142,0.078,58
+"Decarb_CLE",2035,"MONT","Montenegro",9.34,6.441,0.114,56
+"Decarb_CLE",2035,"MYAN","Myanmar",6.18,4.514,0.257,15
+"Decarb_CLE",2035,"NAFR","Northern Africa (excl Egypt)",11.34,10.786,0.381,1668
+"Decarb_CLE",2035,"NEPA","Nepal",25.4,16.159,1.293,207
+"Decarb_CLE",2035,"NETH","Netherlands",5.81,2.087,1.444,2738
+"Decarb_CLE",2035,"NIGE","Nigeria",5.94,5.663,0.426,452
+"Decarb_CLE",2035,"NORW","Norway",2.06,0.798,0.133,777
+"Decarb_CLE",2035,"NZEL","New Zealand",0.89,0.836,0,618
+"Decarb_CLE",2035,"PAKI","Pakistan",33.93,30.421,4.728,558
+"Decarb_CLE",2035,"PARA","Paraguay",3.21,2.376,0.014,136
+"Decarb_CLE",2035,"PERU","Peru",7.72,7.491,0.135,468
+"Decarb_CLE",2035,"PHIL","Philippines",6.74,6.659,0.43,1299
+"Decarb_CLE",2035,"POLA","Poland",5.36,2.907,4.823,4870
+"Decarb_CLE",2035,"PORT","Portugal",4.36,2.241,0.063,842
+"Decarb_CLE",2035,"ROMA","Romania",6.96,4.083,2.84,1599
+"Decarb_CLE",2035,"RSAF","Remaining Southern Africa",3.7,3.499,0.518,748
+"Decarb_CLE",2035,"RUSS","Russian Federation",6.67,4.989,5.571,9326
+"Decarb_CLE",2035,"SAAR","Saudi Arabia",4.72,2.874,0.743,3495
+"Decarb_CLE",2035,"SAFR","South Africa",4.98,4.564,0.168,1688
+"Decarb_CLE",2035,"SERB","Serbia",9.57,6.312,3.575,495
+"Decarb_CLE",2035,"SING","Singapore",7.68,1.143,0.225,844
+"Decarb_CLE",2035,"SKRE","Slovakia",5.02,1.542,0.898,474
+"Decarb_CLE",2035,"SLOV","Slovenia",8.12,4.923,0.641,308
+"Decarb_CLE",2035,"SPAI","Spain",4.76,2.494,0.775,5524
+"Decarb_CLE",2035,"SRIL","Sri Lanka",4.85,4.44,0.004,111
+"Decarb_CLE",2035,"SWED","Sweden",2.71,0.851,0.342,1226
+"Decarb_CLE",2035,"SWIT","Switzerland",4.78,2.679,0.417,783
+"Decarb_CLE",2035,"TAIW","Taiwan",13.49,11.981,0.054,3146
+"Decarb_CLE",2035,"TANZ","United Republic of Tanzania",4.04,3.813,0.28,267
+"Decarb_CLE",2035,"THAI","Thailand",6.94,5.899,1.721,3798
+"Decarb_CLE",2035,"TURK","Turkey",10.74,7.874,3.648,4857
+"Decarb_CLE",2035,"UKRA","Ukraine",6.38,3.453,4.682,1180
+"Decarb_CLE",2035,"UNKI","United Kingdom",3.6,2.134,2.709,4649
+"Decarb_CLE",2035,"URUG","Uruguay",3,2.574,0.167,92
+"Decarb_CLE",2035,"USAM","United States of America",4.29,4.014,1.338,51647
+"Decarb_CLE",2035,"VENE","Venezuela (Bolivarian Republic of)",4.83,4.657,0.125,766
+"Decarb_CLE",2035,"VIET","Vietnam",16.67,14.628,2.795,3049
+"Decarb_CLE",2035,"WAFR","Western Africa (excl Nigeria)",4.89,4.475,0.212,1278
+"Decarb_MTFR",2035,"AFGH","Afghanistan",7.34,7.166,0.323,2153
+"Decarb_MTFR",2035,"ALBA","Albania",4,1.663,0.177,383
+"Decarb_MTFR",2035,"ARGE","Argentina",1.1,0.929,0.103,5937
+"Decarb_MTFR",2035,"ARME","Armenia",5.27,5.571,0.252,435
+"Decarb_MTFR",2035,"AUST","Austria",3.07,1.107,0.764,1698
+"Decarb_MTFR",2035,"AUTR","Australia",0.84,0.762,0.016,6637
+"Decarb_MTFR",2035,"AZER","Azerbaijan",3.81,1.765,0.469,3241
+"Decarb_MTFR",2035,"BANG","Bangladesh",12.48,6.421,0.469,3939
+"Decarb_MTFR",2035,"BELA","Belarus",2.91,0.976,0.406,1884
+"Decarb_MTFR",2035,"BELG","Belgium",3.73,1.227,0.913,1971
+"Decarb_MTFR",2035,"BHUT","Bhutan",2.95,1.399,0.088,198
+"Decarb_MTFR",2035,"BOHE","Bosnia and Herzegovina",3.87,1.838,0.507,770
+"Decarb_MTFR",2035,"BOLV","Bolivia (Plurinational State of)",0.87,0.818,0.001,870
+"Decarb_MTFR",2035,"BRAZ","Brazil",1.76,1.689,0.414,24446
+"Decarb_MTFR",2035,"BRUN","Brunei Darussalam",1.46,0.801,0.032,130
+"Decarb_MTFR",2035,"BULG","Bulgaria",3.24,1.166,0.317,763
+"Decarb_MTFR",2035,"CAMB","Cambodia",1.4,0.774,0.059,680
+"Decarb_MTFR",2035,"CANA","Canada",2.26,1.645,0.086,10805
+"Decarb_MTFR",2035,"CARB","Caribbean",0.96,0.821,0.036,2019
+"Decarb_MTFR",2035,"CEAM","Central America",1.43,1.373,0.004,2521
+"Decarb_MTFR",2035,"CHIL","Chile",5.86,5.805,0.097,2061
+"Decarb_MTFR",2035,"CHIN","China",10.26,9.649,6.474,128784
+"Decarb_MTFR",2035,"COLO","Colombia",1.91,1.815,0.006,3530
+"Decarb_MTFR",2035,"CROA","Croatia",3.49,1.056,0.494,692
+"Decarb_MTFR",2035,"CYPR","Cyprus",4.3,0.321,0.001,109
+"Decarb_MTFR",2035,"CZRE","Czech Republic",4.07,2.131,1.296,1985
+"Decarb_MTFR",2035,"DENM","Denmark",2.44,0.718,0.234,1471
+"Decarb_MTFR",2035,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1,0.807,0.049,9374
+"Decarb_MTFR",2035,"ECUA","Ecuador",1.06,0.963,0.002,1312
+"Decarb_MTFR",2035,"EGYP","Egypt",3.74,2.881,0.42,6525
+"Decarb_MTFR",2035,"ESTO","Estonia",2.11,0.568,0.027,287
+"Decarb_MTFR",2035,"FINL","Finland",1.85,0.568,0.088,1665
+"Decarb_MTFR",2035,"FRAN","France",3.58,2.103,3.45,11210
+"Decarb_MTFR",2035,"GEOR","Georgia",3.56,3.763,0.177,649
+"Decarb_MTFR",2035,"GERM","Germany",3.05,1.534,5.199,10653
+"Decarb_MTFR",2035,"GREE","Greece",4.84,1.94,0.276,1371
+"Decarb_MTFR",2035,"HUNG","Hungary",4.65,2.43,1.461,1370
+"Decarb_MTFR",2035,"ICEL","Iceland",2.54,1.679,0.022,49
+"Decarb_MTFR",2035,"INDI","India",8.47,7.306,10.008,74998
+"Decarb_MTFR",2035,"INDO","Indonesia",8.48,8.284,0.717,21607
+"Decarb_MTFR",2035,"IRAN","Iran",5.62,5.382,0.581,12690
+"Decarb_MTFR",2035,"IREL","Ireland",1.62,0.503,0.097,1206
+"Decarb_MTFR",2035,"ISRA","Israel",4.03,3.212,0.181,1448
+"Decarb_MTFR",2035,"ITAL","Italy",5.26,2.929,1.753,5926
+"Decarb_MTFR",2035,"JAPA","Japan",2.99,2.276,0.014,8950
+"Decarb_MTFR",2035,"KENY","Kenya",1.79,1.698,0.06,2213
+"Decarb_MTFR",2035,"KORS","Republic of Korea",9.32,5.462,0.396,6533
+"Decarb_MTFR",2035,"KOSO","Kosovo",4.66,2.586,0.227,288
+"Decarb_MTFR",2035,"LAOS","Laos",1.25,0.389,0.059,826
+"Decarb_MTFR",2035,"LATV","Latvia",2.61,1.005,0.107,419
+"Decarb_MTFR",2035,"LITH","Lithuania",2.35,0.564,0.132,525
+"Decarb_MTFR",2035,"LUXE","Luxembourg",2.98,0.56,0.029,189
+"Decarb_MTFR",2035,"MACE","TFYR Macedonia",3.64,1.74,0.249,391
+"Decarb_MTFR",2035,"MALA","Malaysia",5.94,5.492,1.733,6034
+"Decarb_MTFR",2035,"MALT","Malta",6.41,0.425,0,41
+"Decarb_MTFR",2035,"MEXI","Mexico",2.6,2.483,0.012,8917
+"Decarb_MTFR",2035,"MIDE","Middle East",2.19,1.617,0.912,10972
+"Decarb_MTFR",2035,"MOLD","Republic of Moldova",3.4,0.972,0.072,585
+"Decarb_MTFR",2035,"MONG","Mongolia",2.28,2.213,0.04,443
+"Decarb_MTFR",2035,"MONT","Montenegro",3.55,1.369,0.039,116
+"Decarb_MTFR",2035,"MYAN","Myanmar",1.73,1.126,0.08,2363
+"Decarb_MTFR",2035,"NAFR","Northern Africa (excl Egypt)",2.14,1.602,0.1,9794
+"Decarb_MTFR",2035,"NEPA","Nepal",7.95,4.668,0.414,1732
+"Decarb_MTFR",2035,"NETH","Netherlands",3.96,1.388,0.89,3154
+"Decarb_MTFR",2035,"NIGE","Nigeria",1.77,1.653,0.163,8577
+"Decarb_MTFR",2035,"NORW","Norway",1.54,0.439,0.065,933
+"Decarb_MTFR",2035,"NZEL","New Zealand",0.45,0.395,0,1078
+"Decarb_MTFR",2035,"PAKI","Pakistan",8.12,6.905,1.161,9692
+"Decarb_MTFR",2035,"PARA","Paraguay",1.13,0.843,0.005,644
+"Decarb_MTFR",2035,"PERU","Peru",2.94,2.751,0.08,2124
+"Decarb_MTFR",2035,"PHIL","Philippines",2.06,1.973,0.128,5068
+"Decarb_MTFR",2035,"POLA","Poland",3.28,1.595,2.446,6864
+"Decarb_MTFR",2035,"PORT","Portugal",3.57,1.641,0.033,1200
+"Decarb_MTFR",2035,"ROMA","Romania",4.74,2.879,1.601,2242
+"Decarb_MTFR",2035,"RSAF","Remaining Southern Africa",0.74,0.618,0.115,5898
+"Decarb_MTFR",2035,"RUSS","Russian Federation",3.18,1.844,1.744,25041
+"Decarb_MTFR",2035,"SAAR","Saudi Arabia",1.43,0.68,0.262,7561
+"Decarb_MTFR",2035,"SAFR","South Africa",1.91,1.77,0.102,4520
+"Decarb_MTFR",2035,"SERB","Serbia",3.82,1.685,1.205,1095
+"Decarb_MTFR",2035,"SING","Singapore",2.7,0.638,0.136,983
+"Decarb_MTFR",2035,"SKRE","Slovakia",3.41,1.124,0.487,750
+"Decarb_MTFR",2035,"SLOV","Slovenia",4.22,1.907,0.277,467
+"Decarb_MTFR",2035,"SPAI","Spain",3.7,1.551,0.438,7497
+"Decarb_MTFR",2035,"SRIL","Sri Lanka",1.34,1.137,0.001,878
+"Decarb_MTFR",2035,"SWED","Sweden",2.15,0.702,0.229,1455
+"Decarb_MTFR",2035,"SWIT","Switzerland",3.33,1.744,0.296,1093
+"Decarb_MTFR",2035,"TAIW","Taiwan",5.8,4.707,0.028,4236
+"Decarb_MTFR",2035,"TANZ","United Republic of Tanzania",0.97,0.893,0.075,3685
+"Decarb_MTFR",2035,"THAI","Thailand",2.17,1.726,0.498,8675
+"Decarb_MTFR",2035,"TURK","Turkey",5.27,2.935,1.021,8678
+"Decarb_MTFR",2035,"UKRA","Ukraine",3,1.039,1.347,4672
+"Decarb_MTFR",2035,"UNKI","United Kingdom",2.61,1.491,1.599,6257
+"Decarb_MTFR",2035,"URUG","Uruguay",0.88,0.713,0.051,421
+"Decarb_MTFR",2035,"USAM","United States of America",1.97,1.813,0.537,69931
+"Decarb_MTFR",2035,"VENE","Venezuela (Bolivarian Republic of)",1.79,1.676,0.057,3091
+"Decarb_MTFR",2035,"VIET","Vietnam",4.91,3.862,0.779,6543
+"Decarb_MTFR",2035,"WAFR","Western Africa (excl Nigeria)",1.36,1.192,0.059,12012
+"Baseline_CLE",2040,"AFGH","Afghanistan",62.03,61.176,2.484,327
+"Baseline_CLE",2040,"ALBA","Albania",8.89,5.745,0.716,234
+"Baseline_CLE",2040,"ARGE","Argentina",3.53,3.048,0.39,3025
+"Baseline_CLE",2040,"ARME","Armenia",10.16,14.365,0.441,104
+"Baseline_CLE",2040,"AUST","Austria",4.69,1.831,1.372,1656
+"Baseline_CLE",2040,"AUTR","Australia",1.93,1.662,0.043,5918
+"Baseline_CLE",2040,"AZER","Azerbaijan",8.16,7.259,1.446,703
+"Baseline_CLE",2040,"BANG","Bangladesh",54.26,28.139,1.722,292
+"Baseline_CLE",2040,"BELA","Belarus",6.81,3.612,1.475,777
+"Baseline_CLE",2040,"BELG","Belgium",6.02,2.329,1.926,1949
+"Baseline_CLE",2040,"BHUT","Bhutan",14.52,8.734,0.811,32
+"Baseline_CLE",2040,"BOHE","Bosnia and Herzegovina",10.22,7.266,1.633,351
+"Baseline_CLE",2040,"BOLV","Bolivia (Plurinational State of)",3.49,3.374,0.005,262
+"Baseline_CLE",2040,"BRAZ","Brazil",6.05,5.979,1.343,15478
+"Baseline_CLE",2040,"BRUN","Brunei Darussalam",5.56,3.308,0.12,39
+"Baseline_CLE",2040,"BULG","Bulgaria",5.88,2.427,0.881,772
+"Baseline_CLE",2040,"CAMB","Cambodia",8.76,6.038,0.275,12
+"Baseline_CLE",2040,"CANA","Canada",6.47,5.048,0.202,12627
+"Baseline_CLE",2040,"CARB","Caribbean",4.16,4.004,0.188,866
+"Baseline_CLE",2040,"CEAM","Central America",7.36,7.262,0.022,1428
+"Baseline_CLE",2040,"CHIL","Chile",15.76,15.646,0.171,2002
+"Baseline_CLE",2040,"CHIN","China",21.84,20.318,13.828,118854
+"Baseline_CLE",2040,"COLO","Colombia",6.75,6.491,0.028,2523
+"Baseline_CLE",2040,"CROA","Croatia",5.77,1.825,1.018,722
+"Baseline_CLE",2040,"CYPR","Cyprus",6.45,0.597,0.002,78
+"Baseline_CLE",2040,"CZRE","Czech Republic",6.27,3.212,2.249,1741
+"Baseline_CLE",2040,"DENM","Denmark",3.85,1.38,0.496,1470
+"Baseline_CLE",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",8.42,7.474,0.535,1274
+"Baseline_CLE",2040,"ECUA","Ecuador",3.95,3.796,0.008,1170
+"Baseline_CLE",2040,"EGYP","Egypt",19.36,17.525,2.042,1647
+"Baseline_CLE",2040,"ESTO","Estonia",3.26,1,0.053,217
+"Baseline_CLE",2040,"FINL","Finland",2.73,1.064,0.181,1551
+"Baseline_CLE",2040,"FRAN","France",5.06,3.126,5.507,11822
+"Baseline_CLE",2040,"GEOR","Georgia",6.83,8.024,0.372,345
+"Baseline_CLE",2040,"GERM","Germany",4.71,2.473,8.527,9925
+"Baseline_CLE",2040,"GREE","Greece",6.76,2.717,0.608,935
+"Baseline_CLE",2040,"HUNG","Hungary",6.98,3.206,2.435,1316
+"Baseline_CLE",2040,"ICEL","Iceland",3.09,2.219,0.027,53
+"Baseline_CLE",2040,"INDI","India",35.48,29.333,38.222,66849
+"Baseline_CLE",2040,"INDO","Indonesia",50.2,49.936,5.495,12328
+"Baseline_CLE",2040,"IRAN","Iran",28.86,27.838,2.5,6860
+"Baseline_CLE",2040,"IREL","Ireland",2.22,0.788,0.187,1328
+"Baseline_CLE",2040,"ISRA","Israel",14.72,11.536,1.025,1995
+"Baseline_CLE",2040,"ITAL","Italy",7.27,4.509,3.239,7279
+"Baseline_CLE",2040,"JAPA","Japan",6.1,4.996,0.033,12142
+"Baseline_CLE",2040,"KENY","Kenya",9.23,8.664,0.338,349
+"Baseline_CLE",2040,"KORS","Republic of Korea",21.12,13.162,0.93,8570
+"Baseline_CLE",2040,"KOSO","Kosovo",16.26,12.894,0.814,91
+"Baseline_CLE",2040,"LAOS","Laos",6.3,2.803,0.395,24
+"Baseline_CLE",2040,"LATV","Latvia",4.49,1.919,0.191,356
+"Baseline_CLE",2040,"LITH","Lithuania",4.24,1.217,0.349,495
+"Baseline_CLE",2040,"LUXE","Luxembourg",4.36,0.66,0.047,137
+"Baseline_CLE",2040,"MACE","TFYR Macedonia",9,5.884,0.653,174
+"Baseline_CLE",2040,"MALA","Malaysia",30.21,28.767,8.601,2972
+"Baseline_CLE",2040,"MALT","Malta",7.95,1.223,0,36
+"Baseline_CLE",2040,"MEXI","Mexico",9.98,9.75,0.046,10729
+"Baseline_CLE",2040,"MIDE","Middle East",12.67,10.618,4.428,7900
+"Baseline_CLE",2040,"MOLD","Republic of Moldova",8.41,3.627,0.267,198
+"Baseline_CLE",2040,"MONG","Mongolia",9.7,9.451,0.145,184
+"Baseline_CLE",2040,"MONT","Montenegro",9.17,6.199,0.108,83
+"Baseline_CLE",2040,"MYAN","Myanmar",9.22,6.711,0.33,29
+"Baseline_CLE",2040,"NAFR","Northern Africa (excl Egypt)",15.63,15.017,0.557,2457
+"Baseline_CLE",2040,"NEPA","Nepal",43.81,31.099,2.229,392
+"Baseline_CLE",2040,"NETH","Netherlands",6.15,2.271,1.667,3182
+"Baseline_CLE",2040,"NIGE","Nigeria",18.5,18.093,1.115,723
+"Baseline_CLE",2040,"NORW","Norway",2.29,1,0.288,698
+"Baseline_CLE",2040,"NZEL","New Zealand",1.18,0.984,0,924
+"Baseline_CLE",2040,"PAKI","Pakistan",52.7,47.365,7.154,1569
+"Baseline_CLE",2040,"PARA","Paraguay",5.11,4.132,0.023,242
+"Baseline_CLE",2040,"PERU","Peru",12.46,12.193,0.192,782
+"Baseline_CLE",2040,"PHIL","Philippines",11.13,11.038,0.572,2145
+"Baseline_CLE",2040,"POLA","Poland",5.72,3.07,5.349,6833
+"Baseline_CLE",2040,"PORT","Portugal",4.84,2.571,0.072,1110
+"Baseline_CLE",2040,"ROMA","Romania",7.99,4.775,3.164,2158
+"Baseline_CLE",2040,"RSAF","Remaining Southern Africa",6.26,5.977,0.794,1124
+"Baseline_CLE",2040,"RUSS","Russian Federation",7.48,5.764,6.634,14148
+"Baseline_CLE",2040,"SAAR","Saudi Arabia",7.46,4.572,1.273,6514
+"Baseline_CLE",2040,"SAFR","South Africa",7.21,6.601,0.241,4045
+"Baseline_CLE",2040,"SERB","Serbia",9.73,6.258,3.456,539
+"Baseline_CLE",2040,"SING","Singapore",13.84,2.946,0.462,1124
+"Baseline_CLE",2040,"SKRE","Slovakia",5.54,1.78,1.029,671
+"Baseline_CLE",2040,"SLOV","Slovenia",8.57,5.095,0.699,364
+"Baseline_CLE",2040,"SPAI","Spain",5.03,2.647,0.887,6729
+"Baseline_CLE",2040,"SRIL","Sri Lanka",7.99,7.387,0.006,199
+"Baseline_CLE",2040,"SWED","Sweden",2.84,0.894,0.399,1409
+"Baseline_CLE",2040,"SWIT","Switzerland",5.17,2.9,0.435,1608
+"Baseline_CLE",2040,"TAIW","Taiwan",16.47,14.388,0.078,7238
+"Baseline_CLE",2040,"TANZ","United Republic of Tanzania",7.66,7.269,0.481,379
+"Baseline_CLE",2040,"THAI","Thailand",11.19,9.765,3.024,5956
+"Baseline_CLE",2040,"TURK","Turkey",12.15,9.325,5.456,8797
+"Baseline_CLE",2040,"UKRA","Ukraine",7.39,4.307,6.748,3495
+"Baseline_CLE",2040,"UNKI","United Kingdom",3.95,2.46,2.817,6213
+"Baseline_CLE",2040,"URUG","Uruguay",4.2,3.699,0.206,155
+"Baseline_CLE",2040,"USAM","United States of America",4.49,4.195,1.445,63160
+"Baseline_CLE",2040,"VENE","Venezuela (Bolivarian Republic of)",7.95,7.724,0.211,1327
+"Baseline_CLE",2040,"VIET","Vietnam",22.12,19.526,3.577,4942
+"Baseline_CLE",2040,"WAFR","Western Africa (excl Nigeria)",8.85,8.04,0.338,1833
+"Baseline_MTFR",2040,"AFGH","Afghanistan",13.39,13.105,0.635,5562
+"Baseline_MTFR",2040,"ALBA","Albania",5,2.393,0.312,420
+"Baseline_MTFR",2040,"ARGE","Argentina",1.38,1.145,0.157,10694
+"Baseline_MTFR",2040,"ARME","Armenia",4.77,3.934,0.152,325
+"Baseline_MTFR",2040,"AUST","Austria",3.75,1.443,1.145,2089
+"Baseline_MTFR",2040,"AUTR","Australia",0.99,0.905,0.023,11048
+"Baseline_MTFR",2040,"AZER","Azerbaijan",4.28,2.127,0.641,1566
+"Baseline_MTFR",2040,"BANG","Bangladesh",17.01,8.33,0.648,6351
+"Baseline_MTFR",2040,"BELA","Belarus",3.85,1.376,0.612,2148
+"Baseline_MTFR",2040,"BELG","Belgium",4.86,1.782,1.453,2304
+"Baseline_MTFR",2040,"BHUT","Bhutan",4.39,2.404,0.148,344
+"Baseline_MTFR",2040,"BOHE","Bosnia and Herzegovina",4.99,2.616,0.647,819
+"Baseline_MTFR",2040,"BOLV","Bolivia (Plurinational State of)",1.27,1.203,0.002,1312
+"Baseline_MTFR",2040,"BRAZ","Brazil",2.27,2.2,0.588,35457
+"Baseline_MTFR",2040,"BRUN","Brunei Darussalam",2.46,1.625,0.073,201
+"Baseline_MTFR",2040,"BULG","Bulgaria",4.06,1.382,0.523,1051
+"Baseline_MTFR",2040,"CAMB","Cambodia",1.91,1.091,0.077,1355
+"Baseline_MTFR",2040,"CANA","Canada",3.17,2.308,0.117,16580
+"Baseline_MTFR",2040,"CARB","Caribbean",1.75,1.599,0.075,3223
+"Baseline_MTFR",2040,"CEAM","Central America",3.67,3.603,0.012,4107
+"Baseline_MTFR",2040,"CHIL","Chile",7.89,7.811,0.114,4052
+"Baseline_MTFR",2040,"CHIN","China",12.4,11.716,8.551,178827
+"Baseline_MTFR",2040,"COLO","Colombia",2.38,2.246,0.008,5747
+"Baseline_MTFR",2040,"CROA","Croatia",4.12,1.195,0.71,984
+"Baseline_MTFR",2040,"CYPR","Cyprus",4.93,0.466,0.001,118
+"Baseline_MTFR",2040,"CZRE","Czech Republic",4.38,1.982,1.584,2426
+"Baseline_MTFR",2040,"DENM","Denmark",3.08,1.027,0.414,1753
+"Baseline_MTFR",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1.92,1.604,0.141,31823
+"Baseline_MTFR",2040,"ECUA","Ecuador",1.42,1.311,0.003,2083
+"Baseline_MTFR",2040,"EGYP","Egypt",4.98,3.9,0.586,12743
+"Baseline_MTFR",2040,"ESTO","Estonia",2.45,0.65,0.037,360
+"Baseline_MTFR",2040,"FINL","Finland",2.16,0.738,0.135,2173
+"Baseline_MTFR",2040,"FRAN","France",4.13,2.422,4.298,14800
+"Baseline_MTFR",2040,"GEOR","Georgia",3.71,3.732,0.155,800
+"Baseline_MTFR",2040,"GERM","Germany",3.82,1.945,6.701,13024
+"Baseline_MTFR",2040,"GREE","Greece",5.56,2.131,0.409,1573
+"Baseline_MTFR",2040,"HUNG","Hungary",4.79,2.018,1.784,1819
+"Baseline_MTFR",2040,"ICEL","Iceland",2.56,1.692,0.022,75
+"Baseline_MTFR",2040,"INDI","India",12.05,10.005,14.271,128445
+"Baseline_MTFR",2040,"INDO","Indonesia",13.4,13.189,1.239,35528
+"Baseline_MTFR",2040,"IRAN","Iran",7.25,6.896,0.842,22443
+"Baseline_MTFR",2040,"IREL","Ireland",1.97,0.682,0.155,1492
+"Baseline_MTFR",2040,"ISRA","Israel",5.92,4.659,0.414,3315
+"Baseline_MTFR",2040,"ITAL","Italy",6.36,3.802,2.469,9122
+"Baseline_MTFR",2040,"JAPA","Japan",3.89,3.084,0.021,15428
+"Baseline_MTFR",2040,"KENY","Kenya",2.78,2.603,0.125,5957
+"Baseline_MTFR",2040,"KORS","Republic of Korea",12.22,7.477,0.526,10016
+"Baseline_MTFR",2040,"KOSO","Kosovo",6.54,3.997,0.266,293
+"Baseline_MTFR",2040,"LAOS","Laos",1.91,0.612,0.095,1375
+"Baseline_MTFR",2040,"LATV","Latvia",3.06,1.076,0.138,532
+"Baseline_MTFR",2040,"LITH","Lithuania",3,0.77,0.239,649
+"Baseline_MTFR",2040,"LUXE","Luxembourg",3.53,0.567,0.033,172
+"Baseline_MTFR",2040,"MACE","TFYR Macedonia",4.66,2.378,0.365,388
+"Baseline_MTFR",2040,"MALA","Malaysia",7.97,7.368,2.377,10371
+"Baseline_MTFR",2040,"MALT","Malta",7.37,0.916,0,52
+"Baseline_MTFR",2040,"MEXI","Mexico",3.75,3.595,0.02,19231
+"Baseline_MTFR",2040,"MIDE","Middle East",3.49,2.668,1.516,19403
+"Baseline_MTFR",2040,"MOLD","Republic of Moldova",4.88,1.228,0.102,692
+"Baseline_MTFR",2040,"MONG","Mongolia",3.82,3.722,0.073,1015
+"Baseline_MTFR",2040,"MONT","Montenegro",4.52,2.083,0.049,137
+"Baseline_MTFR",2040,"MYAN","Myanmar",2.71,1.822,0.142,4592
+"Baseline_MTFR",2040,"NAFR","Northern Africa (excl Egypt)",3.93,3.36,0.149,15544
+"Baseline_MTFR",2040,"NEPA","Nepal",12.88,8.105,0.712,3779
+"Baseline_MTFR",2040,"NETH","Netherlands",5.21,2.056,1.513,3674
+"Baseline_MTFR",2040,"NIGE","Nigeria",4.37,4.225,0.443,36816
+"Baseline_MTFR",2040,"NORW","Norway",1.86,0.658,0.138,916
+"Baseline_MTFR",2040,"NZEL","New Zealand",0.57,0.512,0,1589
+"Baseline_MTFR",2040,"PAKI","Pakistan",13.54,11.643,2.314,17479
+"Baseline_MTFR",2040,"PARA","Paraguay",1.74,1.328,0.01,1030
+"Baseline_MTFR",2040,"PERU","Peru",4.27,4.055,0.107,3591
+"Baseline_MTFR",2040,"PHIL","Philippines",3.03,2.949,0.18,9612
+"Baseline_MTFR",2040,"POLA","Poland",4.01,1.909,3.387,9271
+"Baseline_MTFR",2040,"PORT","Portugal",3.9,1.771,0.038,1556
+"Baseline_MTFR",2040,"ROMA","Romania",5.07,2.528,1.983,3244
+"Baseline_MTFR",2040,"RSAF","Remaining Southern Africa",1.25,1.08,0.232,17313
+"Baseline_MTFR",2040,"RUSS","Russian Federation",3.93,2.363,2.206,34726
+"Baseline_MTFR",2040,"SAAR","Saudi Arabia",1.96,0.926,0.392,13352
+"Baseline_MTFR",2040,"SAFR","South Africa",2.87,2.649,0.146,8970
+"Baseline_MTFR",2040,"SERB","Serbia",5.07,2.422,1.644,1198
+"Baseline_MTFR",2040,"SING","Singapore",4.14,1.23,0.217,1388
+"Baseline_MTFR",2040,"SKRE","Slovakia",3.86,1.027,0.627,988
+"Baseline_MTFR",2040,"SLOV","Slovenia",5.19,2.323,0.376,530
+"Baseline_MTFR",2040,"SPAI","Spain",4.24,1.934,0.658,8624
+"Baseline_MTFR",2040,"SRIL","Sri Lanka",1.91,1.643,0.002,1575
+"Baseline_MTFR",2040,"SWED","Sweden",2.52,0.855,0.384,1645
+"Baseline_MTFR",2040,"SWIT","Switzerland",4.43,2.52,0.369,1642
+"Baseline_MTFR",2040,"TAIW","Taiwan",8.36,7.143,0.042,9693
+"Baseline_MTFR",2040,"TANZ","United Republic of Tanzania",1.54,1.405,0.149,8532
+"Baseline_MTFR",2040,"THAI","Thailand",3.44,2.846,0.873,15500
+"Baseline_MTFR",2040,"TURK","Turkey",7.21,4.536,2.042,14743
+"Baseline_MTFR",2040,"UKRA","Ukraine",4.85,2.646,6.686,7533
+"Baseline_MTFR",2040,"UNKI","United Kingdom",3.46,2.148,2.255,8086
+"Baseline_MTFR",2040,"URUG","Uruguay",1.14,0.903,0.079,634
+"Baseline_MTFR",2040,"USAM","United States of America",2.7,2.503,0.813,87878
+"Baseline_MTFR",2040,"VENE","Venezuela (Bolivarian Republic of)",2.65,2.503,0.095,5472
+"Baseline_MTFR",2040,"VIET","Vietnam",6.49,5.095,1.086,11777
+"Baseline_MTFR",2040,"WAFR","Western Africa (excl Nigeria)",1.96,1.664,0.086,30344
+"Decarb_CLE",2040,"AFGH","Afghanistan",26.2,25.708,1.028,60
+"Decarb_CLE",2040,"ALBA","Albania",7.94,5.038,0.701,157
+"Decarb_CLE",2040,"ARGE","Argentina",2.75,2.365,0.294,1973
+"Decarb_CLE",2040,"ARME","Armenia",14.34,22.23,0.994,25
+"Decarb_CLE",2040,"AUST","Austria",3.8,1.41,0.99,1042
+"Decarb_CLE",2040,"AUTR","Australia",1.31,1.232,0.031,2882
+"Decarb_CLE",2040,"AZER","Azerbaijan",7.83,5.642,1.524,275
+"Decarb_CLE",2040,"BANG","Bangladesh",33.54,18.121,1.188,112
+"Decarb_CLE",2040,"BELA","Belarus",5.48,2.852,1.186,374
+"Decarb_CLE",2040,"BELG","Belgium",5.12,1.923,1.512,1299
+"Decarb_CLE",2040,"BHUT","Bhutan",7.95,3.796,0.355,6
+"Decarb_CLE",2040,"BOHE","Bosnia and Herzegovina",8.4,5.797,1.285,231
+"Decarb_CLE",2040,"BOLV","Bolivia (Plurinational State of)",2.09,2.008,0.002,111
+"Decarb_CLE",2040,"BRAZ","Brazil",5.19,5.125,1.091,10961
+"Decarb_CLE",2040,"BRUN","Brunei Darussalam",2.75,1.397,0.042,23
+"Decarb_CLE",2040,"BULG","Bulgaria",4.54,1.624,0.67,448
+"Decarb_CLE",2040,"CAMB","Cambodia",5.51,3.599,0.181,9
+"Decarb_CLE",2040,"CANA","Canada",6.06,4.799,0.187,5019
+"Decarb_CLE",2040,"CARB","Caribbean",2.15,2.001,0.084,340
+"Decarb_CLE",2040,"CEAM","Central America",3.13,3.058,0.009,499
+"Decarb_CLE",2040,"CHIL","Chile",10.92,10.825,0.126,778
+"Decarb_CLE",2040,"CHIN","China",17.89,17.156,11.14,44852
+"Decarb_CLE",2040,"COLO","Colombia",4.49,4.346,0.018,909
+"Decarb_CLE",2040,"CROA","Croatia",4.44,1.094,0.698,359
+"Decarb_CLE",2040,"CYPR","Cyprus",5.39,0.445,0.002,49
+"Decarb_CLE",2040,"CZRE","Czech Republic",4.91,2.41,1.742,1079
+"Decarb_CLE",2040,"DENM","Denmark",3.25,1.133,0.415,946
+"Decarb_CLE",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",3.8,3.283,0.236,803
+"Decarb_CLE",2040,"ECUA","Ecuador",2.36,2.242,0.005,546
+"Decarb_CLE",2040,"EGYP","Egypt",13.33,12.081,1.421,967
+"Decarb_CLE",2040,"ESTO","Estonia",2.82,0.823,0.045,118
+"Decarb_CLE",2040,"FINL","Finland",2.33,0.803,0.117,923
+"Decarb_CLE",2040,"FRAN","France",4.45,2.712,4.905,6127
+"Decarb_CLE",2040,"GEOR","Georgia",10.19,12.879,0.789,127
+"Decarb_CLE",2040,"GERM","Germany",3.89,1.993,6.922,5277
+"Decarb_CLE",2040,"GREE","Greece",5.96,2.361,0.454,472
+"Decarb_CLE",2040,"HUNG","Hungary",5.51,2.46,1.86,780
+"Decarb_CLE",2040,"ICEL","Iceland",3.07,2.198,0.026,24
+"Decarb_CLE",2040,"INDI","India",24.17,20.706,25.771,31069
+"Decarb_CLE",2040,"INDO","Indonesia",28.86,28.639,2.024,4965
+"Decarb_CLE",2040,"IRAN","Iran",17.64,17.089,1.465,2979
+"Decarb_CLE",2040,"IREL","Ireland",2.02,0.679,0.162,889
+"Decarb_CLE",2040,"ISRA","Israel",11.41,9.142,0.455,591
+"Decarb_CLE",2040,"ITAL","Italy",6.14,3.533,2.577,2618
+"Decarb_CLE",2040,"JAPA","Japan",5.39,4.436,0.023,4305
+"Decarb_CLE",2040,"KENY","Kenya",4.31,4.027,0.155,196
+"Decarb_CLE",2040,"KORS","Republic of Korea",19.08,12.84,0.889,3523
+"Decarb_CLE",2040,"KOSO","Kosovo",13.29,10.236,0.739,62
+"Decarb_CLE",2040,"LAOS","Laos",3.77,1.741,0.215,11
+"Decarb_CLE",2040,"LATV","Latvia",3.65,1.465,0.154,200
+"Decarb_CLE",2040,"LITH","Lithuania",3.43,0.93,0.266,323
+"Decarb_CLE",2040,"LUXE","Luxembourg",3.72,0.576,0.036,94
+"Decarb_CLE",2040,"MACE","TFYR Macedonia",7.79,5.009,0.577,119
+"Decarb_CLE",2040,"MALA","Malaysia",17.95,17.226,4.594,1003
+"Decarb_CLE",2040,"MALT","Malta",7.63,1.063,0,23
+"Decarb_CLE",2040,"MEXI","Mexico",6.55,6.375,0.03,3547
+"Decarb_CLE",2040,"MIDE","Middle East",8.04,6.824,2.638,3251
+"Decarb_CLE",2040,"MOLD","Republic of Moldova",6.75,3.005,0.227,134
+"Decarb_CLE",2040,"MONG","Mongolia",3.43,3.3,0.063,10
+"Decarb_CLE",2040,"MONT","Montenegro",7.63,4.848,0.084,55
+"Decarb_CLE",2040,"MYAN","Myanmar",5.93,4.467,0.251,11
+"Decarb_CLE",2040,"NAFR","Northern Africa (excl Egypt)",10.49,9.938,0.329,1356
+"Decarb_CLE",2040,"NEPA","Nepal",24.82,16.227,1.21,159
+"Decarb_CLE",2040,"NETH","Netherlands",5.2,1.851,1.272,2060
+"Decarb_CLE",2040,"NIGE","Nigeria",4.62,4.357,0.349,403
+"Decarb_CLE",2040,"NORW","Norway",1.85,0.627,0.113,569
+"Decarb_CLE",2040,"NZEL","New Zealand",0.76,0.701,0,414
+"Decarb_CLE",2040,"PAKI","Pakistan",30.55,27.408,3.965,373
+"Decarb_CLE",2040,"PARA","Paraguay",2.75,1.958,0.011,105
+"Decarb_CLE",2040,"PERU","Peru",6.34,6.116,0.123,383
+"Decarb_CLE",2040,"PHIL","Philippines",6.25,6.162,0.392,900
+"Decarb_CLE",2040,"POLA","Poland",4.48,2.278,3.915,3794
+"Decarb_CLE",2040,"PORT","Portugal",4.02,1.857,0.055,586
+"Decarb_CLE",2040,"ROMA","Romania",5.45,2.809,2.126,1176
+"Decarb_CLE",2040,"RSAF","Remaining Southern Africa",3.47,3.28,0.485,661
+"Decarb_CLE",2040,"RUSS","Russian Federation",6.19,4.586,4.74,7847
+"Decarb_CLE",2040,"SAAR","Saudi Arabia",4.01,2.381,0.61,2584
+"Decarb_CLE",2040,"SAFR","South Africa",4.56,4.164,0.151,1308
+"Decarb_CLE",2040,"SERB","Serbia",8.1,5.201,3.095,371
+"Decarb_CLE",2040,"SING","Singapore",6.09,0.935,0.184,627
+"Decarb_CLE",2040,"SKRE","Slovakia",4.35,1.309,0.79,431
+"Decarb_CLE",2040,"SLOV","Slovenia",6.68,3.811,0.509,219
+"Decarb_CLE",2040,"SPAI","Spain",4.53,2.2,0.711,3932
+"Decarb_CLE",2040,"SRIL","Sri Lanka",4.59,4.213,0.004,83
+"Decarb_CLE",2040,"SWED","Sweden",2.54,0.809,0.318,908
+"Decarb_CLE",2040,"SWIT","Switzerland",4.4,2.515,0.375,584
+"Decarb_CLE",2040,"TAIW","Taiwan",12.81,11.366,0.049,2195
+"Decarb_CLE",2040,"TANZ","United Republic of Tanzania",3.79,3.588,0.253,239
+"Decarb_CLE",2040,"THAI","Thailand",6.54,5.611,1.319,2789
+"Decarb_CLE",2040,"TURK","Turkey",9.98,7.275,3.418,3611
+"Decarb_CLE",2040,"UKRA","Ukraine",5.93,3.211,4.334,931
+"Decarb_CLE",2040,"UNKI","United Kingdom",3.3,1.945,2.484,3223
+"Decarb_CLE",2040,"URUG","Uruguay",2.45,2.054,0.155,67
+"Decarb_CLE",2040,"USAM","United States of America",3.95,3.682,1.241,38056
+"Decarb_CLE",2040,"VENE","Venezuela (Bolivarian Republic of)",3.89,3.735,0.1,551
+"Decarb_CLE",2040,"VIET","Vietnam",15.6,13.848,2.552,2417
+"Decarb_CLE",2040,"WAFR","Western Africa (excl Nigeria)",4.46,4.1,0.195,1144
+"Decarb_MTFR",2040,"AFGH","Afghanistan",6.81,6.662,0.285,1968
+"Decarb_MTFR",2040,"ALBA","Albania",3.7,1.397,0.172,334
+"Decarb_MTFR",2040,"ARGE","Argentina",1.02,0.857,0.083,5719
+"Decarb_MTFR",2040,"ARME","Armenia",5.18,5.311,0.268,595
+"Decarb_MTFR",2040,"AUST","Austria",2.75,0.981,0.63,1412
+"Decarb_MTFR",2040,"AUTR","Australia",0.73,0.643,0.014,5491
+"Decarb_MTFR",2040,"AZER","Azerbaijan",3.62,1.513,0.421,3406
+"Decarb_MTFR",2040,"BANG","Bangladesh",10.9,5.682,0.41,3836
+"Decarb_MTFR",2040,"BELA","Belarus",2.61,0.82,0.362,1676
+"Decarb_MTFR",2040,"BELG","Belgium",3.34,1.095,0.783,1591
+"Decarb_MTFR",2040,"BHUT","Bhutan",2.53,1.123,0.066,156
+"Decarb_MTFR",2040,"BOHE","Bosnia and Herzegovina",3.22,1.313,0.392,633
+"Decarb_MTFR",2040,"BOLV","Bolivia (Plurinational State of)",0.8,0.75,0.001,797
+"Decarb_MTFR",2040,"BRAZ","Brazil",1.61,1.542,0.357,24199
+"Decarb_MTFR",2040,"BRUN","Brunei Darussalam",1.03,0.479,0.018,97
+"Decarb_MTFR",2040,"BULG","Bulgaria",2.68,0.734,0.24,613
+"Decarb_MTFR",2040,"CAMB","Cambodia",1.2,0.705,0.052,608
+"Decarb_MTFR",2040,"CANA","Canada",2.05,1.51,0.08,7988
+"Decarb_MTFR",2040,"CARB","Caribbean",0.77,0.631,0.026,1620
+"Decarb_MTFR",2040,"CEAM","Central America",1.08,1.026,0.003,2049
+"Decarb_MTFR",2040,"CHIL","Chile",4.68,4.622,0.085,1699
+"Decarb_MTFR",2040,"CHIN","China",8.78,8.169,5.28,81263
+"Decarb_MTFR",2040,"COLO","Colombia",1.65,1.566,0.005,2727
+"Decarb_MTFR",2040,"CROA","Croatia",2.87,0.631,0.355,520
+"Decarb_MTFR",2040,"CYPR","Cyprus",4.31,0.262,0.001,84
+"Decarb_MTFR",2040,"CZRE","Czech Republic",3.33,1.61,1.044,1665
+"Decarb_MTFR",2040,"DENM","Denmark",2.15,0.648,0.218,1212
+"Decarb_MTFR",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.81,0.629,0.035,6175
+"Decarb_MTFR",2040,"ECUA","Ecuador",0.88,0.786,0.001,1043
+"Decarb_MTFR",2040,"EGYP","Egypt",3.41,2.581,0.369,7253
+"Decarb_MTFR",2040,"ESTO","Estonia",1.96,0.502,0.023,239
+"Decarb_MTFR",2040,"FINL","Finland",1.75,0.503,0.071,1356
+"Decarb_MTFR",2040,"FRAN","France",3.35,1.96,3.198,8710
+"Decarb_MTFR",2040,"GEOR","Georgia",3.39,3.285,0.17,881
+"Decarb_MTFR",2040,"GERM","Germany",2.7,1.346,4.425,8071
+"Decarb_MTFR",2040,"GREE","Greece",4.64,1.735,0.231,1012
+"Decarb_MTFR",2040,"HUNG","Hungary",3.71,1.762,1.145,1198
+"Decarb_MTFR",2040,"ICEL","Iceland",2.56,1.693,0.022,39
+"Decarb_MTFR",2040,"INDI","India",7.44,6.441,8.574,64596
+"Decarb_MTFR",2040,"INDO","Indonesia",7.12,6.925,0.536,18133
+"Decarb_MTFR",2040,"IRAN","Iran",4.5,4.288,0.468,10896
+"Decarb_MTFR",2040,"IREL","Ireland",1.56,0.482,0.093,1011
+"Decarb_MTFR",2040,"ISRA","Israel",3.66,2.905,0.15,1064
+"Decarb_MTFR",2040,"ITAL","Italy",4.9,2.529,1.541,4355
+"Decarb_MTFR",2040,"JAPA","Japan",2.73,2.063,0.012,5598
+"Decarb_MTFR",2040,"KENY","Kenya",1.62,1.549,0.05,1603
+"Decarb_MTFR",2040,"KORS","Republic of Korea",8.94,5.463,0.387,4557
+"Decarb_MTFR",2040,"KOSO","Kosovo",3.65,1.657,0.184,241
+"Decarb_MTFR",2040,"LAOS","Laos",1.08,0.362,0.052,716
+"Decarb_MTFR",2040,"LATV","Latvia",2.25,0.758,0.09,350
+"Decarb_MTFR",2040,"LITH","Lithuania",2.09,0.484,0.11,434
+"Decarb_MTFR",2040,"LUXE","Luxembourg",2.6,0.439,0.018,126
+"Decarb_MTFR",2040,"MACE","TFYR Macedonia",3.16,1.347,0.207,308
+"Decarb_MTFR",2040,"MALA","Malaysia",5,4.597,1.473,4269
+"Decarb_MTFR",2040,"MALT","Malta",6.65,0.407,0,32
+"Decarb_MTFR",2040,"MEXI","Mexico",2.21,2.105,0.01,8136
+"Decarb_MTFR",2040,"MIDE","Middle East",2.02,1.5,0.813,8959
+"Decarb_MTFR",2040,"MOLD","Republic of Moldova",2.83,0.628,0.053,542
+"Decarb_MTFR",2040,"MONG","Mongolia",1.46,1.394,0.036,243
+"Decarb_MTFR",2040,"MONT","Montenegro",3.09,0.951,0.03,101
+"Decarb_MTFR",2040,"MYAN","Myanmar",1.52,1.014,0.071,2254
+"Decarb_MTFR",2040,"NAFR","Northern Africa (excl Egypt)",1.75,1.213,0.079,8688
+"Decarb_MTFR",2040,"NEPA","Nepal",7.2,4.445,0.381,1709
+"Decarb_MTFR",2040,"NETH","Netherlands",3.49,1.212,0.767,2470
+"Decarb_MTFR",2040,"NIGE","Nigeria",1.4,1.288,0.139,4522
+"Decarb_MTFR",2040,"NORW","Norway",1.43,0.349,0.057,690
+"Decarb_MTFR",2040,"NZEL","New Zealand",0.37,0.313,0,868
+"Decarb_MTFR",2040,"PAKI","Pakistan",6.96,5.894,0.977,8525
+"Decarb_MTFR",2040,"PARA","Paraguay",0.92,0.675,0.004,511
+"Decarb_MTFR",2040,"PERU","Peru",2.6,2.418,0.081,1713
+"Decarb_MTFR",2040,"PHIL","Philippines",1.78,1.697,0.107,4257
+"Decarb_MTFR",2040,"POLA","Poland",2.69,1.161,1.795,5668
+"Decarb_MTFR",2040,"PORT","Portugal",3.31,1.318,0.028,926
+"Decarb_MTFR",2040,"ROMA","Romania",3.5,1.761,1.107,1766
+"Decarb_MTFR",2040,"RSAF","Remaining Southern Africa",0.67,0.551,0.105,4255
+"Decarb_MTFR",2040,"RUSS","Russian Federation",2.94,1.64,1.499,20579
+"Decarb_MTFR",2040,"SAAR","Saudi Arabia",1.24,0.563,0.221,6148
+"Decarb_MTFR",2040,"SAFR","South Africa",1.61,1.483,0.088,3838
+"Decarb_MTFR",2040,"SERB","Serbia",3.25,1.323,1.046,895
+"Decarb_MTFR",2040,"SING","Singapore",2.36,0.561,0.114,720
+"Decarb_MTFR",2040,"SKRE","Slovakia",2.9,0.913,0.408,700
+"Decarb_MTFR",2040,"SLOV","Slovenia",3.61,1.484,0.22,370
+"Decarb_MTFR",2040,"SPAI","Spain",3.63,1.396,0.406,5823
+"Decarb_MTFR",2040,"SRIL","Sri Lanka",1.23,1.041,0.001,788
+"Decarb_MTFR",2040,"SWED","Sweden",2.03,0.667,0.208,1137
+"Decarb_MTFR",2040,"SWIT","Switzerland",3,1.564,0.261,873
+"Decarb_MTFR",2040,"TAIW","Taiwan",5.34,4.32,0.025,3022
+"Decarb_MTFR",2040,"TANZ","United Republic of Tanzania",0.85,0.792,0.064,2915
+"Decarb_MTFR",2040,"THAI","Thailand",1.93,1.556,0.397,7052
+"Decarb_MTFR",2040,"TURK","Turkey",4.97,2.586,0.903,7078
+"Decarb_MTFR",2040,"UKRA","Ukraine",2.79,0.937,1.216,4193
+"Decarb_MTFR",2040,"UNKI","United Kingdom",2.39,1.349,1.427,4920
+"Decarb_MTFR",2040,"URUG","Uruguay",0.7,0.546,0.044,346
+"Decarb_MTFR",2040,"USAM","United States of America",1.74,1.586,0.459,53957
+"Decarb_MTFR",2040,"VENE","Venezuela (Bolivarian Republic of)",1.41,1.301,0.046,2396
+"Decarb_MTFR",2040,"VIET","Vietnam",4.16,3.301,0.634,5367
+"Decarb_MTFR",2040,"WAFR","Western Africa (excl Nigeria)",1.15,0.995,0.048,9130
+"Baseline_CLE",2045,"AFGH","Afghanistan",64.59,63.703,2.48,496
+"Baseline_CLE",2045,"ALBA","Albania",8,4.945,0.666,190
+"Baseline_CLE",2045,"ARGE","Argentina",3.63,3.129,0.398,3218
+"Baseline_CLE",2045,"ARME","Armenia",10.41,15.274,0.429,124
+"Baseline_CLE",2045,"AUST","Austria",4.31,1.613,1.212,1365
+"Baseline_CLE",2045,"AUTR","Australia",1.93,1.663,0.041,5777
+"Baseline_CLE",2045,"AZER","Azerbaijan",8.68,8.31,1.531,789
+"Baseline_CLE",2045,"BANG","Bangladesh",55.72,29.192,1.756,328
+"Baseline_CLE",2045,"BELA","Belarus",6.73,3.628,1.512,813
+"Baseline_CLE",2045,"BELG","Belgium",5.68,2.21,1.866,1596
+"Baseline_CLE",2045,"BHUT","Bhutan",16.16,10.264,0.939,37
+"Baseline_CLE",2045,"BOHE","Bosnia and Herzegovina",9.3,6.457,1.408,300
+"Baseline_CLE",2045,"BOLV","Bolivia (Plurinational State of)",3.8,3.667,0.005,270
+"Baseline_CLE",2045,"BRAZ","Brazil",6.32,6.252,1.397,16356
+"Baseline_CLE",2045,"BRUN","Brunei Darussalam",5.65,3.329,0.123,41
+"Baseline_CLE",2045,"BULG","Bulgaria",5.29,1.937,0.831,704
+"Baseline_CLE",2045,"CAMB","Cambodia",9.32,6.599,0.281,12
+"Baseline_CLE",2045,"CANA","Canada",6.59,5.175,0.204,12147
+"Baseline_CLE",2045,"CARB","Caribbean",4.22,4.062,0.187,848
+"Baseline_CLE",2045,"CEAM","Central America",7.41,7.307,0.021,1384
+"Baseline_CLE",2045,"CHIL","Chile",16.03,15.915,0.181,2046
+"Baseline_CLE",2045,"CHIN","China",21.09,19.717,13.277,96024
+"Baseline_CLE",2045,"COLO","Colombia",7.09,6.809,0.029,2616
+"Baseline_CLE",2045,"CROA","Croatia",5.14,1.456,0.979,690
+"Baseline_CLE",2045,"CYPR","Cyprus",6.33,0.529,0.002,57
+"Baseline_CLE",2045,"CZRE","Czech Republic",5.46,2.576,1.941,1449
+"Baseline_CLE",2045,"DENM","Denmark",3.59,1.285,0.475,1265
+"Baseline_CLE",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",9.05,8.067,0.534,1444
+"Baseline_CLE",2045,"ECUA","Ecuador",4.33,4.165,0.008,1262
+"Baseline_CLE",2045,"EGYP","Egypt",21.2,19.319,2.16,1772
+"Baseline_CLE",2045,"ESTO","Estonia",3.11,0.891,0.051,185
+"Baseline_CLE",2045,"FINL","Finland",2.63,0.989,0.2,1373
+"Baseline_CLE",2045,"FRAN","France",4.84,2.978,5.25,9705
+"Baseline_CLE",2045,"GEOR","Georgia",7.08,8.518,0.384,405
+"Baseline_CLE",2045,"GERM","Germany",4.46,2.342,8.075,8157
+"Baseline_CLE",2045,"GREE","Greece",6.61,2.601,0.554,857
+"Baseline_CLE",2045,"HUNG","Hungary",6.18,2.657,2.154,1117
+"Baseline_CLE",2045,"ICEL","Iceland",3.18,2.299,0.028,53
+"Baseline_CLE",2045,"INDI","India",36.25,29.734,38.28,71310
+"Baseline_CLE",2045,"INDO","Indonesia",54.54,54.27,5.745,12503
+"Baseline_CLE",2045,"IRAN","Iran",32.34,31.303,2.635,7665
+"Baseline_CLE",2045,"IREL","Ireland",2.13,0.733,0.176,1328
+"Baseline_CLE",2045,"ISRA","Israel",15.06,11.751,1.055,2063
+"Baseline_CLE",2045,"ITAL","Italy",6.94,4.179,3.019,6397
+"Baseline_CLE",2045,"JAPA","Japan",6.01,4.923,0.032,11042
+"Baseline_CLE",2045,"KENY","Kenya",10.42,9.845,0.359,402
+"Baseline_CLE",2045,"KORS","Republic of Korea",20.96,13.047,0.912,7172
+"Baseline_CLE",2045,"KOSO","Kosovo",14.67,11.449,0.746,80
+"Baseline_CLE",2045,"LAOS","Laos",6.55,3.007,0.402,25
+"Baseline_CLE",2045,"LATV","Latvia",4.24,1.741,0.181,263
+"Baseline_CLE",2045,"LITH","Lithuania",4,1.075,0.312,417
+"Baseline_CLE",2045,"LUXE","Luxembourg",4.06,0.58,0.041,95
+"Baseline_CLE",2045,"MACE","TFYR Macedonia",8.04,5.037,0.559,148
+"Baseline_CLE",2045,"MALA","Malaysia",31.34,29.828,8.995,3061
+"Baseline_CLE",2045,"MALT","Malta",8.05,1.228,0,29
+"Baseline_CLE",2045,"MEXI","Mexico",10.46,10.237,0.047,11849
+"Baseline_CLE",2045,"MIDE","Middle East",14.11,11.987,4.496,9050
+"Baseline_CLE",2045,"MOLD","Republic of Moldova",8.1,3.42,0.255,234
+"Baseline_CLE",2045,"MONG","Mongolia",9.4,9.16,0.148,205
+"Baseline_CLE",2045,"MONT","Montenegro",8.3,5.396,0.089,80
+"Baseline_CLE",2045,"MYAN","Myanmar",9.74,7.167,0.339,29
+"Baseline_CLE",2045,"NAFR","Northern Africa (excl Egypt)",17.17,16.545,0.591,2677
+"Baseline_CLE",2045,"NEPA","Nepal",49.09,36.445,2.414,439
+"Baseline_CLE",2045,"NETH","Netherlands",5.78,2.138,1.569,2611
+"Baseline_CLE",2045,"NIGE","Nigeria",19.12,18.69,1.175,897
+"Baseline_CLE",2045,"NORW","Norway",2.25,0.979,0.277,602
+"Baseline_CLE",2045,"NZEL","New Zealand",1.18,0.986,0,917
+"Baseline_CLE",2045,"PAKI","Pakistan",56.3,50.898,7.657,1870
+"Baseline_CLE",2045,"PARA","Paraguay",5.42,4.401,0.023,250
+"Baseline_CLE",2045,"PERU","Peru",13.47,13.197,0.212,824
+"Baseline_CLE",2045,"PHIL","Philippines",11.85,11.758,0.641,2210
+"Baseline_CLE",2045,"POLA","Poland",5.25,2.728,4.86,5669
+"Baseline_CLE",2045,"PORT","Portugal",4.7,2.419,0.067,863
+"Baseline_CLE",2045,"ROMA","Romania",6.98,3.847,2.842,2050
+"Baseline_CLE",2045,"RSAF","Remaining Southern Africa",6.92,6.635,0.841,1298
+"Baseline_CLE",2045,"RUSS","Russian Federation",7.44,5.726,6.43,14276
+"Baseline_CLE",2045,"SAAR","Saudi Arabia",8.04,5.076,1.286,7488
+"Baseline_CLE",2045,"SAFR","South Africa",7.43,6.789,0.244,4313
+"Baseline_CLE",2045,"SERB","Serbia",8.98,5.69,3.229,507
+"Baseline_CLE",2045,"SING","Singapore",14.45,3.029,0.477,1140
+"Baseline_CLE",2045,"SKRE","Slovakia",4.97,1.461,0.877,522
+"Baseline_CLE",2045,"SLOV","Slovenia",7.04,3.752,0.555,300
+"Baseline_CLE",2045,"SPAI","Spain",4.87,2.452,0.861,5516
+"Baseline_CLE",2045,"SRIL","Sri Lanka",8.03,7.399,0.006,199
+"Baseline_CLE",2045,"SWED","Sweden",2.77,0.895,0.404,1214
+"Baseline_CLE",2045,"SWIT","Switzerland",5.07,2.917,0.439,1691
+"Baseline_CLE",2045,"TAIW","Taiwan",16.94,14.79,0.081,8304
+"Baseline_CLE",2045,"TANZ","United Republic of Tanzania",8.53,8.129,0.499,430
+"Baseline_CLE",2045,"THAI","Thailand",11.61,10.185,3.128,5982
+"Baseline_CLE",2045,"TURK","Turkey",12.05,9.194,5.264,8638
+"Baseline_CLE",2045,"UKRA","Ukraine",7.48,4.48,6.97,3701
+"Baseline_CLE",2045,"UNKI","United Kingdom",3.78,2.361,2.698,5556
+"Baseline_CLE",2045,"URUG","Uruguay",4.43,3.91,0.211,164
+"Baseline_CLE",2045,"USAM","United States of America",4.45,4.143,1.424,56640
+"Baseline_CLE",2045,"VENE","Venezuela (Bolivarian Republic of)",8.62,8.391,0.226,1441
+"Baseline_CLE",2045,"VIET","Vietnam",23.03,20.505,3.596,4842
+"Baseline_CLE",2045,"WAFR","Western Africa (excl Nigeria)",9.63,8.793,0.349,2097
+"Baseline_MTFR",2045,"AFGH","Afghanistan",15.06,14.773,0.661,5434
+"Baseline_MTFR",2045,"ALBA","Albania",4.26,1.67,0.267,379
+"Baseline_MTFR",2045,"ARGE","Argentina",1.37,1.128,0.147,13173
+"Baseline_MTFR",2045,"ARME","Armenia",6.41,3.683,0.131,350
+"Baseline_MTFR",2045,"AUST","Austria",3.71,1.408,1.236,1775
+"Baseline_MTFR",2045,"AUTR","Australia",0.95,0.866,0.024,11827
+"Baseline_MTFR",2045,"AZER","Azerbaijan",4.61,2.054,0.593,1854
+"Baseline_MTFR",2045,"BANG","Bangladesh",15.3,8.014,0.613,6542
+"Baseline_MTFR",2045,"BELA","Belarus",3.67,1.235,0.572,2403
+"Baseline_MTFR",2045,"BELG","Belgium",4.79,1.802,1.547,1953
+"Baseline_MTFR",2045,"BHUT","Bhutan",4.79,2.839,0.173,394
+"Baseline_MTFR",2045,"BOHE","Bosnia and Herzegovina",4.15,1.797,0.55,756
+"Baseline_MTFR",2045,"BOLV","Bolivia (Plurinational State of)",1.34,1.264,0.002,1407
+"Baseline_MTFR",2045,"BRAZ","Brazil",2.31,2.24,0.582,40944
+"Baseline_MTFR",2045,"BRUN","Brunei Darussalam",2.45,1.629,0.074,204
+"Baseline_MTFR",2045,"BULG","Bulgaria",3.81,1.18,0.531,961
+"Baseline_MTFR",2045,"CAMB","Cambodia",1.91,1.108,0.074,1362
+"Baseline_MTFR",2045,"CANA","Canada",3.19,2.344,0.118,16275
+"Baseline_MTFR",2045,"CARB","Caribbean",1.67,1.522,0.072,3404
+"Baseline_MTFR",2045,"CEAM","Central America",3.39,3.323,0.011,4329
+"Baseline_MTFR",2045,"CHIL","Chile",7.38,7.303,0.117,4472
+"Baseline_MTFR",2045,"CHIN","China",11.54,10.849,7.87,156866
+"Baseline_MTFR",2045,"COLO","Colombia",2.51,2.367,0.008,5918
+"Baseline_MTFR",2045,"CROA","Croatia",3.8,0.919,0.688,945
+"Baseline_MTFR",2045,"CYPR","Cyprus",5,0.439,0.001,97
+"Baseline_MTFR",2045,"CZRE","Czech Republic",4,1.584,1.58,2134
+"Baseline_MTFR",2045,"DENM","Denmark",2.94,0.982,0.406,1546
+"Baseline_MTFR",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1.96,1.639,0.14,30599
+"Baseline_MTFR",2045,"ECUA","Ecuador",1.46,1.342,0.003,2271
+"Baseline_MTFR",2045,"EGYP","Egypt",4.35,3.269,0.524,15740
+"Baseline_MTFR",2045,"ESTO","Estonia",2.39,0.592,0.041,323
+"Baseline_MTFR",2045,"FINL","Finland",2.11,0.699,0.172,1938
+"Baseline_MTFR",2045,"FRAN","France",4.08,2.392,4.23,12496
+"Baseline_MTFR",2045,"GEOR","Georgia",5.48,3.56,0.139,966
+"Baseline_MTFR",2045,"GERM","Germany",3.78,1.919,6.644,11183
+"Baseline_MTFR",2045,"GREE","Greece",5.47,2.055,0.422,1497
+"Baseline_MTFR",2045,"HUNG","Hungary",4.49,1.784,1.799,1649
+"Baseline_MTFR",2045,"ICEL","Iceland",2.64,1.768,0.022,74
+"Baseline_MTFR",2045,"INDI","India",11.82,9.764,13.826,130891
+"Baseline_MTFR",2045,"INDO","Indonesia",13.82,13.609,1.288,37733
+"Baseline_MTFR",2045,"IRAN","Iran",6.95,6.589,0.837,25561
+"Baseline_MTFR",2045,"IREL","Ireland",1.9,0.631,0.144,1488
+"Baseline_MTFR",2045,"ISRA","Israel",5.94,4.696,0.414,3652
+"Baseline_MTFR",2045,"ITAL","Italy",6.25,3.631,2.43,8177
+"Baseline_MTFR",2045,"JAPA","Japan",3.79,3.007,0.02,14261
+"Baseline_MTFR",2045,"KENY","Kenya",3.12,2.942,0.128,5925
+"Baseline_MTFR",2045,"KORS","Republic of Korea",11.84,7.284,0.506,8616
+"Baseline_MTFR",2045,"KOSO","Kosovo",4.72,2.281,0.206,289
+"Baseline_MTFR",2045,"LAOS","Laos",1.89,0.624,0.094,1445
+"Baseline_MTFR",2045,"LATV","Latvia",2.97,1.021,0.137,436
+"Baseline_MTFR",2045,"LITH","Lithuania",2.9,0.728,0.236,569
+"Baseline_MTFR",2045,"LUXE","Luxembourg",3.4,0.492,0.026,131
+"Baseline_MTFR",2045,"MACE","TFYR Macedonia",3.81,1.581,0.287,354
+"Baseline_MTFR",2045,"MALA","Malaysia",8.02,7.394,2.406,10979
+"Baseline_MTFR",2045,"MALT","Malta",7.61,1.001,0,40
+"Baseline_MTFR",2045,"MEXI","Mexico",3.55,3.4,0.018,22315
+"Baseline_MTFR",2045,"MIDE","Middle East",3.66,2.844,1.518,21742
+"Baseline_MTFR",2045,"MOLD","Republic of Moldova",4.47,0.904,0.083,741
+"Baseline_MTFR",2045,"MONG","Mongolia",3.35,3.262,0.073,1079
+"Baseline_MTFR",2045,"MONT","Montenegro",3.69,1.278,0.04,131
+"Baseline_MTFR",2045,"MYAN","Myanmar",2.72,1.846,0.141,4849
+"Baseline_MTFR",2045,"NAFR","Northern Africa (excl Egypt)",3.71,3.131,0.137,17848
+"Baseline_MTFR",2045,"NEPA","Nepal",13.56,8.972,0.726,3949
+"Baseline_MTFR",2045,"NETH","Netherlands",5.09,2.036,1.506,3091
+"Baseline_MTFR",2045,"NIGE","Nigeria",4.35,4.197,0.465,33808
+"Baseline_MTFR",2045,"NORW","Norway",1.89,0.7,0.141,795
+"Baseline_MTFR",2045,"NZEL","New Zealand",0.55,0.49,0,1663
+"Baseline_MTFR",2045,"PAKI","Pakistan",13.53,11.629,2.365,18024
+"Baseline_MTFR",2045,"PARA","Paraguay",1.71,1.302,0.009,1081
+"Baseline_MTFR",2045,"PERU","Peru",4.48,4.261,0.121,3793
+"Baseline_MTFR",2045,"PHIL","Philippines",3.12,3.033,0.191,10229
+"Baseline_MTFR",2045,"POLA","Poland",3.88,1.816,3.504,7952
+"Baseline_MTFR",2045,"PORT","Portugal",3.84,1.646,0.036,1296
+"Baseline_MTFR",2045,"ROMA","Romania",4.49,1.981,1.877,3100
+"Baseline_MTFR",2045,"RSAF","Remaining Southern Africa",1.34,1.167,0.252,17559
+"Baseline_MTFR",2045,"RUSS","Russian Federation",3.85,2.232,2.082,35007
+"Baseline_MTFR",2045,"SAAR","Saudi Arabia",1.96,0.943,0.386,15336
+"Baseline_MTFR",2045,"SAFR","South Africa",2.75,2.509,0.145,9452
+"Baseline_MTFR",2045,"SERB","Serbia",4.29,1.679,1.299,1177
+"Baseline_MTFR",2045,"SING","Singapore",4.33,1.328,0.228,1444
+"Baseline_MTFR",2045,"SKRE","Slovakia",3.64,0.82,0.583,841
+"Baseline_MTFR",2045,"SLOV","Slovenia",4.74,1.906,0.414,459
+"Baseline_MTFR",2045,"SPAI","Spain",4.24,1.892,0.687,7396
+"Baseline_MTFR",2045,"SRIL","Sri Lanka",1.81,1.541,0.001,1535
+"Baseline_MTFR",2045,"SWED","Sweden",2.5,0.867,0.397,1446
+"Baseline_MTFR",2045,"SWIT","Switzerland",4.42,2.542,0.376,1694
+"Baseline_MTFR",2045,"TAIW","Taiwan",8.53,7.348,0.043,11125
+"Baseline_MTFR",2045,"TANZ","United Republic of Tanzania",1.67,1.526,0.153,8314
+"Baseline_MTFR",2045,"THAI","Thailand",3.48,2.907,0.88,16434
+"Baseline_MTFR",2045,"TURK","Turkey",7.22,4.4,1.987,14931
+"Baseline_MTFR",2045,"UKRA","Ukraine",4.7,2.502,6.541,8311
+"Baseline_MTFR",2045,"UNKI","United Kingdom",3.35,2.083,2.198,7450
+"Baseline_MTFR",2045,"URUG","Uruguay",1.16,0.934,0.08,668
+"Baseline_MTFR",2045,"USAM","United States of America",2.64,2.442,0.789,81164
+"Baseline_MTFR",2045,"VENE","Venezuela (Bolivarian Republic of)",2.68,2.539,0.099,6072
+"Baseline_MTFR",2045,"VIET","Vietnam",6.46,5.181,1.076,11784
+"Baseline_MTFR",2045,"WAFR","Western Africa (excl Nigeria)",2.04,1.737,0.09,30139
+"Decarb_CLE",2045,"AFGH","Afghanistan",24.62,24.139,0.916,38
+"Decarb_CLE",2045,"ALBA","Albania",7.18,4.343,0.671,95
+"Decarb_CLE",2045,"ARGE","Argentina",2.62,2.254,0.278,1609
+"Decarb_CLE",2045,"ARME","Armenia",27.28,23.799,1.067,23
+"Decarb_CLE",2045,"AUST","Austria",3.44,1.23,0.842,709
+"Decarb_CLE",2045,"AUTR","Australia",1.18,1.099,0.03,2011
+"Decarb_CLE",2045,"AZER","Azerbaijan",8.39,4.722,1.313,241
+"Decarb_CLE",2045,"BANG","Bangladesh",30.86,18.745,1.181,74
+"Decarb_CLE",2045,"BELA","Belarus",4.92,2.453,1.063,309
+"Decarb_CLE",2045,"BELG","Belgium",4.78,1.846,1.472,982
+"Decarb_CLE",2045,"BHUT","Bhutan",6.59,2.558,0.226,3
+"Decarb_CLE",2045,"BOHE","Bosnia and Herzegovina",7.5,5.015,1.144,152
+"Decarb_CLE",2045,"BOLV","Bolivia (Plurinational State of)",1.89,1.806,0.002,83
+"Decarb_CLE",2045,"BRAZ","Brazil",4.95,4.876,1.029,8872
+"Decarb_CLE",2045,"BRUN","Brunei Darussalam",2.23,1.059,0.031,17
+"Decarb_CLE",2045,"BULG","Bulgaria",4.11,1.315,0.608,319
+"Decarb_CLE",2045,"CAMB","Cambodia",5.29,3.433,0.165,9
+"Decarb_CLE",2045,"CANA","Canada",6.08,4.861,0.191,3171
+"Decarb_CLE",2045,"CARB","Caribbean",1.9,1.75,0.075,274
+"Decarb_CLE",2045,"CEAM","Central America",2.71,2.637,0.008,386
+"Decarb_CLE",2045,"CHIL","Chile",10.34,10.242,0.126,523
+"Decarb_CLE",2045,"CHIN","China",17.16,16.42,10.56,25862
+"Decarb_CLE",2045,"COLO","Colombia",4.17,4.043,0.016,567
+"Decarb_CLE",2045,"CROA","Croatia",3.93,0.836,0.632,245
+"Decarb_CLE",2045,"CYPR","Cyprus",5.42,0.416,0.001,29
+"Decarb_CLE",2045,"CZRE","Czech Republic",4.13,1.81,1.414,758
+"Decarb_CLE",2045,"DENM","Denmark",2.93,1.015,0.385,726
+"Decarb_CLE",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",3.89,3.384,0.229,730
+"Decarb_CLE",2045,"ECUA","Ecuador",2.14,2.013,0.004,319
+"Decarb_CLE",2045,"EGYP","Egypt",12.4,11.199,1.344,778
+"Decarb_CLE",2045,"ESTO","Estonia",2.61,0.705,0.04,75
+"Decarb_CLE",2045,"FINL","Finland",2.19,0.708,0.109,667
+"Decarb_CLE",2045,"FRAN","France",4.2,2.555,4.616,4506
+"Decarb_CLE",2045,"GEOR","Georgia",17.65,14.951,0.843,111
+"Decarb_CLE",2045,"GERM","Germany",3.59,1.856,6.466,3560
+"Decarb_CLE",2045,"GREE","Greece",5.81,2.244,0.418,310
+"Decarb_CLE",2045,"HUNG","Hungary",4.73,1.936,1.587,541
+"Decarb_CLE",2045,"ICEL","Iceland",3.12,2.245,0.027,17
+"Decarb_CLE",2045,"INDI","India",23.53,20.193,24.632,23014
+"Decarb_CLE",2045,"INDO","Indonesia",27.66,27.429,1.942,3654
+"Decarb_CLE",2045,"IRAN","Iran",16.54,16.039,1.381,1905
+"Decarb_CLE",2045,"IREL","Ireland",1.91,0.633,0.156,768
+"Decarb_CLE",2045,"ISRA","Israel",11.3,9.104,0.432,363
+"Decarb_CLE",2045,"ITAL","Italy",5.82,3.224,2.39,1433
+"Decarb_CLE",2045,"JAPA","Japan",5.22,4.282,0.021,2417
+"Decarb_CLE",2045,"KENY","Kenya",4.45,4.179,0.147,161
+"Decarb_CLE",2045,"KORS","Republic of Korea",18.73,12.663,0.871,2051
+"Decarb_CLE",2045,"KOSO","Kosovo",11.65,8.712,0.683,44
+"Decarb_CLE",2045,"LAOS","Laos",3.52,1.578,0.194,10
+"Decarb_CLE",2045,"LATV","Latvia",3.28,1.227,0.143,106
+"Decarb_CLE",2045,"LITH","Lithuania",3.1,0.776,0.235,227
+"Decarb_CLE",2045,"LUXE","Luxembourg",3.43,0.502,0.032,56
+"Decarb_CLE",2045,"MACE","TFYR Macedonia",7,4.314,0.512,77
+"Decarb_CLE",2045,"MALA","Malaysia",15.25,14.532,4.391,701
+"Decarb_CLE",2045,"MALT","Malta",7.77,1.103,0,16
+"Decarb_CLE",2045,"MEXI","Mexico",6.15,5.983,0.028,2573
+"Decarb_CLE",2045,"MIDE","Middle East",7.65,6.492,2.499,2125
+"Decarb_CLE",2045,"MOLD","Republic of Moldova",6.17,2.659,0.203,113
+"Decarb_CLE",2045,"MONG","Mongolia",3.19,3.077,0.061,4
+"Decarb_CLE",2045,"MONT","Montenegro",6.77,4.046,0.066,40
+"Decarb_CLE",2045,"MYAN","Myanmar",5.84,4.462,0.246,8
+"Decarb_CLE",2045,"NAFR","Northern Africa (excl Egypt)",9.41,8.845,0.292,1017
+"Decarb_CLE",2045,"NEPA","Nepal",23.85,15.49,1.089,103
+"Decarb_CLE",2045,"NETH","Netherlands",4.79,1.713,1.179,1571
+"Decarb_CLE",2045,"NIGE","Nigeria",4.75,4.486,0.347,375
+"Decarb_CLE",2045,"NORW","Norway",1.72,0.53,0.104,385
+"Decarb_CLE",2045,"NZEL","New Zealand",0.65,0.593,0,234
+"Decarb_CLE",2045,"PAKI","Pakistan",30.96,27.982,3.912,185
+"Decarb_CLE",2045,"PARA","Paraguay",2.35,1.599,0.01,72
+"Decarb_CLE",2045,"PERU","Peru",5.24,5.017,0.129,297
+"Decarb_CLE",2045,"PHIL","Philippines",6.13,6.038,0.424,679
+"Decarb_CLE",2045,"POLA","Poland",4.01,1.981,3.573,2518
+"Decarb_CLE",2045,"PORT","Portugal",3.79,1.601,0.049,373
+"Decarb_CLE",2045,"ROMA","Romania",4.61,2.095,1.822,839
+"Decarb_CLE",2045,"RSAF","Remaining Southern Africa",3.49,3.307,0.492,600
+"Decarb_CLE",2045,"RUSS","Russian Federation",6,4.38,4.247,6245
+"Decarb_CLE",2045,"SAAR","Saudi Arabia",3.68,2.148,0.536,1615
+"Decarb_CLE",2045,"SAFR","South Africa",4.53,4.133,0.15,889
+"Decarb_CLE",2045,"SERB","Serbia",7.32,4.6,2.875,276
+"Decarb_CLE",2045,"SING","Singapore",6.11,0.989,0.185,443
+"Decarb_CLE",2045,"SKRE","Slovakia",3.86,1.086,0.714,275
+"Decarb_CLE",2045,"SLOV","Slovenia",5.27,2.574,0.367,144
+"Decarb_CLE",2045,"SPAI","Spain",4.41,2.046,0.683,2757
+"Decarb_CLE",2045,"SRIL","Sri Lanka",4.52,4.177,0.003,62
+"Decarb_CLE",2045,"SWED","Sweden",2.44,0.797,0.307,688
+"Decarb_CLE",2045,"SWIT","Switzerland",4.13,2.381,0.324,446
+"Decarb_CLE",2045,"TAIW","Taiwan",12.57,11.158,0.047,1458
+"Decarb_CLE",2045,"TANZ","United Republic of Tanzania",3.94,3.741,0.245,213
+"Decarb_CLE",2045,"THAI","Thailand",6.52,5.657,1.256,1903
+"Decarb_CLE",2045,"TURK","Turkey",9.91,7.054,3.309,2435
+"Decarb_CLE",2045,"UKRA","Ukraine",5.63,2.996,4.001,725
+"Decarb_CLE",2045,"UNKI","United Kingdom",3.07,1.783,2.141,2353
+"Decarb_CLE",2045,"URUG","Uruguay",1.93,1.549,0.147,44
+"Decarb_CLE",2045,"USAM","United States of America",3.75,3.475,1.19,25704
+"Decarb_CLE",2045,"VENE","Venezuela (Bolivarian Republic of)",3.1,2.951,0.085,376
+"Decarb_CLE",2045,"VIET","Vietnam",15.44,13.82,2.496,1744
+"Decarb_CLE",2045,"WAFR","Western Africa (excl Nigeria)",4.52,4.159,0.196,1034
+"Decarb_MTFR",2045,"AFGH","Afghanistan",7.35,7.21,0.29,2068
+"Decarb_MTFR",2045,"ALBA","Albania",3.52,1.229,0.149,265
+"Decarb_MTFR",2045,"ARGE","Argentina",0.98,0.822,0.075,5008
+"Decarb_MTFR",2045,"ARME","Armenia",5.25,5.534,0.289,650
+"Decarb_MTFR",2045,"AUST","Austria",2.54,0.887,0.528,1059
+"Decarb_MTFR",2045,"AUTR","Australia",0.69,0.609,0.015,4218
+"Decarb_MTFR",2045,"AZER","Azerbaijan",3.5,1.33,0.379,3443
+"Decarb_MTFR",2045,"BANG","Bangladesh",10.38,5.52,0.383,3927
+"Decarb_MTFR",2045,"BELA","Belarus",2.41,0.695,0.317,1478
+"Decarb_MTFR",2045,"BELG","Belgium",3.08,1.03,0.725,1278
+"Decarb_MTFR",2045,"BHUT","Bhutan",2.18,0.818,0.045,111
+"Decarb_MTFR",2045,"BOHE","Bosnia and Herzegovina",3.07,1.224,0.386,515
+"Decarb_MTFR",2045,"BOLV","Bolivia (Plurinational State of)",0.78,0.728,0.001,701
+"Decarb_MTFR",2045,"BRAZ","Brazil",1.54,1.469,0.324,22251
+"Decarb_MTFR",2045,"BRUN","Brunei Darussalam",0.82,0.333,0.012,69
+"Decarb_MTFR",2045,"BULG","Bulgaria",2.48,0.592,0.217,465
+"Decarb_MTFR",2045,"CAMB","Cambodia",1.2,0.729,0.049,539
+"Decarb_MTFR",2045,"CANA","Canada",1.97,1.462,0.078,6046
+"Decarb_MTFR",2045,"CARB","Caribbean",0.72,0.581,0.023,1270
+"Decarb_MTFR",2045,"CEAM","Central America",0.99,0.931,0.002,1525
+"Decarb_MTFR",2045,"CHIL","Chile",4.41,4.354,0.09,1259
+"Decarb_MTFR",2045,"CHIN","China",8.06,7.449,4.716,59588
+"Decarb_MTFR",2045,"COLO","Colombia",1.54,1.464,0.004,2144
+"Decarb_MTFR",2045,"CROA","Croatia",2.57,0.442,0.294,396
+"Decarb_MTFR",2045,"CYPR","Cyprus",4.33,0.247,0.001,66
+"Decarb_MTFR",2045,"CZRE","Czech Republic",2.76,1.164,0.816,1315
+"Decarb_MTFR",2045,"DENM","Denmark",1.95,0.593,0.2,985
+"Decarb_MTFR",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.86,0.684,0.035,5774
+"Decarb_MTFR",2045,"ECUA","Ecuador",0.81,0.709,0.001,737
+"Decarb_MTFR",2045,"EGYP","Egypt",3.16,2.35,0.339,6403
+"Decarb_MTFR",2045,"ESTO","Estonia",1.86,0.447,0.021,186
+"Decarb_MTFR",2045,"FINL","Finland",1.66,0.442,0.063,1061
+"Decarb_MTFR",2045,"FRAN","France",3.21,1.891,3.012,6959
+"Decarb_MTFR",2045,"GEOR","Georgia",3.51,3.51,0.18,1049
+"Decarb_MTFR",2045,"GERM","Germany",2.49,1.256,4.114,6344
+"Decarb_MTFR",2045,"GREE","Greece",4.57,1.656,0.205,858
+"Decarb_MTFR",2045,"HUNG","Hungary",3.1,1.288,0.916,963
+"Decarb_MTFR",2045,"ICEL","Iceland",2.59,1.712,0.022,29
+"Decarb_MTFR",2045,"INDI","India",6.97,6.036,7.902,55347
+"Decarb_MTFR",2045,"INDO","Indonesia",6.75,6.551,0.518,16040
+"Decarb_MTFR",2045,"IRAN","Iran",4.04,3.84,0.436,8427
+"Decarb_MTFR",2045,"IREL","Ireland",1.49,0.444,0.087,893
+"Decarb_MTFR",2045,"ISRA","Israel",3.58,2.851,0.135,740
+"Decarb_MTFR",2045,"ITAL","Italy",4.66,2.27,1.406,3157
+"Decarb_MTFR",2045,"JAPA","Japan",2.58,1.933,0.01,3435
+"Decarb_MTFR",2045,"KENY","Kenya",1.92,1.84,0.051,1447
+"Decarb_MTFR",2045,"KORS","Republic of Korea",8.5,5.186,0.37,2959
+"Decarb_MTFR",2045,"KOSO","Kosovo",3.44,1.497,0.17,205
+"Decarb_MTFR",2045,"LAOS","Laos",1.02,0.361,0.05,630
+"Decarb_MTFR",2045,"LATV","Latvia",2.08,0.67,0.085,250
+"Decarb_MTFR",2045,"LITH","Lithuania",1.93,0.421,0.095,328
+"Decarb_MTFR",2045,"LUXE","Luxembourg",2.39,0.379,0.015,90
+"Decarb_MTFR",2045,"MACE","TFYR Macedonia",3.03,1.255,0.177,245
+"Decarb_MTFR",2045,"MALA","Malaysia",4.34,3.943,1.349,3316
+"Decarb_MTFR",2045,"MALT","Malta",6.79,0.424,0,25
+"Decarb_MTFR",2045,"MEXI","Mexico",2.04,1.937,0.009,6957
+"Decarb_MTFR",2045,"MIDE","Middle East",1.98,1.477,0.784,6552
+"Decarb_MTFR",2045,"MOLD","Republic of Moldova",2.58,0.504,0.045,488
+"Decarb_MTFR",2045,"MONG","Mongolia",1.35,1.297,0.036,219
+"Decarb_MTFR",2045,"MONT","Montenegro",2.98,0.858,0.027,78
+"Decarb_MTFR",2045,"MYAN","Myanmar",1.49,1.029,0.067,2183
+"Decarb_MTFR",2045,"NAFR","Northern Africa (excl Egypt)",1.6,1.053,0.075,7091
+"Decarb_MTFR",2045,"NEPA","Nepal",6.96,4.428,0.376,1779
+"Decarb_MTFR",2045,"NETH","Netherlands",3.18,1.096,0.691,1992
+"Decarb_MTFR",2045,"NIGE","Nigeria",1.43,1.322,0.142,4558
+"Decarb_MTFR",2045,"NORW","Norway",1.35,0.295,0.054,491
+"Decarb_MTFR",2045,"NZEL","New Zealand",0.34,0.28,0,641
+"Decarb_MTFR",2045,"PAKI","Pakistan",6.47,5.465,0.899,8545
+"Decarb_MTFR",2045,"PARA","Paraguay",0.85,0.624,0.004,387
+"Decarb_MTFR",2045,"PERU","Peru",2.57,2.385,0.093,1232
+"Decarb_MTFR",2045,"PHIL","Philippines",1.76,1.67,0.111,3864
+"Decarb_MTFR",2045,"POLA","Poland",2.46,1.04,1.605,4296
+"Decarb_MTFR",2045,"PORT","Portugal",3.11,1.088,0.024,705
+"Decarb_MTFR",2045,"ROMA","Romania",2.91,1.221,0.878,1379
+"Decarb_MTFR",2045,"RSAF","Remaining Southern Africa",0.74,0.623,0.116,3864
+"Decarb_MTFR",2045,"RUSS","Russian Federation",2.8,1.524,1.378,17216
+"Decarb_MTFR",2045,"SAAR","Saudi Arabia",1.13,0.476,0.196,4358
+"Decarb_MTFR",2045,"SAFR","South Africa",1.6,1.468,0.088,3131
+"Decarb_MTFR",2045,"SERB","Serbia",3.08,1.246,1.008,742
+"Decarb_MTFR",2045,"SING","Singapore",2.34,0.601,0.116,520
+"Decarb_MTFR",2045,"SKRE","Slovakia",2.51,0.7,0.347,550
+"Decarb_MTFR",2045,"SLOV","Slovenia",3.12,1.106,0.17,270
+"Decarb_MTFR",2045,"SPAI","Spain",3.58,1.314,0.391,4612
+"Decarb_MTFR",2045,"SRIL","Sri Lanka",1.17,0.991,0.001,776
+"Decarb_MTFR",2045,"SWED","Sweden",1.96,0.66,0.198,927
+"Decarb_MTFR",2045,"SWIT","Switzerland",2.78,1.439,0.212,725
+"Decarb_MTFR",2045,"TAIW","Taiwan",5.29,4.295,0.025,2110
+"Decarb_MTFR",2045,"TANZ","United Republic of Tanzania",0.98,0.918,0.066,2820
+"Decarb_MTFR",2045,"THAI","Thailand",1.88,1.532,0.366,5819
+"Decarb_MTFR",2045,"TURK","Turkey",4.85,2.447,0.848,5630
+"Decarb_MTFR",2045,"UKRA","Ukraine",2.66,0.862,1.116,3670
+"Decarb_MTFR",2045,"UNKI","United Kingdom",2.22,1.246,1.272,4112
+"Decarb_MTFR",2045,"URUG","Uruguay",0.58,0.439,0.041,263
+"Decarb_MTFR",2045,"USAM","United States of America",1.62,1.463,0.415,40204
+"Decarb_MTFR",2045,"VENE","Venezuela (Bolivarian Republic of)",1.16,1.055,0.039,1686
+"Decarb_MTFR",2045,"VIET","Vietnam",4.04,3.277,0.602,4706
+"Decarb_MTFR",2045,"WAFR","Western Africa (excl Nigeria)",1.24,1.081,0.051,8631
+"Baseline_CLE",2050,"AFGH","Afghanistan",65.01,64.098,2.402,670
+"Baseline_CLE",2050,"ALBA","Albania",7.5,4.497,0.64,129
+"Baseline_CLE",2050,"ARGE","Argentina",3.7,3.192,0.403,3379
+"Baseline_CLE",2050,"ARME","Armenia",11.19,17.395,0.461,140
+"Baseline_CLE",2050,"AUST","Austria",4.02,1.45,1.047,1123
+"Baseline_CLE",2050,"AUTR","Australia",1.96,1.694,0.042,5853
+"Baseline_CLE",2050,"AZER","Azerbaijan",9.26,9.416,1.616,875
+"Baseline_CLE",2050,"BANG","Bangladesh",56.24,29.524,1.747,325
+"Baseline_CLE",2050,"BELA","Belarus",6.67,3.628,1.541,848
+"Baseline_CLE",2050,"BELG","Belgium",5.47,2.137,1.759,1331
+"Baseline_CLE",2050,"BHUT","Bhutan",17.4,11.416,1.03,41
+"Baseline_CLE",2050,"BOHE","Bosnia and Herzegovina",8.5,5.754,1.248,223
+"Baseline_CLE",2050,"BOLV","Bolivia (Plurinational State of)",4.08,3.944,0.005,264
+"Baseline_CLE",2050,"BRAZ","Brazil",6.57,6.499,1.443,16936
+"Baseline_CLE",2050,"BRUN","Brunei Darussalam",5.71,3.335,0.126,42
+"Baseline_CLE",2050,"BULG","Bulgaria",5.06,1.782,0.777,625
+"Baseline_CLE",2050,"CAMB","Cambodia",9.87,7.154,0.285,12
+"Baseline_CLE",2050,"CANA","Canada",6.71,5.309,0.206,11823
+"Baseline_CLE",2050,"CARB","Caribbean",4.29,4.131,0.193,844
+"Baseline_CLE",2050,"CEAM","Central America",7.38,7.274,0.02,1318
+"Baseline_CLE",2050,"CHIL","Chile",16.43,16.316,0.189,2014
+"Baseline_CLE",2050,"CHIN","China",20.46,19.211,12.793,76892
+"Baseline_CLE",2050,"COLO","Colombia",7.51,7.211,0.03,2730
+"Baseline_CLE",2050,"CROA","Croatia",4.84,1.364,0.914,614
+"Baseline_CLE",2050,"CYPR","Cyprus",6.4,0.489,0.002,44
+"Baseline_CLE",2050,"CZRE","Czech Republic",4.89,2.136,1.712,1199
+"Baseline_CLE",2050,"DENM","Denmark",3.47,1.247,0.464,1102
+"Baseline_CLE",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",9.82,8.795,0.535,1641
+"Baseline_CLE",2050,"ECUA","Ecuador",4.73,4.55,0.008,1356
+"Baseline_CLE",2050,"EGYP","Egypt",23.1,21.173,2.27,1861
+"Baseline_CLE",2050,"ESTO","Estonia",2.99,0.806,0.048,141
+"Baseline_CLE",2050,"FINL","Finland",2.5,0.877,0.173,1150
+"Baseline_CLE",2050,"FRAN","France",4.69,2.855,4.913,8904
+"Baseline_CLE",2050,"GEOR","Georgia",7.51,9.578,0.414,451
+"Baseline_CLE",2050,"GERM","Germany",4.27,2.246,7.81,6708
+"Baseline_CLE",2050,"GREE","Greece",6.51,2.499,0.519,620
+"Baseline_CLE",2050,"HUNG","Hungary",5.62,2.308,1.954,854
+"Baseline_CLE",2050,"ICEL","Iceland",3.27,2.394,0.029,51
+"Baseline_CLE",2050,"INDI","India",37.06,30.218,38.485,71360
+"Baseline_CLE",2050,"INDO","Indonesia",58.14,57.864,5.98,12540
+"Baseline_CLE",2050,"IRAN","Iran",34.97,33.918,2.733,8423
+"Baseline_CLE",2050,"IREL","Ireland",2.13,0.74,0.171,1593
+"Baseline_CLE",2050,"ISRA","Israel",15.25,11.804,1.052,2078
+"Baseline_CLE",2050,"ITAL","Italy",6.64,3.876,2.856,5182
+"Baseline_CLE",2050,"JAPA","Japan",5.95,4.874,0.031,10083
+"Baseline_CLE",2050,"KENY","Kenya",11.88,11.297,0.382,466
+"Baseline_CLE",2050,"KORS","Republic of Korea",20.81,12.974,0.902,6439
+"Baseline_CLE",2050,"KOSO","Kosovo",13.24,10.129,0.698,67
+"Baseline_CLE",2050,"LAOS","Laos",6.77,3.195,0.407,25
+"Baseline_CLE",2050,"LATV","Latvia",4.02,1.576,0.171,194
+"Baseline_CLE",2050,"LITH","Lithuania",3.88,1.015,0.297,388
+"Baseline_CLE",2050,"LUXE","Luxembourg",3.88,0.58,0.038,90
+"Baseline_CLE",2050,"MACE","TFYR Macedonia",7.62,4.715,0.512,107
+"Baseline_CLE",2050,"MALA","Malaysia",32.1,30.528,9.298,3104
+"Baseline_CLE",2050,"MALT","Malta",8.14,1.214,0,26
+"Baseline_CLE",2050,"MEXI","Mexico",10.85,10.627,0.046,12692
+"Baseline_CLE",2050,"MIDE","Middle East",15.46,13.289,4.609,10244
+"Baseline_CLE",2050,"MOLD","Republic of Moldova",7.85,3.229,0.246,276
+"Baseline_CLE",2050,"MONG","Mongolia",9.28,9.045,0.153,242
+"Baseline_CLE",2050,"MONT","Montenegro",7.39,4.542,0.075,58
+"Baseline_CLE",2050,"MYAN","Myanmar",10.23,7.6,0.344,29
+"Baseline_CLE",2050,"NAFR","Northern Africa (excl Egypt)",18.8,18.156,0.632,2884
+"Baseline_CLE",2050,"NEPA","Nepal",55.68,42.983,2.597,476
+"Baseline_CLE",2050,"NETH","Netherlands",5.55,2.066,1.514,2282
+"Baseline_CLE",2050,"NIGE","Nigeria",19.91,19.458,1.255,1123
+"Baseline_CLE",2050,"NORW","Norway",2.26,1.006,0.267,466
+"Baseline_CLE",2050,"NZEL","New Zealand",1.2,1.003,0,932
+"Baseline_CLE",2050,"PAKI","Pakistan",59.88,54.452,8.124,2135
+"Baseline_CLE",2050,"PARA","Paraguay",5.71,4.662,0.022,257
+"Baseline_CLE",2050,"PERU","Peru",14.5,14.212,0.231,862
+"Baseline_CLE",2050,"PHIL","Philippines",12.5,12.405,0.713,2239
+"Baseline_CLE",2050,"POLA","Poland",5.02,2.588,4.549,4501
+"Baseline_CLE",2050,"PORT","Portugal",4.47,2.157,0.061,652
+"Baseline_CLE",2050,"ROMA","Romania",5.99,2.894,2.418,1775
+"Baseline_CLE",2050,"RSAF","Remaining Southern Africa",7.71,7.415,0.896,1499
+"Baseline_CLE",2050,"RUSS","Russian Federation",7.38,5.657,6.185,13951
+"Baseline_CLE",2050,"SAAR","Saudi Arabia",8.47,5.432,1.286,8451
+"Baseline_CLE",2050,"SAFR","South Africa",7.76,7.082,0.247,4454
+"Baseline_CLE",2050,"SERB","Serbia",8.07,4.933,2.905,399
+"Baseline_CLE",2050,"SING","Singapore",15.05,3.183,0.493,1148
+"Baseline_CLE",2050,"SKRE","Slovakia",4.57,1.263,0.807,396
+"Baseline_CLE",2050,"SLOV","Slovenia",6.12,2.985,0.458,240
+"Baseline_CLE",2050,"SPAI","Spain",4.74,2.298,0.824,4550
+"Baseline_CLE",2050,"SRIL","Sri Lanka",8.21,7.556,0.005,194
+"Baseline_CLE",2050,"SWED","Sweden",2.73,0.888,0.387,991
+"Baseline_CLE",2050,"SWIT","Switzerland",5.11,3.057,0.468,1813
+"Baseline_CLE",2050,"TAIW","Taiwan",17.4,15.192,0.085,9172
+"Baseline_CLE",2050,"TANZ","United Republic of Tanzania",9.57,9.147,0.52,489
+"Baseline_CLE",2050,"THAI","Thailand",11.94,10.519,3.194,5940
+"Baseline_CLE",2050,"TURK","Turkey",12.32,9.43,5.438,8521
+"Baseline_CLE",2050,"UKRA","Ukraine",7.6,4.659,7.326,4025
+"Baseline_CLE",2050,"UNKI","United Kingdom",3.68,2.297,2.605,5250
+"Baseline_CLE",2050,"URUG","Uruguay",4.67,4.144,0.216,172
+"Baseline_CLE",2050,"USAM","United States of America",4.43,4.121,1.415,51642
+"Baseline_CLE",2050,"VENE","Venezuela (Bolivarian Republic of)",9.28,9.038,0.243,1525
+"Baseline_CLE",2050,"VIET","Vietnam",23.87,21.423,3.605,4721
+"Baseline_CLE",2050,"WAFR","Western Africa (excl Nigeria)",10.57,9.691,0.365,2408
+"Baseline_MTFR",2050,"AFGH","Afghanistan",16.34,16.042,0.685,5232
+"Baseline_MTFR",2050,"ALBA","Albania",3.93,1.372,0.247,323
+"Baseline_MTFR",2050,"ARGE","Argentina",1.4,1.161,0.149,13932
+"Baseline_MTFR",2050,"ARME","Armenia",6.64,3.883,0.129,385
+"Baseline_MTFR",2050,"AUST","Austria",3.46,1.247,0.971,1519
+"Baseline_MTFR",2050,"AUTR","Australia",0.98,0.898,0.025,11860
+"Baseline_MTFR",2050,"AZER","Azerbaijan",4.69,2.137,0.589,2018
+"Baseline_MTFR",2050,"BANG","Bangladesh",15.28,8.022,0.605,6402
+"Baseline_MTFR",2050,"BELA","Belarus",3.58,1.212,0.582,2450
+"Baseline_MTFR",2050,"BELG","Belgium",4.59,1.713,1.406,1702
+"Baseline_MTFR",2050,"BHUT","Bhutan",5.15,3.192,0.19,430
+"Baseline_MTFR",2050,"BOHE","Bosnia and Herzegovina",3.77,1.499,0.474,655
+"Baseline_MTFR",2050,"BOLV","Bolivia (Plurinational State of)",1.4,1.324,0.002,1416
+"Baseline_MTFR",2050,"BRAZ","Brazil",2.39,2.319,0.599,42693
+"Baseline_MTFR",2050,"BRUN","Brunei Darussalam",2.49,1.661,0.076,203
+"Baseline_MTFR",2050,"BULG","Bulgaria",3.7,1.114,0.501,863
+"Baseline_MTFR",2050,"CAMB","Cambodia",1.97,1.167,0.075,1332
+"Baseline_MTFR",2050,"CANA","Canada",3.26,2.423,0.12,16194
+"Baseline_MTFR",2050,"CARB","Caribbean",1.59,1.44,0.071,3553
+"Baseline_MTFR",2050,"CEAM","Central America",3.04,2.971,0.009,4510
+"Baseline_MTFR",2050,"CHIL","Chile",7.58,7.509,0.124,4554
+"Baseline_MTFR",2050,"CHIN","China",11.13,10.436,7.501,133642
+"Baseline_MTFR",2050,"COLO","Colombia",2.65,2.5,0.008,6032
+"Baseline_MTFR",2050,"CROA","Croatia",3.63,0.889,0.657,860
+"Baseline_MTFR",2050,"CYPR","Cyprus",5.05,0.416,0.001,84
+"Baseline_MTFR",2050,"CZRE","Czech Republic",3.67,1.385,1.347,1867
+"Baseline_MTFR",2050,"DENM","Denmark",2.84,0.961,0.385,1381
+"Baseline_MTFR",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",2.05,1.717,0.141,29814
+"Baseline_MTFR",2050,"ECUA","Ecuador",1.6,1.473,0.003,2420
+"Baseline_MTFR",2050,"EGYP","Egypt",4.46,3.371,0.532,17347
+"Baseline_MTFR",2050,"ESTO","Estonia",2.29,0.538,0.035,277
+"Baseline_MTFR",2050,"FINL","Finland",2.01,0.61,0.138,1651
+"Baseline_MTFR",2050,"FRAN","France",4.01,2.355,4.04,11552
+"Baseline_MTFR",2050,"GEOR","Georgia",5.8,3.873,0.138,1091
+"Baseline_MTFR",2050,"GERM","Germany",3.61,1.852,6.476,9727
+"Baseline_MTFR",2050,"GREE","Greece",5.42,1.988,0.373,1269
+"Baseline_MTFR",2050,"HUNG","Hungary",4.25,1.692,1.666,1402
+"Baseline_MTFR",2050,"ICEL","Iceland",2.69,1.814,0.024,73
+"Baseline_MTFR",2050,"INDI","India",11.87,9.765,13.73,127530
+"Baseline_MTFR",2050,"INDO","Indonesia",14.67,14.452,1.349,38794
+"Baseline_MTFR",2050,"IRAN","Iran",7.43,7.064,0.87,26898
+"Baseline_MTFR",2050,"IREL","Ireland",1.89,0.626,0.139,1754
+"Baseline_MTFR",2050,"ISRA","Israel",6.03,4.752,0.416,3637
+"Baseline_MTFR",2050,"ITAL","Italy",6.02,3.398,2.325,6970
+"Baseline_MTFR",2050,"JAPA","Japan",3.74,2.968,0.019,12989
+"Baseline_MTFR",2050,"KENY","Kenya",3.64,3.461,0.138,5898
+"Baseline_MTFR",2050,"KORS","Republic of Korea",11.68,7.222,0.499,7877
+"Baseline_MTFR",2050,"KOSO","Kosovo",4.16,1.792,0.192,263
+"Baseline_MTFR",2050,"LAOS","Laos",1.91,0.646,0.096,1457
+"Baseline_MTFR",2050,"LATV","Latvia",2.84,0.946,0.132,363
+"Baseline_MTFR",2050,"LITH","Lithuania",2.8,0.691,0.218,539
+"Baseline_MTFR",2050,"LUXE","Luxembourg",3.26,0.487,0.021,127
+"Baseline_MTFR",2050,"MACE","TFYR Macedonia",3.47,1.298,0.252,314
+"Baseline_MTFR",2050,"MALA","Malaysia",8.23,7.581,2.482,11207
+"Baseline_MTFR",2050,"MALT","Malta",7.64,0.918,0,36
+"Baseline_MTFR",2050,"MEXI","Mexico",3.58,3.441,0.018,23658
+"Baseline_MTFR",2050,"MIDE","Middle East",3.94,3.103,1.565,23538
+"Baseline_MTFR",2050,"MOLD","Republic of Moldova",4.33,0.814,0.075,767
+"Baseline_MTFR",2050,"MONG","Mongolia",3.41,3.325,0.075,1153
+"Baseline_MTFR",2050,"MONT","Montenegro",3.35,0.97,0.033,105
+"Baseline_MTFR",2050,"MYAN","Myanmar",2.8,1.922,0.146,4850
+"Baseline_MTFR",2050,"NAFR","Northern Africa (excl Egypt)",3.91,3.322,0.143,19457
+"Baseline_MTFR",2050,"NEPA","Nepal",14.92,10.368,0.769,4005
+"Baseline_MTFR",2050,"NETH","Netherlands",4.85,1.921,1.423,2768
+"Baseline_MTFR",2050,"NIGE","Nigeria",4.38,4.219,0.497,31349
+"Baseline_MTFR",2050,"NORW","Norway",2.01,0.839,0.165,633
+"Baseline_MTFR",2050,"NZEL","New Zealand",0.56,0.499,0,1666
+"Baseline_MTFR",2050,"PAKI","Pakistan",13.76,11.813,2.422,18464
+"Baseline_MTFR",2050,"PARA","Paraguay",1.68,1.267,0.008,1092
+"Baseline_MTFR",2050,"PERU","Peru",4.73,4.506,0.137,3979
+"Baseline_MTFR",2050,"PHIL","Philippines",3.27,3.183,0.206,10522
+"Baseline_MTFR",2050,"POLA","Poland",3.69,1.708,3.109,6763
+"Baseline_MTFR",2050,"PORT","Portugal",3.67,1.463,0.033,1071
+"Baseline_MTFR",2050,"ROMA","Romania",4.35,1.895,1.798,2740
+"Baseline_MTFR",2050,"RSAF","Remaining Southern Africa",1.49,1.313,0.281,17797
+"Baseline_MTFR",2050,"RUSS","Russian Federation",3.83,2.216,2.029,33601
+"Baseline_MTFR",2050,"SAAR","Saudi Arabia",2.05,1.003,0.38,16759
+"Baseline_MTFR",2050,"SAFR","South Africa",2.91,2.653,0.149,9546
+"Baseline_MTFR",2050,"SERB","Serbia",3.93,1.42,1.183,1004
+"Baseline_MTFR",2050,"SING","Singapore",4.56,1.442,0.247,1456
+"Baseline_MTFR",2050,"SKRE","Slovakia",3.41,0.752,0.51,726
+"Baseline_MTFR",2050,"SLOV","Slovenia",4.32,1.606,0.33,395
+"Baseline_MTFR",2050,"SPAI","Spain",4.13,1.75,0.632,6430
+"Baseline_MTFR",2050,"SRIL","Sri Lanka",1.82,1.54,0.001,1492
+"Baseline_MTFR",2050,"SWED","Sweden",2.45,0.85,0.363,1240
+"Baseline_MTFR",2050,"SWIT","Switzerland",4.52,2.71,0.421,1786
+"Baseline_MTFR",2050,"TAIW","Taiwan",8.72,7.557,0.045,12259
+"Baseline_MTFR",2050,"TANZ","United Republic of Tanzania",1.83,1.686,0.161,8137
+"Baseline_MTFR",2050,"THAI","Thailand",3.58,3.023,0.903,16555
+"Baseline_MTFR",2050,"TURK","Turkey",7.34,4.5,2.11,14853
+"Baseline_MTFR",2050,"UKRA","Ukraine",4.65,2.493,6.493,8879
+"Baseline_MTFR",2050,"UNKI","United Kingdom",3.27,2.035,2.125,7179
+"Baseline_MTFR",2050,"URUG","Uruguay",1.21,0.98,0.082,700
+"Baseline_MTFR",2050,"USAM","United States of America",2.63,2.426,0.782,76323
+"Baseline_MTFR",2050,"VENE","Venezuela (Bolivarian Republic of)",2.89,2.743,0.105,6491
+"Baseline_MTFR",2050,"VIET","Vietnam",6.58,5.354,1.081,11520
+"Baseline_MTFR",2050,"WAFR","Western Africa (excl Nigeria)",2.19,1.873,0.097,30092
+"Decarb_CLE",2050,"AFGH","Afghanistan",23.54,23.074,0.855,18
+"Decarb_CLE",2050,"ALBA","Albania",6.87,4.064,0.664,43
+"Decarb_CLE",2050,"ARGE","Argentina",2.48,2.125,0.261,1129
+"Decarb_CLE",2050,"ARME","Armenia",27.43,24.065,1.085,17
+"Decarb_CLE",2050,"AUST","Austria",3.18,1.1,0.735,470
+"Decarb_CLE",2050,"AUTR","Australia",1.14,1.056,0.03,1555
+"Decarb_CLE",2050,"AZER","Azerbaijan",7.44,3.778,1.11,176
+"Decarb_CLE",2050,"BANG","Bangladesh",30.31,18.819,1.148,43
+"Decarb_CLE",2050,"BELA","Belarus",4.46,2.1,0.962,244
+"Decarb_CLE",2050,"BELG","Belgium",4.55,1.755,1.389,793
+"Decarb_CLE",2050,"BHUT","Bhutan",6.11,2.185,0.17,13
+"Decarb_CLE",2050,"BOHE","Bosnia and Herzegovina",6.83,4.434,1.013,81
+"Decarb_CLE",2050,"BOLV","Bolivia (Plurinational State of)",1.79,1.706,0.002,65
+"Decarb_CLE",2050,"BRAZ","Brazil",4.62,4.55,0.968,6330
+"Decarb_CLE",2050,"BRUN","Brunei Darussalam",1.94,0.904,0.027,10
+"Decarb_CLE",2050,"BULG","Bulgaria",3.91,1.201,0.577,200
+"Decarb_CLE",2050,"CAMB","Cambodia",5.1,3.279,0.15,10
+"Decarb_CLE",2050,"CANA","Canada",6.13,4.94,0.194,2703
+"Decarb_CLE",2050,"CARB","Caribbean",1.73,1.58,0.066,224
+"Decarb_CLE",2050,"CEAM","Central America",2.41,2.336,0.007,300
+"Decarb_CLE",2050,"CHIL","Chile",10.34,10.25,0.13,385
+"Decarb_CLE",2050,"CHIN","China",16.66,15.928,10.156,15018
+"Decarb_CLE",2050,"COLO","Colombia",4.01,3.891,0.016,360
+"Decarb_CLE",2050,"CROA","Croatia",3.67,0.741,0.58,132
+"Decarb_CLE",2050,"CYPR","Cyprus",5.43,0.401,0.001,19
+"Decarb_CLE",2050,"CZRE","Czech Republic",3.6,1.401,1.214,516
+"Decarb_CLE",2050,"DENM","Denmark",2.75,0.93,0.359,577
+"Decarb_CLE",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",4.07,3.589,0.228,701
+"Decarb_CLE",2050,"ECUA","Ecuador",2.02,1.896,0.004,159
+"Decarb_CLE",2050,"EGYP","Egypt",11.29,10.133,1.188,626
+"Decarb_CLE",2050,"ESTO","Estonia",2.45,0.606,0.038,34
+"Decarb_CLE",2050,"FINL","Finland",2.06,0.607,0.097,455
+"Decarb_CLE",2050,"FRAN","France",4.06,2.453,4.367,4130
+"Decarb_CLE",2050,"GEOR","Georgia",19.09,16.502,0.883,84
+"Decarb_CLE",2050,"GERM","Germany",3.4,1.747,6.078,2835
+"Decarb_CLE",2050,"GREE","Greece",5.72,2.163,0.388,105
+"Decarb_CLE",2050,"HUNG","Hungary",4.22,1.601,1.378,319
+"Decarb_CLE",2050,"ICEL","Iceland",3.2,2.319,0.028,13
+"Decarb_CLE",2050,"INDI","India",23.07,19.839,23.845,12750
+"Decarb_CLE",2050,"INDO","Indonesia",26.58,26.345,1.903,2532
+"Decarb_CLE",2050,"IRAN","Iran",14.51,14.067,1.177,979
+"Decarb_CLE",2050,"IREL","Ireland",1.88,0.612,0.149,703
+"Decarb_CLE",2050,"ISRA","Israel",11.18,9.093,0.414,204
+"Decarb_CLE",2050,"ITAL","Italy",5.59,2.987,2.259,945
+"Decarb_CLE",2050,"JAPA","Japan",5.11,4.186,0.021,1662
+"Decarb_CLE",2050,"KENY","Kenya",4.6,4.327,0.145,141
+"Decarb_CLE",2050,"KORS","Republic of Korea",18.51,12.533,0.857,1262
+"Decarb_CLE",2050,"KOSO","Kosovo",10.43,7.562,0.65,30
+"Decarb_CLE",2050,"LAOS","Laos",3.29,1.413,0.175,10
+"Decarb_CLE",2050,"LATV","Latvia",2.97,1.01,0.131,43
+"Decarb_CLE",2050,"LITH","Lithuania",2.87,0.672,0.212,163
+"Decarb_CLE",2050,"LUXE","Luxembourg",3.24,0.483,0.027,41
+"Decarb_CLE",2050,"MACE","TFYR Macedonia",6.77,4.158,0.494,42
+"Decarb_CLE",2050,"MALA","Malaysia",13.18,12.452,4.334,434
+"Decarb_CLE",2050,"MALT","Malta",7.87,1.098,0,11
+"Decarb_CLE",2050,"MEXI","Mexico",5.89,5.725,0.027,1699
+"Decarb_CLE",2050,"MIDE","Middle East",7.06,6.001,2.27,1144
+"Decarb_CLE",2050,"MOLD","Republic of Moldova",5.74,2.407,0.188,86
+"Decarb_CLE",2050,"MONG","Mongolia",3.21,3.11,0.061,1
+"Decarb_CLE",2050,"MONT","Montenegro",6.06,3.376,0.056,20
+"Decarb_CLE",2050,"MYAN","Myanmar",5.75,4.437,0.239,6
+"Decarb_CLE",2050,"NAFR","Northern Africa (excl Egypt)",8.52,7.947,0.266,751
+"Decarb_CLE",2050,"NEPA","Nepal",22.1,13.848,0.938,55
+"Decarb_CLE",2050,"NETH","Netherlands",4.55,1.616,1.118,1338
+"Decarb_CLE",2050,"NIGE","Nigeria",4.94,4.687,0.363,373
+"Decarb_CLE",2050,"NORW","Norway",1.65,0.475,0.097,241
+"Decarb_CLE",2050,"NZEL","New Zealand",0.61,0.547,0,134
+"Decarb_CLE",2050,"PAKI","Pakistan",31.38,28.533,3.913,76
+"Decarb_CLE",2050,"PARA","Paraguay",2.05,1.35,0.009,49
+"Decarb_CLE",2050,"PERU","Peru",4.63,4.398,0.138,242
+"Decarb_CLE",2050,"PHIL","Philippines",6.04,5.954,0.464,475
+"Decarb_CLE",2050,"POLA","Poland",3.72,1.804,3.371,1368
+"Decarb_CLE",2050,"PORT","Portugal",3.55,1.34,0.043,227
+"Decarb_CLE",2050,"ROMA","Romania",3.99,1.564,1.564,512
+"Decarb_CLE",2050,"RSAF","Remaining Southern Africa",3.61,3.422,0.507,557
+"Decarb_CLE",2050,"RUSS","Russian Federation",5.76,4.16,3.867,4448
+"Decarb_CLE",2050,"SAAR","Saudi Arabia",3.1,1.752,0.422,770
+"Decarb_CLE",2050,"SAFR","South Africa",4.68,4.278,0.151,488
+"Decarb_CLE",2050,"SERB","Serbia",6.63,4.052,2.694,172
+"Decarb_CLE",2050,"SING","Singapore",6.28,1.074,0.196,283
+"Decarb_CLE",2050,"SKRE","Slovakia",3.49,0.902,0.649,162
+"Decarb_CLE",2050,"SLOV","Slovenia",4.46,1.883,0.287,86
+"Decarb_CLE",2050,"SPAI","Spain",4.29,1.891,0.65,2005
+"Decarb_CLE",2050,"SRIL","Sri Lanka",4.46,4.14,0.003,50
+"Decarb_CLE",2050,"SWED","Sweden",2.37,0.777,0.282,519
+"Decarb_CLE",2050,"SWIT","Switzerland",3.97,2.3,0.307,372
+"Decarb_CLE",2050,"TAIW","Taiwan",12.7,11.3,0.047,968
+"Decarb_CLE",2050,"TANZ","United Republic of Tanzania",4.2,4,0.247,200
+"Decarb_CLE",2050,"THAI","Thailand",6.54,5.721,1.21,1148
+"Decarb_CLE",2050,"TURK","Turkey",9.93,7.08,3.304,1543
+"Decarb_CLE",2050,"UKRA","Ukraine",5.41,2.852,3.778,532
+"Decarb_CLE",2050,"UNKI","United Kingdom",2.98,1.725,2.059,1929
+"Decarb_CLE",2050,"URUG","Uruguay",1.59,1.233,0.142,28
+"Decarb_CLE",2050,"USAM","United States of America",3.64,3.357,1.162,17175
+"Decarb_CLE",2050,"VENE","Venezuela (Bolivarian Republic of)",2.63,2.483,0.074,252
+"Decarb_CLE",2050,"VIET","Vietnam",15.38,13.847,2.462,1129
+"Decarb_CLE",2050,"WAFR","Western Africa (excl Nigeria)",4.67,4.297,0.2,981
+"Decarb_MTFR",2050,"AFGH","Afghanistan",7.57,7.428,0.291,2028
+"Decarb_MTFR",2050,"ALBA","Albania",3.5,1.214,0.139,214
+"Decarb_MTFR",2050,"ARGE","Argentina",0.95,0.804,0.071,3353
+"Decarb_MTFR",2050,"ARME","Armenia",5.2,5.494,0.294,667
+"Decarb_MTFR",2050,"AUST","Austria",2.39,0.818,0.456,804
+"Decarb_MTFR",2050,"AUTR","Australia",0.71,0.621,0.016,3205
+"Decarb_MTFR",2050,"AZER","Azerbaijan",3.41,1.192,0.354,3331
+"Decarb_MTFR",2050,"BANG","Bangladesh",10.27,5.595,0.376,3803
+"Decarb_MTFR",2050,"BELA","Belarus",2.25,0.588,0.284,1210
+"Decarb_MTFR",2050,"BELG","Belgium",2.94,0.984,0.675,1091
+"Decarb_MTFR",2050,"BHUT","Bhutan",2.11,0.779,0.038,112
+"Decarb_MTFR",2050,"BOHE","Bosnia and Herzegovina",2.93,1.13,0.329,420
+"Decarb_MTFR",2050,"BOLV","Bolivia (Plurinational State of)",0.8,0.738,0.001,601
+"Decarb_MTFR",2050,"BRAZ","Brazil",1.48,1.414,0.306,18186
+"Decarb_MTFR",2050,"BRUN","Brunei Darussalam",0.76,0.303,0.011,48
+"Decarb_MTFR",2050,"BULG","Bulgaria",2.4,0.551,0.205,336
+"Decarb_MTFR",2050,"CAMB","Cambodia",1.24,0.781,0.049,458
+"Decarb_MTFR",2050,"CANA","Canada",1.95,1.46,0.076,5504
+"Decarb_MTFR",2050,"CARB","Caribbean",0.69,0.543,0.021,1013
+"Decarb_MTFR",2050,"CEAM","Central America",0.91,0.85,0.002,1164
+"Decarb_MTFR",2050,"CHIL","Chile",4.48,4.422,0.094,1042
+"Decarb_MTFR",2050,"CHIN","China",7.72,7.101,4.413,45151
+"Decarb_MTFR",2050,"COLO","Colombia",1.5,1.428,0.004,1716
+"Decarb_MTFR",2050,"CROA","Croatia",2.45,0.399,0.265,277
+"Decarb_MTFR",2050,"CYPR","Cyprus",4.35,0.242,0,56
+"Decarb_MTFR",2050,"CZRE","Czech Republic",2.31,0.789,0.655,1035
+"Decarb_MTFR",2050,"DENM","Denmark",1.84,0.554,0.182,832
+"Decarb_MTFR",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.94,0.771,0.036,5571
+"Decarb_MTFR",2050,"ECUA","Ecuador",0.8,0.691,0.001,525
+"Decarb_MTFR",2050,"EGYP","Egypt",3.08,2.275,0.315,5285
+"Decarb_MTFR",2050,"ESTO","Estonia",1.77,0.396,0.019,141
+"Decarb_MTFR",2050,"FINL","Finland",1.59,0.388,0.057,778
+"Decarb_MTFR",2050,"FRAN","France",3.15,1.851,2.841,6485
+"Decarb_MTFR",2050,"GEOR","Georgia",3.59,3.684,0.187,1155
+"Decarb_MTFR",2050,"GERM","Germany",2.35,1.173,3.817,5617
+"Decarb_MTFR",2050,"GREE","Greece",4.54,1.617,0.19,666
+"Decarb_MTFR",2050,"HUNG","Hungary",2.74,1.032,0.767,724
+"Decarb_MTFR",2050,"ICEL","Iceland",2.61,1.733,0.022,24
+"Decarb_MTFR",2050,"INDI","India",6.73,5.824,7.517,42298
+"Decarb_MTFR",2050,"INDO","Indonesia",6.64,6.437,0.524,13661
+"Decarb_MTFR",2050,"IRAN","Iran",3.76,3.573,0.403,6121
+"Decarb_MTFR",2050,"IREL","Ireland",1.47,0.428,0.082,830
+"Decarb_MTFR",2050,"ISRA","Israel",3.55,2.833,0.126,442
+"Decarb_MTFR",2050,"ITAL","Italy",4.48,2.078,1.311,2667
+"Decarb_MTFR",2050,"JAPA","Japan",2.5,1.857,0.01,2481
+"Decarb_MTFR",2050,"KENY","Kenya",2.08,2.003,0.052,1341
+"Decarb_MTFR",2050,"KORS","Republic of Korea",8.29,5.049,0.359,2101
+"Decarb_MTFR",2050,"KOSO","Kosovo",3.31,1.401,0.159,180
+"Decarb_MTFR",2050,"LAOS","Laos",0.99,0.365,0.049,517
+"Decarb_MTFR",2050,"LATV","Latvia",1.96,0.589,0.078,181
+"Decarb_MTFR",2050,"LITH","Lithuania",1.82,0.375,0.084,255
+"Decarb_MTFR",2050,"LUXE","Luxembourg",2.26,0.367,0.013,76
+"Decarb_MTFR",2050,"MACE","TFYR Macedonia",3.03,1.281,0.164,209
+"Decarb_MTFR",2050,"MALA","Malaysia",3.96,3.552,1.282,2376
+"Decarb_MTFR",2050,"MALT","Malta",6.9,0.419,0,19
+"Decarb_MTFR",2050,"MEXI","Mexico",1.98,1.888,0.009,5257
+"Decarb_MTFR",2050,"MIDE","Middle East",1.97,1.488,0.75,4487
+"Decarb_MTFR",2050,"MOLD","Republic of Moldova",2.45,0.445,0.039,427
+"Decarb_MTFR",2050,"MONG","Mongolia",1.46,1.406,0.036,188
+"Decarb_MTFR",2050,"MONT","Montenegro",2.87,0.764,0.021,54
+"Decarb_MTFR",2050,"MYAN","Myanmar",1.51,1.074,0.067,1958
+"Decarb_MTFR",2050,"NAFR","Northern Africa (excl Egypt)",1.6,1.043,0.077,5532
+"Decarb_MTFR",2050,"NEPA","Nepal",6.79,4.366,0.374,1645
+"Decarb_MTFR",2050,"NETH","Netherlands",2.99,1.018,0.65,1767
+"Decarb_MTFR",2050,"NIGE","Nigeria",1.49,1.378,0.148,4810
+"Decarb_MTFR",2050,"NORW","Norway",1.3,0.259,0.046,340
+"Decarb_MTFR",2050,"NZEL","New Zealand",0.33,0.272,0,484
+"Decarb_MTFR",2050,"PAKI","Pakistan",6.28,5.309,0.873,8339
+"Decarb_MTFR",2050,"PARA","Paraguay",0.8,0.588,0.003,270
+"Decarb_MTFR",2050,"PERU","Peru",2.65,2.459,0.106,917
+"Decarb_MTFR",2050,"PHIL","Philippines",1.79,1.698,0.118,3271
+"Decarb_MTFR",2050,"POLA","Poland",2.3,0.956,1.497,3100
+"Decarb_MTFR",2050,"PORT","Portugal",2.91,0.849,0.022,558
+"Decarb_MTFR",2050,"ROMA","Romania",2.5,0.845,0.713,993
+"Decarb_MTFR",2050,"RSAF","Remaining Southern Africa",0.84,0.725,0.132,3518
+"Decarb_MTFR",2050,"RUSS","Russian Federation",2.71,1.436,1.268,14007
+"Decarb_MTFR",2050,"SAAR","Saudi Arabia",1.03,0.404,0.17,2800
+"Decarb_MTFR",2050,"SAFR","South Africa",1.69,1.544,0.09,2439
+"Decarb_MTFR",2050,"SERB","Serbia",2.95,1.194,0.984,582
+"Decarb_MTFR",2050,"SING","Singapore",2.38,0.659,0.125,356
+"Decarb_MTFR",2050,"SKRE","Slovakia",2.22,0.532,0.3,436
+"Decarb_MTFR",2050,"SLOV","Slovenia",2.86,0.924,0.141,197
+"Decarb_MTFR",2050,"SPAI","Spain",3.53,1.225,0.375,3812
+"Decarb_MTFR",2050,"SRIL","Sri Lanka",1.17,1.006,0.001,739
+"Decarb_MTFR",2050,"SWED","Sweden",1.92,0.645,0.177,765
+"Decarb_MTFR",2050,"SWIT","Switzerland",2.67,1.391,0.205,644
+"Decarb_MTFR",2050,"TAIW","Taiwan",5.44,4.463,0.027,1522
+"Decarb_MTFR",2050,"TANZ","United Republic of Tanzania",1.14,1.071,0.069,2777
+"Decarb_MTFR",2050,"THAI","Thailand",1.89,1.557,0.352,4389
+"Decarb_MTFR",2050,"TURK","Turkey",4.85,2.429,0.826,4501
+"Decarb_MTFR",2050,"UKRA","Ukraine",2.59,0.824,1.063,3058
+"Decarb_MTFR",2050,"UNKI","United Kingdom",2.15,1.195,1.201,3771
+"Decarb_MTFR",2050,"URUG","Uruguay",0.51,0.378,0.04,204
+"Decarb_MTFR",2050,"USAM","United States of America",1.56,1.403,0.39,30741
+"Decarb_MTFR",2050,"VENE","Venezuela (Bolivarian Republic of)",1.03,0.927,0.035,1217
+"Decarb_MTFR",2050,"VIET","Vietnam",4.06,3.339,0.592,3986
+"Decarb_MTFR",2050,"WAFR","Western Africa (excl Nigeria)",1.37,1.206,0.057,8333

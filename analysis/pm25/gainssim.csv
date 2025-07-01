@@ -1,0 +1,1171 @@
+"IDSCENARIOS","IDYEARS","REGION_4LETTER","REGION_4LETTER_LABEL","PM25_ANTHROP","PM25_SELF","PM25_EXPORT"
+"Baseline",2020,"AFGH","Afghanistan",42.63,41.789,1.828
+"Baseline",2020,"ALBA","Albania",16.5,9.297,0.742
+"Baseline",2020,"ARGE","Argentina",3.37,2.908,0.336
+"Baseline",2020,"ARME","Armenia",10.04,6.083,0.505
+"Baseline",2020,"AUST","Austria",9.37,4.296,3.244
+"Baseline",2020,"AUTR","Australia",2.43,2.358,0.076
+"Baseline",2020,"AZER","Azerbaijan",7.19,3.532,1.324
+"Baseline",2020,"BANG","Bangladesh",53.66,32.511,1.595
+"Baseline",2020,"BELA","Belarus",9.17,4.265,1.539
+"Baseline",2020,"BELG","Belgium",9.87,3.663,2.847
+"Baseline",2020,"BHUT","Bhutan",9.92,3.978,0.416
+"Baseline",2020,"BOHE","Bosnia and Herzegovina",24.3,18.638,12.109
+"Baseline",2020,"BOLV","Bolivia (Plurinational State of)",2.34,2.229,0.004
+"Baseline",2020,"BRAZ","Brazil",6.01,5.945,1.377
+"Baseline",2020,"BRUN","Brunei Darussalam",4.56,2.713,0.085
+"Baseline",2020,"BULG","Bulgaria",13.02,7.188,2.25
+"Baseline",2020,"CAMB","Cambodia",7.01,4.296,0.238
+"Baseline",2020,"CANA","Canada",7.21,5.469,0.218
+"Baseline",2020,"CARB","Caribbean",3.82,3.663,0.179
+"Baseline",2020,"CEAM","Central America",6.6,6.498,0.025
+"Baseline",2020,"CHIL","Chile",18.02,17.922,0.203
+"Baseline",2020,"CHIN","China",30.65,29.829,20.872
+"Baseline",2020,"COLO","Colombia",6.92,6.714,0.032
+"Baseline",2020,"CROA","Croatia",14.09,6.439,2.505
+"Baseline",2020,"CYPR","Cyprus",7.57,0.788,0.011
+"Baseline",2020,"CZRE","Czech Republic",13.1,7.005,5.294
+"Baseline",2020,"DENM","Denmark",5.99,1.873,0.706
+"Baseline",2020,"EAFR","Eastern Africa (excl Kenya, Tanzania)",8.44,7.43,0.67
+"Baseline",2020,"ECUA","Ecuador",3.28,3.135,0.007
+"Baseline",2020,"EGYP","Egypt",12.82,10.859,1.382
+"Baseline",2020,"ESTO","Estonia",5.25,2.357,0.135
+"Baseline",2020,"FINL","Finland",3.48,1.508,0.332
+"Baseline",2020,"FRAN","France",7.71,4.939,9.098
+"Baseline",2020,"GEOR","Georgia",7.27,4.263,0.37
+"Baseline",2020,"GERM","Germany",8.17,4.395,16.845
+"Baseline",2020,"GREE","Greece",11.97,6.342,1.431
+"Baseline",2020,"HUNG","Hungary",13.26,5.645,3.737
+"Baseline",2020,"ICEL","Iceland",2.65,1.801,0.022
+"Baseline",2020,"INDI","India",38.22,32.925,43.728
+"Baseline",2020,"INDO","Indonesia",31.34,31.085,2.994
+"Baseline",2020,"IRAN","Iran",21.39,20.122,2.241
+"Baseline",2020,"IREL","Ireland",3.57,1.711,0.305
+"Baseline",2020,"ISRA","Israel",16.37,13.393,1.466
+"Baseline",2020,"ITAL","Italy",12.6,9.227,5.761
+"Baseline",2020,"JAPA","Japan",7.63,6.269,0.048
+"Baseline",2020,"KAZA","Kazakhstan",20.97,18.075,3.296
+"Baseline",2020,"KENY","Kenya",8.67,8.013,0.361
+"Baseline",2020,"KORN","North Korea",14.43,5.69,1.391
+"Baseline",2020,"KORS","Republic of Korea",23.85,14.214,1.098
+"Baseline",2020,"KOSO","Kosovo",34.8,24.975,4.151
+"Baseline",2020,"KYRG","Kyrgyzstan",9.76,5.608,1.321
+"Baseline",2020,"LAOS","Laos",5.28,1.837,0.342
+"Baseline",2020,"LATV","Latvia",8.72,4.949,0.336
+"Baseline",2020,"LITH","Lithuania",7.57,2.795,0.67
+"Baseline",2020,"LUXE","Luxembourg",7.75,1.349,0.116
+"Baseline",2020,"MACE","TFYR Macedonia",17.94,10.397,1.92
+"Baseline",2020,"MALA","Malaysia",21.5,20.457,6.967
+"Baseline",2020,"MALT","Malta",8.02,1.485,0
+"Baseline",2020,"MEXI","Mexico",10.83,10.542,0.056
+"Baseline",2020,"MIDE","Middle East",10.45,8.188,5.311
+"Baseline",2020,"MOLD","Republic of Moldova",12.71,6,0.394
+"Baseline",2020,"MONG","Mongolia",8.62,8.315,0.117
+"Baseline",2020,"MONT","Montenegro",19.19,12.38,0.86
+"Baseline",2020,"MYAN","Myanmar",8,5.328,0.285
+"Baseline",2020,"NAFR","Northern Africa (excl Egypt)",9.91,9.332,0.432
+"Baseline",2020,"NEPA","Nepal",35.54,20.226,1.653
+"Baseline",2020,"NETH","Netherlands",9.47,3.013,2.475
+"Baseline",2020,"NIGE","Nigeria",22.33,21.942,1.3
+"Baseline",2020,"NORW","Norway",3.01,1.481,0.297
+"Baseline",2020,"NZEL","New Zealand",1.52,1.465,0
+"Baseline",2020,"PAKI","Pakistan",45.57,40.051,6.07
+"Baseline",2020,"PARA","Paraguay",3.96,2.964,0.021
+"Baseline",2020,"PERU","Peru",8.75,8.477,0.167
+"Baseline",2020,"PHIL","Philippines",9.36,9.28,0.508
+"Baseline",2020,"POLA","Poland",15.63,11.307,16.578
+"Baseline",2020,"PORT","Portugal",6.44,4.181,0.137
+"Baseline",2020,"ROMA","Romania",14.41,9.09,5.478
+"Baseline",2020,"RSAF","Remaining Southern Africa",5.56,4.93,0.728
+"Baseline",2020,"RUSS","Russian Federation",8.25,6.224,7.411
+"Baseline",2020,"SAAR","Saudi Arabia",8.06,4.8,1.726
+"Baseline",2020,"SAFR","South Africa",9.46,8.907,0.645
+"Baseline",2020,"SERB","Serbia",20.12,12.989,19.743
+"Baseline",2020,"SING","Singapore",10.13,2.469,0.423
+"Baseline",2020,"SKRE","Slovakia",10.72,3.3,1.607
+"Baseline",2020,"SLOV","Slovenia",12.25,5.715,0.911
+"Baseline",2020,"SPAI","Spain",7.57,5.333,1.41
+"Baseline",2020,"SRIL","Sri Lanka",7.78,7.16,0.006
+"Baseline",2020,"SWED","Sweden",4.16,1.513,0.575
+"Baseline",2020,"SWIT","Switzerland",8.04,4.202,0.684
+"Baseline",2020,"TAIW","Taiwan",14.69,12.764,0.057
+"Baseline",2020,"TAJI","Tajikistan",13.23,8.56,1.223
+"Baseline",2020,"TANZ","United Republic of Tanzania",6.45,5.963,0.488
+"Baseline",2020,"THAI","Thailand",10.19,8.726,2.721
+"Baseline",2020,"TKME","Turkmenistan",6.55,3.195,0.649
+"Baseline",2020,"TURK","Turkey",19.09,15.824,7.237
+"Baseline",2020,"UKRA","Ukraine",9.24,5.015,8.937
+"Baseline",2020,"UNKI","United Kingdom",6.04,3.927,5.061
+"Baseline",2020,"URUG","Uruguay",3.15,2.673,0.19
+"Baseline",2020,"USAM","United States of America",5.78,5.468,1.844
+"Baseline",2020,"UZBE","Uzbekistan",12.46,7.667,5.121
+"Baseline",2020,"VENE","Venezuela (Bolivarian Republic of)",5.34,5.128,0.153
+"Baseline",2020,"VIET","Vietnam",20.08,16.756,3.321
+"Baseline",2020,"WAFR","Western Africa (excl Nigeria)",8.19,7.255,0.363
+"Baseline",2025,"AFGH","Afghanistan",47.01,46.152,1.993
+"Baseline",2025,"ALBA","Albania",13.91,8.596,0.823
+"Baseline",2025,"ARGE","Argentina",3.5,3.033,0.386
+"Baseline",2025,"ARME","Armenia",9.63,5.795,0.445
+"Baseline",2025,"AUST","Austria",7.57,3.228,2.449
+"Baseline",2025,"AUTR","Australia",2.35,2.277,0.068
+"Baseline",2025,"AZER","Azerbaijan",7.24,3.69,1.266
+"Baseline",2025,"BANG","Bangladesh",55.8,33.047,1.692
+"Baseline",2025,"BELA","Belarus",7.97,3.731,1.486
+"Baseline",2025,"BELG","Belgium",8.59,3.206,2.561
+"Baseline",2025,"BHUT","Bhutan",11.16,4.866,0.453
+"Baseline",2025,"BOHE","Bosnia and Herzegovina",18.67,14.01,6.704
+"Baseline",2025,"BOLV","Bolivia (Plurinational State of)",2.48,2.367,0.004
+"Baseline",2025,"BRAZ","Brazil",5.79,5.729,1.322
+"Baseline",2025,"BRUN","Brunei Darussalam",4.93,2.91,0.097
+"Baseline",2025,"BULG","Bulgaria",11.23,6.448,2.455
+"Baseline",2025,"CAMB","Cambodia",7.37,4.618,0.249
+"Baseline",2025,"CANA","Canada",6.67,4.981,0.209
+"Baseline",2025,"CARB","Caribbean",3.87,3.705,0.188
+"Baseline",2025,"CEAM","Central America",6.84,6.739,0.025
+"Baseline",2025,"CHIL","Chile",16.42,16.308,0.176
+"Baseline",2025,"CHIN","China",26.93,26.07,18.233
+"Baseline",2025,"COLO","Colombia",6.63,6.4,0.028
+"Baseline",2025,"CROA","Croatia",12.25,5.921,2.405
+"Baseline",2025,"CYPR","Cyprus",7.1,0.667,0.003
+"Baseline",2025,"CZRE","Czech Republic",10.85,5.893,4.239
+"Baseline",2025,"DENM","Denmark",5.24,1.684,0.602
+"Baseline",2025,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.08,6.142,0.533
+"Baseline",2025,"ECUA","Ecuador",3.3,3.16,0.008
+"Baseline",2025,"EGYP","Egypt",14.94,12.995,1.657
+"Baseline",2025,"ESTO","Estonia",4.37,1.711,0.087
+"Baseline",2025,"FINL","Finland",3.16,1.301,0.251
+"Baseline",2025,"FRAN","France",7.21,4.736,8.277
+"Baseline",2025,"GEOR","Georgia",6.77,3.877,0.385
+"Baseline",2025,"GERM","Germany",6.92,3.668,13.48
+"Baseline",2025,"GREE","Greece",9.32,4.339,1.007
+"Baseline",2025,"HUNG","Hungary",11.72,5.444,3.67
+"Baseline",2025,"ICEL","Iceland",2.88,2.022,0.025
+"Baseline",2025,"INDI","India",39.97,34.318,46.575
+"Baseline",2025,"INDO","Indonesia",37.14,36.878,4.388
+"Baseline",2025,"IRAN","Iran",24.31,23.077,2.346
+"Baseline",2025,"IREL","Ireland",3.02,1.336,0.277
+"Baseline",2025,"ISRA","Israel",16.38,13.284,1.395
+"Baseline",2025,"ITAL","Italy",11.43,8.345,5.234
+"Baseline",2025,"JAPA","Japan",6.85,5.608,0.041
+"Baseline",2025,"KENY","Kenya",7.08,6.524,0.295
+"Baseline",2025,"KORS","Republic of Korea",22.77,13.99,1.02
+"Baseline",2025,"KOSO","Kosovo",28.77,22.173,3.302
+"Baseline",2025,"LAOS","Laos",5.64,2.134,0.385
+"Baseline",2025,"LATV","Latvia",7.13,3.783,0.272
+"Baseline",2025,"LITH","Lithuania",6.6,2.449,0.585
+"Baseline",2025,"LUXE","Luxembourg",6.6,1.087,0.087
+"Baseline",2025,"MACE","TFYR Macedonia",14.72,8.996,1.121
+"Baseline",2025,"MALA","Malaysia",24.33,23.113,7.456
+"Baseline",2025,"MALT","Malta",7.72,1.274,0
+"Baseline",2025,"MEXI","Mexico",9.88,9.608,0.056
+"Baseline",2025,"MIDE","Middle East",11.34,9.098,5.315
+"Baseline",2025,"MOLD","Republic of Moldova",11.24,5.23,0.357
+"Baseline",2025,"MONG","Mongolia",20.15,19.834,0.143
+"Baseline",2025,"MONT","Montenegro",15.8,10.821,0.486
+"Baseline",2025,"MYAN","Myanmar",8.3,5.414,0.293
+"Baseline",2025,"NAFR","Northern Africa (excl Egypt)",11.34,10.762,0.482
+"Baseline",2025,"NEPA","Nepal",37.56,21.377,1.743
+"Baseline",2025,"NETH","Netherlands",8.32,2.729,2.149
+"Baseline",2025,"NIGE","Nigeria",17.01,16.648,1.02
+"Baseline",2025,"NORW","Norway",2.6,1.157,0.244
+"Baseline",2025,"NZEL","New Zealand",1.41,1.357,0
+"Baseline",2025,"PAKI","Pakistan",47.96,42.202,6.571
+"Baseline",2025,"PARA","Paraguay",4.13,3.164,0.022
+"Baseline",2025,"PERU","Peru",9.38,9.123,0.167
+"Baseline",2025,"PHIL","Philippines",9.41,9.331,0.528
+"Baseline",2025,"POLA","Poland",12.16,8.454,12.31
+"Baseline",2025,"PORT","Portugal",6.35,4.152,0.114
+"Baseline",2025,"ROMA","Romania",13.21,8.708,5.198
+"Baseline",2025,"RSAF","Remaining Southern Africa",4.91,4.49,0.683
+"Baseline",2025,"RUSS","Russian Federation",8.25,6.365,7.624
+"Baseline",2025,"SAAR","Saudi Arabia",8.13,4.847,1.634
+"Baseline",2025,"SAFR","South Africa",7.73,7.208,0.414
+"Baseline",2025,"SERB","Serbia",16.67,10.943,11.79
+"Baseline",2025,"SING","Singapore",11.5,2.379,0.41
+"Baseline",2025,"SKRE","Slovakia",8.8,2.675,1.573
+"Baseline",2025,"SLOV","Slovenia",12.36,6.827,0.979
+"Baseline",2025,"SPAI","Spain",6.52,4.263,1.155
+"Baseline",2025,"SRIL","Sri Lanka",7.55,6.877,0.006
+"Baseline",2025,"SWED","Sweden",3.5,1.105,0.467
+"Baseline",2025,"SWIT","Switzerland",7.39,4.061,0.65
+"Baseline",2025,"TAIW","Taiwan",14.77,12.93,0.063
+"Baseline",2025,"TANZ","United Republic of Tanzania",5.61,5.225,0.424
+"Baseline",2025,"THAI","Thailand",10.48,8.993,2.877
+"Baseline",2025,"TURK","Turkey",15.98,12.887,6.625
+"Baseline",2025,"UKRA","Ukraine",8.07,4.171,6.796
+"Baseline",2025,"UNKI","United Kingdom",5.34,3.401,4.085
+"Baseline",2025,"URUG","Uruguay",3.36,2.869,0.195
+"Baseline",2025,"USAM","United States of America",5.46,5.151,1.767
+"Baseline",2025,"VENE","Venezuela (Bolivarian Republic of)",6.06,5.838,0.176
+"Baseline",2025,"VIET","Vietnam",20.48,17.308,3.438
+"Baseline",2025,"WAFR","Western Africa (excl Nigeria)",7.03,6.266,0.309
+"Baseline",2030,"AFGH","Afghanistan",54.19,53.35,2.246
+"Baseline",2030,"ALBA","Albania",12.37,8.29,0.841
+"Baseline",2030,"ARGE","Argentina",3.22,2.753,0.37
+"Baseline",2030,"ARME","Armenia",9.81,6.023,0.469
+"Baseline",2030,"AUST","Austria",6.05,2.39,1.821
+"Baseline",2030,"AUTR","Australia",2.25,2.168,0.052
+"Baseline",2030,"AZER","Azerbaijan",7.43,3.93,1.313
+"Baseline",2030,"BANG","Bangladesh",53.26,33.5,1.7
+"Baseline",2030,"BELA","Belarus",7.73,3.944,1.508
+"Baseline",2030,"BELG","Belgium",7.29,2.785,2.262
+"Baseline",2030,"BHUT","Bhutan",11.85,6.062,0.554
+"Baseline",2030,"BOHE","Bosnia and Herzegovina",15.38,11.68,4.782
+"Baseline",2030,"BOLV","Bolivia (Plurinational State of)",2.82,2.704,0.004
+"Baseline",2030,"BRAZ","Brazil",5.76,5.693,1.299
+"Baseline",2030,"BRUN","Brunei Darussalam",5.31,3.174,0.11
+"Baseline",2030,"BULG","Bulgaria",8.65,4.485,1.382
+"Baseline",2030,"CAMB","Cambodia",7.94,5.126,0.263
+"Baseline",2030,"CANA","Canada",6.4,4.831,0.204
+"Baseline",2030,"CARB","Caribbean",4.01,3.852,0.192
+"Baseline",2030,"CEAM","Central America",7.1,7.001,0.024
+"Baseline",2030,"CHIL","Chile",16.07,15.962,0.17
+"Baseline",2030,"CHIN","China",24.34,23.47,16.361
+"Baseline",2030,"COLO","Colombia",6.39,6.143,0.029
+"Baseline",2030,"CROA","Croatia",8.7,3.446,1.611
+"Baseline",2030,"CYPR","Cyprus",6.74,0.651,0.003
+"Baseline",2030,"CZRE","Czech Republic",8.99,4.951,3.459
+"Baseline",2030,"DENM","Denmark",4.66,1.604,0.567
+"Baseline",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.48,6.581,0.54
+"Baseline",2030,"ECUA","Ecuador",3.33,3.182,0.008
+"Baseline",2030,"EGYP","Egypt",15.88,14.029,1.75
+"Baseline",2030,"ESTO","Estonia",3.78,1.291,0.067
+"Baseline",2030,"FINL","Finland",3,1.224,0.214
+"Baseline",2030,"FRAN","France",6.03,3.845,6.873
+"Baseline",2030,"GEOR","Georgia",6.57,3.695,0.356
+"Baseline",2030,"GERM","Germany",5.82,3.041,10.767
+"Baseline",2030,"GREE","Greece",7.96,3.575,0.81
+"Baseline",2030,"HUNG","Hungary",10.36,5.241,3.344
+"Baseline",2030,"ICEL","Iceland",2.92,2.055,0.026
+"Baseline",2030,"INDI","India",35.38,29.627,39.301
+"Baseline",2030,"INDO","Indonesia",41.18,40.922,4.85
+"Baseline",2030,"IRAN","Iran",25.56,24.5,2.351
+"Baseline",2030,"IREL","Ireland",2.58,1.058,0.23
+"Baseline",2030,"ISRA","Israel",15.57,12.579,1.22
+"Baseline",2030,"ITAL","Italy",8.88,6.003,4.12
+"Baseline",2030,"JAPA","Japan",6.47,5.295,0.037
+"Baseline",2030,"KENY","Kenya",7.67,7.116,0.309
+"Baseline",2030,"KORS","Republic of Korea",21.76,13.433,0.97
+"Baseline",2030,"KOSO","Kosovo",23.82,19.222,2.063
+"Baseline",2030,"LAOS","Laos",6.13,2.641,0.521
+"Baseline",2030,"LATV","Latvia",5.95,2.927,0.241
+"Baseline",2030,"LITH","Lithuania",5.67,1.989,0.494
+"Baseline",2030,"LUXE","Luxembourg",5.55,0.983,0.072
+"Baseline",2030,"MACE","TFYR Macedonia",12.89,8.617,1.017
+"Baseline",2030,"MALA","Malaysia",26.75,25.493,7.832
+"Baseline",2030,"MALT","Malta",7.6,1.195,0
+"Baseline",2030,"MEXI","Mexico",9.43,9.174,0.049
+"Baseline",2030,"MIDE","Middle East",11.07,9.008,4.537
+"Baseline",2030,"MOLD","Republic of Moldova",10.27,4.747,0.328
+"Baseline",2030,"MONG","Mongolia",14.81,14.528,0.14
+"Baseline",2030,"MONT","Montenegro",13.14,9.177,0.164
+"Baseline",2030,"MYAN","Myanmar",8.31,5.852,0.309
+"Baseline",2030,"NAFR","Northern Africa (excl Egypt)",12.75,12.164,0.508
+"Baseline",2030,"NEPA","Nepal",37.72,24.048,1.906
+"Baseline",2030,"NETH","Netherlands",7.26,2.523,1.9
+"Baseline",2030,"NIGE","Nigeria",17.61,17.227,1.037
+"Baseline",2030,"NORW","Norway",2.38,1.007,0.215
+"Baseline",2030,"NZEL","New Zealand",1.33,1.277,0
+"Baseline",2030,"PAKI","Pakistan",49.01,43.668,6.697
+"Baseline",2030,"PARA","Paraguay",4.45,3.505,0.023
+"Baseline",2030,"PERU","Peru",10.5,10.244,0.181
+"Baseline",2030,"PHIL","Philippines",9.91,9.831,0.549
+"Baseline",2030,"POLA","Poland",9.51,6.312,9.498
+"Baseline",2030,"PORT","Portugal",5.49,3.329,0.095
+"Baseline",2030,"ROMA","Romania",11.82,7.999,4.909
+"Baseline",2030,"RSAF","Remaining Southern Africa",5.29,4.974,0.725
+"Baseline",2030,"RUSS","Russian Federation",7.82,5.979,7.103
+"Baseline",2030,"SAAR","Saudi Arabia",7.25,4.332,1.351
+"Baseline",2030,"SAFR","South Africa",7.13,6.571,0.287
+"Baseline",2030,"SERB","Serbia",13.9,9.141,6.21
+"Baseline",2030,"SING","Singapore",11.78,2.031,0.356
+"Baseline",2030,"SKRE","Slovakia",7.21,2.087,1.203
+"Baseline",2030,"SLOV","Slovenia",11.29,6.838,0.936
+"Baseline",2030,"SPAI","Spain",5.55,3.285,0.98
+"Baseline",2030,"SRIL","Sri Lanka",7.51,6.958,0.006
+"Baseline",2030,"SWED","Sweden",3.14,0.948,0.435
+"Baseline",2030,"SWIT","Switzerland",6.28,3.503,0.552
+"Baseline",2030,"TAIW","Taiwan",14.9,13.153,0.065
+"Baseline",2030,"TANZ","United Republic of Tanzania",6.28,5.891,0.447
+"Baseline",2030,"THAI","Thailand",10.78,9.258,2.927
+"Baseline",2030,"TURK","Turkey",13.84,10.825,5.938
+"Baseline",2030,"UKRA","Ukraine",7.79,4.213,6.634
+"Baseline",2030,"UNKI","United Kingdom",4.51,2.783,3.279
+"Baseline",2030,"URUG","Uruguay",3.64,3.159,0.199
+"Baseline",2030,"USAM","United States of America",5.03,4.727,1.623
+"Baseline",2030,"VENE","Venezuela (Bolivarian Republic of)",6.59,6.364,0.187
+"Baseline",2030,"VIET","Vietnam",21.3,18.352,3.566
+"Baseline",2030,"WAFR","Western Africa (excl Nigeria)",7.63,6.844,0.323
+"Decarb",2030,"AFGH","Afghanistan",8.37,8.151,0.393
+"Decarb",2030,"ALBA","Albania",5.36,2.847,0.221
+"Decarb",2030,"ARGE","Argentina",1.26,1.065,0.135
+"Decarb",2030,"ARME","Armenia",5.65,3.115,0.235
+"Decarb",2030,"AUST","Austria",3.63,1.362,0.998
+"Decarb",2030,"AUTR","Australia",1,0.92,0.018
+"Decarb",2030,"AZER","Azerbaijan",4.17,1.642,0.548
+"Decarb",2030,"BANG","Bangladesh",14.8,9.022,0.554
+"Decarb",2030,"BELA","Belarus",3.46,1.227,0.482
+"Decarb",2030,"BELG","Belgium",4.4,1.541,1.204
+"Decarb",2030,"BHUT","Bhutan",3.16,1.427,0.092
+"Decarb",2030,"BOHE","Bosnia and Herzegovina",6.08,3.743,0.842
+"Decarb",2030,"BOLV","Bolivia (Plurinational State of)",0.9,0.852,0.001
+"Decarb",2030,"BRAZ","Brazil",1.95,1.886,0.484
+"Decarb",2030,"BRUN","Brunei Darussalam",1.93,1.134,0.044
+"Decarb",2030,"BULG","Bulgaria",4.54,2.171,0.48
+"Decarb",2030,"CAMB","Cambodia",1.8,0.975,0.074
+"Decarb",2030,"CANA","Canada",2.64,1.915,0.097
+"Decarb",2030,"CARB","Caribbean",1.09,0.951,0.048
+"Decarb",2030,"CEAM","Central America",1.61,1.55,0.005
+"Decarb",2030,"CHIL","Chile",7.46,7.4,0.11
+"Decarb",2030,"CHIN","China",12.26,11.636,8.038
+"Decarb",2030,"COLO","Colombia",2.28,2.169,0.007
+"Decarb",2030,"CROA","Croatia",4.64,1.753,0.768
+"Decarb",2030,"CYPR","Cyprus",4.36,0.266,0.001
+"Decarb",2030,"CZRE","Czech Republic",5.26,2.944,1.776
+"Decarb",2030,"DENM","Denmark",2.83,0.851,0.292
+"Decarb",2030,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1.12,0.887,0.06
+"Decarb",2030,"ECUA","Ecuador",1.29,1.195,0.003
+"Decarb",2030,"EGYP","Egypt",4.94,3.998,0.54
+"Decarb",2030,"ESTO","Estonia",2.33,0.666,0.03
+"Decarb",2030,"FINL","Finland",1.99,0.652,0.106
+"Decarb",2030,"FRAN","France",3.97,2.38,4.09
+"Decarb",2030,"GEOR","Georgia",3.93,2.187,0.201
+"Decarb",2030,"GERM","Germany",3.51,1.737,5.917
+"Decarb",2030,"GREE","Greece",5.25,2.271,0.38
+"Decarb",2030,"HUNG","Hungary",5.94,3.178,1.862
+"Decarb",2030,"ICEL","Iceland",2.48,1.627,0.022
+"Decarb",2030,"INDI","India",10,8.592,11.773
+"Decarb",2030,"INDO","Indonesia",10.29,10.093,0.924
+"Decarb",2030,"IRAN","Iran",7.13,6.845,0.733
+"Decarb",2030,"IREL","Ireland",1.78,0.62,0.119
+"Decarb",2030,"ISRA","Israel",4.93,4.009,0.275
+"Decarb",2030,"ITAL","Italy",6.11,3.769,2.182
+"Decarb",2030,"JAPA","Japan",3.38,2.616,0.018
+"Decarb",2030,"KENY","Kenya",1.93,1.827,0.072
+"Decarb",2030,"KORS","Republic of Korea",10.52,6.114,0.46
+"Decarb",2030,"KOSO","Kosovo",8.9,6.505,0.392
+"Decarb",2030,"LAOS","Laos",1.53,0.484,0.075
+"Decarb",2030,"LATV","Latvia",3.4,1.577,0.129
+"Decarb",2030,"LITH","Lithuania",3.07,0.966,0.191
+"Decarb",2030,"LUXE","Luxembourg",3.51,0.697,0.041
+"Decarb",2030,"MACE","TFYR Macedonia",5.37,3.185,0.374
+"Decarb",2030,"MALA","Malaysia",7.31,6.809,2.127
+"Decarb",2030,"MALT","Malta",6.21,0.439,0
+"Decarb",2030,"MEXI","Mexico",3.18,3.055,0.016
+"Decarb",2030,"MIDE","Middle East",2.42,1.752,1.057
+"Decarb",2030,"MOLD","Republic of Moldova",4.7,1.829,0.128
+"Decarb",2030,"MONG","Mongolia",7.17,7.071,0.049
+"Decarb",2030,"MONT","Montenegro",5.48,3.131,0.063
+"Decarb",2030,"MYAN","Myanmar",2.1,1.381,0.097
+"Decarb",2030,"NAFR","Northern Africa (excl Egypt)",3.07,2.547,0.138
+"Decarb",2030,"NEPA","Nepal",9.12,5.09,0.464
+"Decarb",2030,"NETH","Netherlands",4.55,1.562,1.066
+"Decarb",2030,"NIGE","Nigeria",1.98,1.848,0.178
+"Decarb",2030,"NORW","Norway",1.73,0.59,0.088
+"Decarb",2030,"NZEL","New Zealand",0.57,0.512,0
+"Decarb",2030,"PAKI","Pakistan",10.04,8.578,1.44
+"Decarb",2030,"PARA","Paraguay",1.22,0.868,0.006
+"Decarb",2030,"PERU","Peru",3.07,2.865,0.079
+"Decarb",2030,"PHIL","Philippines",2.4,2.318,0.154
+"Decarb",2030,"POLA","Poland",4.96,3.035,4.003
+"Decarb",2030,"PORT","Portugal",3.93,2.035,0.046
+"Decarb",2030,"ROMA","Romania",6.9,4.778,2.412
+"Decarb",2030,"RSAF","Remaining Southern Africa",0.83,0.686,0.124
+"Decarb",2030,"RUSS","Russian Federation",3.8,2.39,2.163
+"Decarb",2030,"SAAR","Saudi Arabia",1.69,0.816,0.311
+"Decarb",2030,"SAFR","South Africa",2.47,2.332,0.125
+"Decarb",2030,"SERB","Serbia",5.86,3.337,2.182
+"Decarb",2030,"SING","Singapore",3.15,0.715,0.162
+"Decarb",2030,"SKRE","Slovakia",4.18,1.35,0.593
+"Decarb",2030,"SLOV","Slovenia",5.2,2.51,0.365
+"Decarb",2030,"SPAI","Spain",3.89,1.799,0.505
+"Decarb",2030,"SRIL","Sri Lanka",1.59,1.37,0.001
+"Decarb",2030,"SWED","Sweden",2.32,0.752,0.275
+"Decarb",2030,"SWIT","Switzerland",3.86,2.047,0.346
+"Decarb",2030,"TAIW","Taiwan",6.11,4.929,0.029
+"Decarb",2030,"TANZ","United Republic of Tanzania",1.08,1.002,0.092
+"Decarb",2030,"THAI","Thailand",2.55,2.011,0.586
+"Decarb",2030,"TURK","Turkey",6.25,3.786,1.253
+"Decarb",2030,"UKRA","Ukraine",3.45,1.254,1.653
+"Decarb",2030,"UNKI","United Kingdom",2.96,1.732,1.874
+"Decarb",2030,"URUG","Uruguay",1.07,0.871,0.064
+"Decarb",2030,"USAM","United States of America",2.37,2.199,0.674
+"Decarb",2030,"VENE","Venezuela (Bolivarian Republic of)",2.22,2.102,0.07
+"Decarb",2030,"VIET","Vietnam",6.3,5.006,1.034
+"Decarb",2030,"WAFR","Western Africa (excl Nigeria)",1.63,1.447,0.076
+"Baseline",2035,"AFGH","Afghanistan",60.42,59.573,2.468
+"Baseline",2035,"ALBA","Albania",10.21,6.707,0.767
+"Baseline",2035,"ARGE","Argentina",3.31,2.831,0.38
+"Baseline",2035,"ARME","Armenia",10.15,6.366,0.477
+"Baseline",2035,"AUST","Austria",5.12,1.969,1.512
+"Baseline",2035,"AUTR","Australia",1.96,1.876,0.047
+"Baseline",2035,"AZER","Azerbaijan",7.74,4.247,1.366
+"Baseline",2035,"BANG","Bangladesh",53.78,34.051,1.708
+"Baseline",2035,"BELA","Belarus",7.17,3.736,1.492
+"Baseline",2035,"BELG","Belgium",6.38,2.379,1.913
+"Baseline",2035,"BHUT","Bhutan",13.28,7.448,0.666
+"Baseline",2035,"BOHE","Bosnia and Herzegovina",11.74,8.498,1.994
+"Baseline",2035,"BOLV","Bolivia (Plurinational State of)",3.15,3.039,0.004
+"Baseline",2035,"BRAZ","Brazil",5.87,5.806,1.323
+"Baseline",2035,"BRUN","Brunei Darussalam",5.49,3.273,0.116
+"Baseline",2035,"BULG","Bulgaria",7.17,3.404,1.122
+"Baseline",2035,"CAMB","Cambodia",8.35,5.598,0.27
+"Baseline",2035,"CANA","Canada",6.3,4.838,0.202
+"Baseline",2035,"CARB","Caribbean",4.07,3.914,0.191
+"Baseline",2035,"CEAM","Central America",7.16,7.059,0.023
+"Baseline",2035,"CHIL","Chile",15.91,15.801,0.169
+"Baseline",2035,"CHIN","China",22.96,22.085,15.101
+"Baseline",2035,"COLO","Colombia",6.52,6.27,0.029
+"Baseline",2035,"CROA","Croatia",6.96,2.608,1.307
+"Baseline",2035,"CYPR","Cyprus",6.55,0.553,0.003
+"Baseline",2035,"CZRE","Czech Republic",7.25,3.836,2.609
+"Baseline",2035,"DENM","Denmark",4.13,1.427,0.497
+"Baseline",2035,"EAFR","Eastern Africa (excl Kenya, Tanzania)",7.89,6.973,0.537
+"Baseline",2035,"ECUA","Ecuador",3.61,3.459,0.008
+"Baseline",2035,"EGYP","Egypt",17.24,15.393,1.878
+"Baseline",2035,"ESTO","Estonia",3.45,1.105,0.059
+"Baseline",2035,"FINL","Finland",2.83,1.119,0.192
+"Baseline",2035,"FRAN","France",5.39,3.375,5.897
+"Baseline",2035,"GEOR","Georgia",6.75,3.865,0.371
+"Baseline",2035,"GERM","Germany",5.15,2.737,9.524
+"Baseline",2035,"GREE","Greece",7.23,3.039,0.652
+"Baseline",2035,"HUNG","Hungary",8.15,3.871,2.705
+"Baseline",2035,"ICEL","Iceland",3.03,2.159,0.026
+"Baseline",2035,"INDI","India",35.49,29.631,38.648
+"Baseline",2035,"INDO","Indonesia",45.88,45.621,5.188
+"Baseline",2035,"IRAN","Iran",27.24,26.208,2.43
+"Baseline",2035,"IREL","Ireland",2.27,0.815,0.198
+"Baseline",2035,"ISRA","Israel",15.41,12.334,1.157
+"Baseline",2035,"ITAL","Italy",7.74,4.979,3.515
+"Baseline",2035,"JAPA","Japan",6.28,5.139,0.034
+"Baseline",2035,"KENY","Kenya",8.34,7.78,0.321
+"Baseline",2035,"KORS","Republic of Korea",21.27,13.172,0.941
+"Baseline",2035,"KOSO","Kosovo",19.25,15.459,1.521
+"Baseline",2035,"LAOS","Laos",6.05,2.575,0.391
+"Baseline",2035,"LATV","Latvia",4.96,2.218,0.207
+"Baseline",2035,"LITH","Lithuania",4.63,1.341,0.384
+"Baseline",2035,"LUXE","Luxembourg",4.8,0.813,0.057
+"Baseline",2035,"MACE","TFYR Macedonia",10.92,7.344,0.885
+"Baseline",2035,"MALA","Malaysia",28.59,27.178,8.156
+"Baseline",2035,"MALT","Malta",7.66,1.16,0
+"Baseline",2035,"MEXI","Mexico",9.69,9.454,0.048
+"Baseline",2035,"MIDE","Middle East",11.81,9.749,4.456
+"Baseline",2035,"MOLD","Republic of Moldova",9.18,4.02,0.287
+"Baseline",2035,"MONG","Mongolia",10.38,10.111,0.142
+"Baseline",2035,"MONT","Montenegro",10.61,7.386,0.14
+"Baseline",2035,"MYAN","Myanmar",8.76,6.27,0.32
+"Baseline",2035,"NAFR","Northern Africa (excl Egypt)",14.17,13.568,0.54
+"Baseline",2035,"NEPA","Nepal",40.02,26.806,2.034
+"Baseline",2035,"NETH","Netherlands",6.58,2.412,1.758
+"Baseline",2035,"NIGE","Nigeria",17.9,17.509,1.064
+"Baseline",2035,"NORW","Norway",2.28,0.955,0.206
+"Baseline",2035,"NZEL","New Zealand",1.18,1.127,0
+"Baseline",2035,"PAKI","Pakistan",50.04,44.646,6.773
+"Baseline",2035,"PARA","Paraguay",4.81,3.848,0.023
+"Baseline",2035,"PERU","Peru",11.54,11.284,0.186
+"Baseline",2035,"PHIL","Philippines",10.56,10.477,0.568
+"Baseline",2035,"POLA","Poland",6.99,4.138,7.002
+"Baseline",2035,"PORT","Portugal",4.98,2.807,0.08
+"Baseline",2035,"ROMA","Romania",9.77,6.292,4.092
+"Baseline",2035,"RSAF","Remaining Southern Africa",5.71,5.426,0.758
+"Baseline",2035,"RUSS","Russian Federation",7.57,5.743,6.854
+"Baseline",2035,"SAAR","Saudi Arabia",7.31,4.421,1.301
+"Baseline",2035,"SAFR","South Africa",7.09,6.51,0.247
+"Baseline",2035,"SERB","Serbia",11.05,7.123,4.366
+"Baseline",2035,"SING","Singapore",13.48,3.219,0.499
+"Baseline",2035,"SKRE","Slovakia",6.11,1.847,1.066
+"Baseline",2035,"SLOV","Slovenia",9.88,6.064,0.79
+"Baseline",2035,"SPAI","Spain",5.16,2.851,0.872
+"Baseline",2035,"SRIL","Sri Lanka",7.75,7.172,0.006
+"Baseline",2035,"SWED","Sweden",2.92,0.884,0.385
+"Baseline",2035,"SWIT","Switzerland",5.51,3.054,0.465
+"Baseline",2035,"TAIW","Taiwan",15.79,14.097,0.075
+"Baseline",2035,"TANZ","United Republic of Tanzania",6.91,6.526,0.463
+"Baseline",2035,"THAI","Thailand",10.93,9.5,2.966
+"Baseline",2035,"TURK","Turkey",12.58,9.537,5.624
+"Baseline",2035,"UKRA","Ukraine",7.58,4.27,7.148
+"Baseline",2035,"UNKI","United Kingdom",4.18,2.59,2.942
+"Baseline",2035,"URUG","Uruguay",3.96,3.463,0.204
+"Baseline",2035,"USAM","United States of America",4.64,4.34,1.497
+"Baseline",2035,"VENE","Venezuela (Bolivarian Republic of)",7.28,7.049,0.2
+"Baseline",2035,"VIET","Vietnam",21.67,18.936,3.546
+"Baseline",2035,"WAFR","Western Africa (excl Nigeria)",8.18,7.386,0.33
+"Decarb",2035,"AFGH","Afghanistan",7.34,7.166,0.323
+"Decarb",2035,"ALBA","Albania",4,1.663,0.177
+"Decarb",2035,"ARGE","Argentina",1.1,0.929,0.103
+"Decarb",2035,"ARME","Armenia",5.27,2.859,0.252
+"Decarb",2035,"AUST","Austria",3.07,1.107,0.764
+"Decarb",2035,"AUTR","Australia",0.84,0.762,0.016
+"Decarb",2035,"AZER","Azerbaijan",3.81,1.352,0.469
+"Decarb",2035,"BANG","Bangladesh",12.48,7.64,0.469
+"Decarb",2035,"BELA","Belarus",2.91,0.976,0.406
+"Decarb",2035,"BELG","Belgium",3.73,1.227,0.913
+"Decarb",2035,"BHUT","Bhutan",2.95,1.399,0.085
+"Decarb",2035,"BOHE","Bosnia and Herzegovina",3.87,1.838,0.507
+"Decarb",2035,"BOLV","Bolivia (Plurinational State of)",0.87,0.818,0.001
+"Decarb",2035,"BRAZ","Brazil",1.76,1.689,0.414
+"Decarb",2035,"BRUN","Brunei Darussalam",1.46,0.801,0.032
+"Decarb",2035,"BULG","Bulgaria",3.24,1.166,0.317
+"Decarb",2035,"CAMB","Cambodia",1.4,0.774,0.059
+"Decarb",2035,"CANA","Canada",2.26,1.645,0.086
+"Decarb",2035,"CARB","Caribbean",0.96,0.821,0.036
+"Decarb",2035,"CEAM","Central America",1.43,1.373,0.004
+"Decarb",2035,"CHIL","Chile",5.86,5.805,0.097
+"Decarb",2035,"CHIN","China",10.26,9.649,6.474
+"Decarb",2035,"COLO","Colombia",1.91,1.815,0.006
+"Decarb",2035,"CROA","Croatia",3.49,1.056,0.494
+"Decarb",2035,"CYPR","Cyprus",4.3,0.221,0.001
+"Decarb",2035,"CZRE","Czech Republic",4.07,2.131,1.296
+"Decarb",2035,"DENM","Denmark",2.44,0.719,0.234
+"Decarb",2035,"EAFR","Eastern Africa (excl Kenya, Tanzania)",1,0.807,0.049
+"Decarb",2035,"ECUA","Ecuador",1.06,0.963,0.002
+"Decarb",2035,"EGYP","Egypt",3.74,2.881,0.42
+"Decarb",2035,"ESTO","Estonia",2.11,0.568,0.027
+"Decarb",2035,"FINL","Finland",1.85,0.569,0.088
+"Decarb",2035,"FRAN","France",3.58,2.104,3.45
+"Decarb",2035,"GEOR","Georgia",3.56,1.898,0.177
+"Decarb",2035,"GERM","Germany",3.05,1.534,5.199
+"Decarb",2035,"GREE","Greece",4.84,1.941,0.276
+"Decarb",2035,"HUNG","Hungary",4.65,2.43,1.461
+"Decarb",2035,"ICEL","Iceland",2.54,1.679,0.022
+"Decarb",2035,"INDI","India",8.47,7.306,9.847
+"Decarb",2035,"INDO","Indonesia",8.48,8.284,0.717
+"Decarb",2035,"IRAN","Iran",5.62,5.382,0.581
+"Decarb",2035,"IREL","Ireland",1.62,0.503,0.097
+"Decarb",2035,"ISRA","Israel",4.03,3.212,0.181
+"Decarb",2035,"ITAL","Italy",5.26,2.929,1.753
+"Decarb",2035,"JAPA","Japan",2.99,2.276,0.014
+"Decarb",2035,"KENY","Kenya",1.79,1.698,0.06
+"Decarb",2035,"KORS","Republic of Korea",9.32,5.462,0.396
+"Decarb",2035,"KOSO","Kosovo",4.66,2.586,0.227
+"Decarb",2035,"LAOS","Laos",1.25,0.389,0.059
+"Decarb",2035,"LATV","Latvia",2.61,1.005,0.107
+"Decarb",2035,"LITH","Lithuania",2.35,0.564,0.132
+"Decarb",2035,"LUXE","Luxembourg",2.98,0.56,0.029
+"Decarb",2035,"MACE","TFYR Macedonia",3.64,1.74,0.249
+"Decarb",2035,"MALA","Malaysia",5.94,5.492,1.733
+"Decarb",2035,"MALT","Malta",6.41,0.425,0
+"Decarb",2035,"MEXI","Mexico",2.6,2.483,0.012
+"Decarb",2035,"MIDE","Middle East",2.19,1.617,0.915
+"Decarb",2035,"MOLD","Republic of Moldova",3.4,0.973,0.072
+"Decarb",2035,"MONG","Mongolia",2.28,2.213,0.04
+"Decarb",2035,"MONT","Montenegro",3.55,1.369,0.039
+"Decarb",2035,"MYAN","Myanmar",1.73,1.126,0.08
+"Decarb",2035,"NAFR","Northern Africa (excl Egypt)",2.14,1.602,0.1
+"Decarb",2035,"NEPA","Nepal",7.95,4.668,0.409
+"Decarb",2035,"NETH","Netherlands",3.96,1.388,0.89
+"Decarb",2035,"NIGE","Nigeria",1.77,1.653,0.163
+"Decarb",2035,"NORW","Norway",1.54,0.439,0.065
+"Decarb",2035,"NZEL","New Zealand",0.45,0.395,0
+"Decarb",2035,"PAKI","Pakistan",8.12,6.905,1.161
+"Decarb",2035,"PARA","Paraguay",1.13,0.843,0.005
+"Decarb",2035,"PERU","Peru",2.94,2.751,0.08
+"Decarb",2035,"PHIL","Philippines",2.06,1.973,0.128
+"Decarb",2035,"POLA","Poland",3.28,1.595,2.446
+"Decarb",2035,"PORT","Portugal",3.57,1.642,0.033
+"Decarb",2035,"ROMA","Romania",4.74,2.879,1.601
+"Decarb",2035,"RSAF","Remaining Southern Africa",0.74,0.618,0.115
+"Decarb",2035,"RUSS","Russian Federation",3.18,1.822,1.743
+"Decarb",2035,"SAAR","Saudi Arabia",1.43,0.68,0.263
+"Decarb",2035,"SAFR","South Africa",1.91,1.77,0.102
+"Decarb",2035,"SERB","Serbia",3.82,1.685,1.205
+"Decarb",2035,"SING","Singapore",2.7,0.638,0.136
+"Decarb",2035,"SKRE","Slovakia",3.41,1.124,0.487
+"Decarb",2035,"SLOV","Slovenia",4.22,1.907,0.277
+"Decarb",2035,"SPAI","Spain",3.7,1.551,0.438
+"Decarb",2035,"SRIL","Sri Lanka",1.34,1.137,0.001
+"Decarb",2035,"SWED","Sweden",2.15,0.703,0.229
+"Decarb",2035,"SWIT","Switzerland",3.33,1.744,0.296
+"Decarb",2035,"TAIW","Taiwan",5.8,4.707,0.028
+"Decarb",2035,"TANZ","United Republic of Tanzania",0.97,0.893,0.075
+"Decarb",2035,"THAI","Thailand",2.17,1.726,0.498
+"Decarb",2035,"TURK","Turkey",5.27,2.815,1.021
+"Decarb",2035,"UKRA","Ukraine",3,1.037,1.347
+"Decarb",2035,"UNKI","United Kingdom",2.61,1.491,1.599
+"Decarb",2035,"URUG","Uruguay",0.88,0.713,0.051
+"Decarb",2035,"USAM","United States of America",1.97,1.813,0.537
+"Decarb",2035,"VENE","Venezuela (Bolivarian Republic of)",1.79,1.676,0.057
+"Decarb",2035,"VIET","Vietnam",4.91,3.862,0.779
+"Decarb",2035,"WAFR","Western Africa (excl Nigeria)",1.36,1.192,0.059
+"Baseline",2040,"AFGH","Afghanistan",62.03,61.176,2.484
+"Baseline",2040,"ALBA","Albania",8.89,5.745,0.716
+"Baseline",2040,"ARGE","Argentina",3.53,3.048,0.39
+"Baseline",2040,"ARME","Armenia",10.16,6.357,0.441
+"Baseline",2040,"AUST","Austria",4.69,1.831,1.372
+"Baseline",2040,"AUTR","Australia",1.93,1.845,0.044
+"Baseline",2040,"AZER","Azerbaijan",8.16,4.711,1.446
+"Baseline",2040,"BANG","Bangladesh",54.26,34.727,1.722
+"Baseline",2040,"BELA","Belarus",6.81,3.626,1.475
+"Baseline",2040,"BELG","Belgium",6.02,2.329,1.926
+"Baseline",2040,"BHUT","Bhutan",14.52,8.734,0.772
+"Baseline",2040,"BOHE","Bosnia and Herzegovina",10.22,7.266,1.633
+"Baseline",2040,"BOLV","Bolivia (Plurinational State of)",3.49,3.374,0.005
+"Baseline",2040,"BRAZ","Brazil",6.05,5.979,1.343
+"Baseline",2040,"BRUN","Brunei Darussalam",5.56,3.308,0.12
+"Baseline",2040,"BULG","Bulgaria",5.88,2.427,0.881
+"Baseline",2040,"CAMB","Cambodia",8.76,6.038,0.275
+"Baseline",2040,"CANA","Canada",6.47,5.048,0.202
+"Baseline",2040,"CARB","Caribbean",4.16,4.004,0.188
+"Baseline",2040,"CEAM","Central America",7.36,7.262,0.022
+"Baseline",2040,"CHIL","Chile",15.76,15.646,0.171
+"Baseline",2040,"CHIN","China",21.84,20.947,14.123
+"Baseline",2040,"COLO","Colombia",6.75,6.491,0.028
+"Baseline",2040,"CROA","Croatia",5.77,1.825,1.018
+"Baseline",2040,"CYPR","Cyprus",6.45,0.484,0.002
+"Baseline",2040,"CZRE","Czech Republic",6.27,3.212,2.249
+"Baseline",2040,"DENM","Denmark",3.85,1.38,0.496
+"Baseline",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",8.42,7.474,0.535
+"Baseline",2040,"ECUA","Ecuador",3.95,3.796,0.008
+"Baseline",2040,"EGYP","Egypt",19.36,17.525,2.042
+"Baseline",2040,"ESTO","Estonia",3.26,1,0.053
+"Baseline",2040,"FINL","Finland",2.73,1.064,0.181
+"Baseline",2040,"FRAN","France",5.06,3.126,5.507
+"Baseline",2040,"GEOR","Georgia",6.83,3.932,0.372
+"Baseline",2040,"GERM","Germany",4.71,2.473,8.529
+"Baseline",2040,"GREE","Greece",6.76,2.717,0.608
+"Baseline",2040,"HUNG","Hungary",6.98,3.206,2.435
+"Baseline",2040,"ICEL","Iceland",3.09,2.219,0.027
+"Baseline",2040,"INDI","India",35.48,29.333,37.582
+"Baseline",2040,"INDO","Indonesia",50.2,49.936,5.495
+"Baseline",2040,"IRAN","Iran",28.86,27.838,2.5
+"Baseline",2040,"IREL","Ireland",2.22,0.788,0.187
+"Baseline",2040,"ISRA","Israel",14.72,11.536,1.025
+"Baseline",2040,"ITAL","Italy",7.27,4.509,3.239
+"Baseline",2040,"JAPA","Japan",6.1,4.996,0.033
+"Baseline",2040,"KENY","Kenya",9.23,8.664,0.338
+"Baseline",2040,"KORS","Republic of Korea",21.12,13.162,0.93
+"Baseline",2040,"KOSO","Kosovo",16.26,12.894,0.814
+"Baseline",2040,"LAOS","Laos",6.3,2.803,0.395
+"Baseline",2040,"LATV","Latvia",4.49,1.919,0.191
+"Baseline",2040,"LITH","Lithuania",4.24,1.217,0.349
+"Baseline",2040,"LUXE","Luxembourg",4.36,0.66,0.047
+"Baseline",2040,"MACE","TFYR Macedonia",9,5.884,0.653
+"Baseline",2040,"MALA","Malaysia",30.21,28.767,8.601
+"Baseline",2040,"MALT","Malta",7.95,1.224,0
+"Baseline",2040,"MEXI","Mexico",9.98,9.75,0.046
+"Baseline",2040,"MIDE","Middle East",12.67,10.618,4.435
+"Baseline",2040,"MOLD","Republic of Moldova",8.41,3.631,0.267
+"Baseline",2040,"MONG","Mongolia",9.7,9.451,0.145
+"Baseline",2040,"MONT","Montenegro",9.17,6.199,0.108
+"Baseline",2040,"MYAN","Myanmar",9.22,6.711,0.33
+"Baseline",2040,"NAFR","Northern Africa (excl Egypt)",15.63,15.017,0.557
+"Baseline",2040,"NEPA","Nepal",43.81,31.099,2.206
+"Baseline",2040,"NETH","Netherlands",6.15,2.271,1.667
+"Baseline",2040,"NIGE","Nigeria",18.5,18.093,1.115
+"Baseline",2040,"NORW","Norway",2.29,1,0.288
+"Baseline",2040,"NZEL","New Zealand",1.18,1.12,0
+"Baseline",2040,"PAKI","Pakistan",52.7,47.365,7.153
+"Baseline",2040,"PARA","Paraguay",5.11,4.132,0.023
+"Baseline",2040,"PERU","Peru",12.46,12.193,0.192
+"Baseline",2040,"PHIL","Philippines",11.13,11.038,0.572
+"Baseline",2040,"POLA","Poland",5.72,3.07,5.349
+"Baseline",2040,"PORT","Portugal",4.84,2.573,0.072
+"Baseline",2040,"ROMA","Romania",7.99,4.775,3.164
+"Baseline",2040,"RSAF","Remaining Southern Africa",6.26,5.977,0.794
+"Baseline",2040,"RUSS","Russian Federation",7.48,5.687,6.634
+"Baseline",2040,"SAAR","Saudi Arabia",7.46,4.572,1.277
+"Baseline",2040,"SAFR","South Africa",7.21,6.601,0.241
+"Baseline",2040,"SERB","Serbia",9.73,6.258,3.456
+"Baseline",2040,"SING","Singapore",13.84,2.946,0.462
+"Baseline",2040,"SKRE","Slovakia",5.54,1.78,1.029
+"Baseline",2040,"SLOV","Slovenia",8.57,5.095,0.699
+"Baseline",2040,"SPAI","Spain",5.03,2.647,0.887
+"Baseline",2040,"SRIL","Sri Lanka",7.99,7.387,0.006
+"Baseline",2040,"SWED","Sweden",2.84,0.895,0.399
+"Baseline",2040,"SWIT","Switzerland",5.17,2.898,0.435
+"Baseline",2040,"TAIW","Taiwan",16.47,14.817,0.082
+"Baseline",2040,"TANZ","United Republic of Tanzania",7.66,7.269,0.481
+"Baseline",2040,"THAI","Thailand",11.19,9.765,3.024
+"Baseline",2040,"TURK","Turkey",12.15,9.118,5.456
+"Baseline",2040,"UKRA","Ukraine",7.39,4.259,6.745
+"Baseline",2040,"UNKI","United Kingdom",3.95,2.46,2.817
+"Baseline",2040,"URUG","Uruguay",4.2,3.699,0.206
+"Baseline",2040,"USAM","United States of America",4.49,4.195,1.445
+"Baseline",2040,"VENE","Venezuela (Bolivarian Republic of)",7.95,7.724,0.211
+"Baseline",2040,"VIET","Vietnam",22.12,19.526,3.577
+"Baseline",2040,"WAFR","Western Africa (excl Nigeria)",8.85,8.04,0.338
+"Decarb",2040,"AFGH","Afghanistan",6.81,6.662,0.285
+"Decarb",2040,"ALBA","Albania",3.7,1.397,0.172
+"Decarb",2040,"ARGE","Argentina",1.02,0.857,0.083
+"Decarb",2040,"ARME","Armenia",5.18,2.843,0.268
+"Decarb",2040,"AUST","Austria",2.75,0.981,0.63
+"Decarb",2040,"AUTR","Australia",0.73,0.643,0.014
+"Decarb",2040,"AZER","Azerbaijan",3.62,1.197,0.421
+"Decarb",2040,"BANG","Bangladesh",10.9,6.761,0.41
+"Decarb",2040,"BELA","Belarus",2.61,0.82,0.362
+"Decarb",2040,"BELG","Belgium",3.34,1.095,0.783
+"Decarb",2040,"BHUT","Bhutan",2.53,1.123,0.063
+"Decarb",2040,"BOHE","Bosnia and Herzegovina",3.22,1.313,0.392
+"Decarb",2040,"BOLV","Bolivia (Plurinational State of)",0.8,0.75,0.001
+"Decarb",2040,"BRAZ","Brazil",1.61,1.542,0.357
+"Decarb",2040,"BRUN","Brunei Darussalam",1.03,0.479,0.018
+"Decarb",2040,"BULG","Bulgaria",2.68,0.734,0.24
+"Decarb",2040,"CAMB","Cambodia",1.2,0.705,0.052
+"Decarb",2040,"CANA","Canada",2.05,1.51,0.08
+"Decarb",2040,"CARB","Caribbean",0.77,0.631,0.026
+"Decarb",2040,"CEAM","Central America",1.08,1.026,0.003
+"Decarb",2040,"CHIL","Chile",4.68,4.622,0.085
+"Decarb",2040,"CHIN","China",8.78,8.169,5.28
+"Decarb",2040,"COLO","Colombia",1.65,1.566,0.005
+"Decarb",2040,"CROA","Croatia",2.87,0.631,0.355
+"Decarb",2040,"CYPR","Cyprus",4.31,0.19,0.001
+"Decarb",2040,"CZRE","Czech Republic",3.33,1.61,1.044
+"Decarb",2040,"DENM","Denmark",2.15,0.648,0.218
+"Decarb",2040,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.81,0.629,0.035
+"Decarb",2040,"ECUA","Ecuador",0.88,0.786,0.001
+"Decarb",2040,"EGYP","Egypt",3.41,2.581,0.369
+"Decarb",2040,"ESTO","Estonia",1.96,0.502,0.023
+"Decarb",2040,"FINL","Finland",1.75,0.503,0.071
+"Decarb",2040,"FRAN","France",3.35,1.961,3.198
+"Decarb",2040,"GEOR","Georgia",3.39,1.771,0.17
+"Decarb",2040,"GERM","Germany",2.7,1.346,4.425
+"Decarb",2040,"GREE","Greece",4.64,1.735,0.231
+"Decarb",2040,"HUNG","Hungary",3.71,1.762,1.145
+"Decarb",2040,"ICEL","Iceland",2.56,1.693,0.022
+"Decarb",2040,"INDI","India",7.44,6.441,8.434
+"Decarb",2040,"INDO","Indonesia",7.12,6.925,0.536
+"Decarb",2040,"IRAN","Iran",4.5,4.288,0.468
+"Decarb",2040,"IREL","Ireland",1.56,0.482,0.093
+"Decarb",2040,"ISRA","Israel",3.66,2.905,0.15
+"Decarb",2040,"ITAL","Italy",4.9,2.529,1.541
+"Decarb",2040,"JAPA","Japan",2.73,2.063,0.012
+"Decarb",2040,"KENY","Kenya",1.62,1.549,0.05
+"Decarb",2040,"KORS","Republic of Korea",8.94,5.463,0.387
+"Decarb",2040,"KOSO","Kosovo",3.65,1.657,0.184
+"Decarb",2040,"LAOS","Laos",1.08,0.362,0.052
+"Decarb",2040,"LATV","Latvia",2.25,0.758,0.09
+"Decarb",2040,"LITH","Lithuania",2.09,0.484,0.11
+"Decarb",2040,"LUXE","Luxembourg",2.6,0.439,0.018
+"Decarb",2040,"MACE","TFYR Macedonia",3.16,1.347,0.207
+"Decarb",2040,"MALA","Malaysia",5,4.597,1.473
+"Decarb",2040,"MALT","Malta",6.65,0.407,0
+"Decarb",2040,"MEXI","Mexico",2.21,2.105,0.01
+"Decarb",2040,"MIDE","Middle East",2.02,1.5,0.816
+"Decarb",2040,"MOLD","Republic of Moldova",2.83,0.628,0.053
+"Decarb",2040,"MONG","Mongolia",1.46,1.394,0.036
+"Decarb",2040,"MONT","Montenegro",3.09,0.951,0.03
+"Decarb",2040,"MYAN","Myanmar",1.52,1.014,0.071
+"Decarb",2040,"NAFR","Northern Africa (excl Egypt)",1.75,1.213,0.079
+"Decarb",2040,"NEPA","Nepal",7.2,4.445,0.377
+"Decarb",2040,"NETH","Netherlands",3.49,1.212,0.767
+"Decarb",2040,"NIGE","Nigeria",1.4,1.288,0.139
+"Decarb",2040,"NORW","Norway",1.43,0.349,0.057
+"Decarb",2040,"NZEL","New Zealand",0.37,0.313,0
+"Decarb",2040,"PAKI","Pakistan",6.96,5.894,0.976
+"Decarb",2040,"PARA","Paraguay",0.92,0.675,0.004
+"Decarb",2040,"PERU","Peru",2.6,2.418,0.081
+"Decarb",2040,"PHIL","Philippines",1.78,1.697,0.107
+"Decarb",2040,"POLA","Poland",2.69,1.161,1.795
+"Decarb",2040,"PORT","Portugal",3.31,1.318,0.028
+"Decarb",2040,"ROMA","Romania",3.5,1.761,1.107
+"Decarb",2040,"RSAF","Remaining Southern Africa",0.67,0.551,0.105
+"Decarb",2040,"RUSS","Russian Federation",2.94,1.605,1.499
+"Decarb",2040,"SAAR","Saudi Arabia",1.24,0.563,0.222
+"Decarb",2040,"SAFR","South Africa",1.61,1.483,0.088
+"Decarb",2040,"SERB","Serbia",3.25,1.323,1.046
+"Decarb",2040,"SING","Singapore",2.36,0.561,0.114
+"Decarb",2040,"SKRE","Slovakia",2.9,0.913,0.408
+"Decarb",2040,"SLOV","Slovenia",3.61,1.484,0.22
+"Decarb",2040,"SPAI","Spain",3.63,1.396,0.406
+"Decarb",2040,"SRIL","Sri Lanka",1.23,1.041,0.001
+"Decarb",2040,"SWED","Sweden",2.03,0.668,0.208
+"Decarb",2040,"SWIT","Switzerland",3,1.564,0.261
+"Decarb",2040,"TAIW","Taiwan",5.34,4.32,0.025
+"Decarb",2040,"TANZ","United Republic of Tanzania",0.85,0.792,0.064
+"Decarb",2040,"THAI","Thailand",1.93,1.556,0.397
+"Decarb",2040,"TURK","Turkey",4.97,2.477,0.903
+"Decarb",2040,"UKRA","Ukraine",2.79,0.936,1.216
+"Decarb",2040,"UNKI","United Kingdom",2.39,1.349,1.427
+"Decarb",2040,"URUG","Uruguay",0.7,0.546,0.044
+"Decarb",2040,"USAM","United States of America",1.74,1.586,0.459
+"Decarb",2040,"VENE","Venezuela (Bolivarian Republic of)",1.41,1.301,0.046
+"Decarb",2040,"VIET","Vietnam",4.16,3.301,0.634
+"Decarb",2040,"WAFR","Western Africa (excl Nigeria)",1.15,0.995,0.048
+"Baseline",2045,"AFGH","Afghanistan",64.59,63.703,2.48
+"Baseline",2045,"ALBA","Albania",8,4.945,0.666
+"Baseline",2045,"ARGE","Argentina",3.63,3.129,0.398
+"Baseline",2045,"ARME","Armenia",10.41,6.573,0.429
+"Baseline",2045,"AUST","Austria",4.31,1.613,1.212
+"Baseline",2045,"AUTR","Australia",1.93,1.841,0.041
+"Baseline",2045,"AZER","Azerbaijan",8.68,5.223,1.53
+"Baseline",2045,"BANG","Bangladesh",55.72,35.879,1.756
+"Baseline",2045,"BELA","Belarus",6.73,3.64,1.512
+"Baseline",2045,"BELG","Belgium",5.68,2.21,1.866
+"Baseline",2045,"BHUT","Bhutan",16.16,10.264,0.895
+"Baseline",2045,"BOHE","Bosnia and Herzegovina",9.3,6.457,1.408
+"Baseline",2045,"BOLV","Bolivia (Plurinational State of)",3.8,3.667,0.005
+"Baseline",2045,"BRAZ","Brazil",6.32,6.252,1.397
+"Baseline",2045,"BRUN","Brunei Darussalam",5.65,3.329,0.123
+"Baseline",2045,"BULG","Bulgaria",5.29,1.937,0.831
+"Baseline",2045,"CAMB","Cambodia",9.32,6.599,0.281
+"Baseline",2045,"CANA","Canada",6.59,5.175,0.204
+"Baseline",2045,"CARB","Caribbean",4.22,4.062,0.187
+"Baseline",2045,"CEAM","Central America",7.41,7.307,0.021
+"Baseline",2045,"CHIL","Chile",16.03,15.915,0.181
+"Baseline",2045,"CHIN","China",21.09,20.18,13.495
+"Baseline",2045,"COLO","Colombia",7.09,6.809,0.029
+"Baseline",2045,"CROA","Croatia",5.14,1.456,0.979
+"Baseline",2045,"CYPR","Cyprus",6.33,0.446,0.002
+"Baseline",2045,"CZRE","Czech Republic",5.46,2.576,1.941
+"Baseline",2045,"DENM","Denmark",3.59,1.285,0.475
+"Baseline",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",9.05,8.067,0.534
+"Baseline",2045,"ECUA","Ecuador",4.33,4.165,0.008
+"Baseline",2045,"EGYP","Egypt",21.2,19.319,2.16
+"Baseline",2045,"ESTO","Estonia",3.11,0.891,0.051
+"Baseline",2045,"FINL","Finland",2.63,0.989,0.2
+"Baseline",2045,"FRAN","France",4.84,2.978,5.25
+"Baseline",2045,"GEOR","Georgia",7.08,4.148,0.385
+"Baseline",2045,"GERM","Germany",4.46,2.343,8.075
+"Baseline",2045,"GREE","Greece",6.61,2.601,0.554
+"Baseline",2045,"HUNG","Hungary",6.18,2.657,2.154
+"Baseline",2045,"ICEL","Iceland",3.18,2.299,0.028
+"Baseline",2045,"INDI","India",36.25,29.734,37.671
+"Baseline",2045,"INDO","Indonesia",54.54,54.27,5.745
+"Baseline",2045,"IRAN","Iran",32.34,31.303,2.635
+"Baseline",2045,"IREL","Ireland",2.13,0.733,0.176
+"Baseline",2045,"ISRA","Israel",15.06,11.751,1.055
+"Baseline",2045,"ITAL","Italy",6.94,4.179,3.019
+"Baseline",2045,"JAPA","Japan",6.01,4.923,0.032
+"Baseline",2045,"KENY","Kenya",10.42,9.845,0.359
+"Baseline",2045,"KORS","Republic of Korea",20.96,13.047,0.912
+"Baseline",2045,"KOSO","Kosovo",14.67,11.449,0.746
+"Baseline",2045,"LAOS","Laos",6.55,3.007,0.402
+"Baseline",2045,"LATV","Latvia",4.24,1.741,0.181
+"Baseline",2045,"LITH","Lithuania",4,1.075,0.312
+"Baseline",2045,"LUXE","Luxembourg",4.06,0.581,0.041
+"Baseline",2045,"MACE","TFYR Macedonia",8.04,5.037,0.559
+"Baseline",2045,"MALA","Malaysia",31.34,29.828,8.995
+"Baseline",2045,"MALT","Malta",8.05,1.229,0
+"Baseline",2045,"MEXI","Mexico",10.46,10.237,0.047
+"Baseline",2045,"MIDE","Middle East",14.11,11.987,4.503
+"Baseline",2045,"MOLD","Republic of Moldova",8.1,3.424,0.255
+"Baseline",2045,"MONG","Mongolia",9.4,9.16,0.148
+"Baseline",2045,"MONT","Montenegro",8.3,5.396,0.089
+"Baseline",2045,"MYAN","Myanmar",9.74,7.167,0.339
+"Baseline",2045,"NAFR","Northern Africa (excl Egypt)",17.17,16.545,0.591
+"Baseline",2045,"NEPA","Nepal",49.09,36.445,2.391
+"Baseline",2045,"NETH","Netherlands",5.78,2.138,1.569
+"Baseline",2045,"NIGE","Nigeria",19.12,18.69,1.175
+"Baseline",2045,"NORW","Norway",2.25,0.979,0.277
+"Baseline",2045,"NZEL","New Zealand",1.18,1.122,0
+"Baseline",2045,"PAKI","Pakistan",56.3,50.898,7.657
+"Baseline",2045,"PARA","Paraguay",5.42,4.401,0.023
+"Baseline",2045,"PERU","Peru",13.47,13.197,0.212
+"Baseline",2045,"PHIL","Philippines",11.85,11.758,0.641
+"Baseline",2045,"POLA","Poland",5.25,2.728,4.86
+"Baseline",2045,"PORT","Portugal",4.7,2.419,0.067
+"Baseline",2045,"ROMA","Romania",6.98,3.847,2.842
+"Baseline",2045,"RSAF","Remaining Southern Africa",6.92,6.635,0.841
+"Baseline",2045,"RUSS","Russian Federation",7.44,5.646,6.43
+"Baseline",2045,"SAAR","Saudi Arabia",8.04,5.076,1.29
+"Baseline",2045,"SAFR","South Africa",7.43,6.789,0.244
+"Baseline",2045,"SERB","Serbia",8.98,5.69,3.229
+"Baseline",2045,"SING","Singapore",14.45,3.029,0.477
+"Baseline",2045,"SKRE","Slovakia",4.97,1.461,0.877
+"Baseline",2045,"SLOV","Slovenia",7.04,3.752,0.555
+"Baseline",2045,"SPAI","Spain",4.87,2.452,0.861
+"Baseline",2045,"SRIL","Sri Lanka",8.03,7.399,0.006
+"Baseline",2045,"SWED","Sweden",2.77,0.896,0.404
+"Baseline",2045,"SWIT","Switzerland",5.07,2.915,0.438
+"Baseline",2045,"TAIW","Taiwan",16.94,15.31,0.087
+"Baseline",2045,"TANZ","United Republic of Tanzania",8.53,8.129,0.499
+"Baseline",2045,"THAI","Thailand",11.61,10.185,3.128
+"Baseline",2045,"TURK","Turkey",12.05,9.006,5.264
+"Baseline",2045,"UKRA","Ukraine",7.48,4.428,6.967
+"Baseline",2045,"UNKI","United Kingdom",3.78,2.361,2.698
+"Baseline",2045,"URUG","Uruguay",4.43,3.91,0.211
+"Baseline",2045,"USAM","United States of America",4.45,4.143,1.424
+"Baseline",2045,"VENE","Venezuela (Bolivarian Republic of)",8.62,8.391,0.226
+"Baseline",2045,"VIET","Vietnam",23.03,20.505,3.596
+"Baseline",2045,"WAFR","Western Africa (excl Nigeria)",9.63,8.793,0.349
+"Decarb",2045,"AFGH","Afghanistan",7.35,7.21,0.29
+"Decarb",2045,"ALBA","Albania",3.52,1.229,0.149
+"Decarb",2045,"ARGE","Argentina",0.98,0.822,0.075
+"Decarb",2045,"ARME","Armenia",5.25,2.963,0.289
+"Decarb",2045,"AUST","Austria",2.54,0.887,0.528
+"Decarb",2045,"AUTR","Australia",0.69,0.609,0.015
+"Decarb",2045,"AZER","Azerbaijan",3.5,1.078,0.379
+"Decarb",2045,"BANG","Bangladesh",10.38,6.587,0.383
+"Decarb",2045,"BELA","Belarus",2.41,0.695,0.317
+"Decarb",2045,"BELG","Belgium",3.08,1.03,0.725
+"Decarb",2045,"BHUT","Bhutan",2.18,0.818,0.043
+"Decarb",2045,"BOHE","Bosnia and Herzegovina",3.07,1.224,0.386
+"Decarb",2045,"BOLV","Bolivia (Plurinational State of)",0.78,0.728,0.001
+"Decarb",2045,"BRAZ","Brazil",1.54,1.469,0.324
+"Decarb",2045,"BRUN","Brunei Darussalam",0.82,0.333,0.012
+"Decarb",2045,"BULG","Bulgaria",2.48,0.592,0.217
+"Decarb",2045,"CAMB","Cambodia",1.2,0.729,0.049
+"Decarb",2045,"CANA","Canada",1.97,1.462,0.078
+"Decarb",2045,"CARB","Caribbean",0.72,0.581,0.023
+"Decarb",2045,"CEAM","Central America",0.99,0.931,0.002
+"Decarb",2045,"CHIL","Chile",4.41,4.354,0.09
+"Decarb",2045,"CHIN","China",8.06,7.449,4.716
+"Decarb",2045,"COLO","Colombia",1.54,1.464,0.004
+"Decarb",2045,"CROA","Croatia",2.57,0.442,0.294
+"Decarb",2045,"CYPR","Cyprus",4.33,0.189,0.001
+"Decarb",2045,"CZRE","Czech Republic",2.76,1.164,0.816
+"Decarb",2045,"DENM","Denmark",1.95,0.593,0.2
+"Decarb",2045,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.86,0.684,0.035
+"Decarb",2045,"ECUA","Ecuador",0.81,0.709,0.001
+"Decarb",2045,"EGYP","Egypt",3.16,2.35,0.339
+"Decarb",2045,"ESTO","Estonia",1.86,0.447,0.021
+"Decarb",2045,"FINL","Finland",1.66,0.442,0.063
+"Decarb",2045,"FRAN","France",3.21,1.891,3.012
+"Decarb",2045,"GEOR","Georgia",3.51,1.914,0.18
+"Decarb",2045,"GERM","Germany",2.49,1.256,4.114
+"Decarb",2045,"GREE","Greece",4.57,1.656,0.205
+"Decarb",2045,"HUNG","Hungary",3.1,1.288,0.916
+"Decarb",2045,"ICEL","Iceland",2.59,1.712,0.022
+"Decarb",2045,"INDI","India",6.97,6.036,7.774
+"Decarb",2045,"INDO","Indonesia",6.75,6.551,0.518
+"Decarb",2045,"IRAN","Iran",4.04,3.84,0.436
+"Decarb",2045,"IREL","Ireland",1.49,0.444,0.087
+"Decarb",2045,"ISRA","Israel",3.58,2.851,0.135
+"Decarb",2045,"ITAL","Italy",4.66,2.27,1.406
+"Decarb",2045,"JAPA","Japan",2.58,1.933,0.01
+"Decarb",2045,"KENY","Kenya",1.92,1.84,0.051
+"Decarb",2045,"KORS","Republic of Korea",8.5,5.186,0.37
+"Decarb",2045,"KOSO","Kosovo",3.44,1.497,0.17
+"Decarb",2045,"LAOS","Laos",1.02,0.361,0.05
+"Decarb",2045,"LATV","Latvia",2.08,0.67,0.085
+"Decarb",2045,"LITH","Lithuania",1.93,0.421,0.095
+"Decarb",2045,"LUXE","Luxembourg",2.39,0.379,0.015
+"Decarb",2045,"MACE","TFYR Macedonia",3.03,1.255,0.177
+"Decarb",2045,"MALA","Malaysia",4.34,3.943,1.349
+"Decarb",2045,"MALT","Malta",6.79,0.424,0
+"Decarb",2045,"MEXI","Mexico",2.04,1.937,0.009
+"Decarb",2045,"MIDE","Middle East",1.98,1.477,0.787
+"Decarb",2045,"MOLD","Republic of Moldova",2.58,0.504,0.045
+"Decarb",2045,"MONG","Mongolia",1.35,1.297,0.036
+"Decarb",2045,"MONT","Montenegro",2.98,0.858,0.027
+"Decarb",2045,"MYAN","Myanmar",1.49,1.029,0.067
+"Decarb",2045,"NAFR","Northern Africa (excl Egypt)",1.6,1.053,0.075
+"Decarb",2045,"NEPA","Nepal",6.96,4.428,0.372
+"Decarb",2045,"NETH","Netherlands",3.18,1.096,0.691
+"Decarb",2045,"NIGE","Nigeria",1.43,1.322,0.142
+"Decarb",2045,"NORW","Norway",1.35,0.295,0.054
+"Decarb",2045,"NZEL","New Zealand",0.34,0.28,0
+"Decarb",2045,"PAKI","Pakistan",6.47,5.465,0.898
+"Decarb",2045,"PARA","Paraguay",0.85,0.624,0.004
+"Decarb",2045,"PERU","Peru",2.57,2.385,0.093
+"Decarb",2045,"PHIL","Philippines",1.76,1.67,0.111
+"Decarb",2045,"POLA","Poland",2.46,1.04,1.605
+"Decarb",2045,"PORT","Portugal",3.11,1.088,0.024
+"Decarb",2045,"ROMA","Romania",2.91,1.221,0.878
+"Decarb",2045,"RSAF","Remaining Southern Africa",0.74,0.623,0.116
+"Decarb",2045,"RUSS","Russian Federation",2.8,1.475,1.378
+"Decarb",2045,"SAAR","Saudi Arabia",1.13,0.476,0.197
+"Decarb",2045,"SAFR","South Africa",1.6,1.468,0.088
+"Decarb",2045,"SERB","Serbia",3.08,1.246,1.008
+"Decarb",2045,"SING","Singapore",2.34,0.601,0.116
+"Decarb",2045,"SKRE","Slovakia",2.51,0.7,0.347
+"Decarb",2045,"SLOV","Slovenia",3.12,1.106,0.17
+"Decarb",2045,"SPAI","Spain",3.58,1.314,0.391
+"Decarb",2045,"SRIL","Sri Lanka",1.17,0.991,0.001
+"Decarb",2045,"SWED","Sweden",1.96,0.661,0.198
+"Decarb",2045,"SWIT","Switzerland",2.78,1.439,0.212
+"Decarb",2045,"TAIW","Taiwan",5.29,4.295,0.025
+"Decarb",2045,"TANZ","United Republic of Tanzania",0.98,0.918,0.066
+"Decarb",2045,"THAI","Thailand",1.88,1.532,0.366
+"Decarb",2045,"TURK","Turkey",4.85,2.343,0.848
+"Decarb",2045,"UKRA","Ukraine",2.66,0.861,1.116
+"Decarb",2045,"UNKI","United Kingdom",2.22,1.246,1.272
+"Decarb",2045,"URUG","Uruguay",0.58,0.439,0.041
+"Decarb",2045,"USAM","United States of America",1.62,1.463,0.415
+"Decarb",2045,"VENE","Venezuela (Bolivarian Republic of)",1.16,1.055,0.039
+"Decarb",2045,"VIET","Vietnam",4.04,3.277,0.602
+"Decarb",2045,"WAFR","Western Africa (excl Nigeria)",1.24,1.081,0.051
+"Baseline",2050,"AFGH","Afghanistan",65.01,64.098,2.402
+"Baseline",2050,"ALBA","Albania",7.5,4.497,0.64
+"Baseline",2050,"ARGE","Argentina",3.7,3.192,0.403
+"Baseline",2050,"ARME","Armenia",11.19,7.27,0.461
+"Baseline",2050,"AUST","Austria",4.02,1.45,1.047
+"Baseline",2050,"AUTR","Australia",1.96,1.872,0.042
+"Baseline",2050,"AZER","Azerbaijan",9.26,5.76,1.616
+"Baseline",2050,"BANG","Bangladesh",56.24,36.102,1.747
+"Baseline",2050,"BELA","Belarus",6.67,3.637,1.541
+"Baseline",2050,"BELG","Belgium",5.47,2.137,1.759
+"Baseline",2050,"BHUT","Bhutan",17.4,11.416,0.983
+"Baseline",2050,"BOHE","Bosnia and Herzegovina",8.5,5.754,1.248
+"Baseline",2050,"BOLV","Bolivia (Plurinational State of)",4.08,3.944,0.005
+"Baseline",2050,"BRAZ","Brazil",6.57,6.499,1.443
+"Baseline",2050,"BRUN","Brunei Darussalam",5.71,3.335,0.126
+"Baseline",2050,"BULG","Bulgaria",5.06,1.782,0.777
+"Baseline",2050,"CAMB","Cambodia",9.87,7.154,0.285
+"Baseline",2050,"CANA","Canada",6.71,5.309,0.206
+"Baseline",2050,"CARB","Caribbean",4.29,4.131,0.193
+"Baseline",2050,"CEAM","Central America",7.38,7.274,0.02
+"Baseline",2050,"CHIL","Chile",16.43,16.316,0.189
+"Baseline",2050,"CHIN","China",20.46,19.541,12.949
+"Baseline",2050,"COLO","Colombia",7.51,7.211,0.03
+"Baseline",2050,"CROA","Croatia",4.84,1.364,0.914
+"Baseline",2050,"CYPR","Cyprus",6.4,0.419,0.002
+"Baseline",2050,"CZRE","Czech Republic",4.89,2.136,1.712
+"Baseline",2050,"DENM","Denmark",3.47,1.247,0.464
+"Baseline",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",9.82,8.795,0.535
+"Baseline",2050,"ECUA","Ecuador",4.73,4.55,0.008
+"Baseline",2050,"EGYP","Egypt",23.1,21.173,2.27
+"Baseline",2050,"ESTO","Estonia",2.99,0.806,0.048
+"Baseline",2050,"FINL","Finland",2.5,0.877,0.173
+"Baseline",2050,"FRAN","France",4.69,2.856,4.913
+"Baseline",2050,"GEOR","Georgia",7.51,4.508,0.414
+"Baseline",2050,"GERM","Germany",4.27,2.247,7.809
+"Baseline",2050,"GREE","Greece",6.51,2.499,0.519
+"Baseline",2050,"HUNG","Hungary",5.62,2.308,1.954
+"Baseline",2050,"ICEL","Iceland",3.27,2.394,0.029
+"Baseline",2050,"INDI","India",37.06,30.218,37.907
+"Baseline",2050,"INDO","Indonesia",58.14,57.864,5.98
+"Baseline",2050,"IRAN","Iran",34.97,33.918,2.733
+"Baseline",2050,"IREL","Ireland",2.13,0.74,0.171
+"Baseline",2050,"ISRA","Israel",15.25,11.804,1.052
+"Baseline",2050,"ITAL","Italy",6.64,3.876,2.856
+"Baseline",2050,"JAPA","Japan",5.95,4.874,0.031
+"Baseline",2050,"KENY","Kenya",11.88,11.297,0.382
+"Baseline",2050,"KORS","Republic of Korea",20.81,12.974,0.902
+"Baseline",2050,"KOSO","Kosovo",13.24,10.129,0.698
+"Baseline",2050,"LAOS","Laos",6.77,3.195,0.407
+"Baseline",2050,"LATV","Latvia",4.02,1.576,0.171
+"Baseline",2050,"LITH","Lithuania",3.88,1.015,0.297
+"Baseline",2050,"LUXE","Luxembourg",3.88,0.58,0.038
+"Baseline",2050,"MACE","TFYR Macedonia",7.62,4.715,0.512
+"Baseline",2050,"MALA","Malaysia",32.1,30.528,9.298
+"Baseline",2050,"MALT","Malta",8.14,1.215,0
+"Baseline",2050,"MEXI","Mexico",10.85,10.627,0.046
+"Baseline",2050,"MIDE","Middle East",15.46,13.289,4.616
+"Baseline",2050,"MOLD","Republic of Moldova",7.85,3.233,0.246
+"Baseline",2050,"MONG","Mongolia",9.28,9.045,0.153
+"Baseline",2050,"MONT","Montenegro",7.39,4.542,0.075
+"Baseline",2050,"MYAN","Myanmar",10.23,7.6,0.344
+"Baseline",2050,"NAFR","Northern Africa (excl Egypt)",18.8,18.156,0.632
+"Baseline",2050,"NEPA","Nepal",55.68,42.983,2.573
+"Baseline",2050,"NETH","Netherlands",5.55,2.066,1.514
+"Baseline",2050,"NIGE","Nigeria",19.91,19.458,1.255
+"Baseline",2050,"NORW","Norway",2.26,1.006,0.267
+"Baseline",2050,"NZEL","New Zealand",1.2,1.142,0
+"Baseline",2050,"PAKI","Pakistan",59.88,54.452,8.126
+"Baseline",2050,"PARA","Paraguay",5.71,4.662,0.022
+"Baseline",2050,"PERU","Peru",14.5,14.212,0.231
+"Baseline",2050,"PHIL","Philippines",12.5,12.405,0.713
+"Baseline",2050,"POLA","Poland",5.02,2.588,4.549
+"Baseline",2050,"PORT","Portugal",4.47,2.158,0.061
+"Baseline",2050,"ROMA","Romania",5.99,2.894,2.418
+"Baseline",2050,"RSAF","Remaining Southern Africa",7.71,7.415,0.896
+"Baseline",2050,"RUSS","Russian Federation",7.38,5.577,6.185
+"Baseline",2050,"SAAR","Saudi Arabia",8.47,5.432,1.29
+"Baseline",2050,"SAFR","South Africa",7.76,7.082,0.247
+"Baseline",2050,"SERB","Serbia",8.07,4.933,2.905
+"Baseline",2050,"SING","Singapore",15.05,3.183,0.493
+"Baseline",2050,"SKRE","Slovakia",4.57,1.263,0.807
+"Baseline",2050,"SLOV","Slovenia",6.12,2.985,0.458
+"Baseline",2050,"SPAI","Spain",4.74,2.298,0.824
+"Baseline",2050,"SRIL","Sri Lanka",8.21,7.556,0.005
+"Baseline",2050,"SWED","Sweden",2.73,0.888,0.387
+"Baseline",2050,"SWIT","Switzerland",5.11,3.055,0.468
+"Baseline",2050,"TAIW","Taiwan",17.4,15.787,0.092
+"Baseline",2050,"TANZ","United Republic of Tanzania",9.57,9.147,0.52
+"Baseline",2050,"THAI","Thailand",11.94,10.519,3.194
+"Baseline",2050,"TURK","Turkey",12.32,9.253,5.438
+"Baseline",2050,"UKRA","Ukraine",7.6,4.604,7.324
+"Baseline",2050,"UNKI","United Kingdom",3.68,2.297,2.605
+"Baseline",2050,"URUG","Uruguay",4.67,4.144,0.216
+"Baseline",2050,"USAM","United States of America",4.43,4.121,1.415
+"Baseline",2050,"VENE","Venezuela (Bolivarian Republic of)",9.28,9.038,0.243
+"Baseline",2050,"VIET","Vietnam",23.87,21.423,3.605
+"Baseline",2050,"WAFR","Western Africa (excl Nigeria)",10.57,9.691,0.365
+"Decarb",2050,"AFGH","Afghanistan",7.57,7.428,0.291
+"Decarb",2050,"ALBA","Albania",3.5,1.214,0.139
+"Decarb",2050,"ARGE","Argentina",0.95,0.804,0.071
+"Decarb",2050,"ARME","Armenia",5.2,2.933,0.294
+"Decarb",2050,"AUST","Austria",2.39,0.818,0.456
+"Decarb",2050,"AUTR","Australia",0.71,0.621,0.016
+"Decarb",2050,"AZER","Azerbaijan",3.41,0.996,0.354
+"Decarb",2050,"BANG","Bangladesh",10.27,6.676,0.376
+"Decarb",2050,"BELA","Belarus",2.25,0.587,0.284
+"Decarb",2050,"BELG","Belgium",2.94,0.984,0.675
+"Decarb",2050,"BHUT","Bhutan",2.11,0.779,0.037
+"Decarb",2050,"BOHE","Bosnia and Herzegovina",2.93,1.13,0.329
+"Decarb",2050,"BOLV","Bolivia (Plurinational State of)",0.8,0.738,0.001
+"Decarb",2050,"BRAZ","Brazil",1.48,1.414,0.306
+"Decarb",2050,"BRUN","Brunei Darussalam",0.76,0.303,0.011
+"Decarb",2050,"BULG","Bulgaria",2.4,0.551,0.205
+"Decarb",2050,"CAMB","Cambodia",1.24,0.781,0.049
+"Decarb",2050,"CANA","Canada",1.95,1.46,0.076
+"Decarb",2050,"CARB","Caribbean",0.69,0.543,0.021
+"Decarb",2050,"CEAM","Central America",0.91,0.85,0.002
+"Decarb",2050,"CHIL","Chile",4.48,4.422,0.094
+"Decarb",2050,"CHIN","China",7.72,7.101,4.413
+"Decarb",2050,"COLO","Colombia",1.5,1.428,0.004
+"Decarb",2050,"CROA","Croatia",2.45,0.399,0.265
+"Decarb",2050,"CYPR","Cyprus",4.35,0.187,0
+"Decarb",2050,"CZRE","Czech Republic",2.31,0.789,0.655
+"Decarb",2050,"DENM","Denmark",1.84,0.554,0.182
+"Decarb",2050,"EAFR","Eastern Africa (excl Kenya, Tanzania)",0.94,0.771,0.036
+"Decarb",2050,"ECUA","Ecuador",0.8,0.691,0.001
+"Decarb",2050,"EGYP","Egypt",3.08,2.275,0.315
+"Decarb",2050,"ESTO","Estonia",1.77,0.396,0.019
+"Decarb",2050,"FINL","Finland",1.59,0.388,0.057
+"Decarb",2050,"FRAN","France",3.15,1.852,2.842
+"Decarb",2050,"GEOR","Georgia",3.59,2.01,0.187
+"Decarb",2050,"GERM","Germany",2.35,1.173,3.817
+"Decarb",2050,"GREE","Greece",4.54,1.617,0.19
+"Decarb",2050,"HUNG","Hungary",2.74,1.032,0.767
+"Decarb",2050,"ICEL","Iceland",2.61,1.733,0.022
+"Decarb",2050,"INDI","India",6.73,5.824,7.399
+"Decarb",2050,"INDO","Indonesia",6.64,6.437,0.524
+"Decarb",2050,"IRAN","Iran",3.76,3.573,0.403
+"Decarb",2050,"IREL","Ireland",1.47,0.428,0.082
+"Decarb",2050,"ISRA","Israel",3.55,2.833,0.126
+"Decarb",2050,"ITAL","Italy",4.48,2.078,1.311
+"Decarb",2050,"JAPA","Japan",2.5,1.857,0.01
+"Decarb",2050,"KENY","Kenya",2.08,2.003,0.052
+"Decarb",2050,"KORS","Republic of Korea",8.29,5.049,0.359
+"Decarb",2050,"KOSO","Kosovo",3.31,1.401,0.159
+"Decarb",2050,"LAOS","Laos",0.99,0.365,0.049
+"Decarb",2050,"LATV","Latvia",1.96,0.589,0.078
+"Decarb",2050,"LITH","Lithuania",1.82,0.375,0.084
+"Decarb",2050,"LUXE","Luxembourg",2.26,0.367,0.013
+"Decarb",2050,"MACE","TFYR Macedonia",3.03,1.281,0.164
+"Decarb",2050,"MALA","Malaysia",3.96,3.552,1.282
+"Decarb",2050,"MALT","Malta",6.9,0.419,0
+"Decarb",2050,"MEXI","Mexico",1.98,1.888,0.009
+"Decarb",2050,"MIDE","Middle East",1.97,1.488,0.753
+"Decarb",2050,"MOLD","Republic of Moldova",2.45,0.445,0.039
+"Decarb",2050,"MONG","Mongolia",1.46,1.406,0.036
+"Decarb",2050,"MONT","Montenegro",2.87,0.764,0.021
+"Decarb",2050,"MYAN","Myanmar",1.51,1.074,0.067
+"Decarb",2050,"NAFR","Northern Africa (excl Egypt)",1.6,1.043,0.077
+"Decarb",2050,"NEPA","Nepal",6.79,4.366,0.37
+"Decarb",2050,"NETH","Netherlands",2.99,1.018,0.65
+"Decarb",2050,"NIGE","Nigeria",1.49,1.378,0.148
+"Decarb",2050,"NORW","Norway",1.3,0.259,0.046
+"Decarb",2050,"NZEL","New Zealand",0.33,0.272,0
+"Decarb",2050,"PAKI","Pakistan",6.28,5.309,0.873
+"Decarb",2050,"PARA","Paraguay",0.8,0.588,0.003
+"Decarb",2050,"PERU","Peru",2.65,2.459,0.106
+"Decarb",2050,"PHIL","Philippines",1.79,1.698,0.118
+"Decarb",2050,"POLA","Poland",2.3,0.956,1.497
+"Decarb",2050,"PORT","Portugal",2.91,0.849,0.022
+"Decarb",2050,"ROMA","Romania",2.5,0.845,0.713
+"Decarb",2050,"RSAF","Remaining Southern Africa",0.84,0.725,0.132
+"Decarb",2050,"RUSS","Russian Federation",2.71,1.391,1.268
+"Decarb",2050,"SAAR","Saudi Arabia",1.03,0.404,0.171
+"Decarb",2050,"SAFR","South Africa",1.69,1.544,0.09
+"Decarb",2050,"SERB","Serbia",2.95,1.194,0.984
+"Decarb",2050,"SING","Singapore",2.38,0.659,0.125
+"Decarb",2050,"SKRE","Slovakia",2.22,0.532,0.3
+"Decarb",2050,"SLOV","Slovenia",2.86,0.924,0.141
+"Decarb",2050,"SPAI","Spain",3.53,1.225,0.375
+"Decarb",2050,"SRIL","Sri Lanka",1.17,1.006,0.001
+"Decarb",2050,"SWED","Sweden",1.92,0.645,0.177
+"Decarb",2050,"SWIT","Switzerland",2.67,1.391,0.205
+"Decarb",2050,"TAIW","Taiwan",5.44,4.463,0.027
+"Decarb",2050,"TANZ","United Republic of Tanzania",1.14,1.071,0.069
+"Decarb",2050,"THAI","Thailand",1.89,1.557,0.352
+"Decarb",2050,"TURK","Turkey",4.85,2.328,0.826
+"Decarb",2050,"UKRA","Ukraine",2.59,0.823,1.063
+"Decarb",2050,"UNKI","United Kingdom",2.15,1.195,1.201
+"Decarb",2050,"URUG","Uruguay",0.51,0.378,0.04
+"Decarb",2050,"USAM","United States of America",1.56,1.403,0.39
+"Decarb",2050,"VENE","Venezuela (Bolivarian Republic of)",1.03,0.927,0.035
+"Decarb",2050,"VIET","Vietnam",4.06,3.339,0.592
+"Decarb",2050,"WAFR","Western Africa (excl Nigeria)",1.37,1.206,0.057

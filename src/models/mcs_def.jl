@@ -59,6 +59,9 @@ function getsim(model::Model, samplesize::Int)
         SulphateForcing.d_sulphateforcingbase = TriangularDist(-0.8, -0.2, -0.4)
         SulphateForcing.ind_slopeSEforcing_indirect = TriangularDist(-0.8, 0, -0.4)
 
+        # GlobalTemperature
+        # Moved to conditional below
+
         # SeaLevelRise
         SeaLevelRise.s0_initialSL = TriangularDist(0.17, 0.21, 0.19)        # taken from PAGE-ICE v6.20 default
         SeaLevelRise.sltemp_SLtemprise = TriangularDist(0.7, 3., 1.5)       # median sensitivity to GMST changes
@@ -93,6 +96,10 @@ function getsim(model::Model, samplesize::Int)
         Discontinuity.wdis_gdplostdisc = TriangularDist(1, 5, 3)
         Discontinuity.ipow_incomeexponent = TriangularDist(-.3, 0, -.1)
         Discontinuity.distau_discontinuityexponent = TriangularDist(10, 30, 20)
+
+        # PM2.5 Emulator
+        rv(RV_pm25_draw) = DiscreteUniform(1, 1000)
+        PM25Pollution_pm25_draw = RV_pm25_draw
 
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
@@ -239,11 +246,8 @@ function getsim(model::Model, samplesize::Int)
         add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
     end
 
-    # GlobalTemperature.frt_warminghalflife = TriangularDist(10, 55, 20)        # from PAGE-ICE v6.2 documentation
-    # GlobalTemperature.tcr_transientresponse = TriangularDist(0.8, 2.7, 1.8)   # from PAGE-ICE v6.2 documentation
-    # GlobalTemperature.alb_emulator_rand = TriangularDist(-1., 1., 0.)
-    add_RV!(mcs, :frt_warminghalflife, TriangularDist(10, 55, 20))
-    add_RV!(mcs, :tcr_transientresponse, TriangularDist(0.8, 2.7, 1.8))
+    add_RV!(mcs, :frt_warminghalflife, TriangularDist(10, 55, 20))        # from PAGE-ICE v6.2 documentation
+    add_RV!(mcs, :tcr_transientresponse, TriangularDist(0.8, 2.7, 1.8))   # from PAGE-ICE v6.2 documentation
     add_RV!(mcs, :alb_emulator_rand, TriangularDist(-1., 1., 0.))
     if has_comp(model, :GlobalTemperature)
         add_transform!(mcs, :GlobalTemperature_frt_warminghalflife, :(=), :frt_warminghalflife)
