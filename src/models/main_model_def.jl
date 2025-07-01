@@ -464,7 +464,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true)
+                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])

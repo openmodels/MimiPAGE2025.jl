@@ -28,9 +28,9 @@ get.kts <- function(filename, mufunc=mean) {
     df <- read.csv(file.path("output", filename))
     names(df)[3] <- 'var'
     df %>% filter(country == 'KOR') %>% group_by(time) %>%
-        summarize(mu=mufunc(var),
-                  ci25=quantile(var, .25),
-                  ci75=quantile(var, .75))
+        summarize(mu=mufunc(var, na.rm=T),
+                  ci25=quantile(var, .25, na.rm=T),
+                  ci75=quantile(var, .75, na.rm=T))
 }
 
 plot.kts <- function(filename) {
@@ -198,9 +198,9 @@ df2$mu.frac <- df2$mu.wit / df2$mu.gdp
 polydata3 <- polydata2 %>% left_join(subset(df2, time == 2100), by=c('code'='country'))
 shp2 <- shp %>% left_join(polydata3[, c('PID', 'mu.frac')])
 ggplot(shp2, aes(X, Y, group=paste(PID, SID))) +
-    geom_polygon(aes(fill=mu.frac)) +
+    geom_polygon(aes(fill=pmax(-quantile(abs(df2$mu.frac), .9), pmin(quantile(abs(df2$mu.frac), .9), mu.frac)))) +
     theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + scale_y_continuous(NULL, expand=c(0, 0)) +
-    scale_fill_distiller("Damages (% Cons.)", type='div', palette="RdYlGn", limits=c(-1, 1)*max(abs(df2$mu.frac)), labels=scales::percent)
+    scale_fill_distiller("Damages (% Cons.)", type='div', palette="RdYlGn", limits=c(-1, 1)*quantile(abs(df2$mu.frac), .9), labels=scales::percent)
 ggsave("../../output/figures/d_cons_mkt.png", width=9.5, height=5)
 
 df <- get.allts("NonMarketDamages_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")

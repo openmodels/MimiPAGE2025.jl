@@ -37,6 +37,8 @@ include("../utils/interpol.jl")
     pop_population = Parameter(index=[time, country], unit="million person")
     pop0_initpopulation = Parameter(index=[country], unit="million person")
 
+    control_factor = Parameter(default=1.) # > 1 to increase control action
+
     # === Draw Selector ===
     pm25_draw = Parameter{Int}()  # 0 = use mean of draws, 1–1000 = use a specific draw
     scenario_suffix = Parameter{String}()
@@ -50,6 +52,7 @@ include("../utils/interpol.jl")
     baseline_co2 = Parameter(index=[time, country], unit="Mtonne/year")
     baseline_ch4 = Parameter(index=[time, country], unit="Mtonne/year")
     baseline_gdppc = Parameter(index=[time, country], unit="\$/person")
+    # baseline_costs = Parameter(index=[time, country], unit="million EUR")
     baseline_pm25_self = Parameter(index=[time, country])
     baseline_pm25_export = Parameter(index=[time, country])
 
@@ -63,16 +66,14 @@ include("../utils/interpol.jl")
     β_self_ch4         = Variable()
     β_self_co2xyear    = Variable()
     β_self_ch4xyear    = Variable()
-    β_self_gdppc       = Variable()
-    β_self_gdppc2      = Variable()
+    # β_self_costs       = Variable()
 
     # === Regression Coefficients (EXPORT) ===
     β_export_co2       = Variable()
     β_export_ch4       = Variable()
     β_export_co2xyear  = Variable()
     β_export_ch4xyear  = Variable()
-    β_export_gdppc     = Variable()
-    β_export_gdppc2    = Variable()
+    # β_export_costs     = Variable()
 
     # === Output Variables ===
     logpm_self   = Variable(index=[time, country], unit="log(μg/m^3)")  # PM2.5 from own emissions
@@ -86,33 +87,29 @@ include("../utils/interpol.jl")
         if p.pm25_draw == 0
             values = mean.(eachcol(pm25_self_params))
             v.β_self_co2      = values[1]
-            v.β_self_ch4      = values[2]
-            v.β_self_co2xyear = values[3]
-            v.β_self_ch4xyear = values[4]
-            v.β_self_gdppc    = values[5]
-            v.β_self_gdppc2   = values[6]
+            v.β_self_ch4      = 0.
+            v.β_self_co2xyear = values[2]
+            v.β_self_ch4xyear = 0.
+            # v.β_self_costs    = values[3]
 
             values2 = mean.(eachcol(pm25_export_params))
             v.β_export_co2      = values2[1]
-            v.β_export_ch4      = values2[2]
-            v.β_export_co2xyear = values2[3]
-            v.β_export_ch4xyear = values2[4]
-            v.β_export_gdppc    = values2[5]
-            v.β_export_gdppc2   = values2[6]
+            v.β_export_ch4      = 0.
+            v.β_export_co2xyear = values2[2]
+            v.β_export_ch4xyear = 0.
+            # v.β_export_costs    = values2[3]
         else
             v.β_self_co2      = pm25_self_params[p.pm25_draw, 1]
-            v.β_self_ch4      = pm25_self_params[p.pm25_draw, 2]
-            v.β_self_co2xyear = pm25_self_params[p.pm25_draw, 3]
-            v.β_self_ch4xyear = pm25_self_params[p.pm25_draw, 4]
-            v.β_self_gdppc    = pm25_self_params[p.pm25_draw, 5]
-            v.β_self_gdppc2   = pm25_self_params[p.pm25_draw, 6]
+            v.β_self_ch4      = 0.
+            v.β_self_co2xyear = pm25_self_params[p.pm25_draw, 2]
+            v.β_self_ch4xyear = 0.
+            # v.β_self_costs    = pm25_self_params[p.pm25_draw, 3]
 
             v.β_export_co2      = pm25_export_params[p.pm25_draw, 1]
-            v.β_export_ch4      = pm25_export_params[p.pm25_draw, 2]
-            v.β_export_co2xyear = pm25_export_params[p.pm25_draw, 3]
-            v.β_export_ch4xyear = pm25_export_params[p.pm25_draw, 4]
-            v.β_export_gdppc    = pm25_export_params[p.pm25_draw, 5]
-            v.β_export_gdppc2   = pm25_export_params[p.pm25_draw, 6]
+            v.β_export_ch4      = 0.
+            v.β_export_co2xyear = pm25_export_params[p.pm25_draw, 2]
+            v.β_export_ch4xyear = 0.
+            # v.β_export_costs    = pm25_export_params[p.pm25_draw, 3]
         end
     end
 
@@ -129,26 +126,27 @@ include("../utils/interpol.jl")
             loggdppc0 = log.(pp.gdp[tt, :] ./ pp.pop_population[tt, :]) - log.(pp.baseline_gdppc[tt, :]) - (log.(pp.gdp[TimestepIndex(1), :] ./ pp.pop_population[TimestepIndex(1), :]) - log.(pp.baseline_gdppc[TimestepIndex(1), :]))
             loggdppc02 = log.(pp.gdp[tt, :] ./ pp.pop_population[tt, :]).^2 - log.(pp.baseline_gdppc[tt, :]).^2 - (log.(pp.gdp[TimestepIndex(1), :] ./ pp.pop_population[TimestepIndex(1), :]).^2 - log.(pp.baseline_gdppc[TimestepIndex(1), :]).^2)
 
+            # logcost0 = pp.control_factor * (log.(pp.baseline_costs[tt, :]) - log.(pp.baseline_costs[TimestepIndex(1), :]))
+
             ekc_effect = pp.ekc_loggdppc_coeff * loggdppc0 + pp.ekc_loggdppc2_coeff * loggdppc02
 
             vv.logpm_self[tt, :] = vv.β_self_co2 * logco20 +
                 vv.β_self_ch4 * logch40 +
                 vv.β_self_co2xyear * logco20 * (pp.y_year[tt] - 2020) +
                 vv.β_self_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
-                # vv.β_self_gdppc * loggdppc0 +
-                # vv.β_self_gdppc2 * loggdppc02 .+
-                ekc_effect
-            # pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
+                # vv.β_self_costs * logcost0 +
+                ekc_effect .+
+                pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
 
             vv.logpm_export[tt, :] = vv.β_export_co2 * logco20 +
                 vv.β_export_ch4 * logch40 +
                 vv.β_export_co2xyear * logco20 * (pp.y_year[tt] - 2020) +
                 vv.β_export_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
-                # vv.β_export_gdppc * loggdppc0 +
-                # vv.β_export_gdppc2 * loggdppc02 .+
-                ekc_effect
-            # pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
+                # vv.β_export_costs * logcost0 +
+                ekc_effect .+
+                pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
 
+            # Fill in missing values
             mean_self = mean(filter(x -> !ismissing(x) && !isnan(x), vv.logpm_self[tt, :]))
             vv.logpm_self[tt, ismissing.(vv.logpm_self[tt, :])] .= mean_self
             vv.logpm_self[tt, isnan.(vv.logpm_self[tt, :])] .= mean_self
@@ -203,6 +201,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
     baseline_co2 = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
     baseline_ch4 = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
     baseline_gdppc = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
+    # baseline_costs = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
     baseline_pm25_self = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
     baseline_pm25_export = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
 
@@ -230,6 +229,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
         baseline_co2[tt, :] = baseline_page.EMIS_CO2_KT / 1000
         baseline_ch4[tt, :] = baseline_page.EMIS_CH4_KT / 1000
         baseline_gdppc[tt, :] = 1e9 * baseline_page.GDP_PPP ./ baseline_page.POP
+        # baseline_costs[tt, :] = baseline_page.AP_CONTROL_COSTS_MEUR2015
         baseline_pm25_self[tt, :] = baseline_page.PM25_SELF
         baseline_pm25_export[tt, :] = baseline_page.PM25_EXPORT
     end
@@ -238,6 +238,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
     pm25pollution[:baseline_co2] = baseline_co2
     pm25pollution[:baseline_ch4] = baseline_ch4
     pm25pollution[:baseline_gdppc] = baseline_gdppc
+    # pm25pollution[:baseline_costs] = baseline_costs
     pm25pollution[:baseline_pm25_self] = baseline_pm25_self
     pm25pollution[:baseline_pm25_export] = baseline_pm25_export
 
@@ -247,7 +248,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
     end
 
     if scenario == :Decarb
-        pm25pollution[:scenario_suffix] = ""
+        pm25pollution[:scenario_suffix] = "_decarb"
     else
         pm25pollution[:scenario_suffix] = "_baseline"
     end
