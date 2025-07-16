@@ -2,11 +2,14 @@ import Mimi.add_save!
 include("../../src/main_model.jl")
 include("../../src/mcs.jl")
 
-model = getpage()
-run(model)
+model = getpage();
+run(model);
 
-df = getdataframe(model, :PM25Pollution, :pm_total)
+df = getdataframe(model, :PM25Pollution, :pm_total);
 df[df.country .== "AUS", :]
+
+df2 = getdataframe(model, :PM25Pollution, :baseline_pm25_self);
+df2[df2.country .== "AUS", :]
 
 mcnum = 100
 

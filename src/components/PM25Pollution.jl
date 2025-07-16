@@ -136,7 +136,8 @@ include("../utils/interpol.jl")
                 vv.β_self_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
                 # vv.β_self_costs * logcost0 +
                 ekc_effect .+
-                pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
+                # pp.yearfe_self[tt] .+ <-- don't include: already in baseline
+                pp.trendfe_self .* (pp.y_year[tt] - pp.baseline_year[tt])
 
             vv.logpm_export[tt, :] = vv.β_export_co2 * logco20 +
                 vv.β_export_ch4 * logch40 +
@@ -144,7 +145,8 @@ include("../utils/interpol.jl")
                 vv.β_export_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
                 # vv.β_export_costs * logcost0 +
                 ekc_effect .+
-                pp.yearfe_self[tt] .+ pp.trendfe_self .* (min(pp.y_year[tt], 2050) - 2020)
+                # pp.yearfe_export[tt] .+ <-- don't include: already in baseline
+                pp.trendfe_export .* (pp.y_year[tt] - pp.baseline_year[tt])
 
             # Fill in missing values
             mean_self = mean(filter(x -> !ismissing(x) && !isnan(x), vv.logpm_self[tt, :]))
@@ -172,7 +174,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
     lininterp_self = LinearInterpolation(parse.(Int64, pm25_self_fixeds_regional.idx[pm25_self_fixeds_regional.fe .== "factor(IDYEARS)"]),
                                          pm25_self_fixeds_regional.effect[pm25_self_fixeds_regional.fe .== "factor(IDYEARS)"], extrapolation_bc=Flat())
     pm25pollution[:yearfe_self] = lininterp_self(dim_keys(model, :time))
-    pm25pollution[:trendfe_self] = readcountrydata_i_const(model, pm25_self_fixeds, :ISO3, :effect)
+    pm25pollution[:trendfe_self] = readcountrydata_i_const(model, pm25_self_fixeds, :ISO3, :effect, vv -> mean(skipmissing(vv)))
 
     pm25_export_fixeds_regional = CSV.read(pagedata("pollution/fixedeffects_EXPORT_Contribution.csv"), DataFrame)
     pm25_export_fixeds = leftjoin(mapping, pm25_export_fixeds_regional, on=:REGION_4LETTER => :idx)
@@ -180,7 +182,7 @@ function add_pm25pollution(model::Model, useekc::Bool, scenario::Symbol)
     lininterp_export = LinearInterpolation(parse.(Int64, pm25_export_fixeds_regional.idx[pm25_export_fixeds_regional.fe .== "factor(IDYEARS)"]),
                                          pm25_export_fixeds_regional.effect[pm25_export_fixeds_regional.fe .== "factor(IDYEARS)"], extrapolation_bc=Flat())
     pm25pollution[:yearfe_export] = lininterp_export(dim_keys(model, :time))
-    pm25pollution[:trendfe_export] = readcountrydata_i_const(model, pm25_export_fixeds, :ISO3, :effect)
+    pm25pollution[:trendfe_export] = readcountrydata_i_const(model, pm25_export_fixeds, :ISO3, :effect, vv -> mean(skipmissing(vv)))
 
     export_pattern = CSV.read(pagedata("pollution/export_pattern.csv"), DataFrame)
 

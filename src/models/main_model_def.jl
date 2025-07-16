@@ -191,6 +191,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     # PM2.5 Pollution Component
     pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
+    # PM2.5 Market Damages Component
+    pmmarket = add_comp!(m, PMMarketDamages)
+
     # Total costs component
     add_comp!(m, TotalCosts)
 
@@ -206,6 +209,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
             connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_static, :PreGlobalTemperature_static => :rt_g_globaltemperature)
             connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_seaice, :PreGlobalTemperature_seaice => :rt_g_globaltemperature)
+        end
+
+        if use_permafrost
+            glotemp[:perm_tot_e_co2] = permafrost[:perm_tot_e_co2]
+            glotemp[:perm_tot_ce_ch4] = permafrost[:perm_tot_ce_ch4]
         end
 
         glotemp[:e_globalCO2emissions] = co2emit[:e_globalCO2emissions]
@@ -426,6 +434,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25pollution[:e_countryCH4emissions] = ch4emit[:e_regionalCH4emissions]
     pm25pollution[:gdp] = finalgdp_ref
     pm25pollution[:pop_population] = population[:pop_population]
+
+    # PM Market Damages
+    pmmarket[:pm_total] = pm25pollution[:pm_total]
 
     connect_param!(m, :CountryLevelNPV => :pop_population, :Population => :pop_population)
     connect_param!(m, :CountryLevelNPV => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
