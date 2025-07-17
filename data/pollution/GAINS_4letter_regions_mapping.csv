@@ -1,0 +1,180 @@
+﻿REGION_4LETTER,REGION_4LETTER_LABEL,ISO3,COUNTRY
+AFGH,Afghanistan,AFG,Afghanistan
+ALBA,Albania,ALB,Albania
+ARGE,Argentina,ARG,Argentina
+ARME,Armenia,ARM,Armenia
+AUST,Austria,AUT,Austria
+AUTR,Australia,AUS,Australia
+AZER,Azerbaijan,AZE,Azerbaijan
+BANG,Bangladesh,BGD,Bangladesh
+BELA,Belarus,BLR,Belarus
+BELG,Belgium,BEL,Belgium
+BHUT,Bhutan,BTN,Bhutan
+BOHE,Bosnia and Herzegovina,BIH,Bosnia and Herzegovina
+BOLV,Bolivia (Plurinational State of),BOL,Bolivia (Plurinational State of)
+BRAZ,Brazil,BRA,Brazil
+BRUN,Brunei Darussalam,BRN,Brunei Darussalam
+BULG,Bulgaria,BGR,Bulgaria
+CAMB,Cambodia,KHM,Cambodia
+CANA,Canada,CAN,Canada
+CARB,Caribbean,ABW,Aruba
+CARB,Caribbean,BHS,Bahamas
+CARB,Caribbean,BRB,Barbados
+CARB,Caribbean,CUB,Cuba
+CARB,Caribbean,DOM,Dominican Republic
+CARB,Caribbean,GLP,Guadeloupe
+CARB,Caribbean,GRD,Grenada
+CARB,Caribbean,GUF,French Guiana
+CARB,Caribbean,GUY,Guyana
+CARB,Caribbean,HTI,Haiti
+CARB,Caribbean,JAM,Jamaica
+CARB,Caribbean,LCA,Saint Lucia
+CARB,Caribbean,MTQ,Martinique
+CARB,Caribbean,PRI,Puerto Rico
+CARB,Caribbean,SUR,Suriname
+CARB,Caribbean,TTO,Trinidad and Tobago
+CARB,Caribbean,VCT,Saint Vincent and the Grenadines
+CARB,Caribbean,VIR,United States Virgin Islands
+CEAM,Central America,BLZ,Belize
+CEAM,Central America,CRI,Costa Rica
+CEAM,Central America,GTM,Guatemala
+CEAM,Central America,HND,Honduras
+CEAM,Central America,NIC,Nicaragua
+CEAM,Central America,PAN,Panama
+CEAM,Central America,SLV,El Salvador
+CHIL,Chile,CHL,Chile
+CHIN,China,CHN,China
+COLO,Colombia,COL,Colombia
+CROA,Croatia,HRV,Croatia
+CYPR,Cyprus,CYP,Cyprus
+CZRE,Czech Republic,CZE,Czech Republic
+DENM,Denmark,DNK,Denmark
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",BDI,Burundi
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",COM,Comoros
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",DJI,Djibouti
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",ERI,Eritrea
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",ETH,Ethiopia
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",MDG,Madagascar
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",MUS,Mauritius
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",RWA,Rwanda
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",SDN,Sudan
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",SOM,Somalia
+EAFR,"Eastern Africa (excl Kenya, Tanzania)",UGA,Uganda
+ECUA,Ecuador,ECU,Ecuador
+EGYP,Egypt,EGY,Egypt
+ESTO,Estonia,EST,Estonia
+FINL,Finland,FIN,Finland
+FRAN,France,FRA,France
+GEOR,Georgia,GEO,Georgia
+GERM,Germany,DEU,Germany
+GREE,Greece,GRC,Greece
+HUNG,Hungary,HUN,Hungary
+ICEL,Iceland,ISL,Iceland
+INDI,India,IND,India
+INDO,Indonesia,IDN,Indonesia
+IRAN,Iran,IRN,Iran
+IREL,Ireland,IRL,Ireland
+ISRA,Israel,ISR,Israel
+ITAL,Italy,ITA,Italy
+JAPA,Japan,JPN,Japan
+KAZA,Kazakhstan,KAZ,Kazakhstan
+KENY,Kenya,KEN,Kenya
+KORN,North Korea,PRK,North Korea
+KORS,Republic of Korea,KOR,Republic of Korea
+KOSO,Kosovo,XKX,Kosovo
+KYRG,Kyrgyzstan,KGZ,Kyrgyzstan
+LAOS,Laos,LAO,Laos
+LATV,Latvia,LVA,Latvia
+LITH,Lithuania,LTU,Lithuania
+LUXE,Luxembourg,LUX,Luxembourg
+MACE,TFYR Macedonia,MKD,TFYR Macedonia
+MALA,Malaysia,MYS,Malaysia
+MALT,Malta,MLT,Malta
+MEXI,Mexico,MEX,Mexico
+MIDE,Middle East,ARE,United Arab Emirates
+MIDE,Middle East,BHR,Bahrain
+MIDE,Middle East,IRQ,Iraq
+MIDE,Middle East,JOR,Jordan
+MIDE,Middle East,KWT,Kuwait
+MIDE,Middle East,LBN,Lebanon
+MIDE,Middle East,OMN,Oman
+MIDE,Middle East,PSE,Occupied Palestinian Territory
+MIDE,Middle East,QAT,Qatar
+MIDE,Middle East,SYR,Syrian Arab Republic
+MIDE,Middle East,YEM,Yemen
+MOLD,Republic of Moldova,MDA,Republic of Moldova
+MONG,Mongolia,MNG,Mongolia
+MONT,Montenegro,MNE,Montenegro
+MYAN,Myanmar,MMR,Myanmar
+NAFR,Northern Africa (excl Egypt),DZA,Algeria
+NAFR,Northern Africa (excl Egypt),ESH,Western Sahara
+NAFR,Northern Africa (excl Egypt),LBY,Libyan Arab Jamahiriya
+NAFR,Northern Africa (excl Egypt),MAR,Morocco
+NAFR,Northern Africa (excl Egypt),TUN,Tunisia
+NEPA,Nepal,NPL,Nepal
+NETH,Netherlands,NLD,Netherlands
+NIGE,Nigeria,NGA,Nigeria
+NORW,Norway,NOR,Norway
+NZEL,New Zealand,NZL,New Zealand
+PAKI,Pakistan,PAK,Pakistan
+PARA,Paraguay,PRY,Paraguay
+PERU,Peru,PER,Peru
+PHIL,Philippines,PHL,Philippines
+POLA,Poland,POL,Poland
+PORT,Portugal,PRT,Portugal
+ROMA,Romania,ROU,Romania
+RSAF,Remaining Southern Africa,AGO,Angola
+RSAF,Remaining Southern Africa,BWA,Botswana
+RSAF,Remaining Southern Africa,LSO,Lesotho
+RSAF,Remaining Southern Africa,MOZ,Mozambique
+RSAF,Remaining Southern Africa,MWI,Malawi
+RSAF,Remaining Southern Africa,NAM,Namibia
+RSAF,Remaining Southern Africa,SWZ,Swaziland
+RSAF,Remaining Southern Africa,ZMB,Zambia
+RSAF,Remaining Southern Africa,ZWE,Zimbabwe
+RUSS,Russian Federation,RUS,Russian Federation
+SAAR,Saudi Arabia,SAU,Saudi Arabia
+SAFR,South Africa,ZAF,South Africa
+SERB,Serbia,SRB,Serbia
+SING,Singapore,SGP,Singapore
+SKRE,Slovakia,SVK,Slovakia
+SLOV,Slovenia,SVN,Slovenia
+SPAI,Spain,ESP,Spain
+SRIL,Sri Lanka,LKA,Sri Lanka
+SWED,Sweden,SWE,Sweden
+SWIT,Switzerland,CHE,Switzerland
+TAIW,Taiwan,TWN,Taiwan
+TAJI,Tajikistan,TJK,Tajikistan
+TANZ,United Republic of Tanzania,TZA,United Republic of Tanzania
+THAI,Thailand,THA,Thailand
+TKME,Turkmenistan,TKM,Turkmenistan
+TURK,Turkey,TUR,Turkey
+UKRA,Ukraine,UKR,Ukraine
+UNKI,United Kingdom,GBR,United Kingdom
+URUG,Uruguay,URY,Uruguay
+USAM,United States of America,USA,United States of America
+UZBE,Uzbekistan,UZB,Uzbekistan
+VENE,Venezuela (Bolivarian Republic of),VEN,Venezuela (Bolivarian Republic of)
+VIET,Vietnam,VNM,Vietnam
+WAFR,Western Africa (excl Nigeria),BEN,Benin
+WAFR,Western Africa (excl Nigeria),BFA,Burkina Faso
+WAFR,Western Africa (excl Nigeria),CAF,Central African Republic
+WAFR,Western Africa (excl Nigeria),CIV,Cote d'Ivoire
+WAFR,Western Africa (excl Nigeria),CMR,Cameroon
+WAFR,Western Africa (excl Nigeria),COD,Democratic Republic of the Congo
+WAFR,Western Africa (excl Nigeria),COG,Congo
+WAFR,Western Africa (excl Nigeria),CPV,Cape Verde
+WAFR,Western Africa (excl Nigeria),GAB,Gabon
+WAFR,Western Africa (excl Nigeria),GHA,Ghana
+WAFR,Western Africa (excl Nigeria),GIN,Guinea
+WAFR,Western Africa (excl Nigeria),GMB,Gambia
+WAFR,Western Africa (excl Nigeria),GNB,Guinea-Bissau
+WAFR,Western Africa (excl Nigeria),GNQ,Equatorial Guinea
+WAFR,Western Africa (excl Nigeria),LBR,Liberia
+WAFR,Western Africa (excl Nigeria),MLI,Mali
+WAFR,Western Africa (excl Nigeria),MRT,Mauritania
+WAFR,Western Africa (excl Nigeria),NER,Niger
+WAFR,Western Africa (excl Nigeria),SEN,Senegal
+WAFR,Western Africa (excl Nigeria),SLE,Sierra Leone
+WAFR,Western Africa (excl Nigeria),TCD,Chad
+WAFR,Western Africa (excl Nigeria),TGO,Togo

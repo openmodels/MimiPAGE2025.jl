@@ -1,6 +1,6 @@
-import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp
+import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp, Mimi.add_save!
 
-function getsim(model::Model)
+function getsim(model::Model, samplesize::Int)
     mcs = @defsim begin
 
         ## NOTE: some assignment to global variables can probably be avoided now
@@ -60,9 +60,7 @@ function getsim(model::Model)
         SulphateForcing.ind_slopeSEforcing_indirect = TriangularDist(-0.8, 0, -0.4)
 
         # GlobalTemperature
-        GlobalTemperature.frt_warminghalflife = TriangularDist(10, 55, 20)        # from PAGE-ICE v6.2 documentation
-        GlobalTemperature.tcr_transientresponse = TriangularDist(0.8, 2.7, 1.8)   # from PAGE-ICE v6.2 documentation
-        GlobalTemperature.alb_emulator_rand = TriangularDist(-1., 1., 0.)
+        # Moved to conditional below
 
         # SeaLevelRise
         SeaLevelRise.s0_initialSL = TriangularDist(0.17, 0.21, 0.19)        # taken from PAGE-ICE v6.20 default
@@ -98,6 +96,10 @@ function getsim(model::Model)
         Discontinuity.wdis_gdplostdisc = TriangularDist(1, 5, 3)
         Discontinuity.ipow_incomeexponent = TriangularDist(-.3, 0, -.1)
         Discontinuity.distau_discontinuityexponent = TriangularDist(10, 30, 20)
+
+        # PM2.5 Emulator
+        rv(RV_pm25_draw) = DiscreteUniform(1, 1000)
+        PM25Pollution_pm25_draw = RV_pm25_draw
 
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
@@ -226,7 +228,6 @@ function getsim(model::Model)
              EquityWeighting.act_percap_adaptationcosts, # without equity
              CO2Cycle.c_CO2concentration,
              TotalForcing.ft_totalforcing,
-             GlobalTemperature.rt_g_globaltemperature,
              GDP.cons_percap_consumption,
              Population.pop_population,
              SeaLevelRise.s_sealevel,
@@ -243,6 +244,24 @@ function getsim(model::Model)
         add_transform!(mcs, :RFFSPScenario_rffsp_draw, :(=), :rffsp_draw)
     else
         add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
+    end
+
+    add_RV!(mcs, :frt_warminghalflife, TriangularDist(10, 55, 20))        # from PAGE-ICE v6.2 documentation
+    add_RV!(mcs, :tcr_transientresponse, TriangularDist(0.8, 2.7, 1.8))   # from PAGE-ICE v6.2 documentation
+    add_RV!(mcs, :alb_emulator_rand, TriangularDist(-1., 1., 0.))
+    if has_comp(model, :GlobalTemperature)
+        add_transform!(mcs, :GlobalTemperature_frt_warminghalflife, :(=), :frt_warminghalflife)
+        add_transform!(mcs, :GlobalTemperature_tcr_transientresponse, :(=), :tcr_transientresponse)
+        add_transform!(mcs, :GlobalTemperature_alb_emulator_rand, :(=), :alb_emulator_rand)
+        add_save!(mcs, (:GlobalTemperature, :rt_g_globaltemperature))
+    end
+
+    if has_comp(model, :FaIRGrounds)
+        add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
+        add_transform!(mcs, :FaIRGrounds_fair_draw, :(=), :fair_draw)
+        add_save!(mcs, (:FaIRGrounds, :rt_g_globaltemperature))
+    else
+        add_RV!(mcs, :fair_draw, DiscreteUniform(1, samplesize))
     end
 
     if has_comp(model, :RegionTemperature)
@@ -270,6 +289,13 @@ function getsim(model::Model)
     #     add_RV!(mcs, rv_name2, Uniform(0,1))
     #     add_transform!(mcs, :AbatementCostsCO2, :baselineco2_uniforms, :(=), rv_name2, [country])
     # end
+
+    if has_comp(model, :FaIRGrounds)
+        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(samplesize; end_year=maximum(dim_keys(model, :time)),
+                                                            delete_downloaded_data=false)
+        disconnect_param!(model, :FaIRGrounds, :prepare_instance)
+        update_param!(model, :FaIRGrounds, :prepare_instance, prepare_instance)
+    end
 
     return mcs
 end
@@ -317,7 +343,6 @@ function reformat_RV_outputs(samplesize::Int; output_path::String=joinpath(@__DI
     df
 end
 
-
 function do_monte_carlo_runs(samplesize::Int, scenario::String="RCP4.5 & SSP2", output_path::String=joinpath(@__DIR__, "../output"))
     # get a model
     m = getpage(scenario)
@@ -328,7 +353,7 @@ end
 
 function do_monte_carlo_runs(samplesize::Int, m::Model, output_path::String=joinpath(@__DIR__, "../output"))
     # get simulation
-    mcs = getsim(m)
+    mcs = getsim(m, samplesize)
 
     # Run
     res = run(mcs, m, samplesize; trials_output_filename=joinpath(output_path, "trialdata.csv"), results_output_dir=output_path)

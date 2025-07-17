@@ -131,7 +131,7 @@ function addabatementcostparameters(model::Model, class::Symbol, policy::String=
         setdistinctparameter(model, componentname, :qmaxminusq0propinit_MaxCutbackCostatPositiveCostinBaseYear, 51.66666666666666664)
         setdistinctparameter(model, componentname, :cmaxinit_MaximumCutbackCostinFocusRegioninBaseYear, 7283.333333333333)
         setdistinctparameter(model, componentname, :ies_InitialExperienceStockofCutbacks, 2000.)
-        setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineCH4emissions.csv"))
+        ## :e0_baselineemissions set in model
         setdistinctparameter(model, componentname, :bau_businessasusualemissions, readpagedata(model, "data/bau_ch4emissions.csv"))
     elseif class == :N2O
         setdistinctparameter(model, componentname, :emit_UncertaintyinBAUEmissFactorinFocusRegioninFinalYear, -7.0)

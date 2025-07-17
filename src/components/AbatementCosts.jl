@@ -66,7 +66,7 @@ function addabatementcosts(model::Model, class::Symbol)
     if class == :CO2
         setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineCO2emissions.csv"))
     elseif class == :CH4
-        setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineCH4emissions.csv"))
+        ## :e0_baselineemissions set in model
     elseif class == :N2O
         setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineN2Oemissions.csv"))
     elseif class == :Lin
