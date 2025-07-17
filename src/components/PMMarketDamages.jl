@@ -23,7 +23,7 @@
             value_lin = pp.pm2lngdp * (pm_total_clip - lag_pm_total_clip)
             value_log = pp.pm2lngdp * (log.(pm_total_clip) - log.(lag_pm_total_clip))
             for cc in dd.country
-                if value_lin > 0
+                if value_lin[cc] > 0
                     vv.dlngdp[tt, cc] = min(value_lin[cc], value_log[cc])
                 else
                     vv.dlngdp[tt, cc] = max(value_lin[cc], value_log[cc])
