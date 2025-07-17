@@ -1,8 +1,4 @@
-function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
-                   config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
-                   config_discontinuity::String="default",
-                   config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="full", use_trade::Bool=true)
+function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false)
     # add all the components
     scenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -22,61 +18,22 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     # Socio-Economics
     population = addpopulation(m)
-    macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
     gdp = addgdp(m)
 
     gdp[:pop0_initpopulation_region] = population[:pop0_initpopulation_region]
-    gdp[:save_savingsrate] = macroparams[:save_savingsrate]
 
-    if config_capital == "full"
-        capital = addcapital(m)
-        capital[:save_savingsrate] = macroparams[:save_savingsrate]
-        finalgdp_ref = capital[:gdp_capital]
-        finalgdp_pair = :Capital => :gdp_capital
-        finalgdp_region_pair = :Capital => :gdp_capital_region
-        finalcons_pair = :Capital => :cons_percap_capital_consumption
-    else
-        finalgdp_ref = gdp[:gdp]
-        finalgdp_pair = :GDP => :gdp
-        finalgdp_region_pair = :GDP => :gdp_region
-        finalcons_pair = :GDP => :cons_percap_consumption
-    end
+    abateco2 = addabatementcostsco2(m)
 
-    if config_abatement == "national"
-        abateco2 = addabatementcostsco2(m)
-        abateco2[:e0_baselineCO2emissions_country] = carbonpriceinfer[:e0_baselineCO2emissions_country]
-        abateco2[:carbonprice] = carbonpriceinfer[:carbonprice]
-        abateco2[:gdp] = finalgdp_ref
-    end
+    abateco2[:e0_baselineCO2emissions_country] = carbonpriceinfer[:e0_baselineCO2emissions_country]
 
-    if config_downscaling == "mcpr"
-        glotemp = addglobaltemperature(m, use_seaice)
-        regtemp = addregiontemperature(m)
-
-        regtemp_comp = :RegionTemperature
-        glotemp_comp = :GlobalTemperature
-        regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
-    elseif config_downscaling == "pageice"
-        climtemp = addclimatetemperature_pageice(m, use_seaice)
-        glotemp = climtemp
-        regtemp = climtemp
-        regtemp_comp = :GlobalTemperature
-        glotemp_comp = :GlobalTemperature
-    else
-        throw(ArgumentError("Unknown downscaling configuration: $config_downscaling"))
-    end
+    glotemp = addglobaltemperature(m, use_seaice)
+    regtemp = addregiontemperature(m)
     if use_permafrost
         permafrost_sibcasa = add_comp!(m, PermafrostSiBCASA)
         permafrost_jules = add_comp!(m, PermafrostJULES)
         permafrost = add_comp!(m, PermafrostTotal)
     end
-    if config_abatement == "national"
-        co2emit = add_comp!(m, co2emissions)
-    elseif config_abatement == "pageice"
-        co2emit = add_comp!(m, co2emissions_regional, :co2emissions)
-    else
-        throw(ArgumentError("Unknown abatement configuration: $config_abatement"))
-    end
+    co2emit = add_comp!(m, co2emissions)
     co2cycle = addco2cycle(m, use_permafrost)
     add_comp!(m, co2forcing)
     ch4emit = add_comp!(m, ch4emissions)
@@ -93,14 +50,6 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     add_comp!(m, SeaLevelRise)
 
     # Abatement Costs
-    allabatement_comps = [
-        (:AbatementCostParametersCH4, :AbatementCostsCH4, :er_CH4emissionsgrowth),
-        (:AbatementCostParametersN2O, :AbatementCostsN2O, :er_N2Oemissionsgrowth),
-        (:AbatementCostParametersLin, :AbatementCostsLin, :er_LGemissionsgrowth)]
-    if config_abatement == "pageice"
-        addabatementcostparameters(m, :CO2)
-        push!(allabatement_comps, (:AbatementCostParametersCO2, :AbatementCostsCO2, :er_CO2emissionsgrowth))
-    end
     addabatementcostparameters(m, :CH4)
     addabatementcostparameters(m, :N2O)
     addabatementcostparameters(m, :Lin)
@@ -117,82 +66,39 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     set_param!(m, :automult_autonomoustechchange, .65)
 
-    if config_abatement == "pageice"
-        addabatementcosts(m, :CO2)
-    end
     addabatementcosts(m, :CH4)
     addabatementcosts(m, :N2O)
     addabatementcosts(m, :Lin)
     addtotalabatementcosts(m)
 
     # Adaptation Costs
-    if config_slrdmg in ["none", "national"]
-        adaptationcosts_sealevel = addadaptationcosts_sealevel(m; config_slrdmg)
-    elseif config_slrdmg == "pageice"
-        adaptationcosts_sealevel = addadaptationcosts_sealevel_regional(m)
-    end
-    adaptationcosts_economic = addadaptationcosts_economic(m; config_marketdmg)
-    adaptationcosts_noneconomic = addadaptationcosts_noneconomic(m; config_nonmarketdmg)
+    adaptationcosts_sealevel = addadaptationcosts_sealevel(m)
+    adaptationcosts_economic = addadaptationcosts_economic(m)
+    adaptationcosts_noneconomic = addadaptationcosts_noneconomic(m)
 
     totaladaptcost = addtotaladaptationcosts(m)
 
     # Impacts
-    if config_slrdmg in ["none", "national"]
-        slrdamages = addslrdamages(m, config_slrdmg)
-    elseif config_slrdmg == "pageice"
-        slrdamages = addslrdamages_regional(m)
-    else
-        throw(ArgumentError("Unknown SLR damages configuration: $config_slrdmg"))
-    end
-    if config_marketdmg in ["none", "nooffset", "constoffset", "adaptive"]
-        marketdamagesburke = addmarketdamagesburke(m, config_marketdmg)
-    elseif config_marketdmg == "pageice"
-        marketdamagesburke = addmarketdamagesburke_regional(m)
-    else
-        throw(ArgumentError("Unknown Market damages configuration: $config_marketdmg"))
-    end
-    if use_trade
-        trade = addtrade(m)
-    end
-    if config_nonmarketdmg in ["none", "pinational", "national"]
-        nonmarketdamages = addnonmarketdamages(m; config_nonmarketdmg)
-    elseif config_nonmarketdmg == "pageice"
-        nonmarketdamages = addnonmarketdamages_regional(m)
-    else
-        throw(ArgumentError("Unknown Non-market damages configuration: $config_nonmarketdmg"))
-    end
-    discontinuity = adddiscontinuity(m; config_discontinuity)
+    slrdamages = addslrdamages(m)
+    marketdamagesburke = addmarketdamagesburke(m)
+    nonmarketdamages = addnonmarketdamages(m)
+    discontinuity = adddiscontinuity(m)
 
-    # Add VSL Component
-    vsl = addVSL(m, :epa)
-
-    # Add Cromar Mortality Component
-    cromarmortality = addcromarmortality(m)
-
-    # Add MarketDamageAQ_CropLoss (Country version)
-    marketdamageaq_croplosscomp = addMarketDamageAQ_CropLoss(m)
-
-    # Equity weighting and Total Costs
-    countrylevelnpv = addcountrylevelnpv(m, use_subnational)
-    equityweighting = addequityweighting(m, use_subnational)
-
-    # connect parameters together
-    connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
-
-    # Add MarketDamageAQ_LostWorkHours (Country version)
-    marketdamageaq_lostworkhours = addMarketDamageAQ_LostWorkHours(m)
-
-    # Add MarketDamageAQ_AsthmaERVisits (Country version)
-    marketdamageaq_asthmaervisitscomp = addMarketDamageAQ_AsthmaERVisits(m)
-
-    # Add MarketDamageAQ_RespiratoryAdmissions (Country version)
-    marketdamageaq_respiratoryadmissionscomp = addMarketDamageAQ_RespiratoryAdmissions(m)
-
+    # Market damages from methane
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_AsthmaERVisits, "data/MarketDamageAQ/Methane_AsthmaERVisits.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_CropLoss, "data/MarketDamageAQ/Methane_CropLoss.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_LostWorkHours, "data/MarketDamageAQ/Methane_LostWorkHours.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_RespiratoryAdmissions, "data/MarketDamageAQ/Methane_RespiratoryAdmissions.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
 
     add_comp!(m, TotalCosts)
     countrylevelnpv = addcountrylevelnpv(m)
     equityweighting = addequityweighting(m)
 
+    #continue
     connect_param!(m, :GlobalTemperature => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
     regtemp[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
 
@@ -209,15 +115,14 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
 
     carbonpriceinfer[:er_CO2emissionsgrowth] = socioscenario[:er_CO2emissionsgrowth]
 
-    if config_abatement == "national"
-        co2emit[:baselineemit] = abateco2[:baselineemit]
-        co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
-    elseif config_abatement == "pageice"
-        co2emit[:er_CO2emissionsgrowth] = scenario[:er_CO2emissionsgrowth]
-    end
+    abateco2[:carbonprice] = carbonpriceinfer[:carbonprice]
+    abateco2[:gdp] = gdp[:gdp]
+
+    co2emit[:baselineemit] = abateco2[:baselineemit]
+    co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
 
     connect_param!(m, :CO2Cycle => :e_globalCO2emissions, :co2emissions => :e_globalCO2emissions)
-    connect_param!(m, :CO2Cycle => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :CO2Cycle => :rt_g_globaltemperature, :GlobalTemperature => :rt_g_globaltemperature)
     if use_permafrost
         co2cycle[:permte_permafrostemissions] = permafrost[:perm_tot_e_co2]
     end
@@ -227,8 +132,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     ch4emit[:er_CH4emissionsgrowth] = scenario[:er_CH4emissionsgrowth]
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
-    connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
-    connect_param!(m, :CH4Cycle => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
+    connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, :RegionTemperature => :rtl_g0_baselandtemp)
+    connect_param!(m, :CH4Cycle => :rtl_g_landtemperature, :RegionTemperature => :rtl_g_landtemperature)
     if use_permafrost
         ch4cycle[:permtce_permafrostemissions] = permafrost[:perm_tot_ce_ch4]
     end
@@ -239,8 +144,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     n2oemit[:er_N2Oemissionsgrowth] = scenario[:er_N2Oemissionsgrowth]
 
     connect_param!(m, :n2ocycle => :e_globalN2Oemissions, :n2oemissions => :e_globalN2Oemissions)
-    connect_param!(m, :n2ocycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
-    connect_param!(m, :n2ocycle => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
+    connect_param!(m, :n2ocycle => :rtl_g0_baselandtemp, :RegionTemperature => :rtl_g0_baselandtemp)
+    connect_param!(m, :n2ocycle => :rtl_g_landtemperature, :RegionTemperature => :rtl_g_landtemperature)
 
     connect_param!(m, :n2oforcing => :c_CH4concentration, :CH4Cycle => :c_CH4concentration)
     connect_param!(m, :n2oforcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
@@ -248,8 +153,8 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     lgemit[:er_LGemissionsgrowth] = scenario[:er_LGemissionsgrowth]
 
     connect_param!(m, :LGcycle => :e_globalLGemissions, :LGemissions => :e_globalLGemissions)
-    connect_param!(m, :LGcycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
-    connect_param!(m, :LGcycle => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
+    connect_param!(m, :LGcycle => :rtl_g0_baselandtemp, :RegionTemperature => :rtl_g0_baselandtemp)
+    connect_param!(m, :LGcycle => :rtl_g_landtemperature, :RegionTemperature => :rtl_g_landtemperature)
 
     connect_param!(m, :LGforcing => :c_LGconcentration, :LGcycle => :c_LGconcentration)
 
@@ -264,21 +169,21 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :TotalForcing => :fs_sulfateforcing, :SulphateForcing => :fs_sulphateforcing)
     totalforcing[:area_region] = regtemp[:area_region]
 
-    connect_param!(m, :SeaLevelRise => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :SeaLevelRise => :rt_g_globaltemperature, :GlobalTemperature => :rt_g_globaltemperature)
 
-    # Connect Socioeconomic component parameters
     population[:popgrw_populationgrowth] = socioscenario[:popgrw_populationgrowth]
+
     connect_param!(m, :GDP => :pop_population, :Population => :pop_population)
     connect_param!(m, :GDP => :pop_population_region, :Population => :pop_population_region)
     gdp[:grw_gdpgrowthrate] = socioscenario[:grw_gdpgrowthrate]
 
-    if config_capital == "full"
-        capital[:pop_population] = population[:pop_population]
-        capital[:gdp_baseline] = gdp[:gdp]
-        capital[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
-    end
+    for allabatement in [
+        (:AbatementCostParametersCH4, :AbatementCostsCH4, :er_CH4emissionsgrowth),
+        (:AbatementCostParametersN2O, :AbatementCostsN2O, :er_N2Oemissionsgrowth),
+        (:AbatementCostParametersLin, :AbatementCostsLin, :er_LGemissionsgrowth)]
 
-    for (abatementcostparameters, abatementcosts, er_parameter) in allabatement_comps
+        abatementcostparameters, abatementcosts, er_parameter = allabatement
+
         connect_param!(m, abatementcostparameters => :yagg, :GDP => :yagg_periodspan)
         connect_param!(m, abatementcostparameters => :cbe_absoluteemissionreductions, abatementcosts => :cbe_absoluteemissionreductions)
 
@@ -289,115 +194,71 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
         connect_param!(m, abatementcosts => :bhi, abatementcostparameters => :bhi)
         connect_param!(m, abatementcosts => :ahi, abatementcostparameters => :ahi)
         connect_param!(m, abatementcosts => :er_emissionsgrowth, socioscenario_comp => er_parameter)
-
-        # For mix-and-match
-        connect_param!(m, abatementcosts => :gdp, finalgdp_region_pair)
-        connect_param!(m, abatementcosts => :gdp_national, finalgdp_pair)
-
     end
 
-    connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_co2, :AbatementCostsCO2 => :tc_totalcost_national)
+    connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_co2, :AbatementCostsCO2 => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_n2o, :AbatementCostsN2O => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_ch4, :AbatementCostsCH4 => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_linear, :AbatementCostsLin => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :pop_population, :Population => :pop_population)
     connect_param!(m, :TotalAbatementCosts => :pop_population_region, :Population => :pop_population_region)
 
-    connect_param!(m, :AdaptiveCostsEconomic => :gdp, finalgdp_region_pair)
-    connect_param!(m, :AdaptiveCostsEconomic => :gdp_national, finalgdp_pair)
-    connect_param!(m, :AdaptiveCostsNonEconomic => :gdp, finalgdp_region_pair)
-    connect_param!(m, :AdaptiveCostsNonEconomic => :gdp_national, finalgdp_pair)
-    if config_slrdmg in ["none", "national"]
-        connect_param!(m, :AdaptiveCostsSeaLevel => :gdp, finalgdp_pair)
-        connect_param!(m, :AdaptiveCostsSeaLevel => :s_sealevel, :SeaLevelRise => :s_sealevel)
-    elseif config_slrdmg == "pageice"
-        connect_param!(m, :AdaptiveCostsSeaLevel => :gdp, finalgdp_region_pair)
-        connect_param!(m, :AdaptiveCostsSeaLevel => :gdp_national, finalgdp_pair)
-    end
+    connect_param!(m, :AdaptiveCostsEconomic => :gdp, :GDP => :gdp_region)
+    connect_param!(m, :AdaptiveCostsNonEconomic => :gdp, :GDP => :gdp_region)
+    connect_param!(m, :AdaptiveCostsSeaLevel => :gdp, :GDP => :gdp)
+    connect_param!(m, :AdaptiveCostsSeaLevel => :s_sealevel, :SeaLevelRise => :s_sealevel)
 
     connect_param!(m, :TotalAdaptationCosts => :ac_adaptationcosts_economic, :AdaptiveCostsEconomic => :ac_adaptivecosts)
     connect_param!(m, :TotalAdaptationCosts => :ac_adaptationcosts_noneconomic, :AdaptiveCostsNonEconomic => :ac_adaptivecosts)
-    if config_slrdmg in ["none", "national"]
-        connect_param!(m, :TotalAdaptationCosts => :ac_adaptationcosts_sealevelrise, :AdaptiveCostsSeaLevel => :ac_adaptivecosts)
-    elseif config_slrdmg == "pageice"
-        connect_param!(m, :TotalAdaptationCosts => :ac_adaptationcosts_sealevelrise, :AdaptiveCostsSeaLevel => :ac_adaptivecosts_national)
-    end
+    connect_param!(m, :TotalAdaptationCosts => :ac_adaptationcosts_sealevelrise, :AdaptiveCostsSeaLevel => :ac_adaptivecosts)
     connect_param!(m, :TotalAdaptationCosts => :pop_population, :Population => :pop_population)
     connect_param!(m, :TotalAdaptationCosts => :pop_population_region, :Population => :pop_population_region)
 
-    connect_param!(m, :SLRDamages => :gdp, finalgdp_pair)
+    connect_param!(m, :SLRDamages => :gdp, :GDP => :gdp)
     connect_param!(m, :SLRDamages => :pop_population, :Population => :pop_population)
     connect_param!(m, :SLRDamages => :s_sealevel, :SeaLevelRise => :s_sealevel)
-    connect_param!(m, :SLRDamages => :cons_percap_consumption, finalcons_pair)
+    connect_param!(m, :SLRDamages => :cons_percap_consumption, :GDP => :cons_percap_consumption)
     connect_param!(m, :SLRDamages => :cons_percap_consumption_0, :GDP => :cons_percap_consumption_0)
     connect_param!(m, :SLRDamages => :tct_per_cap_totalcostspercap, :TotalAbatementCosts => :tct_percap_totalcostspercap)
     connect_param!(m, :SLRDamages => :act_percap_adaptationcosts, :TotalAdaptationCosts => :act_percap_adaptationcosts)
-    if config_slrdmg == "pageice"
-        connect_param!(m, :SLRDamages => :atl_adjustedtolerablelevelofsealevelrise, :AdaptiveCostsSeaLevel => :atl_adjustedtolerablelevel, ignoreunits=true) # For mix-and-match
-        connect_param!(m, :SLRDamages => :imp_actualreductionSLR, :AdaptiveCostsSeaLevel => :imp_adaptedimpacts) # For mix-and-match
-        connect_param!(m, :SLRDamages => :isatg_impactfxnsaturation, :GDP => :isatg_impactfxnsaturation) # For mix-and-match
-    end
-    slrdamages[:save_savingsrate] = macroparams[:save_savingsrate]
 
-    connect_param!(m, :MarketDamagesBurke => :rtl_realizedtemperature_absolute, regtemp_comp => :rtl_realizedtemperature_absolute)
+    connect_param!(m, :MarketDamagesBurke => :rtl_realizedtemperature_absolute, :RegionTemperature => :rtl_realizedtemperature_absolute)
     connect_param!(m, :MarketDamagesBurke => :rgdp_per_cap_SLRRemainGDP, :SLRDamages => :rgdp_per_cap_SLRRemainGDP)
     connect_param!(m, :MarketDamagesBurke => :rcons_per_cap_SLRRemainConsumption, :SLRDamages => :rcons_per_cap_SLRRemainConsumption)
     connect_param!(m, :MarketDamagesBurke => :isatg_impactfxnsaturation, :GDP => :isatg_impactfxnsaturation)
-    connect_param!(m, :MarketDamagesBurke => :gdp, finalgdp_pair)
+    connect_param!(m, :MarketDamagesBurke => :gdp, :GDP => :gdp)
     connect_param!(m, :MarketDamagesBurke => :pop_population, :Population => :pop_population)
-    marketdamagesburke[:save_savingsrate] = macroparams[:save_savingsrate]
 
+    # Kaidi
+    # connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :MarketDamageAQ_LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :MarketDamageAQ_RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+
+    # connect_param!(m, :AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    # connect_param!(m, :RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+
+    connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :MarketDamageAQ_LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
-    connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :MarketDamageAQ_RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
 
-    if use_trade
-        trade[:save_savingsrate] = macroparams[:save_savingsrate]
-        trade[:gdp_baseline] = gdp[:gdp]
-        connect_param!(m, :Trade => :gdp, finalgdp_pair)
-        trade[:pop_population] = population[:pop_population]
-        trade[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
-    end
 
-    if use_trade
-        trade[:gdp_baseline] = gdp[:gdp]
-        connect_param!(m, :Trade => :gdp, :GDP => :gdp)
-        trade[:pop_population] = population[:pop_population]
-        trade[:rgdp_percap_impacts] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP]
-    end
-
-    connect_param!(m, :NonMarketDamages => :rtl_realizedtemperature_change, regtemp_comp => :rtl_realizedtemperature_change)
-    connect_param!(m, :NonMarketDamages => :rtl_g_landtemperature, regtemp_comp => :rtl_g_landtemperature)
-    connect_param!(m, :NonMarketDamages => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
-    if use_trade
-        connect_param!(m, :NonMarketDamages => :rgdp_per_cap_MarketRemainGDP, :Trade => :rgdp_per_cap_TradeRemainGDP)
-        connect_param!(m, :NonMarketDamages => :rcons_per_cap_MarketRemainConsumption, :Trade => :rcons_per_cap_TradeRemainConsumption)
-    else
-        connect_param!(m, :NonMarketDamages => :rgdp_per_cap_MarketRemainGDP, :MarketDamagesBurke => :rgdp_per_cap_MarketRemainGDP)
-        connect_param!(m, :NonMarketDamages => :rcons_per_cap_MarketRemainConsumption, :MarketDamagesBurke => :rcons_per_cap_MarketRemainConsumption)
-    end
+    connect_param!(m, :NonMarketDamages => :rtl_realizedtemperature_change, :RegionTemperature => :rtl_realizedtemperature_change)
+    connect_param!(m, :NonMarketDamages => :rtl_g_landtemperature, :RegionTemperature => :rtl_g_landtemperature)
+    connect_param!(m, :NonMarketDamages => :rt_g_globaltemperature, :GlobalTemperature => :rt_g_globaltemperature)
+    connect_param!(m, :NonMarketDamages => :rgdp_per_cap_MarketRemainGDP, :MarketDamagesBurke => :rgdp_per_cap_MarketRemainGDP)
+    connect_param!(m, :NonMarketDamages => :rcons_per_cap_MarketRemainConsumption, :MarketDamagesBurke => :rcons_per_cap_MarketRemainConsumption)
     connect_param!(m, :NonMarketDamages => :atl_adjustedtolerableleveloftemprise, :AdaptiveCostsNonEconomic => :atl_adjustedtolerablelevel, ignoreunits=true)
     connect_param!(m, :NonMarketDamages => :imp_actualreduction, :AdaptiveCostsNonEconomic => :imp_adaptedimpacts)
     connect_param!(m, :NonMarketDamages => :isatg_impactfxnsaturation, :GDP => :isatg_impactfxnsaturation)
-    if config_nonmarketdmg == "pageice"
-        connect_param!(m, :NonMarketDamages => :pop_population, :Population => :pop_population)
-    end
-    nonmarketdamages[:save_savingsrate] = macroparams[:save_savingsrate]
 
-    connect_param!(m, :Discontinuity => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :Discontinuity => :rt_g_globaltemperature, :GlobalTemperature => :rt_g_globaltemperature)
     connect_param!(m, :Discontinuity => :rgdp_per_cap_NonMarketRemainGDP, :NonMarketDamages => :rgdp_per_cap_NonMarketRemainGDP)
     connect_param!(m, :Discontinuity => :rcons_per_cap_NonMarketRemainConsumption, :NonMarketDamages => :rcons_per_cap_NonMarketRemainConsumption)
     connect_param!(m, :Discontinuity => :isatg_saturationmodification, :GDP => :isatg_impactfxnsaturation)
-    discontinuity[:save_savingsrate] = macroparams[:save_savingsrate]
-
-    connect_param!(m, :VSL => :population, :Population => :pop_population)
-    connect_param!(m, :VSL => :gdp, :GDP => :gdp)
-
-
-    connect_param!(m, :CromarMortality => :temperature, :GlobalTemperature => :rt_g_globaltemperature)
-    connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
-    connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
 
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
@@ -406,12 +267,12 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :TotalCosts => :slr_damages_percap_peryear, :SLRDamages => :d_percap_slr)
     connect_param!(m, :TotalCosts => :market_damages_percap_peryear, :MarketDamagesBurke => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
     connect_param!(m, :TotalCosts => :non_market_damages_percap_peryear, :NonMarketDamages => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
-connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+    connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
 
     connect_param!(m, :CountryLevelNPV => :pop_population, :Population => :pop_population)
     connect_param!(m, :CountryLevelNPV => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
     connect_param!(m, :CountryLevelNPV => :act_percap_adaptationcosts, :TotalAdaptationCosts => :act_percap_adaptationcosts)
-    connect_param!(m, :CountryLevelNPV => :cons_percap_consumption, finalcons_pair)
+    connect_param!(m, :CountryLevelNPV => :cons_percap_consumption, :GDP => :cons_percap_consumption)
     connect_param!(m, :CountryLevelNPV => :cons_percap_consumption_0, :GDP => :cons_percap_consumption_0)
     connect_param!(m, :CountryLevelNPV => :cons_percap_aftercosts, :SLRDamages => :cons_percap_aftercosts)
     connect_param!(m, :CountryLevelNPV => :rcons_percap_dis, :Discontinuity => :rcons_per_cap_DiscRemainConsumption)
@@ -422,7 +283,7 @@ connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discont
     connect_param!(m, :EquityWeighting => :pop_population, :Population => :pop_population)
     connect_param!(m, :EquityWeighting => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
     connect_param!(m, :EquityWeighting => :act_percap_adaptationcosts, :TotalAdaptationCosts => :act_percap_adaptationcosts)
-    connect_param!(m, :EquityWeighting => :cons_percap_consumption, finalcons_pair)
+    connect_param!(m, :EquityWeighting => :cons_percap_consumption, :GDP => :cons_percap_consumption)
     connect_param!(m, :EquityWeighting => :cons_percap_consumption_0, :GDP => :cons_percap_consumption_0)
     connect_param!(m, :EquityWeighting => :cons_percap_aftercosts, :SLRDamages => :cons_percap_aftercosts)
     connect_param!(m, :EquityWeighting => :rcons_percap_dis, :Discontinuity => :rcons_per_cap_DiscRemainConsumption)
@@ -440,26 +301,18 @@ function initpage(m::Model)
     set_leftover_params!(m, p)
 end
 
-function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
-                 config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
-                 config_discontinuity::String="default",
-                 config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                 config_capital::String="full", use_trade::Bool=true)
+function getpage(scenario::String="RCP4.5 & SSP2", use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false)
+    m = Model()
+    set_dimension!(m, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
+    set_dimension!(m, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
+    set_dimension!(m, :country, get_countryinfo().ISO3)
 
-    model = Model()
-    set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
-    set_dimension!(model, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
-    set_dimension!(model, :country, get_countryinfo().ISO3)
-
-    buildpage(model, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
-              config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
-              config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
-              config_capital=config_capital, use_trade=use_trade)
+    buildpage(m, scenario, use_permafrost, use_seaice; use_rffsp=use_rffsp)
 
     # next: add vector and panel example
-    initpage(model)
+    initpage(m)
 
-    return model
+    return m
 end
 
 get_model = getpage
