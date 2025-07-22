@@ -12,10 +12,14 @@
     lnpm2lngdp = Parameter(default=-0.1175, unit="log-point / log-point") # SE = 0.0199, Appendix B.3.9 Table 24
 
     dlngdp = Variable(index=[time,country], unit="log-point")
+    cumullngdp = Variable(index=[time,country], unit="log-point")
+    totalchange = Variable(index=[time,country], unit="%")
 
     function run_timestep(pp, vv, dd, tt)
         if is_first(tt)
             vv.dlngdp[tt, :] .= 0.
+            vv.cumullngdp[tt, :] .= 0.
+            vv.totalchange[tt, :] .= 0.
         else
             # Clip benefits/losses at 20 µg/m3
             pm_total_clip = min.(20., pp.pm_total[tt, :])
@@ -29,6 +33,9 @@
                     vv.dlngdp[tt, cc] = max(value_lin[cc], value_log[cc])
                 end
             end
+
+            vv.cumullngdp[tt, :] = vv.cumullngdp[tt-1, :] + vv.dlngdp[tt, :]
+            vv.totalchange[tt, :] = (exp.(vv.cumullngdp[tt, :]) .- 1) .* 100
         end
     end
 end
