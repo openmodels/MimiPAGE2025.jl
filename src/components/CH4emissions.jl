@@ -29,7 +29,12 @@ include("../utils/country_tools.jl")
 
     function run_timestep(p, v, d, t)
         # eq.4 in Hope (2006) - regional CH4 emissions as % change from baseline
+        for r in d.region
+            v.e_regionalCH4emissions_region[t,r] = p.er_CH4emissionsgrowth_region[t,r] * v.e0_baselineCH4emissions_region[r] / 100
+        end
+
         er_CH4emissionsgrowth = regiontocountry(p.model, p.er_CH4emissionsgrowth_region[t, :])
+
         for cc in d.country
             v.e_regionalCH4emissions[t, cc] = er_CH4emissionsgrowth[cc] * p.e0_baselineCH4emissions[cc] / 100
 
