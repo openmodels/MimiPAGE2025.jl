@@ -22,8 +22,8 @@
             vv.totalchange[tt, :] .= 0.
         else
             # Clip benefits/losses at 20 µg/m3
-            pm_total_clip = min.(20., pp.pm_total[tt, :])
-            lag_pm_total_clip = min.(20., pp.pm_total[tt-1, :])
+            pm_total_clip = min.(20., max.(5., pp.pm_total[tt, :]))
+            lag_pm_total_clip = min.(20., max.(5., pp.pm_total[tt-1, :]))
             value_lin = pp.pm2lngdp * (pm_total_clip - lag_pm_total_clip)
             value_log = pp.pm2lngdp * (log.(pm_total_clip) - log.(lag_pm_total_clip))
             for cc in dd.country

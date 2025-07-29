@@ -188,6 +188,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
 
+    # Add CIL Damage components
+    cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
+
     # PM2.5 Pollution Component
     pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
@@ -429,6 +432,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     cromarmortality[:temperature] = glotemp[:rt_g_globaltemperature]
     connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
     connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
+
+    connect_param!(m, :LaborProductivity => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :LaborProductivity => :gdp, finalgdp_pair)
+    connect_param!(m, :LaborProductivity => :pop_population, :Population => :pop_population)
 
     connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
