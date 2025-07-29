@@ -12,7 +12,8 @@
     er_LGemissionsgrowth = Parameter(index=[time,region], unit="%")
 
     # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
-    gdp_region = Parameter(index=[time, region], unit="\$M")
+    gdppc_region = Parameter(index=[time, region], unit="\$/person")
+    pop_population_region = Parameter(index=[time, region], unit="million person")
     gdp_baseline_region = Parameter(index=[time, region], unit="\$M")
     emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
@@ -23,8 +24,8 @@
             v.e_regionalLGemissions[t,r] = p.er_LGemissionsgrowth[t,r] * p.e0_baselineLGemissions[r] / 100
 
             # rescale emissions based on GDP deviation from original scenario pathway
-            if p.emfeed_emissionfeedback
-                v.e_countryCO2emissions[t, r] = v.e_countryCO2emissions[t, r] * (p.gdp_region[t, r] / p.gdp_baseline_region[t, r])
+            if  !is_first(t) && p.emfeed_emissionfeedback
+                v.e_regionalLGemissions[t, r] = v.e_regionalLGemissions[t, r] * (p.gdppc_region[t-1, r] * p.pop_population_region[t-1, r] / p.gdp_baseline_region[t-1, r])
             end
         end
 

@@ -33,6 +33,7 @@ include("../utils/country_tools.jl")
     isatg_impactfxnsaturation = Parameter(unit="unitless")
     rcons_per_cap_MarketRemainConsumption = Variable(index=[time, country], unit="\$/person")
     rgdp_per_cap_MarketRemainGDP = Variable(index=[time, country], unit="\$/person")
+    rgdp_per_cap_MarketRemainGDP_region = Variable(index=[time, region], unit="\$/person")
     iref_ImpactatReferenceGDPperCap = Variable(index=[time, country])
     igdp_ImpactatActualGDPperCap = Variable(index=[time, country])
 
@@ -115,7 +116,7 @@ include("../utils/country_tools.jl")
             v.rgdp_per_cap_MarketRemainGDP[t, cc] = v.rcons_per_cap_MarketRemainConsumption[t, cc] / (1 - p.save_savingsrate[cc] / 100)
         end
 
-        v.rgdp_per_cap_MarketRemainGDP_region[t, :] = countrytoregion(p.model, sum, v.rgdp_per_cap_MarketRemainGDP[t, :])
+        v.rgdp_per_cap_MarketRemainGDP_region[t, :] = countrytoregion(p.model, weighted_mean, v.rgdp_per_cap_MarketRemainGDP[t, :], p.pop_population[t, :])
     end
 end
 

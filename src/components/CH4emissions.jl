@@ -19,7 +19,8 @@ include("../utils/country_tools.jl")
     e_globalCH4emissions = Variable(index=[time], unit="Mtonne/year")
 
     # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdppc = Parameter(index=[time, country], unit="\$/person")
+    pop_population = Parameter(index=[time, country], unit="million person")
     gdp_baseline = Parameter(index=[time, country], unit="\$M")
     emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
@@ -39,8 +40,8 @@ include("../utils/country_tools.jl")
             v.e_regionalCH4emissions[t, cc] = er_CH4emissionsgrowth[cc] * p.e0_baselineCH4emissions[cc] / 100
 
             # rescale emissions based on GDP deviation from original scenario pathway
-            if p.emfeed_emissionfeedback
-                v.e_regionalCH4emissions[t, cc] = v.e_regionalCH4emissions[t, cc] * (p.gdp[t, cc] / p.gdp_baseline[t, cc])
+            if !is_first(t) && p.emfeed_emissionfeedback
+                v.e_regionalCH4emissions[t, cc] = v.e_regionalCH4emissions[t, cc] * (p.gdppc[t-1, cc] * p.pop_population[t-1, cc] / p.gdp_baseline[t-1, cc])
             end
         end
 

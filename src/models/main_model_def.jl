@@ -3,7 +3,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true)
+                   config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true,
+                   emissionfeedback::Bool=true)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -255,8 +256,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     elseif config_abatement == "pageice"
         co2emit[:er_CO2emissionsgrowth] = sspscenario[:er_CO2emissionsgrowth]
     end
-    co2emit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP] # after impacts
+    co2emit[:gdppc] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP] # after impacts
+    co2emit[:pop_population] = population[:pop_population]
     co2emit[:gdp_baseline] = gdp[:gdp] # before impacts and before feedback
+    co2emit[:emfeed_emissionfeedback] = emissionfeedback
 
     connect_param!(m, :CO2Cycle => :e_globalCO2emissions, :co2emissions => :e_globalCO2emissions)
     connect_param!(m, :CO2Cycle => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
@@ -267,8 +270,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :co2forcing => :c_CO2concentration, :CO2Cycle => :c_CO2concentration)
 
     ch4emit[:er_CH4emissionsgrowth_region] = sspscenario[:er_CH4emissionsgrowth]
-    ch4emit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP] # after impacts
+    ch4emit[:gdppc] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP] # after impacts
+    ch4emit[:pop_population] = population[:pop_population]
     ch4emit[:gdp_baseline] = gdp[:gdp] # before impacts and before feedback
+    ch4emit[:emfeed_emissionfeedback] = emissionfeedback
 
     connect_param!(m, :CH4Cycle => :e_globalCH4emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :CH4Cycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -281,8 +286,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :ch4forcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
     n2oemit[:er_N2Oemissionsgrowth] = sspscenario[:er_N2Oemissionsgrowth]
-    n2oemit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region] # after impacts
+    n2oemit[:gdppc_region] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region] # after impacts
+    n2oemit[:pop_population_region] = population[:pop_population_region]
     n2oemit[:gdp_baseline_region] = gdp[:gdp_region] # before impacts and before feedback
+    n2oemit[:emfeed_emissionfeedback] = emissionfeedback
 
     connect_param!(m, :n2ocycle => :e_globalN2Oemissions, :n2oemissions => :e_globalN2Oemissions)
     connect_param!(m, :n2ocycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -292,8 +299,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :n2oforcing => :c_N2Oconcentration, :n2ocycle => :c_N2Oconcentration)
 
     lgemit[:er_LGemissionsgrowth] = sspscenario[:er_LGemissionsgrowth]
-    lgemit[:gdp] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region]
+    lgemit[:gdppc_region] = marketdamagesburke[:rgdp_per_cap_MarketRemainGDP_region] # after impacts
+    lgemit[:pop_population_region] = population[:pop_population_region]
     lgemit[:gdp_baseline_region] = gdp[:gdp_region]
+    lgemit[:emfeed_emissionfeedback] = emissionfeedback
 
     connect_param!(m, :LGcycle => :e_globalLGemissions, :LGemissions => :e_globalLGemissions)
     connect_param!(m, :LGcycle => :rtl_g0_baselandtemp, regtemp_comp => :rtl_g0_baselandtemp)
@@ -505,7 +514,8 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true)
+                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true,
+                 emissionfeedback::Bool=true)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
@@ -516,7 +526,8 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
               use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
-              config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc)
+              config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc,
+              emissionfeedback=emissionfeedback)
 
     # next: add vector and panel example
     initpage(model)
