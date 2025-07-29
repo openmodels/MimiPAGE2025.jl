@@ -43,7 +43,7 @@ end
 
 
 function addcromarmortality(m::Model, SSP::String = "SSP2")
-    add_comp!(m, CromarMortalityDamages, :CromarMortality)
+    comp = add_comp!(m, CromarMortalityDamages, :CromarMortality)
 
     cromar_coeffs = load(pagedata("mortality/CromarMortality_damages_coefficients.csv")) |> DataFrame
     cromar_mapping_raw = load(pagedata("mortality/Mapping_countries_to_cromar_mortality_regions.csv")) |> DataFrame
@@ -69,4 +69,6 @@ function addcromarmortality(m::Model, SSP::String = "SSP2")
     mortality_data_filtered2 = readcountrydata_it_const(m, mortality_data_filtered, :ISO, :year, "cdf")
 
     update_param!(m, :CromarMortality, :baseline_mortality_rate, mortality_data_filtered2)
+
+    return comp
 end

@@ -2,7 +2,6 @@ using Mimi
 using MimiFAIRv2
 
 using Random
-
 import Random
 
 export getpage
@@ -63,7 +62,10 @@ include("components/PermafrostJULES.jl")
 include("components/PermafrostTotal.jl")
 include("components/CromarMortalityDamages.jl")
 include("components/VSL.jl")
-
+include("components/PM25Pollution.jl")
+include("components/PMMarketDamages.jl")
+include("components/MarketDamageAQ_Generic.jl")
+include("components/CILDamages.jl")
 
 include("models/main_model_def.jl")
 

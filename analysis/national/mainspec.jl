@@ -15,6 +15,15 @@ for scenario in ["RFFSP", "RCP4.5 & SSP2"]
 
     run(model)
 
+    df = getdataframe(model, :CromarMortality, :excess_deaths)
+    CSV.write("cromar-excess-deaths.csv", df)
+
+    df = getdataframe(model, :AbatementCostsCO2, :tc_totalcost_national)
+    CSV.write("abateco2-tc.csv", df)
+
+    df = getdataframe(model, :Population, :pop_population)
+    CSV.write("pop_1000s.csv", df)
+
     model[:EquityWeighting, :td_totaldiscountedimpacts]
 
     df = getdataframe(model, :NonMarketDamages, :isat_per_cap_ImpactperCapinclSaturationandAdaptation)

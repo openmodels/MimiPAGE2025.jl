@@ -20,6 +20,11 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
     # exf_excessforcing = Parameter(index=[time], unit="W/m2")
     # e_globalSulphateemissions = Parameter(index=[time, region], unit="???")
 
+    perm_tot_e_co2 = Parameter(index=[time], unit="Mtonne")
+    perm_tot_ce_ch4 = Parameter(index=[time], unit="Mtonne")
+
+    biascorrection = Variable()
+
     rt_g_globaltemperature_pre_static = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature_pre_seaice = Parameter(index=[time], unit="degreeC")
     rt_g_globaltemperature = Variable(index=[time], unit="degreeC")
@@ -42,13 +47,22 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
             Mimi.run_timestep(pp.fairmi, vv.clock, dim_val_named_tuple)
             Mimi.advance(vv.clock)
         end
+
+        ## Calculate bias correction
+        fairtime = dim_keys(pp.fairmi, :time)
+        calctemp = mean(pp.fairmi[:temperature, :T][findfirst(fairtime .== 1995):findfirst(fairtime .== 2014)])
+        vv.biascorrection = 0.85 - calctemp
     end
 
     function run_timestep(pp, vv, dd, tt)
         fairtime = dim_keys(pp.fairmi, :time)
         if !is_first(tt)
-            E_co2 = pp.e_globalCO2emissions[tt-1] / 1000 / 3.67 # GtC yr⁻¹
-            E_ch4 = pp.e_globalCH4emissions[tt-1] # TgCH₄ yr⁻¹
+            E_co2 = (pp.e_globalCO2emissions[tt-1] + pp.perm_tot_e_co2[tt-1]) / 1000 / 3.67 # GtC yr⁻¹
+            if tt.t > 2
+                E_ch4 = (pp.e_globalCH4emissions[tt-1] + pp.perm_tot_ce_ch4[tt-1] - pp.perm_tot_ce_ch4[tt-2]) # TgCH₄ yr⁻¹
+            else
+                E_ch4 = pp.e_globalCH4emissions[tt-1] # TgCH₄ yr⁻¹
+            end
             E_n2o = pp.e_globalN2Oemissions[tt-1] * 0.6367 # TgN yr⁻¹ (2 * 14.01 / 44.01)
 
             fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
@@ -72,7 +86,7 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
             Mimi.advance(vv.clock)
         end
 
-        vv.rt_g_globaltemperature[tt] = pp.fairmi[:temperature, :T][findfirst(fairtime .== pp.y_year[tt])] + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
+        vv.rt_g_globaltemperature[tt] = pp.fairmi[:temperature, :T][findfirst(fairtime .== pp.y_year[tt])] + vv.biascorrection + pp.rt_g_globaltemperature_pre_seaice[tt] - pp.rt_g_globaltemperature_pre_static[tt]
     end
 end
 
@@ -80,7 +94,7 @@ function addfairgrounds(model::Model, scenario::String)
     fairgrounds = add_comp!(model, FaIRGrounds)
 
     mapping = Dict("Zero Emissions & SSP1"=>"ssp119", "1.5 degC Target"=>"ssp119", "RCP1.9 & SSP1"=>"ssp119", "2 degC Target"=>"ssp126", "RCP2.6 & SSP1"=>"ssp126",
-                   "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585")
+                   "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585", "RCP2.6 & SSP2"=>"ssp126")
 
     fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
     fairgrounds[:fairmi] = build(fairmodel)
@@ -89,6 +103,9 @@ function addfairgrounds(model::Model, scenario::String)
 
     fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))
     fairgrounds[:rt_g_globaltemperature_pre_seaice] = zeros(dim_count(model, :time))
+
+    fairgrounds[:perm_tot_e_co2] = zeros(dim_count(model, :time))
+    fairgrounds[:perm_tot_ce_ch4] = zeros(dim_count(model, :time))
 
     return fairgrounds
 end

@@ -3,7 +3,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="full", use_trade::Bool=true)
+                   config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -190,6 +190,25 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
 
+    # Add CIL Damage components
+    cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
+
+    # PM2.5 Pollution Component
+    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
+
+    # PM2.5 Market Damages Component
+    pmmarket = add_comp!(m, PMMarketDamages)
+
+    # Market damages from methane
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_AsthmaERVisits, "data/MarketDamageAQ/Methane_AsthmaERVisits.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_CropLoss, "data/MarketDamageAQ/Methane_CropLoss.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_LostWorkHours, "data/MarketDamageAQ/Methane_LostWorkHours.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+    addMarketDamageAQ_Generic(m, :MarketDamageAQ_RespiratoryAdmissions, "data/MarketDamageAQ/Methane_RespiratoryAdmissions.csv",
+                              "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+
     # Total costs component
     add_comp!(m, TotalCosts)
 
@@ -205,6 +224,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
             connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_static, :PreGlobalTemperature_static => :rt_g_globaltemperature)
             connect_param!(m, glotemp_comp => :rt_g_globaltemperature_pre_seaice, :PreGlobalTemperature_seaice => :rt_g_globaltemperature)
+        end
+
+        if use_permafrost
+            glotemp[:perm_tot_e_co2] = permafrost[:perm_tot_e_co2]
+            glotemp[:perm_tot_ce_ch4] = permafrost[:perm_tot_ce_ch4]
         end
 
         glotemp[:e_globalCO2emissions] = co2emit[:e_globalCO2emissions]
@@ -415,9 +439,18 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :VSL => :population, :Population => :pop_population)
     connect_param!(m, :VSL => :gdp, :GDP => :gdp)
 
-    connect_param!(m, :CromarMortality => :temperature, glotemp_comp => :rt_g_globaltemperature)
+    cromarmortality[:temperature] = glotemp[:rt_g_globaltemperature]
     connect_param!(m, :CromarMortality => :population, :Population => :pop_population)
     connect_param!(m, :CromarMortality => :vsl, :VSL => :vsl)
+
+    connect_param!(m, :LaborProductivity => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
+    connect_param!(m, :LaborProductivity => :gdp, finalgdp_pair)
+    connect_param!(m, :LaborProductivity => :pop_population, :Population => :pop_population)
+
+    connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_LostWorkHours => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
+    connect_param!(m, :MarketDamageAQ_RespiratoryAdmissions => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
 
     connect_param!(m, :TotalCosts => :population, :Population => :pop_population)
     connect_param!(m, :TotalCosts => :period_length, :GDP => :yagg_periodspan)
@@ -427,6 +460,15 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :TotalCosts => :market_damages_percap_peryear, :MarketDamagesBurke => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
     connect_param!(m, :TotalCosts => :non_market_damages_percap_peryear, :NonMarketDamages => :isat_per_cap_ImpactperCapinclSaturationandAdaptation)
     connect_param!(m, :TotalCosts => :discontinuity_damages_percap_peryear, :Discontinuity => :isat_per_cap_DiscImpactperCapinclSaturation)
+
+    # PM2.5 pollution component
+    pm25pollution[:e_countryCO2emissions] = co2emit[:e_countryCO2emissions]
+    pm25pollution[:e_countryCH4emissions] = ch4emit[:e_regionalCH4emissions]
+    pm25pollution[:gdp] = finalgdp_ref
+    pm25pollution[:pop_population] = population[:pop_population]
+
+    # PM Market Damages
+    pmmarket[:pm_total] = pm25pollution[:pm_total]
 
     connect_param!(m, :CountryLevelNPV => :pop_population, :Population => :pop_population)
     connect_param!(m, :CountryLevelNPV => :tct_percap_totalcosts_total, :TotalAbatementCosts => :tct_percap_totalcostspercap)
@@ -453,6 +495,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     return m
 end
 
+
 function initpage(m::Model)
     p = load_parameters(m)
     p["y_year_0"] = 2015.
@@ -464,7 +507,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                 config_capital::String="full", use_trade::Bool=true)
+                 config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
@@ -475,7 +518,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
               use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
-              config_capital=config_capital, use_trade=use_trade)
+              config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc)
 
     # next: add vector and panel example
     initpage(model)

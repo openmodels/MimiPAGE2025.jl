@@ -6,7 +6,7 @@ library(reshape2)
 library(cowplot)
 library(scales)
 
-outdir <- "analysis/national"
+outdir <- "output"
 
 baseline <- read.csv("data/bycountry.csv")
 
@@ -224,38 +224,35 @@ disp.down <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "
                           c('Updated', 'PAGE-ICE'))
 ggsave("sccfig-down.pdf", width=8, height=1.5)
 
-disp.subn <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-subnational.csv")),
-                          c('National', 'Subnational'))
+disp.subn <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-nosubnational.csv")),
+                          c('Subnational', 'National'))
 ggsave("sccfig-subn.pdf", width=8, height=1.5)
 
+disp.trad <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-notrade.csv")),
+                          c('With Trade', 'Independent'))
+ggsave("sccfig-trad.pdf", width=8, height=1.5)
+
 disp.part <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-onlydmg-nonmarket.csv"),
-                            file.path(outdir, "allscc-onlydmg-slr.csv")), #file.path(outdir, "allscc-onlydmg-market.csv"), file.path(outdir, "allscc-onlydmg-discont.csv")),
-                          c('Combined', 'Non-market-only', 'SLR-only'))#, 'Market-only', 'Discontinuity-only'))
-## Note: After ran function by hand, added back both so I could get the tables
-ggsave(file.path(outdir, "figures/sccfig-part.pdf"), width=8, height=2)
+                            file.path(outdir, "allscc-onlydmg-slr.csv"), file.path(outdir, "allscc-onlydmg-market.csv")), # file.path(outdir, "allscc-onlydmg-discont.csv")
+                          c('Combined', 'Non-market-only', 'SLR-only', 'Market-only')) # 'Discontinuity-only'
+ggsave(file.path(outdir, "figures/sccfig-part.pdf"), width=8, height=2.5)
 
 disp.capx <- get.displays(c("output/allscc.csv", "output/allscc-capital-constant.csv",
                             "output/allscc-capital-inferred.csv", "output/allscc-capital-full.csv"),
                           c('Old', 'Constant', 'Inferred', 'Full'))
 ggsave("sccfig-capx.pdf", width=8, height=2)
 
-write.csv(rbind(disp.year, disp.scen, disp.mktd, disp.othd, disp.macu, disp.down), "scc-options.csv", row.names=F)
+write.csv(rbind(disp.scen, disp.year, disp.mktd, disp.othd, disp.macu, disp.down, disp.subn, disp.trad, disp.part, disp.capx), "scc-options.csv", row.names=F)
 
-prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
-write.csv(rbind(disp.year, prevtbl[4:nrow(prevtbl),]), file.path(outdir, "scc-options.csv"), row.names=F)
-
-prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
-write.csv(rbind(prevtbl, disp.part), file.path(outdir, "scc-options.csv"), row.names=F)
-
-for (filepath in c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-2050.csv"), file.path(outdir, "allscc-2100.csv"))) {
+for (filepath in c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-2050-v2.csv"), file.path(outdir, "allscc-2100-v2.csv"))) {
     df <- read.csv(filepath)
     df2 <- df %>% filter(country == 'global')
-    print(c(filepath, mean(df2$scc == 0)))
+    print(c(filepath, mean(df2$scc == 0, na.rm=T)))
 }
 
-prevtbl <- read.csv(file.path(outdir, "scc-options.csv"))
+prevtbl <- read.csv("scc-options.csv")
 
-disptbl <- prevtbl[c(-2:-4, -8, -12, -15, -18, -20:-21),]
+disptbl <- prevtbl[-which(prevtbl[1,2] == prevtbl[, 2])[-1],]
 disptbl$group[1] <- "Default Updated"
 library(xtable)
 print(xtable(disptbl[, c(1, 3:9, 11)]), include.rownames=F)
