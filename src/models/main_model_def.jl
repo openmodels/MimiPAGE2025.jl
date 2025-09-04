@@ -188,8 +188,21 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     
     connect_param!(m, :pm25_pollution => :laglogpm0,    :pm25_pollution => :logpm_self)
     connect_param!(m, :pm25_pollution => :lag2logpm0,   :pm25_pollution => :logpm_self)
+    
+ 
+    # PM2.5 Damages (use mean draw by default)
+    pm25damages = add_pm25_damages(m)
+    
+    # Feed logs from pollution into damages
+    connect_param!(m, :pm25_damages => :pm_log_self,   :pm25_pollution => :logpm_self)
+    connect_param!(m, :pm25_damages => :pm_log_export, :pm25_pollution => :logpm_export)
+    
+    # Socioeconomic inputs
+    connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)
+    connect_param!(m, :pm25_damages => :gdp, :GDP => :gdp)
 
-
+    
+    
 
     # Total costs component
     add_comp!(m, TotalCosts)

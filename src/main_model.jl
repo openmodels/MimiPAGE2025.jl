@@ -64,6 +64,8 @@ include("components/PermafrostTotal.jl")
 include("components/CromarMortalityDamages.jl")
 include("components/VSL.jl")
 include("components/PM25Pollution.jl")
+include("components/PM25Damage.jl")
+
 
 
 include("models/main_model_def.jl")

@@ -10,6 +10,39 @@
     # === Variables needed for PM2.5 pollution ===
     logco20        = Variable(index=[time, country], unit="log(MtCO2/year)")
     logco20xyear0  = Variable(index=[time, country], unit="log(MtCO2/year) * year")
+    
+    
+    function run_timestep(p, v, d, t)
+    idx = Mimi.TimestepIndex(t.t)   # wrap the integer into TimestepIndex
+    #year = d.time[t.t]              
+    year = (2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300)[t.t]
+
+    # Regional CO2 emissions
+    for cc in d.country
+        v.e_countryCO2emissions[idx, cc] = p.baselineemit[idx, cc] * (1 - p.fracabatedcarbon[idx, cc])
+    end
+
+    # Global CO2 emissions
+    v.e_globalCO2emissions[idx] = sum(v.e_countryCO2emissions[idx, :])
+
+    # Derived variables for PM2.5
+    for cc in d.country
+        lc = log(max(v.e_countryCO2emissions[idx, cc], 1e-12))
+        v.logco20[idx, cc]       = lc
+        v.logco20xyear0[idx, cc] = lc * (year - 2015)
+        end
+    end
+end
+
+
+
+
+
+
+
+
+# Commenting out the whole block to try a new run_timestep
+#=
 
     function run_timestep(p, v, d, t)
         idx = TimestepIndex(t.t)
@@ -30,7 +63,7 @@
     end
 end
 
-
+=#
 
 
 #=

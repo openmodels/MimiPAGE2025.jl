@@ -20,11 +20,14 @@ using CSV
 
 # Load Monte Carlo draws
 if !isdefined(Main, :pm25_self_params)
-    global const pm25_self_params = CSV.read("../data/pollution/mvrnorm_SELF_Contribution.csv", DataFrame)
+    #global const pm25_self_params = CSV.read("../data/pollution/mvrnorm_SELF_Contribution.csv", DataFrame)
+    global const pm25_self_params = CSV.read(joinpath(@__DIR__, "../../data/pollution/mvrnorm_SELF_Contribution.csv"), DataFrame)
+
 end
 
 if !isdefined(Main, :pm25_export_params)
-    global const pm25_export_params = CSV.read("../data/pollution/mvrnorm_EXPORT_Contribution.csv", DataFrame)
+    #global const pm25_export_params = CSV.read("../data/pollution/mvrnorm_EXPORT_Contribution.csv", DataFrame)
+    global const pm25_export_params = CSV.read(joinpath(@__DIR__, "../../data/pollution/mvrnorm_EXPORT_Contribution.csv"), DataFrame)
 end
 
 @defcomp pm25_pollution begin
@@ -117,6 +120,40 @@ end
     end
 end
 
+
+
+    function run_timestep(p, v, d, t)
+    idx = Mimi.TimestepIndex(t.t)  # required index type for Mimi TimestepArray
+
+    v.logpm_self[idx, :] =
+          v.β_self_co2      .* p.logco20[idx, :]
+        .+ v.β_self_ch4      .* p.logch40[idx, :]
+        .+ v.β_self_co2xyear .* p.logco20xyear0[idx, :]
+        .+ v.β_self_ch4xyear .* p.logch40xyear0[idx, :]
+        .+ v.β_self_pop      .* p.logpop0[idx, :]
+        .+ v.β_self_gdppc    .* p.loggdppc0[idx, :]
+        .+ v.β_self_gdppc2   .* p.loggdppc02[idx, :]
+        .+ v.β_self_lag1     .* p.laglogpm0[idx, :]
+        .+ v.β_self_lag2     .* p.lag2logpm0[idx, :]
+
+    v.logpm_export[idx, :] =
+          v.β_export_co2      .* p.logco20[idx, :]
+        .+ v.β_export_ch4      .* p.logch40[idx, :]
+        .+ v.β_export_co2xyear .* p.logco20xyear0[idx, :]
+        .+ v.β_export_ch4xyear .* p.logch40xyear0[idx, :]
+        .+ v.β_export_pop      .* p.logpop0[idx, :]
+        .+ v.β_export_gdppc    .* p.loggdppc0[idx, :]
+        .+ v.β_export_gdppc2   .* p.loggdppc02[idx, :]
+        .+ v.β_export_lag1     .* p.laglogpm0[idx, :]
+        .+ v.β_export_lag2     .* p.lag2logpm0[idx, :]
+    end
+end
+
+
+
+
+
+#=
     function run_timestep(p, v, d, t)
     v.logpm_self[t.t, :] = v.β_self_co2      * p.logco20[t.t, :] +
                            v.β_self_ch4      * p.logch40[t.t, :] +
@@ -139,6 +176,8 @@ end
                              v.β_export_lag2     * p.lag2logpm0[t.t, :]
     end
 end
+
+=#
 
 function add_pm25_pollution(model::Model)
     pm25pollution = add_comp!(model, pm25_pollution)
