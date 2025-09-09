@@ -176,6 +176,23 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     # PM2.5 Pollution Component
     pm25pollution = add_pm25_pollution(m)
     
+    # --- TEMP wiring just to smoke-test pm_total shapes ---
+    let
+        nC = dim_count(m, :country)
+        nT = dim_count(m, :time)
+    
+        # identity mixing (sink x source)
+        export_pattern = Matrix{Float64}(I, nC, nC)
+    
+        # neutral baselines (μg/m^3)
+        baseline_self   = ones(Float64, nT, nC)
+        baseline_export = ones(Float64, nT, nC)
+    
+        pm25pollution[:export_pattern]       = export_pattern
+        pm25pollution[:baseline_pm25_self]   = baseline_self
+        pm25pollution[:baseline_pm25_export] = baseline_export
+    end
+    
     
     # Connect inputs to the PM2.5 pollution component
     connect_param!(m, :pm25_pollution => :logco20,       :co2emissions => :logco20)
@@ -189,13 +206,23 @@ function buildpage(m::Model, scenario::String, use_permafrost::Bool=true, use_se
     connect_param!(m, :pm25_pollution => :laglogpm0,    :pm25_pollution => :logpm_self)
     connect_param!(m, :pm25_pollution => :lag2logpm0,   :pm25_pollution => :logpm_self)
     
- 
+
     # PM2.5 Damages (use mean draw by default)
-    pm25damages = add_pm25_damages(m)
+    #pm25damages = add_pm25_damages(m)
     
     # Feed logs from pollution into damages
-    connect_param!(m, :pm25_damages => :pm_log_self,   :pm25_pollution => :logpm_self)
-    connect_param!(m, :pm25_damages => :pm_log_export, :pm25_pollution => :logpm_export)
+    #connect_param!(m, :pm25_damages => :pm_log_self,   :pm25_pollution => :logpm_self)
+    #connect_param!(m, :pm25_damages => :pm_log_export, :pm25_pollution => :logpm_export)
+    
+    # PM2.5 Damages (use mean draw by default)
+    pm25damages = add_pm25_damages(m)
+
+    # Feed total PM (μg/m^3) from pollution into damages
+    connect_param!(m, :pm25_damages => :pm_total, :pm25_pollution => :pm_total)
+
+    
+    
+    
     
     # Socioeconomic inputs
     connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)

@@ -2,15 +2,19 @@
 # PM2.5 Damages Component
 #
 # Computes three cost components (MUSD/yr) per country & year using your
-# chosen R Model 3 specification:
+# chosen R Model 3 specification (estimated in logs):
+#
 #   ln(C_k) = α_k
 #             + (β_pm_k + β_pm_year_k * YEAR[t]) * PM25_TOTAL[t,c]
 #             + θ_pop_k * ln(POP[t,c])
 #             + θ_gdp_k * ln(GDP[t,c])
-#   C_k = exp(ln(C_k))
 #
-# PM25_TOTAL is reconstructed internally from PM logs:
-#   PM25_TOTAL[t,c] = exp(logpm_self[t,c]) + exp(logpm_export[t,c])
+# with log-normal bias correction:
+#   Ĉ_k = exp( ln(C_k) + 0.5 * Var(residuals_k) )
+#
+# Inputs:
+#   PM25_TOTAL[t,c] comes directly from PM25Pollution.pm_total (μg/m^3),
+#   already assembled via self + export mixing and baselines.
 #
 # Coefficients come from Monte Carlo draws stored in CSVs.
 # ==============================================================================
@@ -19,21 +23,16 @@ using Mimi
 using DataFrames
 using CSV
 
-# ---- Load Monte Carlo draws once ----
+# ---- Load Monte Carlo draws once (healthcare, productivity, disutility) ----
 if !isdefined(Main, :pm25_hc_params)
-    #global const pm25_hc_params = CSV.read("../data/pm25_damages/damage_mvrnorm_healthcare.csv", DataFrame)
+    # expected column order: beta_pm, beta_pm_year, theta_pop, theta_gdp
     global const pm25_hc_params = CSV.read(joinpath(@__DIR__, "../../data/pm25_damages/damage_mvrnorm_healthcare.csv"), DataFrame)
-
 end
 if !isdefined(Main, :pm25_prod_params)
-    #global const pm25_prod_params = CSV.read("../data/pm25_damages/damage_mvrnorm_productivity.csv", DataFrame)
     global const pm25_prod_params = CSV.read(joinpath(@__DIR__, "../../data/pm25_damages/damage_mvrnorm_productivity.csv"), DataFrame)
-
 end
 if !isdefined(Main, :pm25_dis_params)
-    #global const pm25_dis_params = CSV.read("../data/pm25_damages/damage_mvrnorm_disutility.csv", DataFrame)
     global const pm25_dis_params = CSV.read(joinpath(@__DIR__, "../../data/pm25_damages/damage_mvrnorm_disutility.csv"), DataFrame)
-
 end
 
 @defcomp pm25_damages begin
@@ -41,12 +40,10 @@ end
     time    = Index()
 
     # === Inputs ===
-    y_year        = Parameter(index=[time], unit="year")    # calendar year (initpage fills this)
-    pm_log_self   = Parameter(index=[time, country])        # from pm25_pollution :logpm_self
-    pm_log_export = Parameter(index=[time, country])        # from pm25_pollution :logpm_export
-    pop           = Parameter(index=[time, country])        # population level (as in R fit)
-    gdp           = Parameter(index=[time, country])        # GDP level (as in R fit)
-    sigma_min     = Parameter(default = 1e-12)              # numeric floor for logs
+    y_year   = Parameter(index=[time], unit="year")                 # calendar year (initpage fills this)
+    pm_total = Parameter(index=[time, country], unit="μg/m^3")      # from pm25_pollution :pm_total
+    pop      = Parameter(index=[time, country])                     # population level (as in R fit)
+    gdp      = Parameter(index=[time, country])                     # GDP level (as in R fit)
 
     # === Draw selector ===
     pm25_dmg_draw = Parameter{Int}()   # 0 = mean of draws, 1..N = specific row
@@ -72,6 +69,12 @@ end
     alpha_healthcare   = Parameter(default = 0.0)
     alpha_productivity = Parameter(default = 0.0)
     alpha_disutility   = Parameter(default = 0.0)
+
+    # === Residual variances from R models (for log-normal correction) ===
+    # provided by user (var(resid(model3_*)))
+    residvar_healthcare   = Parameter(default = 0.166161364191811)
+    residvar_productivity = Parameter(default = 0.166457426511467)
+    residvar_disutility   = Parameter(default = 0.166839938973439)
 
     # === Outputs (MUSD/yr) ===
     cost_healthcare   = Variable(index=[time, country], unit="MUSD/yr")
@@ -103,31 +106,34 @@ end
 
     # ---- timestep: vectorized over countries at current time ----
     function run_timestep(p, v, d, t)
-    idx = Mimi.TimestepIndex(t.t)   # ← add this
+        # year scalar
+        yr = p.y_year[t]
 
-    yr  = p.y_year[idx]             # was p.y_year[t.t]
-    σ   = p.sigma_min
+        # total PM from pollution component (μg/m^3)
+        pm = p.pm_total[t, :]
 
-    pm  = exp.(p.pm_log_self[idx, :]) .+ exp.(p.pm_log_export[idx, :])   # was [... t.t, :]
-    pp  = max.(p.pop[idx, :], σ)                                         # was [... t.t, :]
-    gd  = max.(p.gdp[idx, :], σ)                                         # was [... t.t, :]
+        # floors at 1.0 (guard logs)
+        pp = max.(p.pop[t, :], 1.0)
+        gd = max.(p.gdp[t, :], 1.0)
 
-    βh = v.β_h_pm .+ v.β_h_pmyear * yr
-    βp = v.β_p_pm .+ v.β_p_pmyear * yr
-    βd = v.β_d_pm .+ v.β_d_pmyear * yr
+        # time-adjusted PM slopes
+        βh = v.β_h_pm .+ v.β_h_pmyear * yr
+        βp = v.β_p_pm .+ v.β_p_pmyear * yr
+        βd = v.β_d_pm .+ v.β_d_pmyear * yr
 
-    lnCh = p.alpha_healthcare   .+ βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd)
-    lnCp = p.alpha_productivity .+ βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd)
-    lnCd = p.alpha_disutility   .+ βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd)
+        # log-costs
+        lnCh = p.alpha_healthcare   .+ βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd)
+        lnCp = p.alpha_productivity .+ βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd)
+        lnCd = p.alpha_disutility   .+ βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd)
 
-    v.cost_healthcare[idx, :]   = exp.(lnCh)   # was [... t.t, :]
-    v.cost_productivity[idx, :] = exp.(lnCp)
-    v.cost_disutility[idx, :]   = exp.(lnCd)
+        # log-normal bias correction: yhat = exp(logyhat + 0.5 * Var(resid))
+        v.cost_healthcare[t, :]   = exp.(lnCh .+ 0.5 * p.residvar_healthcare)
+        v.cost_productivity[t, :] = exp.(lnCp .+ 0.5 * p.residvar_productivity)
+        v.cost_disutility[t, :]   = exp.(lnCd .+ 0.5 * p.residvar_disutility)
     end
 end
 
-
-# Helper to add this component and default to "mean of draws", mirroring add_pm25_pollution
+# Helper to add this component and default to "mean of draws"
 function add_pm25_damages(model::Model)
     comp = add_comp!(model, pm25_damages)
     comp[:pm25_dmg_draw] = 0
