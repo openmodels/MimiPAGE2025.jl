@@ -21,6 +21,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
+    policydelay = addpolicydelay(m)
+
+    policydelay[:carbonprice_raw] = carbonpriceinfer[:carbonprice]
 
     # Socio-Economics
     population = addpopulation(m)
