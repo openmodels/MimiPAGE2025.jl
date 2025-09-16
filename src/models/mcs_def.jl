@@ -246,6 +246,13 @@ function getsim(model::Model, samplesize::Int)
         add_RV!(mcs, :rffsp_draw, DiscreteUniform(1, 9400))
     end
 
+    if has_comp(model, :PolicyDelay)
+        add_RV!(mcs, :delay_draw, DiscreteUniform(1, 10000))
+        add_transform!(mcs, :PolicyDelay_delay_draw, :(=), :delay_draw)
+    else
+        add_RV!(mcs, :delay_draw, DiscreteUniform(1, 10000))
+    end
+
     add_RV!(mcs, :frt_warminghalflife, TriangularDist(10, 55, 20))        # from PAGE-ICE v6.2 documentation
     add_RV!(mcs, :tcr_transientresponse, TriangularDist(0.8, 2.7, 1.8))   # from PAGE-ICE v6.2 documentation
     add_RV!(mcs, :alb_emulator_rand, TriangularDist(-1., 1., 0.))

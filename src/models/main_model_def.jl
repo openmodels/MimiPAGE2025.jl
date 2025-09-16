@@ -4,7 +4,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
                    config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true,
-                   emissionfeedback::Bool=true)
+                   emissionfeedback::Bool=true, use_delays::Bool=true)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -21,9 +21,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         socioscenario_comp = :RCPSSPScenario
     end
     carbonpriceinfer = addcarbonpriceinfer(m)
-    policydelay = addpolicydelay(m)
-
-    policydelay[:carbonprice_raw] = carbonpriceinfer[:carbonprice]
+    if use_delays
+        policydelay = addpolicydelay(m)
+        policydelay[:carbonprice_raw] = carbonpriceinfer[:carbonprice]
+    end
 
     # Socio-Economics
     population = addpopulation(m)
@@ -50,7 +51,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     if config_abatement == "national"
         abateco2 = addabatementcostsco2(m)
         abateco2[:e0_baselineCO2emissions_country] = carbonpriceinfer[:e0_baselineCO2emissions_country]
-        abateco2[:carbonprice] = carbonpriceinfer[:carbonprice]
+        if use_delays
+            abateco2[:carbonprice] = policydelay[:carbonprice]
+        else
+            abateco2[:carbonprice] = carbonpriceinfer[:carbonprice]
+        end
         abateco2[:gdp] = finalgdp_ref
     end
 
@@ -518,7 +523,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
                  config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true,
-                 emissionfeedback::Bool=true)
+                 emissionfeedback::Bool=true, use_delays::Bool=true)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
@@ -530,7 +535,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
               config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc,
-              emissionfeedback=emissionfeedback)
+              emissionfeedback=emissionfeedback, use_delays=use_delays)
 
     # next: add vector and panel example
     initpage(model)
