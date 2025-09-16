@@ -66,6 +66,7 @@ include("components/PM25Pollution.jl")
 include("components/PMMarketDamages.jl")
 include("components/MarketDamageAQ_Generic.jl")
 include("components/CILDamages.jl")
+include("components/PolicyDelay.jl")
 
 include("models/main_model_def.jl")
 
