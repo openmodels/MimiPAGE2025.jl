@@ -1,5 +1,6 @@
 using Interpolations
 delays = myloadcsv("data/other/delays.csv")
+delays_extrap = myloadcsv("data/other/delays-extrapolate.csv")
 
 @defcomp PolicyDelay begin
     country = Index()
@@ -20,8 +21,18 @@ delays = myloadcsv("data/other/delays.csv")
             mc_delays = delays[pp.delay_draw, :]
         end
 
+        # Assign randomly
         onedelays = [mc_delays.china[1], mc_delays.india[1], mc_delays.mexico[1], mc_delays.nigeria[1]]
         vv.delay[:] = sample(onedelays, dim_count(pp.model, :country), replace=true)
+
+        # Assign classified based on classes
+        vv.delay[dim_keys(pp.model, :country) .∈ delays_extrap.ISO[delays_extrap.Delay .== 5.]] .= mc_delays.china[1]
+        twodelays = [mc_delays.india[1], mc_delays.mexico[1]]
+        indmex = dim_keys(pp.model, :country) .∈ delays_extrap.ISO[delays_extrap.Delay .== 7.5]
+        vv.delay[indmex] .= sample(twodelays, sum(indmex), replace=true)
+        vv.delay[dim_keys(pp.model, :country) .∈ delays_extrap.ISO[delays_extrap.Delay .== 10.]] .= mc_delays.nigeria[1]
+
+        # Assign known countries
         vv.delay[dim_keys(pp.model, :country) .== "CHN"] .= mc_delays.china[1]
         vv.delay[dim_keys(pp.model, :country) .== "IND"] .= mc_delays.india[1]
         vv.delay[dim_keys(pp.model, :country) .== "MEX"] .= mc_delays.mexico[1]
