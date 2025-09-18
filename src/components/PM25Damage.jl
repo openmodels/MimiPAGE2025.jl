@@ -1,3 +1,4 @@
+
 # ==============================================================================
 # PM2.5 Damages Component
 #
@@ -139,3 +140,4 @@ function add_pm25_damages(model::Model)
     comp[:pm25_dmg_draw] = 0
     return comp
 end
+
