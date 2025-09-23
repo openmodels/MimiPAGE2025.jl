@@ -26,7 +26,7 @@ using CSV
 
 # ---- Load Monte Carlo draws once (healthcare, productivity, disutility) ----
 if !isdefined(Main, :pm25_hc_params)
-    # expected column order: beta_pm, beta_pm_year, theta_pop, theta_gdp
+    # expected column order: beta_pm, beta_year, theta_pop, theta_gdp, beta_pm_year
     global const pm25_hc_params = CSV.read(joinpath(@__DIR__, "../../data/pm25_damages/damage_mvrnorm_healthcare.csv"), DataFrame)
 end
 if !isdefined(Main, :pm25_prod_params)
@@ -51,31 +51,32 @@ end
 
     # === Coefficients (scalars; filled in init) ===
     # Healthcare
+    fe_h = Parameter(index=[country])
     β_h_pm       = Variable()
+    β_h_year     = Variable()
     β_h_pmyear   = Variable()
     θ_h_pop      = Variable()
     θ_h_gdp      = Variable()
     # Productivity
+    fe_p = Parameter(index=[country])
     β_p_pm       = Variable()
+    β_p_year     = Variable()
     β_p_pmyear   = Variable()
     θ_p_pop      = Variable()
     θ_p_gdp      = Variable()
     # Disutility
+    fe_d = Parameter(index=[country])
     β_d_pm       = Variable()
+    β_d_year     = Variable()
     β_d_pmyear   = Variable()
     θ_d_pop      = Variable()
     θ_d_gdp      = Variable()
 
-    # Optional intercepts (default 0; calibrate later if desired)
-    alpha_healthcare   = Parameter(default = 0.0)
-    alpha_productivity = Parameter(default = 0.0)
-    alpha_disutility   = Parameter(default = 0.0)
-
     # === Residual variances from R models (for log-normal correction) ===
     # provided by user (var(resid(model3_*)))
-    residvar_healthcare   = Parameter(default = 0.166161364191811)
-    residvar_productivity = Parameter(default = 0.166457426511467)
-    residvar_disutility   = Parameter(default = 0.166839938973439)
+    residvar_healthcare   = Parameter(default = 0.190420543976005)
+    residvar_productivity = Parameter(default = 0.190723668649814)
+    residvar_disutility   = Parameter(default = 0.191502604324298)
 
     # === Outputs (MUSD/yr) ===
     cost_healthcare   = Variable(index=[time, country], unit="MUSD/yr")
@@ -95,14 +96,14 @@ end
             di = Vector(pm25_dis_params[p.pm25_dmg_draw, :])
         end
         # Healthcare
-        v.β_h_pm     = hc[1]; v.β_h_pmyear = hc[2]
-        v.θ_h_pop    = hc[3]; v.θ_h_gdp    = hc[4]
+        v.β_h_pm     = hc[1]; v.β_h_year   = hc[2];
+        v.θ_h_pop    = hc[3]; v.θ_h_gdp    = hc[4]; v.β_h_pmyear = hc[5]
         # Productivity
-        v.β_p_pm     = pr[1]; v.β_p_pmyear = pr[2]
-        v.θ_p_pop    = pr[3]; v.θ_p_gdp    = pr[4]
+        v.β_p_pm     = hc[1]; v.β_p_year   = hc[2];
+        v.θ_p_pop    = hc[3]; v.θ_p_gdp    = hc[4]; v.β_p_pmyear = hc[5]
         # Disutility
-        v.β_d_pm     = di[1]; v.β_d_pmyear = di[2]
-        v.θ_d_pop    = di[3]; v.θ_d_gdp    = di[4]
+        v.β_d_pm     = hc[1]; v.β_d_year   = hc[2];
+        v.θ_d_pop    = hc[3]; v.θ_d_gdp    = hc[4]; v.β_d_pmyear = hc[5]
     end
 
     # ---- timestep: vectorized over countries at current time ----
@@ -123,9 +124,9 @@ end
         βd = v.β_d_pm .+ v.β_d_pmyear * yr
 
         # log-costs
-        lnCh = p.alpha_healthcare   .+ βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd)
-        lnCp = p.alpha_productivity .+ βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd)
-        lnCd = p.alpha_disutility   .+ βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd)
+        lnCh = βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd) + v.θ_h_year * yr .+ p.fe_h[:]
+        lnCp = βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd) + v.θ_p_year * yr .+ p.fe_p[:]
+        lnCd = βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd) + v.θ_d_year * yr .+ p.fe_d[:]
 
         # log-normal bias correction: yhat = exp(logyhat + 0.5 * Var(resid))
         v.cost_healthcare[t, :]   = exp.(lnCh .+ 0.5 * p.residvar_healthcare)
@@ -138,6 +139,21 @@ end
 function add_pm25_damages(model::Model)
     comp = add_comp!(model, pm25_damages)
     comp[:pm25_dmg_draw] = 0
+
+    mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv"), DataFrame)
+
+    fe_h_regional = CSV.read(pagedata("pm25_damages/damage_fe_healthcare.csv"), DataFrame)
+    fe_h = leftjoin(mapping, fe_h_regional, on=:REGION_4LETTER => :idx)
+    comp[:fe_h] = readcountrydata_i_const(model, fe_h, :ISO3, :effect, vv -> mean(skipmissing(vv)))
+
+    fe_p_regional = CSV.read(pagedata("pm25_damages/damage_fe_productivity.csv"), DataFrame)
+    fe_p = leftjoin(mapping, fe_p_regional, on=:REGION_4LETTER => :idx)
+    comp[:fe_p] = readcountrydata_i_const(model, fe_p, :ISO3, :effect, vv -> mean(skipmissing(vv)))
+
+    fe_d_regional = CSV.read(pagedata("pm25_damages/damage_fe_disutility.csv"), DataFrame)
+    fe_d = leftjoin(mapping, fe_d_regional, on=:REGION_4LETTER => :idx)
+    comp[:fe_d] = readcountrydata_i_const(model, fe_d, :ISO3, :effect, vv -> mean(skipmissing(vv)))
+
     return comp
 end
 

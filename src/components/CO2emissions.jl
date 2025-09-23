@@ -6,80 +6,26 @@
 
     e_countryCO2emissions = Variable(index=[time, country], unit="Mtonne/year")
     e_globalCO2emissions = Variable(index=[time], unit="Mtonne/year")
-    
-    # === Variables needed for PM2.5 pollution ===
-    logco20        = Variable(index=[time, country], unit="log(MtCO2/year)")
-    logco20xyear0  = Variable(index=[time, country], unit="log(MtCO2/year) * year")
-    
-    
-    function run_timestep(p, v, d, t)
-    idx = Mimi.TimestepIndex(t.t)   # wrap the integer into TimestepIndex
-    #year = d.time[t.t]              
-    year = (2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300)[t.t]
 
-    # Regional CO2 emissions
-    for cc in d.country
-        v.e_countryCO2emissions[idx, cc] = p.baselineemit[idx, cc] * (1 - p.fracabatedcarbon[idx, cc])
-    end
-
-    # Global CO2 emissions
-    v.e_globalCO2emissions[idx] = sum(v.e_countryCO2emissions[idx, :])
-
-    # Derived variables for PM2.5
-    for cc in d.country
-        lc = log(max(v.e_countryCO2emissions[idx, cc], 1e-12))
-        v.logco20[idx, cc]       = lc
-        v.logco20xyear0[idx, cc] = lc * (year - 2015)
-        end
-    end
-end
-
-
-
-
-
-
-
-
-# Commenting out the whole block to try a new run_timestep
-#=
+    # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
+    gdppc = Parameter(index=[time, country], unit="\$/person")
+    pop_population = Parameter(index=[time, country], unit="million person")
+    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
     function run_timestep(p, v, d, t)
-        idx = TimestepIndex(t.t)
-
         # eq.4 in Hope (2006) - regional CO2 emissions as % change from baseline
         for cc in d.country
-            v.e_countryCO2emissions[idx, cc] = p.baselineemit[t, cc] * (1 - p.fracabatedcarbon[t, cc])
+            v.e_countryCO2emissions[t, cc] = p.baselineemit[t, cc] * (1 - p.fracabatedcarbon[t, cc])
+
+            # rescale emissions based on GDP deviation from original scenario pathway
+            if !is_first(t) && p.emfeed_emissionfeedback
+                v.e_countryCO2emissions[t, cc] = v.e_countryCO2emissions[t, cc] * (p.gdppc[t-1, cc] * p.pop_population[t-1, cc] / p.gdp_baseline[t-1, cc])
+            end
+
         end
 
-        # eq. 5 in Hope (2006) - global CO2 emissions are sum of regional emissions
-        v.e_globalCO2emissions[idx] = sum(v.e_countryCO2emissions[idx, :])
-
-        # Derived variables for PM2.5
-        for cc in d.country
-            v.logco20[idx, cc] = log(v.e_countryCO2emissions[idx, cc] + 1e-6)  # Avoid log(0)
-            v.logco20xyear0[idx, cc] = v.logco20[idx, cc] * (d.time[idx] - 2015) # '2015' is year_0
-        end
-    end
-end
-
-=#
-
-
-#=
-    function run_timestep(p, v, d, t)
-
-        # eq.4 in Hope (2006) - regional CO2 emissions as % change from baseline
-        for cc in d.country
-            v.e_countryCO2emissions[t,cc] = p.baselineemit[t,cc] * (1 - p.fracabatedcarbon[t, cc])
-        end
         # eq. 5 in Hope (2006) - global CO2 emissions are sum of regional emissions
         v.e_globalCO2emissions[t] = sum(v.e_countryCO2emissions[t,:])
     end
 end
-=#
-
-
-
-
-
