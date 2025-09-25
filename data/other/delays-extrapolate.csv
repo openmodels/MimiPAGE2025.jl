@@ -1,0 +1,37 @@
+﻿Country,Global Innovation Rank,Government Effectiveness Rank,Per Capita GDP Rank,Social Capital Rank,Overall Rank,Delay,ISO
+Germany,4,5,2,6,1,5,DEU
+Japan,7,1,10,1,2,5,JPN
+France,6,7,5,2,3,5,FRA
+Korea,3,3,9,5,4,5,KOR
+United Kingdom,2,6,4,8,5,5,GBR
+Canada,8,2,3,11,6,5,CAN
+Spain,10,9,7,3,7,5,ESP
+Italy,9,11,6,4,8,5,ITA
+USA,1,4,1,25,9,5,USA
+China,5,10,16,9,10,5,CHN
+Poland,13,14,11,7,11,5,POL
+Saudi Arabia,16,8,8,20,12,7.5,SAU
+Thailand,14,15,19,16,13,7.5,THA
+Indonesia,19,12,22,13,14,7.5,IDN
+Viet Nam,15,17,24,10,15,7.5,VNM
+India,12,13,28,21,16,7.5,IND
+Philippines,18,16,26,14,17,7.5,PHL
+Türkiye,11,22,12,29,18,7.5,TUR
+Argentina,26,25,15,17,19,7.5,ARG
+Mexico,20,20,14,30,20,7.5,MEX
+Colombia,22,19,18,28,21,7.5,COL
+Russia,21,31,13,23,22,7.5,RUS
+Brazil,17,26,17,35,23,7.5,BRA
+Morocco,24,18,25,32,24,10,MAR
+Kenya,29,24,30,18,25,10,KEN
+Algeria,32,29,21,22,26,10,DZA
+Bangladesh,30,30,29,15,27,10,BGD
+South Africa,25,23,20,36,28,10,ZAF
+Egypt,27,21,27,31,29,10,EGY
+Iran,23,35,23,26,30,10,IRN
+Ethiopia,35,32,35,12,31,10,ETH
+Pakistan,28,28,32,33,32,10,PAK
+Uganda,33,27,34,27,33,10,UGA
+Myanmar,34,36,33,19,34,10,MMR
+Nigeria,31,33,36,24,35,10,NGA
+Angola,36,34,31,34,36,10,AGO

@@ -7,9 +7,6 @@ include("../utils/country_tools.jl")
     country = Index()
 
     model = Parameter{Model}()
-    
-    y_year = Parameter(index=[time], unit="year")
-    y_year_0 = Parameter(unit="year")
 
     e0_baselineCH4emissions = Parameter(index=[country], unit="Mtonne/year")
     e0_baselineCH4emissions_region = Variable(index=[region], unit="Mtonne/year")
@@ -20,11 +17,12 @@ include("../utils/country_tools.jl")
     e_regionalCH4emissions = Variable(index=[time, country], unit="Mtonne/year")
 
     e_globalCH4emissions = Variable(index=[time], unit="Mtonne/year")
-    
-    # === Variables needed for PM2.5 pollution ===
-    logch40        = Variable(index=[time, country], unit="log(Mtonne/year)")
-    logch40xyear0  = Variable(index=[time, country], unit="log(Mtonne/year) * year")
 
+    # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
+    gdppc = Parameter(index=[time, country], unit="\$/person")
+    pop_population = Parameter(index=[time, country], unit="million person")
+    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
     function init(pp, vv, dd)
         vv.e0_baselineCH4emissions_region[:] = countrytoregion(pp.model, sum, pp.e0_baselineCH4emissions)
@@ -37,16 +35,18 @@ include("../utils/country_tools.jl")
         end
 
         er_CH4emissionsgrowth = regiontocountry(p.model, p.er_CH4emissionsgrowth_region[t, :])
-        v.e_regionalCH4emissions[t, :] = er_CH4emissionsgrowth .* p.e0_baselineCH4emissions[:] / 100
+
+        for cc in d.country
+            v.e_regionalCH4emissions[t, cc] = er_CH4emissionsgrowth[cc] * p.e0_baselineCH4emissions[cc] / 100
+
+            # rescale emissions based on GDP deviation from original scenario pathway
+            if !is_first(t) && p.emfeed_emissionfeedback
+                v.e_regionalCH4emissions[t, cc] = v.e_regionalCH4emissions[t, cc] * (p.gdppc[t-1, cc] * p.pop_population[t-1, cc] / p.gdp_baseline[t-1, cc])
+            end
+        end
 
         # eq. 5 in Hope (2006) - global CH4 emissions are sum of regional emissions
         v.e_globalCH4emissions[t] = sum(v.e_regionalCH4emissions[t, :])
-        
-        # Compute log-transformed emissions for PM2.5 component
-        for cc in d.country
-            v.logch40[t, cc] = log(v.e_regionalCH4emissions[t, cc] + 1e-6)
-            v.logch40xyear0[t, cc] = v.logch40[t, cc] * (p.y_year[t] - p.y_year_0)
-        end
     end
 end
 

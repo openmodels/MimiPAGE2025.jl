@@ -1,9 +1,7 @@
 using Mimi
-#using MimiFAIRv2
+using MimiFAIRv2
 
 using Random
-using Chain
-
 import Random
 
 export getpage
@@ -16,6 +14,7 @@ include("compute_scc.jl")
 
 include("components/RCPSSPScenario.jl")
 include("components/RFFSPScenario.jl")
+include("components/FaIRGrounds.jl")
 include("components/CO2emissions.jl")
 include("components/extensions/CO2emissions_regional.jl")
 include("components/CO2cycle.jl")
@@ -65,8 +64,10 @@ include("components/CromarMortalityDamages.jl")
 include("components/VSL.jl")
 include("components/PM25Pollution.jl")
 include("components/PM25Damage.jl")
-
-
+include("components/PMMarketDamages.jl")
+include("components/MarketDamageAQ_Generic.jl")
+include("components/CILDamages.jl")
+include("components/PolicyDelay.jl")
 
 include("models/main_model_def.jl")
 

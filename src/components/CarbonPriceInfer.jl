@@ -95,7 +95,6 @@ macs = myloadcsv("data/macs.csv")
             rawfractargetabated = -rawtonnesabated ./ baselineemit # fraction abated
             # Regularize so not over 1 and goes to 1 as p -> inf
             regfractargetabated = rawfractargetabated ./ (exp.(-carbonprice / 500) .+ rawfractargetabated)
-            regfractargetabated[rawfractargetabated .> 1.] .= rawfractargetabated[rawfractargetabated .> 1.]
 
             totregfractargetabated = sum(regfractargetabated .* baselineemit) / sum(baselineemit)
 

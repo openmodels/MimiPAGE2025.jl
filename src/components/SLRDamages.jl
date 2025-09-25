@@ -33,7 +33,7 @@
     cons_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
     gdp_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
 
-    d_slr = Variable(index=[time, country], unit="\$")
+    d_slr = Variable(index=[time, country], unit="\$million")
     d_percap_slr = Variable(index=[time, country], unit="\$/person")
 
     rcons_per_cap_SLRRemainConsumption = Variable(index=[time, country], unit="\$/person")
