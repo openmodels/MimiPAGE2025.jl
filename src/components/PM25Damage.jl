@@ -124,9 +124,9 @@ end
         βd = v.β_d_pm .+ v.β_d_pmyear * yr
 
         # log-costs
-        lnCh = βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd) + v.θ_h_year * yr .+ p.fe_h[:]
-        lnCp = βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd) + v.θ_p_year * yr .+ p.fe_p[:]
-        lnCd = βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd) + v.θ_d_year * yr .+ p.fe_d[:]
+        lnCh = βh .* pm .+ v.θ_h_pop .* log.(pp) .+ v.θ_h_gdp .* log.(gd) .+ v.β_h_year * yr .+ p.fe_h[:]
+        lnCp = βp .* pm .+ v.θ_p_pop .* log.(pp) .+ v.θ_p_gdp .* log.(gd) .+ v.β_p_year * yr .+ p.fe_p[:]
+        lnCd = βd .* pm .+ v.θ_d_pop .* log.(pp) .+ v.θ_d_gdp .* log.(gd) .+ v.β_d_year * yr .+ p.fe_d[:]
 
         # log-normal bias correction: yhat = exp(logyhat + 0.5 * Var(resid))
         v.cost_healthcare[t, :]   = exp.(lnCh .+ 0.5 * p.residvar_healthcare)

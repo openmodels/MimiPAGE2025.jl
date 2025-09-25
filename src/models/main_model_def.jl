@@ -486,7 +486,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25pollution[:pop_population] = population[:pop_population]
 
     # Feed total PM (μg/m^3) from pollution into damages
-    connect_param!(m, :pm25_damages => :pm_total, :pm25_pollution => :pm_total)
+    connect_param!(m, :pm25_damages => :pm_total, :PM25Pollution => :pm_total)
 
      # Socioeconomic inputs
     connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)
