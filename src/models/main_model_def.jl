@@ -201,55 +201,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
 
     # PM2.5 Pollution Component
-    pm25pollution = add_pm25_pollution(m)
-
-    # --- TEMP wiring just to smoke-test pm_total shapes ---
-    let
-        nC = dim_count(m, :country)
-        nT = dim_count(m, :time)
-
-        # identity mixing (sink x source)
-        export_pattern = Matrix{Float64}(I, nC, nC)
-
-        # neutral baselines (μg/m^3)
-        baseline_self   = ones(Float64, nT, nC)
-        baseline_export = ones(Float64, nT, nC)
-
-        pm25pollution[:export_pattern]       = export_pattern
-        pm25pollution[:baseline_pm25_self]   = baseline_self
-        pm25pollution[:baseline_pm25_export] = baseline_export
-    end
-
-
-    # Connect inputs to the PM2.5 pollution component
-    connect_param!(m, :pm25_pollution => :logco20,       :co2emissions => :logco20)
-    connect_param!(m, :pm25_pollution => :logch40,       :ch4emissions => :logch40)
-    connect_param!(m, :pm25_pollution => :logco20xyear0, :co2emissions => :logco20xyear0)
-    connect_param!(m, :pm25_pollution => :logch40xyear0, :ch4emissions => :logch40xyear0)
-    connect_param!(m, :pm25_pollution => :logpop0,       :Population => :logpop0)
-    connect_param!(m, :pm25_pollution => :loggdppc0,     :GDP => :loggdppc0)
-    connect_param!(m, :pm25_pollution => :loggdppc02,    :GDP => :loggdppc02)
-
-    connect_param!(m, :pm25_pollution => :laglogpm0,    :pm25_pollution => :logpm_self)
-    connect_param!(m, :pm25_pollution => :lag2logpm0,   :pm25_pollution => :logpm_self)
-
-    # Add CIL Damage components
-    cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
-
-    # PM2.5 Pollution Component
     pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
     # PM2.5 Damages
     pm25damages = add_pm25_damages(m)
-
-    # PM2.5 Market Damages Component
-    pmmarket = add_comp!(m, PMMarketDamages)
-
-    # Socioeconomic inputs
-    connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)
-    connect_param!(m, :pm25_damages => :gdp, :GDP => :gdp)
-
-    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
     # PM2.5 Market Damages Component
     pmmarket = add_comp!(m, PMMarketDamages)
