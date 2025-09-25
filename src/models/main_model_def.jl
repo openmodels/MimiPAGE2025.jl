@@ -196,6 +196,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
+<<<<<<< Updated upstream
 
     # Add CIL Damage components
     cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
@@ -242,11 +243,22 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     #connect_param!(m, :pm25_damages => :pm_log_export, :pm25_pollution => :logpm_export)
 
     # PM2.5 Damages (use mean draw by default)
+=======
+
+    # Add CIL Damage components
+    cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
+
+    # PM2.5 Pollution Component
+    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
+
+    # PM2.5 Damages
+>>>>>>> Stashed changes
     pm25damages = add_pm25_damages(m)
 
-    # Feed total PM (μg/m^3) from pollution into damages
-    connect_param!(m, :pm25_damages => :pm_total, :pm25_pollution => :pm_total)
+    # PM2.5 Market Damages Component
+    pmmarket = add_comp!(m, PMMarketDamages)
 
+<<<<<<< Updated upstream
 
 
 
@@ -262,6 +274,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     # PM2.5 Market Damages Component
     pmmarket = add_comp!(m, PMMarketDamages)
 
+=======
+>>>>>>> Stashed changes
     # Market damages from methane
     addMarketDamageAQ_Generic(m, :MarketDamageAQ_AsthmaERVisits, "data/MarketDamageAQ/Methane_AsthmaERVisits.csv",
                               "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
@@ -271,7 +285,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                               "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
     addMarketDamageAQ_Generic(m, :MarketDamageAQ_RespiratoryAdmissions, "data/MarketDamageAQ/Methane_RespiratoryAdmissions.csv",
                               "data/MarketDamageAQ/Historical_MethaneEmissions.csv")
+<<<<<<< Updated upstream
 >>>>>>> ccac
+=======
+>>>>>>> Stashed changes
 
     # Total costs component
     add_comp!(m, TotalCosts)
@@ -538,6 +555,13 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25pollution[:e_countryCH4emissions] = ch4emit[:e_regionalCH4emissions]
     pm25pollution[:gdp] = finalgdp_ref
     pm25pollution[:pop_population] = population[:pop_population]
+
+    # Feed total PM (μg/m^3) from pollution into damages
+    connect_param!(m, :pm25_damages => :pm_total, :pm25_pollution => :pm_total)
+
+     # Socioeconomic inputs
+    connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)
+    connect_param!(m, :pm25_damages => :gdp, :GDP => :gdp)
 
     # PM Market Damages
     pmmarket[:pm_total] = pm25pollution[:pm_total]
