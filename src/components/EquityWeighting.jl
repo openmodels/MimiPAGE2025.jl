@@ -62,7 +62,7 @@ include("../utils/welfare.jl")
     rcons_percap_dis = Parameter(index=[time, country], unit="\$/person")
 
     wit_equityweightedimpact = Variable(index=[time, country], unit="\$million")
-    wit_percap_equityweightedimpact = Variable(index=[time, country], unit="\$million")
+    wit_percap_equityweightedimpact = Variable(index=[time, country], unit="\$/person")
     widt_equityweightedimpact_discounted = Variable(index=[time, country], unit="\$million")
 
     yagg_periodspan = Parameter(index=[time], unit="year")
