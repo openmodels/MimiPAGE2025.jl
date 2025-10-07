@@ -2,6 +2,8 @@ using Interpolations
 delays = myloadcsv("data/other/delays.csv")
 delays_extrap = myloadcsv("data/other/delays-extrapolate.csv")
 
+# NOTE: This work is for CCAC only. It is unpublished, and any publication should include as authors the people who performed the survey.
+
 @defcomp PolicyDelay begin
     country = Index()
 
