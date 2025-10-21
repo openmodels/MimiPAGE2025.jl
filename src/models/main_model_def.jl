@@ -204,7 +204,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
 
     # PM2.5 Damages
-    pm25damages = add_pm25_damages(m)
+    pm25damages_healthcare = add_pm25_damages(m, "morb_healthcare", 0.0174826104055114, :PM25Damage_Healthcare)
+    pm25damages_productivity = add_pm25_damages(m, "morb_productivity", 0.0178356230184167, :PM25Damage_Productivity)
+    pm25damages_disutility = add_pm25_damages(m, "morb_disutility", 0.0173643959907428, :PM25Damage_Disutility)
+    pm25damages_mortality = add_pm25_damages(m, "mort_disutility", 0.0174748512907443, :PM25Damage_Mortality)
 
     # PM2.5 Market Damages Component
     pmmarket = add_comp!(m, PMMarketDamages)
@@ -485,12 +488,15 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25pollution[:gdp] = finalgdp_ref
     pm25pollution[:pop_population] = population[:pop_population]
 
-    # Feed total PM (μg/m^3) from pollution into damages
-    connect_param!(m, :pm25_damages => :pm_total, :PM25Pollution => :pm_total)
+    for pm25_damages_compnames in [:PM25Damage_Healthcare, :PM25Damage_Productivity,
+                                   :PM25Damage_Disutility, :PM25Damage_Mortality]
+        # Feed total PM (μg/m^3) from pollution into damages
+        connect_param!(m, pm25_damages_compnames => :pm_total, :PM25Pollution => :pm_total)
 
-     # Socioeconomic inputs
-    connect_param!(m, :pm25_damages => :pop, :Population => :pop_population)
-    connect_param!(m, :pm25_damages => :gdp, :GDP => :gdp)
+        # Socioeconomic inputs
+        connect_param!(m, pm25_damages_compnames => :pop, :Population => :pop_population)
+        connect_param!(m, pm25_damages_compnames => :gdp, :GDP => :gdp)
+    end
 
     # PM Market Damages
     pmmarket[:pm_total] = pm25pollution[:pm_total]
