@@ -26,6 +26,8 @@ macs = myloadcsv("data/macs.csv")
     mac_draw = Parameter{Int64}()
     baselineco2_uniforms = Parameter() #index=[country])
 
+    control_factor = Parameter(default=1.) # > 1 to increase carbon price
+
     ## Parameters set by init to MC values
 
     # Decrease in CO2 for a given tax
@@ -104,10 +106,10 @@ macs = myloadcsv("data/macs.csv")
         if geterdiff(0) < 0 # no-mitigation - emissions < 0 -> emissions > no-mitigation
             vv.carbonprice[tt, :] .= 0.
         elseif geterdiff(3000) > 0 # full-mitigation - emissions > 0 -> emissions < $3000 price
-            vv.carbonprice[tt, :] .= 3000.
+            vv.carbonprice[tt, :] .= 3000. * pp.control_factor
         else
             root = find_zero(geterdiff, (0.0, 3000.0), Bisection())
-            vv.carbonprice[tt, :] .= root
+            vv.carbonprice[tt, :] .= root * pp.control_factor
         end
     end
 end

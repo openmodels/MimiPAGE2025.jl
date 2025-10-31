@@ -84,7 +84,7 @@ function getcountryvalue(pageiso, isos, values, aggregator; allowmissing=false)
         end
     else
         ii = findfirst(pageiso .== isos)
-        if ii == nothing
+        if ii == nothing || ismissing(values[ii])
             if allowmissing
                 missing
             else
