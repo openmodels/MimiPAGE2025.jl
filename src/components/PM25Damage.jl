@@ -31,8 +31,8 @@ using CSV
     # === Inputs ===
     y_year   = Parameter(index=[time], unit="year")                 # calendar year (initpage fills this)
     pm_total = Parameter(index=[time, country], unit="μg/m^3")      # from pm25_pollution :pm_total
-    pop      = Parameter(index=[time, country])                     # population level (as in R fit)
-    gdp      = Parameter(index=[time, country])                     # GDP level (as in R fit)
+    pop      = Parameter(index=[time, country], unit="million person") # population level (as in R fit)
+    gdp      = Parameter(index=[time, country], unit="\$M")         # GDP level (as in R fit)
 
     # === Draw selector ===
     pm25_dmg_draw = Parameter{Int}()   # 0 = mean of draws, 1..N = specific row
@@ -58,14 +58,14 @@ using CSV
         # expected column order: beta_pm, beta_year, theta_pop, theta_gdp, beta_pm_year
         pm25_params = CSV.read(joinpath(@__DIR__, "../../data/pm25_damages/damage_mvrnorm_$(p.filesuffix).csv"), DataFrame)
 
-        # expected column order in CSVs: beta_pm, beta_pm_year, theta_pop, theta_gdp
+        # expected column order in CSVs: beta_pm, beta_year, theta_pop, theta_gdp, beta_pm_year
         if p.pm25_dmg_draw == 0
             params = mean.(eachcol(pm25_params))
         else
             params = Vector(pm25_params[p.pm25_dmg_draw, :])
         end
-        v.β_pm     = hc[1]; v.β_year   = hc[2];
-        v.θ_pop    = hc[3]; v.θ_gdp    = hc[4]; v.β_pmyear = hc[5]
+        v.β_pm     = params[1]; v.β_year   = params[2];
+        v.θ_pop    = params[3]; v.θ_gdp    = params[4]; v.β_pmyear = params[5]
     end
 
     # ---- timestep: vectorized over countries at current time ----
@@ -77,17 +77,17 @@ using CSV
         pm = p.pm_total[t, :]
 
         # floors at 1.0 (guard logs)
-        pp = max.(p.pop[t, :], 1.0)
-        gd = max.(p.gdp[t, :], 1.0)
+        pp = max.(p.pop[t, :], 1.0) * 1e6
+        gd = max.(p.gdp[t, :], 1.0) * 1.25 # XXX: Put in 2015 USD-EUR exchange rate
 
         # time-adjusted PM slopes
-        β = v.β_pm .+ v.β_pmyear * yr
+        β = v.β_pm .+ v.β_pmyear * (yr - 2025)
 
         # log-costs
-        lnC = β .* log.(pm) .+ v.θ_pop .* log.(pp) .+ v.θ_gdp .* log.(gd) .+ v.β_year * yr .+ p.fe_h[:]
+        lnC = β .* log.(pm) .+ v.θ_pop .* log.(pp) .+ v.θ_gdp .* log.(gd) .+ v.β_year * (yr - 2025) .+ p.fe[:]
 
         # log-normal bias correction: yhat = exp(logyhat + 0.5 * Var(resid))
-        v.cost[t, :]   = exp.(lnC .+ 0.5 * p.residvar)
+        v.cost[t, :] = exp.(lnC .+ 0.5 * p.residvar)
     end
 end
 

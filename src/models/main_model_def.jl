@@ -3,8 +3,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                    config_discontinuity::String="default",
                    config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
-                   config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true,
-                   emissionfeedback::Bool=true, use_delays::Bool=true)
+                   config_capital::String="full", use_trade::Bool=true,
+                   pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true,
+                   pm25_useext::Bool=false, pm25_gainsmatch::Bool=true,
+                   emissionfeedback::Bool=true, use_delays::Bool=true, vsl_calib::Symbol=:epa,
+                   use_gains_ch4::Bool=false)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -103,7 +106,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
     co2cycle = addco2cycle(m, use_permafrost)
     add_comp!(m, co2forcing)
-    ch4emit = addch4emissions(m)
+    ch4emit = addch4emissions(m, use_gains_ch4, pm25_scenario)
     ch4cycle = addch4cycle(m, use_permafrost)
     add_comp!(m, ch4forcing)
     n2oemit = add_comp!(m, n2oemissions)
@@ -192,7 +195,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     discontinuity = adddiscontinuity(m; config_discontinuity)
 
     # Add VSL Component
-    vsl = addVSL(m, :epa)
+    vsl = addVSL(m, vsl_calib)
 
     # Add Cromar Mortality Component
     cromarmortality = addcromarmortality(m)
@@ -201,7 +204,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
 
     # PM2.5 Pollution Component
-    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_scenario)
+    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_useext, pm25_useext, pm25_gainsmatch, pm25_scenario)
 
     # PM2.5 Damages
     pm25damages_healthcare = add_pm25_damages(m, "morb_healthcare", 0.0174826104055114, :PM25Damage_Healthcare)
@@ -539,7 +542,9 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
                  config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true,
-                 emissionfeedback::Bool=true, use_delays::Bool=true)
+                 pm25_useext::Bool=false, pm25_gainsmatch::Bool=true,
+                 emissionfeedback::Bool=true, use_delays::Bool=true, vsl_calib::Symbol=:epa,
+                 use_gains_ch4::Bool=false)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
@@ -550,8 +555,10 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_perm
               use_rffsp=use_rffsp, config_marketdmg=config_marketdmg,
               config_nonmarketdmg=config_nonmarketdmg, config_slrdmg=config_slrdmg, config_discontinuity=config_discontinuity,
               config_abatement=config_abatement, config_downscaling=config_downscaling, use_subnational=use_subnational,
-              config_capital=config_capital, use_trade=use_trade, pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc,
-              emissionfeedback=emissionfeedback, use_delays=use_delays)
+              config_capital=config_capital, use_trade=use_trade,
+              pm25_scenario=pm25_scenario, pm25_useekc=pm25_useekc,
+              pm25_useext=pm25_useext, pm25_gainsmatch=pm25_gainsmatch,
+              emissionfeedback=emissionfeedback, use_delays=use_delays, vsl_calib=vsl_calib, use_gains_ch4=use_gains_ch4)
 
     # next: add vector and panel example
     initpage(model)

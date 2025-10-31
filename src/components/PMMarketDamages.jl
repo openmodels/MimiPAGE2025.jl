@@ -26,13 +26,15 @@
             lag_pm_total_clip = min.(20., max.(5., pp.pm_total[tt-1, :]))
             value_lin = pp.pm2lngdp * (pm_total_clip - lag_pm_total_clip)
             value_log = pp.pm2lngdp * (log.(pm_total_clip) - log.(lag_pm_total_clip))
-            for cc in dd.country
-                if value_lin[cc] > 0
-                    vv.dlngdp[tt, cc] = min(value_lin[cc], value_log[cc])
-                else
-                    vv.dlngdp[tt, cc] = max(value_lin[cc], value_log[cc])
-                end
-            end
+
+            vv.dlngdp[tt, :] = value_lin
+            # for cc in dd.country
+            #     if value_lin[cc] > 0
+            #         vv.dlngdp[tt, cc] = min(value_lin[cc], value_log[cc])
+            #     else
+            #         vv.dlngdp[tt, cc] = max(value_lin[cc], value_log[cc])
+            #     end
+            # end
 
             vv.cumullngdp[tt, :] = vv.cumullngdp[tt-1, :] + vv.dlngdp[tt, :]
             vv.totalchange[tt, :] = (exp.(vv.cumullngdp[tt, :]) .- 1) .* 100

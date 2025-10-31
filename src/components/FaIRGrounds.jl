@@ -94,7 +94,7 @@ function addfairgrounds(model::Model, scenario::String)
     fairgrounds = add_comp!(model, FaIRGrounds)
 
     mapping = Dict("Zero Emissions & SSP1"=>"ssp119", "1.5 degC Target"=>"ssp119", "RCP1.9 & SSP1"=>"ssp119", "2 degC Target"=>"ssp126", "RCP2.6 & SSP1"=>"ssp126",
-                   "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585", "RCP2.6 & SSP2"=>"ssp126")
+                   "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585", "RCP2.6 & SSP2"=>"ssp126", "RCP4.5 & SSP3"=> "ssp245", "RCP2.6 & SSP3"=>"ssp126")
 
     fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
     fairgrounds[:fairmi] = build(fairmodel)
