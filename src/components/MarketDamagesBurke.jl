@@ -24,7 +24,7 @@ include("../utils/country_tools.jl")
     impf_coeff_lin = Parameter(default=-0.00829990966469437) # rescaled coefficients from Burke
     impf_coeff_quadr = Parameter(default=-0.000500003403703578)
     tcal_burke = Parameter(default=21.) # calibration temperature for the impact function
-    nlag_burke = Parameter(default=2.) # Yumashev et al. (2019) allow for one or two lags
+    nlag_burke = Parameter(default=1.) # Yumashev et al. (2019) allow for one or two lags
 
     marginal_offset = Variable(index=[time, country])
     i1log_impactlogchange = Variable(index=[time, country]) # intermediate variable for computation
@@ -88,12 +88,12 @@ include("../utils/country_tools.jl")
 
         for cc in d.country
             # calculate the log change, depending on the number of lags specified
-            v.i1log_impactlogchange[t,cc] = p.nlag_burke * (p.impf_coeff_lin  * (p.rtl_realizedtemperature_absolute[t,cc] - p.rtl_0_realizedtemperature_absolute_burke[cc]) +
-                                                            p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] - p.tcal_burke)^2 -
-                                                                                  (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] - p.tcal_burke)^2))
+            v.i1log_impactlogchange[t,cc] = p.impf_coeff_lin  * (p.rtl_realizedtemperature_absolute[t,cc] - p.rtl_0_realizedtemperature_absolute_burke[cc]) +
+                p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] - p.tcal_burke)^2 -
+                                      (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] - p.tcal_burke)^2)
 
             # calculate the impact at focus region GDP p.c.
-            v.iref_ImpactatReferenceGDPperCap[t, cc] = 100 * (1 - exp(v.i1log_impactlogchange[t, cc]))
+            v.iref_ImpactatReferenceGDPperCap[t, cc] = 100 * (1 - exp(p.nlag_burke * v.i1log_impactlogchange[t, cc]))
 
             # calculate impacts at actual GDP
             v.igdp_ImpactatActualGDPperCap[t, cc] = v.iref_ImpactatReferenceGDPperCap[t, cc] *
@@ -106,9 +106,8 @@ include("../utils/country_tools.jl")
                 v.isat_ImpactinclSaturationandAdaptation[t, cc] = p.isatg_impactfxnsaturation +
                     ((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) *
                     ((v.igdp_ImpactatActualGDPperCap[t, cc] - p.isatg_impactfxnsaturation) /
-                    (((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) +
-                    (v.igdp_ImpactatActualGDPperCap[t, cc] -
-                    p.isatg_impactfxnsaturation)))
+                     (((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) +
+                      (v.igdp_ImpactatActualGDPperCap[t, cc] - p.isatg_impactfxnsaturation)))
             end
 
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, cc] = (v.isat_ImpactinclSaturationandAdaptation[t, cc] / 100) * p.rgdp_per_cap_SLRRemainGDP[t, cc]
