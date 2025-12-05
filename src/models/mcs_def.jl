@@ -98,8 +98,13 @@ function getsim(model::Model, samplesize::Int)
         Discontinuity.distau_discontinuityexponent = TriangularDist(10, 30, 20)
 
         # PM2.5 Emulator
-        rv(RV_pm25_draw) = DiscreteUniform(1, 1000)
-        PM25Pollution_pm25_draw = RV_pm25_draw
+        PM25Pollution_pm25_draw = DiscreteUniform(1, 1000)
+
+        # PM2.5 Damages
+        PM25Damage_Healthcare_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        PM25Damage_Productivity_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        PM25Damage_Disutility_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        PM25Damage_Mortality_pm25_dmg_draw = DiscreteUniform(1, 1000)
 
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
