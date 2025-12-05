@@ -39,12 +39,13 @@ include("../utils/trade.jl")
         mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[:]]))
 
         if length(residuals(mod)) < 2
-            smoothscaleby = 1.
+            smoothscaleby = [1.]
         else
             smoothscaleby = exp.(predict(mod)) .* exp(var(residuals(mod)) / 2)
         end
 
         vv.isat_after_ofgdp[tt, :] = smoothscaleby[1] * output.totimpacts2.fracloss_export
+        vv.isat_after_ofgdp[tt, :] = vv.isat_after_ofgdp[tt, :] ./ (1. .+ vv.isat_after_ofgdp[tt, :]) # Asymptotic approach to 1.
         # isat = (GDPbase - RGDP) / GDP => RGDP = GDPbase - isat * GDP
         vv.rgdp_per_cap_TradeRemainGDP[tt, :] = (pp.gdp_baseline[tt, :] .- pp.gdp[tt, :] .* vv.isat_after_ofgdp[tt, :]) ./ pp.pop_population[tt, :]
         vv.rcons_per_cap_TradeRemainConsumption[tt, :] = vv.rgdp_per_cap_TradeRemainGDP[tt, :] .* (1 .- pp.save_savingsrate[:] / 100)

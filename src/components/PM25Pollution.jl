@@ -181,6 +181,8 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             vv.logpm_self[tt, :] .= 0.
             vv.logpm_export[tt, :] .= 0.
         else
+            baseidx = TimestepIndex(findfirst(pp.y_year[:] .== pp.baseline_year[tt]))
+
             # Bias-correct so that difference is 0 in 2020
             logco20 = log.(pp.e_countryCO2emissions[tt, :]) - log.(pp.baseline_co2[tt, :]) - (log.(pp.e_countryCO2emissions[TimestepIndex(1), :]) - log.(pp.baseline_co2[TimestepIndex(1), :]))
             logch40 = log.(pp.e_countryCH4emissions[tt, :]) - log.(pp.baseline_ch4[tt, :]) - (log.(pp.e_countryCH4emissions[TimestepIndex(1), :]) - log.(pp.baseline_ch4[TimestepIndex(1), :]))
@@ -192,7 +194,6 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             loggdppc02 = loggdppc.^2 - log.(pp.baseline_gdppc[tt, :]).^2 - (log.(pp.gdp[TimestepIndex(1), :] ./ pp.pop_population[TimestepIndex(1), :]).^2 - log.(pp.baseline_gdppc[TimestepIndex(1), :]).^2)
 
             ekc_effect = pp.ekc_loggdppc_coeff * loggdppc0 + pp.ekc_loggdppc2_coeff * loggdppc02
-            baseidx = TimestepIndex(findfirst(pp.y_year[:] .== pp.baseline_year[tt]))
 
             ## logcost * β - logcost_baseline * β
             logcosteffect_self = log(pp.control_factor) * max.(0., vv.β_self_logcost .+ vv.β_self_logcostxloggdppc .* loggdppc)
@@ -200,25 +201,25 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
 
             vv.logpm_self[tt, :] = vv.β_self_co2 * logco20 +
                 vv.β_self_ch4 * logch40 +
-                vv.β_self_co2xyear * logco20 * (pp.y_year[tt] - 2020) +
-                vv.β_self_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
+                vv.β_self_co2xyear * logco20 * (pp.baseline_year[tt] - 2020) +
+                vv.β_self_ch4xyear * logch40 * (pp.baseline_year[tt] - 2020) .+
                 vv.β_self_loggdp0 * loggdp0 +
                 logcosteffect_self +
                 # vv.β_self_laglogpm0 * vv.logpm_self[tt - 1, :] + <-- DROP because can't do diff
                 ekc_effect .+
-                (vv.yearfe_self[tt] - vv.yearfe_self[baseidx]) .+
-                vv.trendfe_self .* (pp.y_year[tt] - pp.baseline_year[tt])
+                (vv.yearfe_self[tt] - vv.yearfe_self[baseidx])
+                # vv.trendfe_self .* (pp.y_year[tt] - pp.baseline_year[tt]) <-- Don't allow extrapolation
 
             vv.logpm_export[tt, :] = vv.β_export_co2 * logco20 +
                 vv.β_export_ch4 * logch40 +
-                vv.β_export_co2xyear * logco20 * (pp.y_year[tt] - 2020) +
-                vv.β_export_ch4xyear * logch40 * (pp.y_year[tt] - 2020) .+
+                vv.β_export_co2xyear * logco20 * (pp.baseline_year[tt] - 2020) +
+                vv.β_export_ch4xyear * logch40 * (pp.baseline_year[tt] - 2020) .+
                 vv.β_export_loggdp0 * loggdp0 +
                 logcosteffect_export +
                 # vv.β_export_laglogpm0 * vv.logpm_export[tt - 1, :] + <-- DROP because can't do diff
                 ekc_effect .+
-                (vv.yearfe_export[tt] - vv.yearfe_export[baseidx]) .+ # 0 under flat interpolation
-                vv.trendfe_export .* (pp.y_year[tt] - pp.baseline_year[tt])
+                (vv.yearfe_export[tt] - vv.yearfe_export[baseidx]) # 0 under flat interpolation
+                # vv.trendfe_export .* (pp.y_year[tt] - pp.baseline_year[tt]) <-- Don't allow extrapolation
 
             # Fill in missing values
             mean_self = mean(filter(x -> !ismissing(x) && !isnan(x), vv.logpm_self[tt, :]))

@@ -68,6 +68,7 @@ include("components/PMMarketDamages.jl")
 include("components/MarketDamageAQ_Generic.jl")
 include("components/CILDamages.jl")
 include("components/PolicyDelay.jl")
+include("components/AdditionalMarketDamages.jl")
 
 include("models/main_model_def.jl")
 
