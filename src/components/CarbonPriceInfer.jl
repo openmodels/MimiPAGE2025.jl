@@ -95,8 +95,8 @@ macs = myloadcsv("data/macs.csv")
             baselineemit = vv.e0_baselineCO2emissions_country .* bau_co2emissions_country / 100 # Mt
 
             rawfractargetabated = -rawtonnesabated ./ baselineemit # fraction abated
-            # Regularize so not over 1 and goes to 1 as p -> inf
-            regfractargetabated = rawfractargetabated ./ (exp.(-carbonprice / 500) .+ rawfractargetabated)
+            # Regularize so not over 150% and goes to 150% as p -> inf
+            regfractargetabated = rawfractargetabated ./ (exp.(-carbonprice / 500) .+ rawfractargetabated / 1.5)
 
             totregfractargetabated = sum(regfractargetabated .* baselineemit) / sum(baselineemit)
 

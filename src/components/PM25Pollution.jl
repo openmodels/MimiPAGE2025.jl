@@ -184,8 +184,8 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             baseidx = TimestepIndex(findfirst(pp.y_year[:] .== pp.baseline_year[tt]))
 
             # Bias-correct so that difference is 0 in 2020
-            logco20 = log.(pp.e_countryCO2emissions[tt, :]) - log.(pp.baseline_co2[tt, :]) - (log.(pp.e_countryCO2emissions[TimestepIndex(1), :]) - log.(pp.baseline_co2[TimestepIndex(1), :]))
-            logch40 = log.(pp.e_countryCH4emissions[tt, :]) - log.(pp.baseline_ch4[tt, :]) - (log.(pp.e_countryCH4emissions[TimestepIndex(1), :]) - log.(pp.baseline_ch4[TimestepIndex(1), :]))
+            logco20 = log.(max.(1., pp.e_countryCO2emissions[tt, :])) - log.(pp.baseline_co2[tt, :]) - (log.(pp.e_countryCO2emissions[TimestepIndex(1), :]) - log.(pp.baseline_co2[TimestepIndex(1), :]))
+            logch40 = log.(max.(1., pp.e_countryCH4emissions[tt, :])) - log.(pp.baseline_ch4[tt, :]) - (log.(pp.e_countryCH4emissions[TimestepIndex(1), :]) - log.(pp.baseline_ch4[TimestepIndex(1), :]))
 
             loggdp0 = (log.(pp.gdp[tt, :]) - log.(pp.gdp[TimestepIndex(1), :])) - (log.(pp.baseline_gdp[tt, :]) - log.(pp.baseline_gdp[TimestepIndex(1), :]))
             # logpop0 = log.(pp.pop_population[tt, :]) - log.(pp.pop_population[TimestepIndex(1), :])

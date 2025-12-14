@@ -29,6 +29,8 @@ end
 function addadditionalmarketdamages(model::Model)
     additional = add_comp!(model, AdditionalMarketDamages)
 
+    println("NOTE: Need to update to costs in PM25_delta_impact_cost_mort_morb_20251203.xlsx")
+
     additional[:one] = zeros(dim_count(model, :time), dim_count(model, :country))
     additional[:two] = zeros(dim_count(model, :time), dim_count(model, :country))
 

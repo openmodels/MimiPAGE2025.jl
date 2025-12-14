@@ -59,7 +59,7 @@ import Mimi.ModelInstance, Mimi.Clock, Mimi.build, Mimi.dim_dict, Mimi.timesteps
         if !is_first(tt)
             E_co2 = (pp.e_globalCO2emissions[tt-1] + pp.perm_tot_e_co2[tt-1]) / 1000 / 3.67 # GtC yr⁻¹
             if tt.t > 2
-                E_ch4 = (pp.e_globalCH4emissions[tt-1] + pp.perm_tot_ce_ch4[tt-1] - pp.perm_tot_ce_ch4[tt-2]) # TgCH₄ yr⁻¹
+                E_ch4 = pp.e_globalCH4emissions[tt-1] + (pp.perm_tot_ce_ch4[tt-1] - pp.perm_tot_ce_ch4[tt-2]) / (pp.y_year[tt-1] - pp.y_year[tt-2]) # TgCH₄ yr⁻¹
             else
                 E_ch4 = pp.e_globalCH4emissions[tt-1] # TgCH₄ yr⁻¹
             end

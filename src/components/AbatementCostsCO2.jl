@@ -16,6 +16,7 @@ macs = myloadcsv("data/macs.csv")
     model = Parameter{Model}()
     y_year = Parameter(index=[time], unit="year")
     mac_draw = Parameter{Int64}()
+    use_autoreg = Parameter{Bool}()
 
     bau_co2emissions = Parameter(index=[time, region], unit="%")
     e0_baselineCO2emissions_country = Parameter(index=[country], unit="Mtonne/year")
@@ -57,6 +58,7 @@ macs = myloadcsv("data/macs.csv")
     ac_500_infxyear_gdp = Variable(index=[country], unit="\$2010/\$2010/year")
     lag_value_gdp = Variable(index=[country], unit="\$2010")
 
+    rawfractargetabated = Variable(index=[time, country], unit="portion") # portion abated before adjustement
     fracabatedcarbon = Variable(index=[time, country], unit="portion") # portion abated
     loggdpcost = Variable(index=[time, country], unit="log diff") # log difference
     tc_totalcost_national = Variable(index=[time, country], unit="\$million")
@@ -116,14 +118,14 @@ macs = myloadcsv("data/macs.csv")
         vv.baselineemit[tt, :] = max.(pp.e0_baselineCO2emissions_country, 0.05) .* regiontocountry(pp.model, pp.bau_co2emissions[tt, :]) / 100
         # 0.05 is just below the lowest mean value
 
-        rawfractargetabated = -rawtonnesabated ./ vv.baselineemit[tt,:] # fraction abated
-        # Regularize so not over 1 and goes to 1 as p -> inf
-        regfractargetabated = rawfractargetabated ./ (exp.(-pp.carbonprice[tt, :] / 500) + rawfractargetabated)
+        vv.rawfractargetabated[tt, :] = -rawtonnesabated ./ vv.baselineemit[tt,:] # fraction abated
+        # Regularize so not over 150% and goes to 150% as p -> inf
+        regfractargetabated = vv.rawfractargetabated[tt, :] ./ (exp.(-pp.carbonprice[tt, :] / 500) + vv.rawfractargetabated[tt, :] / 1.5)
 
         # Use autoreg factor to approach target
         if is_first(tt)
             vv.fracabatedcarbon[tt,:] = regfractargetabated
-        else
+        elseif pp.use_autoreg
             # delta y = (y_goal - y_t) / tau = y_t+1 - y_t
             #   => y_t+1 = y_goal / tau + (1 - 1 / tau) y_t
             #   lag_value_co2 is (1 - 1 / tau)
@@ -134,9 +136,11 @@ macs = myloadcsv("data/macs.csv")
             # -> G (2v - v^2) + (1 - v)^2 y
             autoreg = (1 .- invtau).^(yp_yearsperiod / 5)
             vv.fracabatedcarbon[tt,:] = regfractargetabated .* (1 .- autoreg) .+ autoreg .* vv.fracabatedcarbon[tt-1,:]
-            if any(vv.fracabatedcarbon[tt,:] .> 1)
-                println(vv.fracabatedcarbon[tt,vv.fracabatedcarbon[tt,:] .> 1])
+            if any(vv.fracabatedcarbon[tt,:] .> 1.5)
+                println(vv.fracabatedcarbon[tt, vv.fracabatedcarbon[tt,:] .> 1.5])
             end
+        else
+            vv.fracabatedcarbon[tt,:] = regfractargetabated
         end
 
         ac_0_20_gdp = vv.ac_0_20_gdp + vv.ac_0_20xyear_gdp * (2050 - gettime(tt))
@@ -160,12 +164,13 @@ macs = myloadcsv("data/macs.csv")
     end
 end
 
-function addabatementcostsco2(model::Model)
+function addabatementcostsco2(model::Model, use_autoreg::Bool=false)
     abatementcostscomp = add_comp!(model, AbatementCostsCO2)
 
     abatementcostscomp[:model] = model
     abatementcostscomp[:mac_draw] = -1
     abatementcostscomp[:carbonprice] = zeros(dim_count(model, :time), dim_count(model, :country))
+    abatementcostscomp[:use_autoreg] = use_autoreg
 
     return abatementcostscomp
 end
