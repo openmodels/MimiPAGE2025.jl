@@ -7,7 +7,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                    pm25_scenario::Symbol=:Baseline, pm25_useekc::Bool=true,
                    pm25_useext::Bool=false, pm25_gainsmatch::Bool=true,
                    emissionfeedback::Bool=true, use_delays::Bool=true, vsl_calib::Symbol=:epa,
-                   use_gains_ch4::Bool=false)
+                   use_gains_ch4::Union{Bool, Symbol}=false)
     # add all the components
     sspscenario = addrcpsspscenario(m, scenario)
     if use_rffsp
@@ -51,7 +51,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         finalcons_pair = :GDP => :cons_percap_consumption
     end
 
-    if config_abatement == "national"
+    if config_abatement in ["national", "nationalrcp"]
         abateco2 = addabatementcostsco2(m)
         abateco2[:e0_baselineCO2emissions_country] = carbonpriceinfer[:e0_baselineCO2emissions_country]
         if use_delays
@@ -99,6 +99,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
     if config_abatement == "national"
         co2emit = add_comp!(m, co2emissions)
+    elseif config_abatement == "nationalrcp"
+        co2emit = addco2emissions_rcp(m, :co2emissions)
     elseif config_abatement == "pageice"
         co2emit = add_comp!(m, co2emissions_regional, :co2emissions)
     else
@@ -106,7 +108,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
     co2cycle = addco2cycle(m, use_permafrost)
     add_comp!(m, co2forcing)
-    ch4emit = addch4emissions(m, use_gains_ch4, pm25_scenario)
+    ch4emit = addch4emissions(m, use_gains_ch4 != false, isa(use_gains_ch4, Symbol) ? use_gains_ch4 : pm25_scenario)
     ch4cycle = addch4cycle(m, use_permafrost)
     add_comp!(m, ch4forcing)
     n2oemit = add_comp!(m, n2oemissions)
@@ -191,7 +193,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
 
     # PM2.5 Pollution Component
-    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_useext, pm25_useext, pm25_gainsmatch, pm25_scenario)
+    pm25pollution = add_pm25pollution(m, pm25_useekc, pm25_useext, pm25_useext, config_abatement == "national",
+                                      pm25_gainsmatch, pm25_scenario)
 
     # PM2.5 Damages
     pm25damages_healthcare = add_pm25_damages(m, "morb_healthcare", 0.0174826104055114, :PM25Damage_Healthcare)
@@ -277,6 +280,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     if config_abatement == "national"
         co2emit[:baselineemit] = abateco2[:baselineemit]
         co2emit[:fracabatedcarbon] = abateco2[:fracabatedcarbon]
+    elseif config_abatement == "nationalrcp"
+        co2emit[:er_CO2emissionsgrowth] = sspscenario[:er_CO2emissionsgrowth]
     elseif config_abatement == "pageice"
         co2emit[:er_CO2emissionsgrowth] = sspscenario[:er_CO2emissionsgrowth]
     end
@@ -441,7 +446,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
 
     # PM2.5 pollution component
-    pm25pollution[:e_countryCO2emissions] = co2emit[:e_countryCO2emissions]
+    if config_abatement == "national"
+        pm25pollution[:e_countryCO2emissions] = co2emit[:e_countryCO2emissions]
+    end
     pm25pollution[:e_countryCH4emissions] = ch4emit[:e_regionalCH4emissions]
     pm25pollution[:gdp] = finalgdp_ref
     pm25pollution[:pop_population] = population[:pop_population]
@@ -547,14 +554,14 @@ function initpage(m::Model)
     set_leftover_params!(m, p)
 end
 
-function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true, use_permafrost::Bool=true, use_seaice::Bool=true; use_rffsp::Bool=false,
+function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true; use_seaice::Bool=true, use_permafrost::Bool=true, use_rffsp::Bool=false,
                  config_marketdmg::String="adaptive", config_nonmarketdmg::String="national", config_slrdmg::String="national",
                  config_discontinuity::String="default",
                  config_abatement::String="national", config_downscaling::String="mcpr", use_subnational::Bool=true,
                  config_capital::String="full", use_trade::Bool=true, pm25_scenario::Symbol=:Baseline_CLE, pm25_useekc::Bool=true,
                  pm25_useext::Bool=false, pm25_gainsmatch::Bool=true,
                  emissionfeedback::Bool=true, use_delays::Bool=true, vsl_calib::Symbol=:epa,
-                 use_gains_ch4::Bool=false)
+                 use_gains_ch4::Union{Bool, Symbol}=false)
 
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])

@@ -8,7 +8,7 @@ include("../utils/country_tools.jl")
 
     model = Parameter{Model}()
     gains_match = Parameter{Bool}()
-    e_regionalCH4emissions_gains = Parameter(index=[time, country], unit="Mtonne/year")
+    e_regionalCH4emissions_gains = Parameter(index=[time, country], unit="kt/person/year")
 
     e0_baselineCH4emissions = Parameter(index=[country], unit="Mtonne/year")
     e0_baselineCH4emissions_region = Variable(index=[region], unit="Mtonne/year")
@@ -33,7 +33,7 @@ include("../utils/country_tools.jl")
     function run_timestep(p, v, d, t)
         if p.gains_match
             for cc in d.country
-                v.e_regionalCH4emissions[t, cc] = p.e_regionalCH4emissions_gains[t, cc]
+                v.e_regionalCH4emissions[t, cc] = p.e_regionalCH4emissions_gains[t, cc] * p.pop_population[t, cc] * 1e6 / 1e3
             end
             v.e_regionalCH4emissions_region[t, :] = countrytoregion(p.model, sum, v.e_regionalCH4emissions[t, :])
         else
@@ -73,6 +73,7 @@ function addch4emissions(model::Model, use_gains_ch4::Bool, gains_scenario::Symb
 
     if use_gains_ch4
         baseline = CSV.read(pagedata("pollution/baseline.csv"), DataFrame)
+        baseline.EMIS_CH4_KT_percap = baseline.EMIS_CH4_KT ./ baseline.POPULATION
         baseline2 = leftjoin(gains_mapping, baseline, on=:REGION_4LETTER)
         baseline2 = baseline2[.!ismissing.(baseline2.IDYEARS), :]
 
@@ -90,8 +91,8 @@ function addch4emissions(model::Model, use_gains_ch4::Bool, gains_scenario::Symb
                 baseline_page = leftjoin(DataFrame(ISO3=dim_keys(model, :country)), baseline_period, on=:ISO3)
             end
 
-            baseline_page.EMIS_CH4_KT[ismissing.(baseline_page.EMIS_CH4_KT)] .= e0_baselineCH4emissions[ismissing.(baseline_page.EMIS_CH4_KT)]
-            gains_ch4[tt, :] = baseline_page.EMIS_CH4_KT / 1000
+            baseline_page.EMIS_CH4_KT_percap[ismissing.(baseline_page.EMIS_CH4_KT_percap)] .= mean(skipmissing(baseline_page.EMIS_CH4_KT_percap))
+            gains_ch4[tt, :] = baseline_page.EMIS_CH4_KT_percap
         end
     end
 

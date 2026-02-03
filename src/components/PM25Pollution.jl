@@ -46,6 +46,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
     scenario_suffix = Parameter{String}()
     use_econ = Parameter{Bool}()
     use_extrap = Parameter{Bool}()
+    use_co2 = Parameter{Bool}()
     gainsmatch = Parameter{Bool}()
 
     yearfe_self = Variable(index=[time])
@@ -138,18 +139,18 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
         end
 
         if p.use_econ
-            v.β_self_co2      = values_self[findfirst(names(pm25_self_params) .== "logco20")]
+            v.β_self_co2      = p.use_co2 ? values_self[findfirst(names(pm25_self_params) .== "logco20")] : 0.
             v.β_self_ch4      = 0.
-            v.β_self_co2xyear = values_self[findfirst(names(pm25_self_params) .== "logco20xyear0")]
+            v.β_self_co2xyear = p.use_co2 ? values_self[findfirst(names(pm25_self_params) .== "logco20xyear0")] : 0.
             v.β_self_ch4xyear = 0.
             v.β_self_loggdp0 = values_self[findfirst(names(pm25_self_params) .== "loggdp0")]
             v.β_self_logcost = values_self[findfirst(names(pm25_self_params) .== "logcost0")]
             v.β_self_logcostxloggdppc = values_self[findfirst(names(pm25_self_params) .== "logcost0xloggdppc")]
             v.β_self_laglogpm0 = values_self[findfirst(names(pm25_self_params) .== "laglogpm0.self")]
 
-            v.β_export_co2      = values_export[findfirst(names(pm25_export_params) .== "logco20")]
+            v.β_export_co2      = p.use_co2 ? values_export[findfirst(names(pm25_export_params) .== "logco20")] : 0.
             v.β_export_ch4      = 0.
-            v.β_export_co2xyear = values_export[findfirst(names(pm25_export_params) .== "logco20xyear0")]
+            v.β_export_co2xyear = p.use_co2 ? values_export[findfirst(names(pm25_export_params) .== "logco20xyear0")] : 0.
             v.β_export_ch4xyear = 0.
             v.β_export_loggdp0 = values_export[findfirst(names(pm25_export_params) .== "loggdp0")]
             v.β_export_logcost = values_export[findfirst(names(pm25_export_params) .== "logcost0")]
@@ -184,7 +185,11 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             baseidx = TimestepIndex(findfirst(pp.y_year[:] .== pp.baseline_year[tt]))
 
             # Bias-correct so that difference is 0 in 2020
-            logco20 = log.(max.(1., pp.e_countryCO2emissions[tt, :])) - log.(pp.baseline_co2[tt, :]) - (log.(pp.e_countryCO2emissions[TimestepIndex(1), :]) - log.(pp.baseline_co2[TimestepIndex(1), :]))
+            if pp.use_co2
+                logco20 = log.(max.(1., pp.e_countryCO2emissions[tt, :])) - log.(pp.baseline_co2[tt, :]) - (log.(pp.e_countryCO2emissions[TimestepIndex(1), :]) - log.(pp.baseline_co2[TimestepIndex(1), :]))
+            else
+                logco20 = zeros(dim_count(model, :country))
+            end
             logch40 = log.(max.(1., pp.e_countryCH4emissions[tt, :])) - log.(pp.baseline_ch4[tt, :]) - (log.(pp.e_countryCH4emissions[TimestepIndex(1), :]) - log.(pp.baseline_ch4[TimestepIndex(1), :]))
 
             loggdp0 = (log.(pp.gdp[tt, :]) - log.(pp.gdp[TimestepIndex(1), :])) - (log.(pp.baseline_gdp[tt, :]) - log.(pp.baseline_gdp[TimestepIndex(1), :]))
@@ -242,12 +247,14 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
     end
 end
 
-function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap::Bool, gainsmatch::Bool, scenario::Symbol)
+function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap::Bool, useco2::Bool, gainsmatch::Bool, scenario::Symbol)
     pm25pollution = add_comp!(model, PM25Pollution)
     pm25pollution[:pm25_draw] = 0
     pm25pollution[:use_econ] = useecon
     pm25pollution[:use_extrap] = useextrap
+    pm25pollution[:use_co2] = useco2
     pm25pollution[:gainsmatch] = gainsmatch
+    pm25pollution[:e_countryCO2emissions] = zeros(dim_count(model, :time), dim_count(model, :country))
 
     export_pattern = CSV.read(pagedata("pollution/export_pattern.csv"), DataFrame)
 
