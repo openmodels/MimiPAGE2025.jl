@@ -141,20 +141,22 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
         if p.use_econ
             v.β_self_co2      = p.use_co2 ? values_self[findfirst(names(pm25_self_params) .== "logco20")] : 0.
             v.β_self_ch4      = 0.
-            v.β_self_co2xyear = p.use_co2 ? values_self[findfirst(names(pm25_self_params) .== "logco20xyear0")] : 0.
+            v.β_self_co2xyear = 0.
             v.β_self_ch4xyear = 0.
-            v.β_self_loggdp0 = values_self[findfirst(names(pm25_self_params) .== "loggdp0")]
-            v.β_self_logcost = values_self[findfirst(names(pm25_self_params) .== "logcost0")]
-            v.β_self_logcostxloggdppc = values_self[findfirst(names(pm25_self_params) .== "logcost0xloggdppc")]
+            v.β_self_loggdp0 = 0.
+            v.β_self_logcost = 0.
+            v.β_self_loggdppc = values_self[findfirst(names(pm25_self_params) .== "loggdppc")]
+            v.β_self_logcostxloggdppc = 0.
             v.β_self_laglogpm0 = values_self[findfirst(names(pm25_self_params) .== "laglogpm0.self")]
 
             v.β_export_co2      = p.use_co2 ? values_export[findfirst(names(pm25_export_params) .== "logco20")] : 0.
             v.β_export_ch4      = 0.
-            v.β_export_co2xyear = p.use_co2 ? values_export[findfirst(names(pm25_export_params) .== "logco20xyear0")] : 0.
+            v.β_export_co2xyear = 0.
             v.β_export_ch4xyear = 0.
-            v.β_export_loggdp0 = values_export[findfirst(names(pm25_export_params) .== "loggdp0")]
-            v.β_export_logcost = values_export[findfirst(names(pm25_export_params) .== "logcost0")]
-            v.β_export_logcostxloggdppc = values_export[findfirst(names(pm25_export_params) .== "logcost0xloggdppc")]
+            v.β_export_loggdp0 = 0.
+            v.β_export_logcost = 0.
+            v.β_export_loggdppc = values_export[findfirst(names(pm25_export_params) .== "loggdppc")]
+            v.β_export_logcostxloggdppc = 0.
             v.β_export_laglogpm0 = values_export[findfirst(names(pm25_export_params) .== "laglogpm0.export")]
         else
             v.β_self_co2      = 0.
@@ -209,6 +211,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
                 vv.β_self_co2xyear * logco20 * (pp.baseline_year[tt] - 2020) +
                 vv.β_self_ch4xyear * logch40 * (pp.baseline_year[tt] - 2020) .+
                 vv.β_self_loggdp0 * loggdp0 +
+                vv.β_self_loggdppc * loggdppc +
                 logcosteffect_self +
                 # vv.β_self_laglogpm0 * vv.logpm_self[tt - 1, :] + <-- DROP because can't do diff
                 ekc_effect .+
@@ -220,6 +223,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
                 vv.β_export_co2xyear * logco20 * (pp.baseline_year[tt] - 2020) +
                 vv.β_export_ch4xyear * logch40 * (pp.baseline_year[tt] - 2020) .+
                 vv.β_export_loggdp0 * loggdp0 +
+                vv.β_export_loggdppc * loggdppc +
                 logcosteffect_export +
                 # vv.β_export_laglogpm0 * vv.logpm_export[tt - 1, :] + <-- DROP because can't do diff
                 ekc_effect .+
@@ -247,7 +251,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
     end
 end
 
-function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap::Bool, useco2::Bool, gainsmatch::Bool, scenario::Symbol)
+function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap::Bool, useco2::Bool, gainsmatch::Bool, scenario::String)
     pm25pollution = add_comp!(model, PM25Pollution)
     pm25pollution[:pm25_draw] = 0
     pm25pollution[:use_econ] = useecon
@@ -281,7 +285,7 @@ function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap:
     baseline_pm25_self = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
     baseline_pm25_export = zeros(Union{Missing, Float64}, dim_count(model, :time), dim_count(model, :country))
 
-    baseline_after2050 = baseline2[(baseline2.IDYEARS .== 2050) .& (baseline2.IDSCENARIOS .== String(scenario)), :]
+    baseline_after2050 = baseline2[(baseline2.IDYEARS .== 2050) .& (baseline2.IDSCENARIOS .== scenario), :]
     baseline_after2050_page = leftjoin(DataFrame(ISO3=dim_keys(model, :country)), baseline_after2050, on=:ISO3)
     baseline_after2050_page[ismissing.(baseline_after2050_page[!, :PM25_SELF]), :PM25_SELF] .= mean(skipmissing(baseline_after2050_page[!, :PM25_SELF]))
     baseline_after2050_page[ismissing.(baseline_after2050_page[!, :PM25_EXPORT]), :PM25_EXPORT] .= mean(skipmissing(baseline_after2050_page[!, :PM25_EXPORT]))
@@ -290,11 +294,7 @@ function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap:
             baseline_page = baseline_after2050_page
             baseline_year[tt] = 2050
         else
-            if dim_keys(model, :time)[tt] < 2030
-                baseline_period = baseline2[(baseline2.IDYEARS .== dim_keys(model, :time)[tt]) .& (baseline2.IDSCENARIOS .== replace(String(scenario), "APC" => "CLE")), :]
-            else
-                baseline_period = baseline2[(baseline2.IDYEARS .== dim_keys(model, :time)[tt]) .& (baseline2.IDSCENARIOS .== String(scenario)), :]
-            end
+            baseline_period = baseline2[(baseline2.IDYEARS .== dim_keys(model, :time)[tt]) .& (baseline2.IDSCENARIOS .== scenario), :]
             baseline_page = leftjoin(DataFrame(ISO3=dim_keys(model, :country)), baseline_period, on=:ISO3)
             baseline_page[ismissing.(baseline_page[!, :PM25_SELF]), :PM25_SELF] .= mean(skipmissing(baseline_page[!, :PM25_SELF]))
             baseline_page[ismissing.(baseline_page[!, :PM25_EXPORT]), :PM25_EXPORT] .= mean(skipmissing(baseline_page[!, :PM25_EXPORT]))
@@ -302,10 +302,10 @@ function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap:
             baseline_year[tt] = dim_keys(model, :time)[tt]
         end
 
-        baseline_co2[tt, :] = baseline_page.EMIS_CO2_KT / 1000
-        baseline_ch4[tt, :] = baseline_page.EMIS_CH4_KT / 1000
-        baseline_gdp[tt, :] = baseline_page.GDP_PPP_MEUR2015
-        baseline_gdppc[tt, :] = 1e6 * baseline_page.GDP_PPP_MEUR2015 ./ baseline_page.POPULATION
+        baseline_co2[tt, :] = baseline_page."CO2 Mt CO2/yr" / 1000
+        baseline_ch4[tt, :] = baseline_page."CH4 kt/yr" / 1000
+        baseline_gdp[tt, :] = baseline_page.GDP_GEUR2015_PPP
+        baseline_gdppc[tt, :] = 1e9 * baseline_page.GDP_GEUR2015_PPP ./ baseline_page.POPULATION
         # baseline_costs[tt, :] = baseline_page.AP_CONTROL_COSTS_MEUR2015
         baseline_pm25_total[tt, :] = baseline_page.PM25_TOTAL
         baseline_pm25_self[tt, :] = baseline_page.PM25_SELF
@@ -327,7 +327,7 @@ function add_pm25pollution(model::Model, useekc::Bool, useecon::Bool, useextrap:
         pm25pollution[:ekc_loggdppc2_coeff] = -0.0139551
     end
 
-    if scenario == :Decarb
+    if scenario in ["Delayed Action", "Integrated Action"]
         pm25pollution[:scenario_suffix] = "_decarb"
     else
         pm25pollution[:scenario_suffix] = "_baseline"

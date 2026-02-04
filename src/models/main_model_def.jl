@@ -197,10 +197,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
                                       pm25_gainsmatch, pm25_scenario)
 
     # PM2.5 Damages
-    pm25damages_healthcare = add_pm25_damages(m, "morb_healthcare", 0.0174826104055114, :PM25Damage_Healthcare)
-    pm25damages_productivity = add_pm25_damages(m, "morb_productivity", 0.0178356230184167, :PM25Damage_Productivity)
-    pm25damages_disutility = add_pm25_damages(m, "morb_disutility", 0.0173643959907428, :PM25Damage_Disutility)
-    pm25damages_mortality = add_pm25_damages(m, "mort_disutility", 0.0174748512907443, :PM25Damage_Mortality)
+    # Files and residvar values from Cost_PM2.5.ipynb
+    pm25damages_healthcare = add_pm25_damages(m, "morb_healthcare", 0.0368009408988602, :PM25Damage_Healthcare)
+    pm25damages_productivity = add_pm25_damages(m, "morb_productivity", 0.0377865925613342, :PM25Damage_Productivity)
+    pm25damages_disutility = add_pm25_damages(m, "morb_disutility", 0.0349276362478346, :PM25Damage_Disutility)
+    pm25damages_mortality = add_pm25_damages(m, "mort_disutility", 0.0386442604132584, :PM25Damage_Mortality)
 
     # PM2.5 Market Damages Component
     pmmarket = add_comp!(m, PMMarketDamages)
