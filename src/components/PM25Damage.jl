@@ -78,7 +78,7 @@ using CSV
 
         # floors at 1.0 (guard logs)
         pp = max.(p.pop[t, :], 1.0) * 1e6
-        gd = max.(p.gdp[t, :], 1.0) * 0.9015 # Average 2015 USD-EUR exchange rate
+        gd = max.(p.gdp[t, :], 1.0) * 0.9015 / 1e3 # Average 2015 USD-EUR exchange rate, to GDP_GEUR2015_PPP
 
         # time-adjusted PM slopes
         β = v.β_pm .+ v.β_pmyear * (yr - 2025)
@@ -87,7 +87,7 @@ using CSV
         lnC = β .* log.(pm) .+ v.θ_pop .* log.(pp) .+ v.θ_gdp .* log.(gd) .+ v.β_year * (yr - 2025) .+ p.fe[:]
 
         # log-normal bias correction: yhat = exp(logyhat + 0.5 * Var(resid))
-        v.cost[t, :] = exp.(lnC .+ 0.5 * p.residvar) / 0.9015 # Average 2015 USD-EUR exchange rate
+        v.cost[t, :] = exp.(lnC .+ 0.5 * p.residvar) * (65.0 / 77.6) / 0.9015 # Average 2015 USD-EUR exchange rate, convert 2015 to 2005
     end
 end
 

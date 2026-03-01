@@ -12,6 +12,7 @@ include("../utils/country_tools.jl")
     # incoming parameters from Climate
     rtl_realizedtemperature_absolute = Parameter(index=[time, country], unit="degreeC")
     rtl_0_realizedtemperature_absolute_burke = Parameter(index=[country], unit="degreeC")
+    rtl_0_realizedtemperature_absolute_trueburke = Parameter(index=[country], unit="degreeC")
 
     # tolerability and impact variables from PAGE damages that Burke damages also require
     rcons_per_cap_SLRRemainConsumption = Parameter(index=[time, country], unit="\$/person")
@@ -86,11 +87,13 @@ include("../utils/country_tools.jl")
             delta_temp = v.marginal_offset[t, :]
         end
 
+        trueburke_delta_temp = p.rtl_0_realizedtemperature_absolute_trueburke .- p.rtl_0_realizedtemperature_absolute_burke
+
         for cc in d.country
             # calculate the log change, depending on the number of lags specified
             v.i1log_impactlogchange[t,cc] = p.impf_coeff_lin  * (p.rtl_realizedtemperature_absolute[t,cc] - p.rtl_0_realizedtemperature_absolute_burke[cc]) +
-                p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] - p.tcal_burke)^2 -
-                                      (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] - p.tcal_burke)^2)
+                p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] + trueburke_delta_temp[cc] - p.tcal_burke)^2 -
+                                      (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] + trueburke_delta_temp[cc] - p.tcal_burke)^2)
 
             # calculate the impact at focus region GDP p.c.
             v.iref_ImpactatReferenceGDPperCap[t, cc] = 100 * (1 - exp(p.nlag_burke * v.i1log_impactlogchange[t, cc]))
@@ -154,6 +157,7 @@ function addmarketdamagesburke(model::Model, config_marketdmg::String)
     marketdamagesburke[:burkey_draw] = -1
     marketdamagesburke[:config_marketdmg] = config_marketdmg
     marketdamagesburke[:rtl_0_realizedtemperature_absolute_burke] = (get_countryinfo().Temp1980 + get_countryinfo().Temp2010) / 2
+    marketdamagesburke[:rtl_0_realizedtemperature_absolute_trueburke] = readcountrydata_i_const(model, "climate/ExtendedDataFig1g.csv", :iso, :meantemp)
 
     if config_marketdmg == "none"
         marketdamagesburke[:nlag_burke] = 0.

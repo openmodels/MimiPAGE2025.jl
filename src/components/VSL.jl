@@ -7,11 +7,15 @@ using Mimi
 
     country       = Index()
 
+    gdp0_initgdp = Parameter(index=[country], unit="\$M")
+    pop0_initpopulation = Parameter(index=[country], unit="million person")
+
     gdp         = Parameter(index=[time, country], unit="\$M")
     population  = Parameter(index=[time, country], unit="million person")
 
     α             = Parameter(unit = "US\$2005")    # VSL scaling parameter
-    ϵ             = Parameter()                     # Income elasticity of the value of a statistical life.
+    ϵ_space       = Parameter()                     # Income elasticity of the value of a statistical life.
+    ϵ_time        = Parameter()                     # Income elasticity of the value of a statistical life.
     y₀            = Parameter(unit = "US\$2005")    # Normalization constant.
     pc_gdp        = Variable(index=[time, country], unit = "US\$2005/yr/person") # Country-level per capita GDP ($/person).
 
@@ -19,8 +23,10 @@ using Mimi
 
     function run_timestep(p, v, d, t)
         for c in d.country
+            pc_gdp_0c = (p.gdp0_initgdp[c]) ./ (p.pop0_initpopulation[c])
             v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
-            v.vsl[t,c] = p.α * (v.pc_gdp[t,c] / p.y₀) ^ p.ϵ
+
+            v.vsl[t,c] = p.α * ((pc_gdp_0c / p.y₀) ^ p.ϵ_space) * (v.pc_gdp[t,c] / pc_gdp_0c) ^ p.ϵ_time
         end
     end
 end
@@ -37,7 +43,8 @@ function addVSL(m::Model, vsl::Symbol)
     if vsl == :oecd_global
 	update_param!(m, :VSL, :α,  2.7e6 * 81.551 / 118.012)
         update_param!(m, :VSL, :y₀, 1)
-        update_param!(m,  :VSL, :ϵ, 0.)
+        update_param!(m,  :VSL, :ϵ_space, 0.)
+        update_param!(m,  :VSL, :ϵ_time, 1.)
     else
         if vsl==:fund
 	    update_param!(m, :VSL, :α,  4.99252262888626e6 * pricelevel_1995_to_2005)   # convert from FUND USD $1995 to USD $2005
@@ -52,7 +59,8 @@ function addVSL(m::Model, vsl::Symbol)
             error("Invalid vsl argument of $vsl.")
         end
 
-        update_param!(m,  :VSL, :ϵ, 1.0)
+        update_param!(m,  :VSL, :ϵ_space, 1.0)
+        update_param!(m,  :VSL, :ϵ_time, 1.0)
     end
 
     compref
