@@ -26,7 +26,7 @@
     # For mix-and-match
     model = Parameter{Model}()
     gdp = Parameter(index=[time, region], unit="\$M")
-    gdp_national = Parameter(index=[time, country], unit="\$M")
+    gdp_national = Parameter(index=[time, country], unit="million US\$2005/yr")
     tc_totalcost_national = Variable(index=[time, country], unit="\$million")
     mac_draw = Parameter{Int64}()
 

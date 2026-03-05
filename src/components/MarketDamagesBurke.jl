@@ -52,7 +52,7 @@ include("../utils/country_tools.jl")
     r1_riskindex_hazard = Parameter(index=[time, country])
     r2_riskindex_vulnerability = Parameter(index=[time, country])
     r3_riskindex_copinglack = Parameter(index=[time, country])
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     pop_population = Parameter(index=[time, country], unit="million person")
 
     function init(pp, vv, dd)

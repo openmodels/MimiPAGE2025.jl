@@ -34,7 +34,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
     e_countryCO2emissions = Parameter(index=[time, country], unit="Mtonne/year")
     e_countryCH4emissions = Parameter(index=[time, country], unit="Mtonne/year")
 
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     gdp0_initgdp = Parameter(index=[country], unit="\$M")
 
     pop_population = Parameter(index=[time, country], unit="million person")
@@ -273,8 +273,8 @@ function load_pm25pollution_baseline(model::Model, scenario::String)
 
         baseline_co2[tt] = baseline_page."CO2 Mt CO2/yr"[1]
         baseline_ch4[tt] = baseline_page."CH4 kt/yr"[1] / 1000
-        baseline_gdp[tt, :] = baseline_page.GDP_GEUR2015_PPP * 1e3
-        baseline_gdppc[tt, :] = 1e9 * baseline_page.GDP_GEUR2015_PPP ./ baseline_page.POPULATION
+        baseline_gdp[tt, :] = baseline_page.GDP_GUSD2017_PPP * 1e3
+        baseline_gdppc[tt, :] = 1e9 * baseline_page.GDP_GUSD2017_PPP ./ baseline_page.POPULATION
         # baseline_costs[tt, :] = baseline_page.AP_CONTROL_COSTS_MEUR2015
         baseline_pm25_total[tt, :] = baseline_page.PM25_TOTAL
         baseline_pm25_self[tt, :] = baseline_page.PM25_SELF

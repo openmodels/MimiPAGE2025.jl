@@ -32,7 +32,7 @@ using CSV
     y_year   = Parameter(index=[time], unit="year")                 # calendar year (initpage fills this)
     pm_total = Parameter(index=[time, country], unit="μg/m^3")      # from pm25_pollution :pm_total
     pop      = Parameter(index=[time, country], unit="million person") # population level (as in R fit)
-    gdp      = Parameter(index=[time, country], unit="\$M")         # GDP level (as in R fit)
+    gdp      = Parameter(index=[time, country], unit="million US\$2005/yr")         # GDP level (as in R fit)
 
     # === Draw selector ===
     pm25_dmg_draw = Parameter{Int}()   # 0 = mean of draws, 1..N = specific row
@@ -78,7 +78,7 @@ using CSV
 
         # floors at 1.0 (guard logs)
         pp = max.(p.pop[t, :], 1.0) * 1e6
-        gd = max.(p.gdp[t, :], 1.0) * 0.9015 / 1e3 # Average 2015 USD-EUR exchange rate, to GDP_GEUR2015_PPP
+        gd = max.(p.gdp[t, :], 1.0) * (1 / 1.1299) / 1e3 # Average 2017 USD-EUR exchange rate, to GDP_GUSD2017_PPP
 
         # time-adjusted PM slopes
         β = v.β_pm .+ v.β_pmyear * (yr - 2025)

@@ -32,7 +32,7 @@
     ac_adaptivecosts = Variable(index=[time, region], unit="\$million")
 
     # For mix-and-match
-    gdp_national = Parameter(index=[time, country], unit="\$M")
+    gdp_national = Parameter(index=[time, country], unit="million US\$2005/yr")
     ac_adaptivecosts_national = Variable(index=[time, country], unit="\$million")
     sealevelcost_draw = Parameter{Int64}()
 

@@ -15,7 +15,7 @@ include("../utils/gains.jl")
     # read in counterfactual GDP in absence of growth effects (gdp_baseline) and actual GDP
     gdppc = Parameter(index=[time, country], unit="\$/person")
     pop_population = Parameter(index=[time, country], unit="million person")
-    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    gdp_baseline = Parameter(index=[time, country], unit="million US\$2005/yr")
     emfeed_emissionfeedback = Parameter{Bool}(unit="none", default=true)
 
     function run_timestep(p, v, d, t)

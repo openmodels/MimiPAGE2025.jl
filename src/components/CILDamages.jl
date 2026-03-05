@@ -4,7 +4,7 @@
 
     rt_g_globaltemperature = Parameter(index=[time], unit="degreeC")
 
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     gdp0_initgdp = Parameter(index=[country], unit="\$M")
 
     pop_population = Parameter(index=[time, country], unit="million person")

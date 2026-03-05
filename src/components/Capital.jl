@@ -24,7 +24,7 @@ end
     capital0 = Variable(index=[country], unit="\$M")
 
     gdp0_initgdp = Parameter(index=[country], unit="\$M")
-    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    gdp_baseline = Parameter(index=[time, country], unit="million US\$2005/yr")
     rgdp_percap_impacts = Parameter(index=[time, country], unit="\$/person")
     i1log_impactlogchange = Parameter(index=[time, country]) # one-year impact that persists
     pop_population = Parameter(index=[time, country], unit="million person")
@@ -38,7 +38,7 @@ end
     capital_baseline = Variable(index=[time, country], unit="\$M")
     capital = Variable(index=[time, country], unit="\$M")
 
-    gdp_capital = Variable(index=[time, country], unit="\$M")
+    gdp_capital = Variable(index=[time, country], unit="million US\$2005/yr")
     gdp_capital_region = Variable(index=[time, region], unit="\$M")
     cons_capital_consumption = Variable(index=[time, country], unit="\$million")
     cons_percap_capital_consumption = Variable(index=[time, country], unit="\$/person")
@@ -67,7 +67,7 @@ end
                 vv.gdp_capital[tt, cc] = pp.gdp_baseline[tt, cc]
             else
                 vv.capital_baseline[tt, cc] = modelstock(vv.capital_baseline[tt-1, cc], (1 - vv.depreciationrate[cc]), (pp.save_savingsrate[cc] / 100) * pp.gdp_baseline[tt-1, cc], pp.y_year[tt] - pp.y_year[tt-1])
-                rgdp_impacts = pp.rgdp_percap_impacts[tt-1, cc] * pp.pop_population[tt-1, cc]
+                rgdp_impacts = max(pp.rgdp_percap_impacts[tt-1, cc], 365) * pp.pop_population[tt-1, cc] # clip at $1 / day
                 vv.capital[tt, cc] = modelstock(vv.capital[tt-1, cc], (1 - vv.depreciationrate[cc]), (pp.save_savingsrate[cc] / 100) * rgdp_impacts, pp.y_year[tt] - pp.y_year[tt-1])
 
                 ## We assume that there are additional persistence impacts, not through capital channel

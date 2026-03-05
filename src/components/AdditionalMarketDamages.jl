@@ -1,7 +1,7 @@
 @defcomp AdditionalMarketDamages begin
     country = Index()
 
-    gdp_baseline = Parameter(index=[time, country], unit="\$M")
+    gdp_baseline = Parameter(index=[time, country], unit="million US\$2005/yr")
     rgdp_per_cap_MarketRemainGDP = Parameter(index=[time, country], unit="\$/person")
 
     save_savingsrate = Parameter(index=[country], unit="%")

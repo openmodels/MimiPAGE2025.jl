@@ -11,7 +11,7 @@
     # incoming parameters from SeaLevelRise
     s_sealevel = Parameter(index=[time], unit="m")
 
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     pop_population = Parameter(index=[time, country], unit="million person")
 
     # incoming parameters to calculate consumption per capita after Costs

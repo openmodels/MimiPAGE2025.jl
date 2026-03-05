@@ -10,7 +10,7 @@ using Mimi
     gdp0_initgdp = Parameter(index=[country], unit="\$M")
     pop0_initpopulation = Parameter(index=[country], unit="million person")
 
-    gdp         = Parameter(index=[time, country], unit="\$M")
+    gdp         = Parameter(index=[time, country], unit="million US\$2005/yr")
     population  = Parameter(index=[time, country], unit="million person")
 
     α             = Parameter(unit = "US\$2005")    # VSL scaling parameter

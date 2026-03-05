@@ -20,7 +20,7 @@ function get_pm25pollution_baserows(model::Model, scenario::String, baseline2::D
     elseif year == 2075
         baseline_page = get_pm25pollution_baserows(model, scenario, baseline2, 2070)[1]
         baseline_page_after = get_pm25pollution_baserows(model, scenario, baseline2, 2080)[1]
-        for col in ["POPULATION", "GDP_GEUR2015_PPP", "CO2 Mt CO2/yr", "CH4 kt/yr", "PM25_TOTAL", "PM25_SELF", "PM25_EXPORT", "AP_CONTROL_COSTS_MEUR2015"]
+        for col in ["POPULATION", "GDP_GUSD2017_PPP", "CO2 Mt CO2/yr", "CH4 kt/yr", "PM25_TOTAL", "PM25_SELF", "PM25_EXPORT", "AP_CONTROL_COSTS_MEUR2015"]
             baseline_page[!, col] = (baseline_page[!, col] + baseline_page_after[!, col]) / 2
         end
         baseline_year = 2075

@@ -30,9 +30,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     end
 
     # Socio-Economics
-    population = addpopulation(m)
+    population = addpopulation(m, pm25_gainsmatch, pm25_scenario)
     macroparams = addmacroparameters(m, (config_capital == "full" ? "inferred" : config_capital)) # can be inferred or constant
-    gdp = addgdp(m)
+    gdp = addgdp(m, pm25_gainsmatch, pm25_scenario)
 
     gdp[:pop0_initpopulation_region] = population[:pop0_initpopulation_region]
     gdp[:save_savingsrate] = macroparams[:save_savingsrate]
@@ -92,9 +92,10 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
             throw(ArgumentError("Unknown downscaling configuration: $config_downscaling"))
         end
     end
+    # Always add SiBCASA and Jules models, to make Monte Carlo easier
+    permafrost_sibcasa = add_comp!(m, PermafrostSiBCASA)
+    permafrost_jules = add_comp!(m, PermafrostJULES)
     if use_permafrost
-        permafrost_sibcasa = add_comp!(m, PermafrostSiBCASA)
-        permafrost_jules = add_comp!(m, PermafrostJULES)
         permafrost = add_comp!(m, PermafrostTotal)
     end
     if config_abatement == "national"
@@ -154,7 +155,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     addabatementcosts(m, :CH4)
     addabatementcosts(m, :N2O)
     addabatementcosts(m, :Lin)
-    addtotalabatementcosts(m)
+    addtotalabatementcosts(m, pm25_gainsmatch, pm25_scenario)
 
     connect_param!(m, :AbatementCostsCH4 => :e0_baselineemissions, :ch4emissions => :e0_baselineCH4emissions_region)
 
@@ -265,9 +266,9 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         connect_param!(m, glotemp_comp => :fant_anthroforcing, :TotalForcing => :fant_anthroforcing)
     end
 
+    permafrost_sibcasa[:rt_g] = glotemp[:rt_g_globaltemperature]
+    permafrost_jules[:rt_g] = glotemp[:rt_g_globaltemperature]
     if use_permafrost
-        permafrost_sibcasa[:rt_g] = glotemp[:rt_g_globaltemperature]
-        permafrost_jules[:rt_g] = glotemp[:rt_g_globaltemperature]
         permafrost[:perm_sib_ce_co2] = permafrost_sibcasa[:perm_sib_ce_co2]
         permafrost[:perm_sib_e_co2] = permafrost_sibcasa[:perm_sib_e_co2]
         permafrost[:perm_sib_ce_ch4] = permafrost_sibcasa[:perm_sib_ce_ch4]
@@ -387,6 +388,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_n2o, :AbatementCostsN2O => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_ch4, :AbatementCostsCH4 => :tc_totalcost)
     connect_param!(m, :TotalAbatementCosts => :tc_totalcosts_linear, :AbatementCostsLin => :tc_totalcost)
+    connect_param!(m, :TotalAbatementCosts => :gdp, :GDP => :gdp)
     connect_param!(m, :TotalAbatementCosts => :pop_population, :Population => :pop_population)
     connect_param!(m, :TotalAbatementCosts => :pop_population_region, :Population => :pop_population_region)
 

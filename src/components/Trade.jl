@@ -8,8 +8,8 @@ include("../utils/trade.jl")
     save_savingsrate = Parameter(index=[country], unit="%")
 
     pop_population = Parameter(index=[time, country], unit="million person")
-    gdp_baseline = Parameter(index=[time, country], unit="\$M") # before capital effects, if used
-    gdp = Parameter(index=[time, country], unit="\$M") # after capital effects, if used
+    gdp_baseline = Parameter(index=[time, country], unit="million US\$2005/yr") # before capital effects, if used
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr") # after capital effects, if used
     rgdp_percap_impacts = Parameter(index=[time, country], unit="\$/person")
 
     global_loss = Variable(index=[time])
@@ -24,6 +24,11 @@ include("../utils/trade.jl")
     function run_timestep(pp, vv, dd, tt)
         rgdp_impacts = pp.rgdp_percap_impacts[tt, :] .* pp.pop_population[tt, :]
         vv.isat_local_ofgdp[tt, :] = (pp.gdp_baseline[tt, :] .- rgdp_impacts) ./ pp.gdp[tt, :]
+        for cc in dd.country
+            if pp.gdp[tt, cc] == 0
+                vv.isat_local_ofgdp[tt, cc] = 0
+            end
+        end
 
         output = calc_domar_distribute_method(pp.model, Vector{Float64}(-vv.isat_local_ofgdp[tt, :]))
 

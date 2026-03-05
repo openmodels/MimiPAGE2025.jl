@@ -22,7 +22,7 @@ macs = myloadcsv("data/macs.csv")
     e0_baselineCO2emissions_country = Parameter(index=[country], unit="Mtonne/year")
     baselineemit = Variable(index=[time, country], unit="MtCO2/year")
 
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     carbonprice = Parameter(index=[time, country], unit="\$2010/tCO2")
 
     ## Parameters set by init to MC values

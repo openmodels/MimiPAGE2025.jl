@@ -6,7 +6,7 @@
     config_slrdmg = Parameter{String}()
 
     s_sealevel = Parameter(index=[time], unit="m")
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
 
     alpha_noadapt = Variable(index=[country])
     beta_noadapt = Variable(index=[country])
