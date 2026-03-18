@@ -1,1397 +1,1281 @@
-df$linear <- project.linear(df, F)
-project.linear <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(df)#
-    df$temp <- 20#
-    predgg0 <- predict(df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ df + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-## True model 1: Stationary climate, no persistence#
-library(tidyverse)#
-df <- tibble(temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$linear <- project.linear(df, F)
-project.linear <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ df + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-## True model 1: Stationary climate, no persistence#
-library(tidyverse)#
-df <- tibble(temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$linear <- project.linear(df, F)
-project.linear <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ df + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(cumsum(predgg1 - predgg0))#
-}#
-#
-## True model 1: Stationary climate, no persistence#
-library(tidyverse)#
-df <- tibble(temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)
-df$kaw <- project.kaw(df)
-df
-df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))
-mod <- lm(gg ~ df + dt : temp, data=df)
-df
-v
-project.linear <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(cumsum(predgg1 - predgg0))#
-}#
-#
-## True model 1: Stationary climate, no persistence#
-library(tidyverse)#
-df <- tibble(temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)
-ggplot(df, aes(time)) +#
-    geom_line(aes(gdppc, colour='Truth')) +#
-    geom_line(aes(gdppc, colour='Linear, no persistence')) +#
-    geom_line(aes(gdppc, colour='Linear, full persistence')) +#
-    geom_line(aes(gdppc, colour='Linear, Kalkuhl & Wenz'))
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=gdppc, colour='Linear, no persistence')) +#
-    geom_line(aes(y=gdppc, colour='Linear, full persistence')) +#
-    geom_line(aes(y=gdppc, colour='Linear, Kalkuhl & Wenz'))
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df <- tibble(temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df
-project.kaw <- function(df) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(c(0, cumsum((predgg1 - predgg0)[-1]))#
-}#
-#
-## True model 1: Stationary climate, no persistence#
-library(tidyverse)#
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))#
-#
-## True model 2: Stationary climate, full persistence#
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df
-df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    print(summary(mod))
-predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)
-pregg1
-predgg1
-predgg0
-exp(c(0, cumsum((predgg1 - predgg0)[-1]))
-)
-exp(c(0, cumsum((predgg1 - predgg0)[-1])))
-project.kaw <- function(df) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(c(0, cumsum((predgg1 - predgg0)[-1])))#
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(oo, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }  #
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+    if (!is.na(organisms[oo])) {#
+      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- text[replenish]#
 }
-library(tidyverse)#
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-df$lin1 <- project.linear(df, F)#
-df$lin2 <- project.linear(df, T)#
-df$kaw <- project.kaw(df)#
-#
-ggplot(df, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-    df$lin1 <- project.linear(df, F)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+fail.loss <- 1.5
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(oo, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }  #
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+    if (!is.na(organisms[oo])) {#
+      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- text[replenish]#
 }
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))
-pdf2
-ggplot(pdf2, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-project.linear <- function(df, persist) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    ## print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    ## print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(c(0, cumsum((predgg1 - predgg0)[-1])))#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+fail.loss <- 2
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(oo, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }  #
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+    if (!is.na(organisms[oo])) {#
+      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- text[replenish]#
 }
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(c(0, gg[-1])))#
-    df$lin1 <- project.linear(df, F)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt - .01 * dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    df$lin1 <- project.linear(df, F)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-ggplot(pdf2, aes(time)) +#
-    geom_points(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-project.linear <- function(df, persist, printmod=F) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    mod <- lm(gg ~ temp, data=df)#
-    if (printmod)#
-        print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    predgg0 <- predict(mod, df)#
-#
-    if (persist == 0)#
-        exp(predgg1 - predgg0)#
-    else#
-        exp(cumsum(predgg1 - predgg0))#
-}#
-#
-project.kaw <- function(df, printmod=F) {#
-    df$gg <- c(NA, diff(log(df$gdppc)))#
-    df$dt <- c(NA, diff(df$temp))#
-#
-    mod <- lm(gg ~ dt + dt : temp, data=df)#
-    if (printmod)#
-        print(summary(mod))#
-#
-    predgg1 <- predict(mod, df)#
-    df$temp <- 20#
-    df$dt <- 0#
-    predgg0 <- predict(mod, df)#
-#
-    exp(c(0, cumsum((predgg1 - predgg0)[-1])))#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+length(organisms)
+fail.loss <- 1.8
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(oo, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }  #
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+    if (!is.na(organisms[oo])) {#
+      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- text[replenish]#
 }
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt, gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T, printmod)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_line(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.01 * dt, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-v
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20), gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20), gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=mean(gdppc), lin1=mean(lin1), lin2=mean(lin2), kaw=mean(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20), gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1 * (temp - 20), gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20), gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-library(tidyverse)#
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1*dt:temp, gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1*dt*temp, gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20), gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * (temp - 20)^3, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * abs(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * sign(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:1000) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * sign(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * sign(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * sign(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1 * sign(temp - 20) * (temp - 20)^2, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=.1*dt - .1*dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1*dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz'))
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz')) +#
-    scale_y_log10()
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1*dt*temp, gdppc=exp(c(0, gg[-1])))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz')) +#
-    scale_y_log10()
-pdf <- data.frame()#
-for (mc in 1:100) {#
-    df <- tibble(time=1:100, temp=rnorm(100, 20, 1), dt=c(NA, diff(temp)), gg=-.1*dt - .1*dt*temp, gdppc=exp(cumsum(c(0, gg[-1]))))#
-    printmod <- mc == 1#
-    df$lin1 <- project.linear(df, F, printmod)#
-    df$lin2 <- project.linear(df, T)#
-    df$kaw <- project.kaw(df, printmod)#
-    pdf <- rbind(pdf, cbind(mc=mc, df))#
-}#
-#
-pdf2 <- pdf %>% group_by(time) %>% summarize(gdppc=median(gdppc), lin1=median(lin1), lin2=median(lin2), kaw=median(kaw))#
-#
-ggplot(pdf2, aes(time)) +#
-    geom_point(aes(y=gdppc, colour='Truth')) +#
-    geom_line(aes(y=lin1, colour='Linear, no persistence')) +#
-    geom_line(aes(y=lin2, colour='Linear, full persistence')) +#
-    geom_line(aes(y=kaw, colour='Linear, Kalkuhl & Wenz')) +#
-    scale_y_log10()
-df <- data.frame(year=c(1980, 2008, 2030), area=c(207368, 366375, 496805))#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+length(organisms)
+fail.loss
+r
+text <- rep('a', 20)#
+  world <- text
+organism <- list(location=10, energy=5, tick=function(self, env) {#
+    return('a')#
+  })
 library(ggplot2)#
 #
-ggplot(df, aes(year, area)) +#
-    geom_line()
-twh <- read.csv("/Users/admin/Dropbox/Climate Change Economics 2024/week7/global-energy-substitution.csv")
-head(twh)
-twh$total <- rowSums(twh[, -1:-3])
-twh
-head(twh)
-tail(twh)
-subset(twh, year >= 1980)
-subset(twh, Year >= 1980)
-twh$area <- twh$total * (366375 / twh$total[twh$Year == 2008])
-ggplot(df, aes(year, area)) +#
-    geom_line() +#
-    geom_line(data=twh, aes(Year))
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative') +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData'))
-)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData'))
-rate <- (log(twh$area[twh$Year == 2022]) - log(twh$area[twh$Year == 1980])) / (2022 - 1980)
-rate
-proj <- data.frame(year=2022:2300, area=twh$area[twh$Year == 2022] * exp(rate * ((2022:2300) - 2022)))
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated'))
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    xlim(1980, 2030)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated'))
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2030)
-proj
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2030)
-148326000 / 1e8
-proj$area / 1e8
-df <- data.frame(year=c(1980, 2008, 2030), area=c(207368, 366375, 496805))#
+fail.loss <- 0.75#
+succ.gain <- 1#
 #
-twh <- read.csv("/Users/admin/Dropbox/Climate Change Economics 2024/week7/global-energy-substitution.csv")#
-twh$total <- rowSums(twh[, -1:-3])#
-twh$area <- twh$total * (366375 / twh$total[twh$Year == 2008])#
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(org, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }#
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- text[replenish]#
+}#
 #
-rate <- (log(twh$area[twh$Year == 2022]) - log(twh$area[twh$Year == 1980])) / (2022 - 1980)#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+world <- sapply(strsplit("when in the course of human events it becomes necessary", "")[[1]], utf8ToInt)#
 #
-proj <- data.frame(year=2022:2300, area=twh$area[twh$Year == 2022] * exp(rate * ((2022:2300) - 2022)))#
+fsm <- list(c(97, 1, 1))#
+organism <- list(location=1, energy=5, fsm=fsm, state=1, tick=function(self, env) {#
+  currstate <- self$fsm[[self$state]]#
+  if (env[2] == currstate[1])#
+    nextstate <- currstate[2]#
+  else#
+    nextstate <- currstate[3]#
+  c(self$fsm[[nextstate]][1], nextstate)#
+})#
 #
+fail.loss <- 0.15#
+succ.gain <- 1.15#
+#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=fsm, state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))
+}#
+#
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+organisms
+length(organisms)
+mutate <- function(fsm) {#
+  ## Choose a random gene#
+  chosen <- sample(length(fsm), 1)#
+  modify <- sample(3, 1)#
+  if (modify == 1) {#
+    fsm[[chosen]][1] <- sample(utf8ToInt('a'):utf8ToInt('z'), 1)#
+  } else {#
+    ## Change it to a random location, possibly a new location#
+    nextstate <- sample(length(fsm) + 1, 1)#
+    fsm[[chosen]][modify] <- nextstate#
+    if (nextstate > length(fsm))#
+      fsm[[nextstate]] <- c(sample(utf8ToInt('a'):utf8ToInt('z'), 1), 1, 1)#
+  }#
+  fsm#
+}#
+#
+testrun <- function(org) {#
+  text <- c()#
+  for (ii in 1:length(world)) {#
+    leftloc <- (ii - 2) %% length(world) + 1#
+    env <- c(world[c(leftloc, ii)])#
+    predstate <- org$tick(org, env)#
+    org$state <- predstate[2]#
+    text <- c(text, predstate[1])#
+  }#
+#
+  text#
+}
+get.entropy.rate <- function(text) {#
+    pp <- table(paste(text[-length(text)], text[-1])) / (length(text) - 1)#
+    -sum(pp * log2(pp))#
+  }
+myorg <- list(fsm=myfsm, state=1, tick=organism$tick)
+bestorg <- organism#
+bestscore <- 0#
+#
+for (ii in 1:1000) {#
+  myfsm <- bestorg$fsm#
+  for (mm in 1:3)#
+    myfsm <- mutate(myfsm)#
+  org <- list(fsm=myfsm, state=1, tick=organism$tick)#
+  text <- testrun(org)#
+  score <- get.entropy.rate(text)#
+  if (score > bestscore) {#
+    print("Improved!")#
+    bestscore <- score#
+    bestorg <- org#
+  }#
+}
+bestorg <- organism#
+bestscore <- sum(rep('a', length(world)) == world)#
+#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      print("B")#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0) {#
+    print("A")#
+    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
+    text <- testrun(org)#
+    score <- sum(text == world)#
+    if (score > bestscore) {#
+      bestorg <- org#
+      bestscore <- score#
+    }#
+    organisms <- list(bestorg)#
+  }#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+}#
+#
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+organisms
+length(organisms)
+fail.loss <- 0.25#
+succ.gain <- 1.25
+bestorg <- organism#
+bestscore <- sum(rep('a', length(world)) == world)#
+#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      print("B")#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0) {#
+    print("A")#
+    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
+    text <- testrun(org)#
+    score <- sum(text == world)#
+    if (score > bestscore) {#
+      bestorg <- org#
+      bestscore <- score#
+    }#
+    organisms <- list(bestorg)#
+  }#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+}#
+#
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+bestorg
+world <- sapply(strsplit("when in the course of human events it becomes necessary", "")[[1]], utf8ToInt)#
+#
+fsm <- list(c(97, 1, 1))#
+organism <- list(location=1, energy=5, fsm=fsm, state=1, tick=function(self, env) {#
+  currstate <- self$fsm[[self$state]]#
+  if (env[2] == currstate[1])#
+    nextstate <- currstate[2]#
+  else#
+    nextstate <- currstate[3]#
+  c(self$fsm[[nextstate]][1], nextstate)#
+})#
+#
+fail.loss <- 0.25#
+succ.gain <- 1.25#
+#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=fsm, state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+}#
+#
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+bestorg <- organism#
+bestscore <- sum(rep('a', length(world)) == world)#
+#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      print("B")#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0) {#
+    print("A")#
+    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
+    text <- testrun(org)#
+    score <- sum(text == world)#
+    if (score > bestscore) {#
+      bestorg <- org#
+      bestscore <- score#
+    }#
+    organisms <- list(bestorg)#
+  }#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+}#
+#
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+organisms
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    organisms[[oo]]$location <- rightloc#
+    predstate <- org$tick(org, env)#
+    organisms[[oo]]$state <- predstate[2]#
+    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
+    organisms[[oo]]$energy <- org$energy + energychange#
+    if (organisms[[oo]]$energy > 10) {#
+      print("B")#
+      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
+        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
+      organisms[[oo]]$energy <- org$energy - 5#
+    } else if (organisms[[oo]]$energy < 0) {#
+      organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0) {#
+    print("A")#
+    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
+    text <- testrun(org)#
+    score <- sum(text == world)#
+    if (score > bestscore) {#
+      bestorg <- org#
+      bestscore <- score#
+    }#
+    organisms <- list(bestorg)#
+  }#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+}
+ggplot(record.org, aes(loc, time)) +#
+  geom_point(data=record.org, aes(colour=energy))
+organisms
+geography <- rep('a', 20)#
+  world <- geography
+organism <- list(location=10, energy=5, tick=function(self, env) {#
+    return('a')#
+  })
 library(ggplot2)#
 #
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()#
+fail.loss <- 0.75#
+succ.gain <- 1#
 #
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2030)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000)#
-    #xlim(1980, 2030)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2300)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2300) + theme_bw()
-proj <- data.frame(year=2022:2350, area=twh$area[twh$Year == 2022] * exp(rate * ((2022:2350) - 2022)))#
+record.env <- data.frame()#
+record.org <- data.frame()#
+organisms = list(organism)#
+for (time in 1:1000) {#
+  for (oo in 1:length(organisms)) {#
+    org <- organisms[[oo]]#
+    leftloc <- (org$location - 2) %% length(world) + 1#
+    rightloc <- org$location %% length(world) + 1#
+    env <- c(world[c(leftloc, org$location)])#
+    pred <- org$tick(org, env)#
+    if (world[rightloc] == pred) {#
+      organisms[[oo]]$energy <- org$energy + succ.gain#
+      world[rightloc] <- '#'#
+      if (organisms[[oo]]$energy > 10) {#
+        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
+          energy=5, tick=org$tick)#
+        organisms[[oo]]$energy <- org$energy - 5#
+      }#
+    } else {#
+      organisms[[oo]]$energy <- org$energy - fail.loss#
+      if (organisms[[oo]]$energy < 0)#
+        organisms[[oo]] <- NA#
+    }#
+  }#
+  organisms <- organisms[!is.na(organisms)]#
+  if (length(organisms) == 0)#
+    organisms <- list(organism)#
+  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == geography, empty=world == '#'))#
+  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
+                                             energy=sapply(organisms, function(org) org$energy)))#
+  ## Relenish 50% of the cells#
+  replenish <- (1:length(world))[runif(length(world)) < .5]#
+  world[replenish] <- geography[replenish]#
+}#
 #
-library(ggplot2)#
-#
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()#
-#
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2350) + theme_bw()
-proj <- data.frame(year=2022:2370, area=twh$area[twh$Year == 2022] * exp(rate * ((2022:2370) - 2022)))#
-#
-library(ggplot2)#
-#
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()#
-#
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) +#
-    xlim(1980, 2370) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) + xlab(NULL) + ylab("Solar panel area (km²)")#
-    xlim(1980, 2370) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=148326000) + xlab(NULL) + ylab("Solar panel area (km²)") +#
-    xlim(1980, 2370) + theme_bw()
-ggplot(df, aes(year, area / 148326000)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    xlab(NULL) + scale_y_continuous("Solar panel area (km²)", labels=scales::percent) +#
-    xlim(1980, 2370) + theme_bw()
-ggplot(df, aes(year, area / 148326000)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=1) +#
-    xlab(NULL) + scale_y_continuous("Solar panel area (% land area)", labels=scales::percent) +#
-    xlim(1980, 2370) + theme_bw()
-df <- data.frame(year=c(1980, 2008, 2030), area=c(207368, 366375, 496805))#
-#
-twh <- read.csv("/Users/admin/Dropbox/Climate Change Economics 2024/week7/global-energy-substitution.csv")#
-twh$total <- rowSums(twh[, -1:-3])#
-twh$area <- twh$total * (366375 / twh$total[twh$Year == 2008])#
-#
-rate <- (log(twh$area[twh$Year == 2022]) - log(twh$area[twh$Year == 1980])) / (2022 - 1980)#
-#
-proj <- data.frame(year=2022:2370, area=twh$area[twh$Year == 2022] * exp(rate * ((2022:2370) - 2022)))#
-#
+ggplot(record.env, aes(loc, time)) +#
+  geom_raster(aes(fill=factor(full - empty))) +#
+  geom_point(data=record.org, aes(colour=energy)) +#
+  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
+str <- "when in the course of human events it becomes necessary"#
+world <- sapply(strsplit(str, "")[[1]], utf8ToInt)
+library(rms)
+install.packages("rms")
+library(rms)
+df = data.frame(xx=c(2020, 2030, 2050, 2100), yy=c(0, 1, 3, 8))
+?spline
+spline(df$xx, df$yy)
+df = data.frame(x=c(2020, 2030, 2050, 2100), y=c(0, 1, 3, 8))
 library(ggplot2)
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_none(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_none(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_blank(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_blank(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_blank(data=subset(proj, year <= 2030), aes(colour='Extrapolated')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_blank(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030), aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_blank(data=twh, aes(Year)) + #, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year), colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_line(data=subset(proj, year <= 2100), aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2100) + theme_bw()
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_blank(data=twh, aes(Year)) + #, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw() + xlab(NULL) + ylab("Solar panel area (km²)") +
+ggplot(df, aes(x, y)) + geom_point() + geom_line(data=spline(df$x, df$y))
+class(spline(df$x, df$y))
+as.data.frame(spline(df$x, df$y))
+ggplot(df, aes(x, y)) + geom_point() + geom_line(data=as.data.frame(spline(df$x, df$y)))
+df = data.frame(x=c(2020, 2030, 2050, 2100), y=c(0, 0.5, 2, 8))
+ggplot(df, aes(x, y)) + geom_point() + geom_line(data=as.data.frame(spline(df$x, df$y)))
+as.data.frame(spline(df$x, df$y))
+library(fit.hmm)
+??fit.hmm
+library(depmixS4)
+?depmix
+df = data.frame(aa=runif(100), bb=runif(100), cc=runif(100))
+depmix(list(aa ~ cc, bb ~ cc), data=df, nstates=3)
+depmix(list(aa ~ cc, bb ~ cc), family=list(gaussian(), gaussian()), data=df, nstates=3)
+hmm <- fit(mod)
+mod = depmix(list(aa ~ cc, bb ~ cc), family=list(gaussian(), gaussian()), data=df, nstates=3)
+hmm <- fit(mod)
+hmm
+summary(hmm)
+library(depmixS6)
+??depmix
+ln(1.1) - ln(1)
+log(1.1) - log(1)
+log10(1.1) - log10(1)
+log(1.1) - log(1)
+-0.011 * (log(1.1) - log(1))
+-0.011 * (log(0.1) - log(0.05))
+\(o) o + 1
+(\(o) o + 1)(3)
+source("~/research/futureloss/loadlib.R", chdir=T)
+gsat2100 <- gsat[gsat$year == 2100,]#
+#
+gsat.likely <- data.frame() # Just scenario and run_id#
+qrange <- .5#
+while (nrow(gsat.likely) < sum(gsat2100$scenario == 'ssp370')) {#
+    print(qrange)#
+    bounds <- quantile(gsat2100$gsat, c(.5 - qrange/2, .5 + qrange/2))#
+    newdraws <- gsat2100 %>% group_by(scenario, run_id) %>% filter(gsat >= bounds[1] & gsat <= bounds[2]) %>%#
+        filter(!(run_id %in% gsat.likely$run_id))#
+    if (nrow(newdraws) > 0) {#
+        newdraws2 <- newdraws %>% group_by(run_id) %>% summarize(chosen=sample(scenario, 1),#
+                                                                 year=2100, gsat=gsat[scenario == chosen],#
+                                                                 model=model[scenario == chosen]) %>%#
+            rename(scenario=chosen)#
+        gsat.likely <- rbind(gsat.likely, newdraws2)#
+    }#
+    qrange <- qrange + (sum(gsat2100$scenario == 'ssp370') - nrow(gsat.likely) + 4) / nrow(gsat2100)#
+}
+gsat.likely <- data.frame() # Just scenario and run_id#
+qrange <- .5#
+while (nrow(gsat.likely) < sum(gsat2100$scenario == 'ssp370')) {#
+    print(qrange)#
+    bounds <- quantile(gsat2100$gsat, c(.5 - qrange/2, .5 + qrange/2))#
+    newdraws <- gsat2100 %>% group_by(scenario, run_id) %>% filter(gsat >= bounds[1] & gsat <= bounds[2]) %>%#
+        filter(!(run_id %in% gsat.likely$run_id))#
+    if (nrow(newdraws) > 0) {#
+        newdraws2 <- newdraws %>% group_by(run_id) %>% dplyr::summarize(chosen=sample(scenario, 1),#
+                                                                 year=2100, gsat=gsat[scenario == chosen],#
+                                                                 model=model[scenario == chosen]) %>%#
+            rename(scenario=chosen)#
+        gsat.likely <- rbind(gsat.likely, newdraws2)#
+    }#
+    qrange <- qrange + (sum(gsat2100$scenario == 'ssp370') - nrow(gsat.likely) + 4) / nrow(gsat2100)#
+}
+c(.5 - qrange/2, .5 + qrange/2)
+library(readr)#
+text = read_file("~/Dropbox/Complex Systems Analysis 2025/week14/catinthehat.txt")#
+text2 <- gsub("[^a-z ]", "", gsub("\n", " ", tolower(text))) # "stopwords"#
+#
+chars = factor(strsplit(text2, split="")[[1]])
+library(tidyverse)#
+library(neuralnet)#
+library(caret)#
+#
+## First, translate into simple numbers#
+chars = utf8ToInt(text2)#
+df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
+                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
+                 lag1=chars[5:(length(chars)-1)], lag0=sapply(chars[6:length(chars)], intToUtf8))#
+#
+train.df <- df[1:5000,]#
+test.df <- df[5001:nrow(df),]#
+#
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE)
+? neuralnet
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE,#
+                  lifesign='minimal')
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE,#
+                  lifesign='full')
+model
+plot(model)
+iris <- iris %>% mutate_if(is.character, as.factor)
+data_rows <- floor(0.80 * nrow(iris))#
+train_indices <- sample(c(1:nrow(iris)), data_rows)#
+train_data <- iris[train_indices,]#
+test_data <- iris[-train_indices,]
+model2 = neuralnet(#
+    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
+data=train_data,#
+hidden=c(4,2),#
+linear.output = FALSE#
 )
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_blank(data=twh, aes(Year)) + #, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw() + xlab(NULL) + ylab("Solar panel area (km²)")
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_blank(data=subset(proj, year <= 2030)) + #, aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw() + xlab(NULL) + ylab("Solar panel area (km²)")
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_line(data=subset(proj, year <= 2030), aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2030) + theme_bw() + xlab(NULL) + ylab("Solar panel area (km²)")
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_line(data=subset(proj, year <= 2100), aes(colour='Extrapolated (exponential)')) +#
-    xlim(1980, 2100) + theme_bw() + xlab(NULL) + ylab("Solar panel area (km²)")
-ggplot(df, aes(year, area)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData (Energy use)')) +#
-    geom_line(data=subset(proj, year <= 2100), aes(colour='Extrapolated (exponential)')) +#
-    geom_hline(yintercept=148326000) + xlab(NULL) + ylab("Solar panel area (km²)") +#
-    xlim(1980, 2100) + theme_bw()
-ggplot(df, aes(year, area / 148326000)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=subset(proj, year <= 2100), aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=1) +#
-    xlab(NULL) + scale_y_continuous("Solar panel area (% land area)", labels=scales::percent) +#
-    xlim(1980, 2100) + theme_bw()
-ggplot(df, aes(year, area / 148326000)) +#
-    geom_line(aes(colour='land art generator initiative')) +#
-    geom_line(data=twh, aes(Year, colour='OurWorldInData')) +#
-    geom_line(data=proj, aes(colour='Extrapolated')) +#
-    geom_hline(yintercept=1) +#
-    xlab(NULL) + scale_y_continuous("Solar panel area (% land area)", labels=scales::percent) +#
-    xlim(1980, 2370) + theme_bw()
-path.jion
-file.path
-strsplit("name: test", ": ")
-?read.csv
-budget = 61
-sapply(1:1000, function(ii) min(runif(6)))
-mean(sapply(1:1000, function(ii) min(runif(6))))
-mean(sapply(1:10000, function(ii) min(runif(6))))
-mean(sapply(1:100000, function(ii) min(runif(6))))
-TT <- seq(0, 8, length.out=100)#
-DD <- 0.3 * TT^2#
+plot(model,rep = "best")
+plot(model2,rep = "best")
+nrow(iris)
+train.df <- df[1:500,]#
+test.df <- df[501:nrow(df),]
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE,#
+                  lifesign='full')
+df <- data.frame(rain=runif(1000) < .2)
+head(df)
+df$sprinkler <- ifelse(df$rain, runif(1000) < 0.01, runif(1000) < .4)
+head(df)
+head(df, 20)
+xdf$grasswet <- ifelse(df$sprinkler & df$rain, runif(1000) < .99,#
+               ifelse(df$sprinkler & !df$rain, runif(1000) < .9,#
+               ifelse(!df$sprinkler & df$rain, runif(1000) < .8, F)))
+df$grasswet <- ifelse(df$sprinkler & df$rain, runif(1000) < .99,#
+               ifelse(df$sprinkler & !df$rain, runif(1000) < .9,#
+               ifelse(!df$sprinkler & df$rain, runif(1000) < .8, F)))
+head(df, 20)
+df$rain <- factor(df$rain)#
+df$sprinkler <- factor(df$sprinkler)#
+df$grasswet <- factor(df$grasswet)
+head(df)
+df$rain[1:10]
+library(bnlearn)
+?bnlearn
+network <- hc(df)
+network
+plot(network)
+library(readr)#
+text = read_file("~/Dropbox/Complex Systems Analysis 2025/week14/catinthehat.txt")
+text
+text2 <- gsub("[^a-z ]", "", gsub("\n", " ", tolower(text))) # "stopwords"
+text2
+chars = factor(strsplit(text2, split="")[[1]])
+chars
+df <- data.frame(lag1=chars[1:(length(chars)-1)], lag0=chars[2:length(chars)])
+head(df)
+network <- hc(df)
+plot(network)
+df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
+                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
+                 lag1=chars[5:(length(chars)-1)], lag0=chars[6:length(chars)])#
+network <- hc(df)#
+plot(network)
+param <- bn.fit(network, data=df)
+param
+samp <- rbn(param, n=20)
+samp
+library(tidyverse)#
+library(neuralnet)
+chars = utf8ToInt(text2)#
+df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
+                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
+                 lag1=chars[5:(length(chars)-1)], lag0=sapply(chars[6:length(chars)], intToUtf8))#
 #
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw()
+train.df <- df[1:500,]#
+test.df <- df[501:nrow(df),]
+head(df)
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE,#
+                  lifesign='full')
+train.df <- df[1:5000,]#
+test.df <- df[5001:nrow(df),]#
+#
+model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
+                  data=train.df,#
+                  hidden=c(5,5),#
+                  linear.output = FALSE,#
+                  lifesign='full')
+data(iris)
+head(iris)
+iris <- iris %>% mutate_if(is.character, as.factor)#
+data_rows <- floor(0.80 * nrow(iris))#
+train_indices <- sample(c(1:nrow(iris)), data_rows)#
+train_data <- iris[train_indices,]#
+test_data <- iris[-train_indices,]
+model2 = neuralnet(#
+    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
+data=train_data,#
+hidden=c(4,2),#
+linear.output = FALSE#
+)
+plot(model2,rep = "best")
+model2 = neuralnet(#
+    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
+data=train_data,#
+hidden=c(4,2),#
+linear.output = FALSE,#
+lifesign='full'#
+)
+plot(model2,rep = "best")
+library(dplyr)#
 library(ggplot2)#
 #
-TT <- seq(0, 8, length.out=100)#
-DD <- 0.3 * TT^2#
+airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab6/airports.csv")#
+routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab6/routes.csv")#
+routes2 <- routes %>% group_by(Source.airport, Source.airport.ID, Destination.airport, Destination.airport.ID) %>%#
+    summarize(Airlines=n()) %>% mutate(Source.airport.ID=as.numeric(Source.airport.ID),#
+                                       Destination.airport.ID=as.numeric(Destination.airport.ID)) %>%#
+    filter(!is.na(Source.airport.ID) & !is.na(Destination.airport.ID))#
 #
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw()
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous(labels=scales::percent)
-TT <- seq(0, 8, length.out=100)#
-DD <- 0.004 * TT^2#
+hist(routes2$Airlines)#
 #
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous(labels=scales::percent)
-library(ggplot2)#
+ggplot(airports, aes(Longitude, Latitude)) +#
+    geom_point()
+airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab5 - networks/airports.csv")#
+routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab5 - networks/routes.csv")
+airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/labs/lab5 - networks/airports.csv")#
+routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/labs/lab5 - networks/routes.csv")
+airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/labs/lab5 - networks/airports.csv")#
+routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/labs/lab5 - networks/routes.csv")
+routes2 <- routes %>% group_by(Source.airport, Source.airport.ID, Destination.airport, Destination.airport.ID) %>%#
+    summarize(Airlines=n()) %>% mutate(Source.airport.ID=as.numeric(Source.airport.ID),#
+                                       Destination.airport.ID=as.numeric(Destination.airport.ID)) %>%#
+    filter(!is.na(Source.airport.ID) & !is.na(Destination.airport.ID))#
 #
-TT <- seq(0, 8, length.out=100)#
-DD <- 0.01 * TT^2#
+hist(routes2$Airlines)#
 #
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous(labels=scales::percent)
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Damages (% GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT=TT[-1], MB=diff(DD)), aes(TT, MB)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Marginal Damages (pp GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT=8 - TT[-1], MB=rev(diff(DD))), aes(TT, MB)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Marginal Damages (pp GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT=8 - TT[-1], MB=diff(DD)), aes(TT, MB)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Marginal Damages (pp GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Damages (% GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-TT <- seq(0, 6, length.out=100)#
-DD <- 0.01 * TT^2#
+ggplot(airports, aes(Longitude, Latitude)) +#
+    geom_point()
+routes3 <- routes2 %>% left_join(airports, by=c('Source.airport.ID'='Airport.ID')) %>%#
+    left_join(airports, by=c('Destination.airport.ID'='Airport.ID'), suffix=c('.src', '.dst')) %>%#
+    mutate(Over.Pacific=abs(Longitude.dst - Longitude.src) > 180)#
 #
-ggplot(data.frame(TT, DD), aes(TT, DD)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Damages (% GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT=TT[-1], MB=diff(DD)), aes(TT, MB)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Marginal Damages (pp GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-ggplot(data.frame(TT=6 - TT[-1], MB=diff(DD)), aes(TT, MB)) +#
-    geom_line() + theme_bw() + scale_y_continuous("Marginal Damages (pp GDP)", labels=scales::percent) +#
-    xlab("Global warming level (C)")
-c.1960 = 3601#
-c.2020 = 10508#
-tt = 2100#
-cbar = (c.2020 - c.1960) * (tt - 1960) / (2020 - 1960) + c.1960
-cbar
-eta = 1.45#
-for (cbar in c(c.2020, (c.2020 - c.1960) * (2100 - 1960) / (2020 - 1960) + c.1960)) {#
-  for (DD in c(1, 10)) {#
-    cc = cbar * (1 - DD / 100)#
-    uu = (cc^(1 - eta)) / (1 - eta)#
-    print(c(cbar, DD, uu))#
-  }#
+ggplot(filter(routes3, !Over.Pacific), aes(Longitude.src, Latitude.src)) +#
+    geom_segment(aes(xend=Longitude.dst, yend=Latitude.dst, linewidth=Airlines)) +#
+    scale_linewidth_continuous(range=c(.1, 1))
+airports$degree.bydest = NA#
+airports$degree.byairl = NA#
+for (ii in 1:nrow(airports)) {#
+    airports$degree.bydest[ii] <- sum(routes2$Source.airport.ID == airports$Airport.ID[ii], na.rm=T)#
+    airports$degree.byairl[ii] <- sum(routes2$Airlines[routes2$Source.airport.ID == airports$Airport.ID[ii]], na.rm=T)#
+}#
+#
+head(airports[order(airports$degree.bydest, decreasing=T),])#
+head(airports[order(airports$degree.byairl, decreasing=T),])#
+#
+ggplot(airports, aes(degree.byairl)) +#
+    geom_histogram() + scale_x_log10() + scale_y_log10()
+all_shortest_paths <- function(start, iters=Inf) {#
+    dists = rep(Inf, max(airports$Airport.ID, na.rm=T))#
+    dists[start] = 0#
+    queue = c(start)#
+#
+    while (length(queue) > 0 && iters > 0) {#
+        ## Dequeue first item#
+        node = queue[1]#
+        queue = queue[-1]#
+        mydist = dists[node]#
+#
+        ## Consider each neighbor#
+        for (ii in which(routes2$Source.airport.ID == node)) {#
+            if (dists[routes2$Destination.airport.ID[ii]] > mydist + 1) {#
+                dists[routes2$Destination.airport.ID[ii]] = mydist + 1#
+                queue = c(queue, routes2$Destination.airport.ID[ii])#
+            }#
+        }#
+#
+        iters = iters - 1#
+    }#
+#
+    dists#
+}#
+#
+airports$meandist = NA#
+for (ii in 1:nrow(airports)) {#
+    print(ii)#
+    dists = all_shortest_paths(airports$Airport.ID[ii])#
+    airports$meandist[ii] = mean(dists[dists != 0 & dists != Inf])#
+}#
+#
+head(airports[order(airports$meandist),])#
+head(airports[order(airports$meandist, decreasing=T),])#
+#
+airports$meandist[airports$meandist <= 2] <- Inf#
+head(airports[order(airports$meandist),])
+ggplot(airports, aes(degree.byairl)) +#
+    geom_histogram() + scale_x_log10() + scale_y_log10()
+quantile(airports$degree.byairl)
+quantile(airports$degree.bydest)
+qnorm(3, 1.2, 1)
+pnorm(3, 1.2, 1)
+pnorm(3, 0, 1)
+1 - pnorm(3, 0, 1)
+1 - pnorm(3, 1.2, 1)
+1 - pnorm(1.2, 1.2, 1)
+1 - pnorm(0.5, 1.2, 1)
+1 - pnorm(3, 1.6, 1)
+omegas1 <- c(0.47, 0.79, 0.70, 0.77, 0.87, 0.11, 0.47#
+mean(omegas1) # 0.53#
+#
+omegas2 <- c(0.08, 0.21, 0.47, 0.79, 0.11, 0.47)#
+mean(omegas2) # 0.31#
+#
+omegas3 <- c(0.70, 0.77, 0.87)#
+mean(omegas3) # 0.78
+omegas1 <- c(0.47, 0.79, 0.70, 0.77, 0.87, 0.11, 0.47)#
+mean(omegas1) # 0.53#
+#
+omegas2 <- c(0.08, 0.21, 0.47, 0.79, 0.11, 0.47)#
+mean(omegas2) # 0.31#
+#
+omegas3 <- c(0.70, 0.77, 0.87)#
+mean(omegas3) # 0.78
+df <- read.csv("~/projects/ailit/extract-merged.csv")
+head(df)
+table(df$Region)
+df <- subset(df, Region %in% regions)
+regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
+y", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Belt", "
+World", "Worldwide")#
+#
+df <- subset(df, Region %in% regions)
+nrow(df)
+head(df)
+table(df$Scenario)
+df.hist <- subset(df, Scenario %in% histscen)
+histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
+#
+df.hist <- subset(df, Scenario %in% histscen)
+head(df.hist)
+table(df.hist$Relative.to)
+histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")
+df.hist <- subset(df, Relative.to %in% histrel2)
+nrow(df.hist)
+head(df.hist)
+basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")
+df.base <- subset(df, Scenario %in% basescen)
+head(df.base)
+table(df.base$Relative.to)
+baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")
+df.hist <- subset(df, Scenario %in% histscen)
+histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
+#
+df.hist <- subset(df, Scenario %in% histscen)#
+#
+histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")#
+#
+df.hist <- subset(df.hist, Relative.to %in% histrel2)#
+#
+basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")#
+#
+df.base <- subset(df, Scenario %in% basescen)#
+#
+baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")#
+#
+df.base <- subset(df.base, Scenario %in% basescen)
+nrow(df.base)
+nrow(df.hist)
+head(df.hist)
+table(df.hist$Outcome)
+unique(paste(df.base$Outcome, df.base$Units))
+head(df)
+rows <- df$Units %in% c('trillion $', 'Trillion USD')#
+stopifnot(all(is.na(df$SD[rows]) & is.na(df$Low.Value[rows])))#
+df$Value <- df$Value * 1000#
+df$Units <- "billion USD"
+df[rows,]
+df <- read.csv("~/projects/ailit/extract-merged.csv")#
+#
+regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
+y", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Belt", "
+World", "Worldwide")#
+#
+df <- subset(df, Region %in% regions)#
+#
+rows <- df$Units %in% c('trillion $', 'Trillion USD')#
+stopifnot(all(is.na(df$SD[rows]) & is.na(df$Low.Value[rows])))#
+df$Value[rows] <- df$Value[rows] * 1000#
+df$SD[rows] <- df$SD[rows] * 1000#
+df$Low.Value[rows] <- df$Low.Value[rows] * 1000#
+df$High.Value[rows] <- df$High.Value[rows] * 1000#
+df$Units <- "billion USD"
+histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
+#
+df.hist <- subset(df, Scenario %in% histscen)#
+#
+histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")#
+#
+df.hist <- subset(df.hist, Relative.to %in% histrel2)#
+#
+basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")#
+#
+df.base <- subset(df, Scenario %in% basescen)#
+#
+baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")#
+#
+df.base <- subset(df.base, Scenario %in% basescen)#
+#
+unique(paste(df.base$Outcome, df.base$Units))
+df <- read.csv("~/projects/ailit/extract-merged.csv")#
+#
+regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
+y", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Belt", "
+World", "Worldwide")#
+#
+df <- subset(df, Region %in% regions)#
+#
+rows <- df$Units %in% c('trillion $', 'Trillion USD')#
+df$Value[rows] <- df$Value[rows] * 1000#
+df$SD[rows] <- df$SD[rows] * 1000#
+df$Low.Value[rows] <- df$Low.Value[rows] * 1000#
+df$High.Value[rows] <- df$High.Value[rows] * 1000#
+df$Units[rows] <- "billion USD"
+histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
+#
+df.hist <- subset(df, Scenario %in% histscen)#
+#
+histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")#
+#
+df.hist <- subset(df.hist, Relative.to %in% histrel2)#
+#
+basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")#
+#
+df.base <- subset(df, Scenario %in% basescen)#
+#
+baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")#
+#
+df.base <- subset(df.base, Scenario %in% basescen)#
+#
+unique(paste(df.base$Outcome, df.base$Units))
+table(paste(df.base$Outcome, df.base$Units))
+unique(paste(df.base$Outcome, df.base$Units))
+outcomes <- list("Crop Yield %"=c("Crop Yield %", "Soybean Production Anomaly %", "Soybean Production Loss %"),#
+                 "Productivity %"=c("Productivity %", "Production %")#
+                 "Suitable Habitat Area %"="Suitable Habitat Area %",#
+                 "Gross Regional Product %"=c("Gross Regional Product %", "GRP %"),#
+                 "GDP per capita %"=c("GDP per capita %", "GDP per capita percent", "GDP per capita losses percent", "GDP %", "GDP Loss %"),#
+                 "Economic Growth percentage points"=c("Economic Growth percentage points", "GDP per capita growth rates %"),#
+                 "Agricultural TFP %"="Agricultural TFP %",#
+                 "Total Damages billion USD"=c("Total Damages billion USD", "Economic damages billion USD", "Economic impact billion 2015$", "Annual US damages billion 2020 USD", "Damages USD billions"),#
+                 "Total Damages %"="Total Damages %",#
+                 "Permanent departures %"="Permanent departures %",#
+                 "Animal output %"="Animal output %",#
+                 "Asset Damage per GDP %"="Asset Damage per GDP %",#
+                 "Additional Suicides suicides"="Additional Suicides suicides",#
+                 "Damages to Paved Roads USD"="Damages to Paved Roads USD",#
+                 "Damages from Inland Flooding USD/Year"="Damages from Inland Flooding USD/Year",#
+                 "Extreme Poverty millions of people"="Extreme Poverty millions of people",#
+                 "Drought risk %"="Drought risk %",#
+                 "Flood risk %"="Flood risk %",#
+                 "Maximum Catch Potential %"="Maximum Catch Potential %",#
+                 "Obese Adults millions / degree C"="Obese Adults millions / degree C",#
+                 "Obesity Rate %"=c("Obesity Rate %", "Obesity %"),#
+                 "Deaths deaths/year"=c("Deaths deaths/year", "Mortality deaths"),#
+                 "Inflation percentage-points per-year"=c("Food Inflation percentage-points per-year", "Food inflation percentage-points per-year", "Food Inflation percentage-points/year", "Headline Inflation percentage-points/year", "Inflation percentage-points per-year"),#
+                 "BI Loss per GDP %"="BI Loss per GDP %",#
+                 "Asset Damage Billion USD"="Asset Damage Billion USD",#
+                 "Wildfire deaths"="Wildfire deaths")
+outcomes <- list("Crop Yield %"=c("Crop Yield %", "Soybean Production Anomaly %", "Soybean Production Loss %"),#
+                 "Productivity %"=c("Productivity %", "Production %"),#
+                 "Suitable Habitat Area %"="Suitable Habitat Area %",#
+                 "Gross Regional Product %"=c("Gross Regional Product %", "GRP %"),#
+                 "GDP per capita %"=c("GDP per capita %", "GDP per capita percent", "GDP per capita losses percent", "GDP %", "GDP Loss %"),#
+                 "Economic Growth percentage points"=c("Economic Growth percentage points", "GDP per capita growth rates %"),#
+                 "Agricultural TFP %"="Agricultural TFP %",#
+                 "Total Damages billion USD"=c("Total Damages billion USD", "Economic damages billion USD", "Economic impact billion 2015$", "Annual US damages billion 2020 USD", "Damages USD billions"),#
+                 "Total Damages %"="Total Damages %",#
+                 "Permanent departures %"="Permanent departures %",#
+                 "Animal output %"="Animal output %",#
+                 "Asset Damage per GDP %"="Asset Damage per GDP %",#
+                 "Additional Suicides suicides"="Additional Suicides suicides",#
+                 "Damages to Paved Roads USD"="Damages to Paved Roads USD",#
+                 "Damages from Inland Flooding USD/Year"="Damages from Inland Flooding USD/Year",#
+                 "Extreme Poverty millions of people"="Extreme Poverty millions of people",#
+                 "Drought risk %"="Drought risk %",#
+                 "Flood risk %"="Flood risk %",#
+                 "Maximum Catch Potential %"="Maximum Catch Potential %",#
+                 "Obese Adults millions / degree C"="Obese Adults millions / degree C",#
+                 "Obesity Rate %"=c("Obesity Rate %", "Obesity %"),#
+                 "Deaths deaths/year"=c("Deaths deaths/year", "Mortality deaths"),#
+                 "Inflation percentage-points per-year"=c("Food Inflation percentage-points per-year", "Food inflation percentage-points per-year", "Food Inflation percentage-points/year", "Headline Inflation percentage-points/year", "Inflation percentage-points per-year"),#
+                 "BI Loss per GDP %"="BI Loss per GDP %",#
+                 "Asset Damage Billion USD"="Asset Damage Billion USD",#
+                 "Wildfire deaths"="Wildfire deaths")
+for (outcome in names(outcomes)) {#
+    print(outcome)#
+    print(subset(df.hist, Outcome %in% outcomes[[outcome]]))#
+    print(subset(df.base, Outcome %in% outcomes[[outcome]]))#
 }
-log(1 - .1)
-log(.1)
-log(1 - .1)
-R = 3.8#
-  C0 = 280#
-  C1 = 2*C0#
-  F = (R*(1/log10(2))*(log10(C1/C0)))
-F
-c = 0.098#
-ECS = 3#
-Tt = ECS#
-F = 8.5#
-R = 3.8#
-deltaT = c*(F-((R/ECS)*Tt))#
-df = data.frame(year=1960, T = .2)#
-for (tt in 1961:2100) {#
-  T = df$T[nrow(df)] + (c*(F-((R/ECS)*df$T[nrow(df)])))#
-  df = rbind(df, data.frame(year=tt, T=T))#
-}#
-tail(df)
-plot(df$year, df$T, xlab='Year', ylab = 'GLobal temperature change(C)')
-co2 = read.csv("~/Dropbox/Climate Change Economics 2024/labs/lab3 - social cost of carbon/co2_ppm.csv")
-co2.ssp245 = subset(co2, scenario == 'ssp245'& year>1960)#
-df2 = data.frame(year=1960, T=0.2)#
-for (tt in 1961:2100) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df2$T[nrow(df2)] + (c*(F-((R/ECS)*df2$T[nrow(df2)])))#
-  df2 = rbind(df2, data.frame(year=tt, T=T))#
-}#
-plot(df2$year, df2$T, xlab='Year', ylab = 'GLobal temperature change(C)')
-a = .010038#
-D = a * (TT*TT)#
-TT=seq(0, 6, length.out=100)#
-DP= D*100#
-df5 = data.frame(year=1960, T=0.2, D=.1)#
-for (tt in 1961:2100) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df5$T[nrow(df5)] + (c*(F-((R/ECS)*df5$T[nrow(df5)])))#
-  D = a * (T*T)#
-  df5 = rbind(df5, data.frame(year=tt, T=T, D=D))#
-}#
-plot(df5$year, df5$D, xlab='Year', ylab = 'Damages')
-ct = meanct (1-(Dt/100))#
-eta = 1.45#
-ut = (ct^(1-eta))/(1-eta)#
-ct=3601.6#
-df10 = data.frame(year=1960, T=0.2, D=.1, ct=3601.6, ut=-.055765)#
-for (tt in 1961:2100) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df10$T[nrow(df10)] + (c*(F-((R/ECS)*df10$T[nrow(df10)])))#
-  D = a * (T*T) *100#
-  ct = df10$ct[nrow(df10)]*(1-(D/100))#
-  ut = (ct^-.45)/(-.45)#
-  df10 = rbind(df10, data.frame(year=tt, T=T, D=D, ct=ct, ut=ut))#
+outcome = "Crop Yield %"
+outcome %in% df.hist$Outcome
+outcome %in% df.base$Outcome
+for (outcome in names(outcomes)) {#
+    print(outcome)#
+    print(subset(df.base, paste(Outcome, Units) %in% outcomes[[outcome]]))#
 }
-year = 2020:2300#
-ut = -0.027#
-tp = 2020#
-P = 7.762 * (10^9)#
-p = .015#
-df13 = data.frame(year=1960, T=0.2, D=.1, ct=3601.6, ut=-.055765)#
-for (tt in 1961:2300) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df13$T[nrow(df13)] + (c*(F-((R/ECS)*df13$T[nrow(df13)])))#
-  D = a * (T*T) *100#
-  ct = df13$ct[nrow(df13)]*(1-(D/100))#
-  ut = (ct^-.45)/(-.45)#
-  df13 = rbind(df13, data.frame(year=tt, T=T, D=D, ct=ct, ut=ut))#
-}#
-W_base <- ((P*ut)*(1+p)^(-(df13$year[df13$year >= 2020]-2020)))#
-sum(W_base)
-df14 = data.frame(year=1960, T=0.2, D=.1, ct=3601.6, ut=-.055765)#
-for (tt in 1961:2300) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  if(tt >=2020)#
-    C1 = C1 + .6569#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df14$T[nrow(df14)] + (c*(F-((R/ECS)*df14$T[nrow(df14)])))#
-  D = a * (T*T) *100#
-  ct = df14$ct[nrow(df14)]*(1-(D/100))#
-  ut = (ct^-.45)/(-.45)#
-  df14 = rbind(df14, data.frame(year=tt, T=T, D=D, ct=ct, ut=ut))#
-}#
-W_plus <- ((P*ut)*(1+p)^(-(df14$year[df14$year >= 2020]-2020)))#
-Welfare = sum(W_plus)-sum(W_base)
-SCC = -(1/(10^10))*(Welfare/(2081.7468^-1.45))
-SCC
-W_base
-df13 = data.frame(year=1960, T=0.2, D=.1, ct=3601.6, ut=-.055765)#
-for (tt in 1961:2300) {#
-  C1 = co2.ssp245$value[co2.ssp245$year==tt]#
-  F = (R*(1/log10(2))*(log10(C1/C0)))#
-  T = df13$T[nrow(df13)] + (c*(F-((R/ECS)*df13$T[nrow(df13)])))#
-  D = a * (T*T) *100#
-  ct = df13$ct[nrow(df13)]*(1-(D/100))#
-  ut = (ct^-.45)/(-.45)#
-  df13 = rbind(df13, data.frame(year=tt, T=T, D=D, ct=ct, ut=ut))#
-}#
-W_base <- ((P*ut)*(1+p)^(-(df13$year[df13$year >= 2020]-2020)))#
-sum(W_base)
-1 - 1.45
-## Libraries#
+df.base <- subset(df.base, Relative.to %in% baserel2)
+outcomes <- list("Crop Yield %"=c("Crop Yield %", "Soybean Production Anomaly %", "Soybean Production Loss %"),#
+                 "Productivity %"=c("Productivity %", "Production %"),#
+                 "Suitable Habitat Area %"="Suitable Habitat Area %",#
+                 "Gross Regional Product %"=c("Gross Regional Product %", "GRP %"),#
+                 "GDP per capita %"=c("GDP per capita %", "GDP per capita percent", "GDP per capita losses percent", "GDP %", "GDP Loss %"),#
+                 "Economic Growth percentage points"=c("Economic Growth percentage points", "GDP per capita growth rates %"),#
+                 "Agricultural TFP %"="Agricultural TFP %",#
+                 "Total Damages billion USD"=c("Total Damages billion USD", "Economic damages billion USD", "Economic impact billion 2015$", "Annual US damages billion 2020 USD", "Damages USD billions"),#
+                 "Total Damages %"="Total Damages %",#
+                 "Permanent departures %"="Permanent departures %",#
+                 "Animal output %"="Animal output %",#
+                 "Asset Damage per GDP %"="Asset Damage per GDP %",#
+                 "Additional Suicides suicides"="Additional Suicides suicides",#
+                 "Damages to Paved Roads USD"="Damages to Paved Roads USD",#
+                 "Damages from Inland Flooding USD/Year"="Damages from Inland Flooding USD/Year",#
+                 "Extreme Poverty millions of people"="Extreme Poverty millions of people",#
+                 "Drought risk %"="Drought risk %",#
+                 "Flood risk %"="Flood risk %",#
+                 "Maximum Catch Potential %"="Maximum Catch Potential %",#
+                 "Obese Adults millions / degree C"="Obese Adults millions / degree C",#
+                 "Obesity Rate %"=c("Obesity Rate %", "Obesity %"),#
+                 "Deaths deaths/year"=c("Deaths deaths/year", "Mortality deaths"),#
+                 "Inflation percentage-points per-year"=c("Food Inflation percentage-points per-year", "Food inflation percentage-points per-year", "Food Inflation percentage-points/year", "Headline Inflation percentage-points/year", "Inflation percentage-points per-year"),#
+                 "BI Loss per GDP %"="BI Loss per GDP %",#
+                 "Asset Damage Billion USD"="Asset Damage Billion USD",#
+                 "Wildfire deaths"="Wildfire deaths")
+for (outcome in names(outcomes)) {#
+    if (any(outcomes[[outcome]] %in% df.base$Outcome)) {#
+        print(outcome)#
+        print(subset(df.base, paste(Outcome, Units) %in% outcomes[[outcome]]))#
+    }#
+}
+outcome = "Crop Yield %"
+outcomes[[outcome]]
+outcomes[[outcome]] %in% df.base$Outcome
+df.base$Outcome
+for (outcome in names(outcomes)) {#
+    if (any(outcomes[[outcome]] %in% paste(df.base$Outcome, df.base$Units))) {#
+        print(outcome)#
+        print(subset(df.base, paste(Outcome, Units) %in% outcomes[[outcome]]))#
+    }#
+}
+rbind(date.frame(Outcome="Crop Yield", Units="%", Value=(-5-17-25) / 3, Refs=2),#
+      date.frame(Outcome="GDP per capita", Units="%", Value=(-10.52-6.66-14.32)/3, Refs=1),#
+      date.frame(Outcome="Total Damages", Units="billion USD / year", Value=(1600.0 + 7000.0)/2, Refs=1),#
+      date.frame(Outcome="Additional Suicides", Units="deaths", Value=24000, Refs=1),#
+      date.frame(Outcome="Damages from Inland Flooding", Units="billion USD / year", Value=1.3e+09 / 1e9, Refs=1),#
+      date.frame(Outcome="Maximum Catch Potential", Units="%", Value=(-4.22-2.04-3.89-5.65)/4, Refs=1),#
+      date.frame(Outcome="Excess Mortality", Units="deaths / year", Value=50000, Refs=1),#
+      date.frame(Outcome="Excess Wildfire Mortality", Units="deaths", Value=1100, Refs=1))
+rbind(data.frame(Outcome="Crop Yield", Units="%", Value=(-5-17-25) / 3, Refs=2),#
+      data.frame(Outcome="GDP per capita", Units="%", Value=(-10.52-6.66-14.32)/3, Refs=1),#
+      data.frame(Outcome="Total Damages", Units="billion USD / year", Value=(1600.0 + 7000.0)/2, Refs=1),#
+      data.frame(Outcome="Additional Suicides", Units="deaths", Value=24000, Refs=1),#
+      data.frame(Outcome="Damages from Inland Flooding", Units="billion USD / year", Value=1.3e+09 / 1e9, Refs=1),#
+      data.frame(Outcome="Maximum Catch Potential", Units="%", Value=(-4.22-2.04-3.89-5.65)/4, Refs=1),#
+      data.frame(Outcome="Excess Mortality", Units="deaths / year", Value=50000, Refs=1),#
+      data.frame(Outcome="Excess Wildfire Mortality", Units="deaths", Value=1100, Refs=1))
+rbind(data.frame(Outcome="Crop Yield", Units="%", Value=(-5-17-25) / 3, Refs=2),#
+      data.frame(Outcome="GDP per capita", Units="%", Value=(-10.52-6.66-14.32)/3, Refs=1),#
+      data.frame(Outcome="Total Damages", Units="billion USD / year", Value=(1600.0 + 7000.0)/2, Refs=1),#
+      ## data.frame(Outcome="Additional Suicides", Units="deaths", Value=24000, Refs=1),#
+      data.frame(Outcome="Damages from Inland Flooding", Units="billion USD / year", Value=1.3e+09 / 1e9, Refs=1),#
+      data.frame(Outcome="Maximum Catch Potential", Units="%", Value=(-4.22-2.04-3.89-5.65)/4, Refs=1),#
+      data.frame(Outcome="Excess Mortality", Units="deaths / year", Value=50000, Refs=1),#
+      data.frame(Outcome="Excess Wildfire Mortality", Units="deaths", Value=1100, Refs=1))
+rbind(data.frame(Outcome="Crop Yield", Units="%", Value=(-5-17-25) / 3, Refs="10.1007/s42452-020-03432-4, 10.1029/2022EF003106"),#
+      data.frame(Outcome="GDP per capita", Units="%", Value=(-10.52-6.66-14.32)/3, Refs="10.1016/j.eneco.2021.105624"),#
+      data.frame(Outcome="Total Damages", Units="billion USD / year", Value=(1600.0 + 7000.0)/2, Refs="10.5194/esd-14-1015-2023"),#
+      ## data.frame(Outcome="Additional Suicides", Units="deaths", Value=24000, Refs=1),#
+      data.frame(Outcome="Damages from Inland Flooding", Units="billion USD / year", Value=1.3e+09 / 1e9, Refs="10.21919/remef.v17i4.794"),#
+      data.frame(Outcome="Maximum Catch Potential", Units="%", Value=(-4.22-2.04-3.89-5.65)/4, Refs="10.1371/journal.pone.0304718"),#
+      data.frame(Outcome="Excess Mortality", Units="deaths / year", Value=50000, Refs="10.5194/esd-14-1015-2023"),#
+      data.frame(Outcome="Excess Wildfire Mortality", Units="deaths", Value=1100, Refs="10.5194/esd-14-1015-2023"))
+install.packages("rpart.plot")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/slr")#
+#
 library(reshape2)#
-library(ggplot2)#
-#
-## Parameters#
-RR = 3.8 # Forcing at 2x CO2#
-C0 = 280 # Pre-industrial CO2#
-c = 0.098 # reaction rate of atmosphere#
-ECS = 3 # Equilibrium climate sensitivity#
-alpha = 1.0038 # Damage function scale#
-c.1960 = 3601.6 # GDP p.c. in 1960#
-c.2020 = 10508.6 # GDP p.c. in 2020#
-eta = 1.45 # Elasticity of marginal consumption#
-#
-## Inputs
-input = read.csv("~/Dropbox/Climate Change Economics 2024/labs/lab5 - integrated assessment/aimcge-np.csv")
-input2 = melt(input, c('Model', 'Scenario', 'Region', 'Variable', 'Unit'))#
-input2 = subset(input2, !is.na(value))#
-input2$year = as.numeric(substring(input2$variable, 2, 5))
-temp = subset(input2, Variable == 'Diagnostics|MAGICC6|Temperature|Global Mean')#
-T.2009 = temp$value[temp$year == 2009]
-co2 = subset(input2, Variable == "Diagnostics|MAGICC6|Concentration|CO2")#
-#
-## Loop over all years from 2010 to 2100#
-df = data.frame(year=2009, T=T.2009, D=NA, cbar=NA, u=NA)#
-for (tt in 2010:2100) {#
-  ## Retrieve the CO2 concentration in year tt#
-  C1 = co2$value[co2$year == tt]#
-  ## Calculate the radiative foring#
-  F = (RR / log(2)) * log(C1 / C0)#
-  ## Update the warming level, using the last row of df for the previous year#
-  T = df$T[nrow(df)] + c * (F - (RR / ECS) * df$T[nrow(df)])#
-  ## Compute the damages#
-  D = alpha * T^2#
-  ## Compute social welfare#
-  cbar = (c.2020 - c.1960) * (tt - 1960) / (2020 - 1960) + c.1960#
-  cc = cbar * (1 - D / 100)#
-  uu = (cc^(1 - eta)) / (1 - eta)#
-  ## Add on the results for the new year to df#
-  df = rbind(df, data.frame(year=tt, T=T, D=D, cbar, u=uu))#
-}
-ggplot(df, aes(year, T)) + geom_line()
-df = read.delim("~/Downloads/ghcn.txt")
-head(df)
-df = read.delim("~/Downloads/ghcn.txt", header=F)
-head(df)
-df = read.delim("~/Downloads/ghcn.txt", header=F, sep=' ')
-head(df)
-?read.delim
-df = read.delim("~/Downloads/ghcn.txt", header=F, sep=' +')
-df = read.table("~/Downloads/ghcn.txt", header=F, sep='')
-df = read.table("~/Downloads/ghcn.txt", header=F, sep=' ')
-df = read.table("~/Downloads/ghcn.txt", header=F)
-df = read.table("~/Downloads/ghcn.txt", header=T)
-df = read.table("~/Downloads/ghcn.txt", header=T, sep='')
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F)
-?read.fwf
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=10)
-df
-head(df)
-df$V1
-df$V2
-df$V6
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=25447)
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=25440)
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=25446)
-tail(df)
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=25447)
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, n=25448)
-?read.fwf
-df = read.fwf("~/Downloads/ghcn.txt", widths=diff(c(0, 12, 21, 31, 38, 41, 72, 76, 80)), header=F, comment.char='')
-head(df)
-plot(df$V3, df$V2)
-?plot
-library(ggplot2)
-ggplot(df, aes())ggplot(df, aes(V3, V2)) + geom_point() + xlim(0, 50) + ylim(0, 50)
-ggplot(df, aes(V3, V2)) + geom_point() + xlim(0, 50) + ylim(0, 50)
-ggplot(df, aes(V3, V2)) + geom_point() + xlim(0, 60) + ylim(-10, 60)
-world_map <- st_read("~/research/gcp/reverse-coding-test/data/ne_50m_admin_0_countries_lakes/ne_50m_admin_0_countries_lakes.shp")
-library(sf)
-world_map <- st_read("~/research/gcp/reverse-coding-test/data/ne_50m_admin_0_countries_lakes/ne_50m_admin_0_countries_lakes.shp")
-head(worldmap)
-head(world_map)
-ggplot(world_map2) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(0, 50) + ylim(0, 50)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(0, 50) + ylim(0, 50)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(30, 40) + ylim(30, 40)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(34, 36) + ylim(30, 34)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(34, 36) + ylim(30, 34) + theme_bw()
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(34, 36) + ylim(30, 34) + theme_bw() +#
-    xlab(NULL) + ylab(NULL)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(33, 36) + ylim(30, 34) + theme_bw() +#
-    xlab(NULL) + ylab(NULL)
-ggplot(world_map) +#
-    geom_sf() +#
-    geom_point(data=df, aes(V3, V2)) + xlim(33.5, 36) + ylim(30, 34) + theme_bw() +#
-    xlab(NULL) + ylab(NULL)
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/slr")
 library(dplyr)#
 #
 load("totalcosts.RData")
-ls()
-head(df)
-unique(df$costtype)
-df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('wetland', 'inundation', 'stormCapital', 'stormPopulation')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
-head(df.costs)
+df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))#
 df.slr <- read.csv("slr-ssp.csv")
-ggplot(df.costs %>% group_by(year) %>% summarize(costs=sum(costs)), aes(year, costs)) +#
-    geom_line() + xlim(2005, 2020)
-ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcosts, linetype="Adaptation Costs")) +#
-    xlim(2005, 2020)
 library(ggplot2)#
 ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcosts, linetype="Adaptation Costs")) +#
-    xlim(2005, 2020)
-ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlim(2005, 2020)
-ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))% +
-ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
     geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
-df.slr$quantiles <- round(df.slr$quantiles, 2)
-df.costs$ssp <- substring(df.costs$ssp, 1, 6)
-df <- subset(df.costs, year >= 2010) %>% left_join(df.slr, by=c('quantile'='quantiles', 'ssp', 'year'='years')) %>%#
-    filter(!is.na(sea_level_change))
+head(df.costs)
 head(df)
-ggplot(df %>% filter(quantile == 0.5) %>% group_by(year, ssp, case) %>% summarize(costs=sum(damages + adaptcost)), sea_level_change=sea_level_change[1]), aes(sea_level_change, costs, group=paste(ssp, case))) +#
-    geom_line(aes(colour=ssp, linetype=case))
-ggplot(df %>% filter(quantile == 0.5) %>% group_by(year, ssp, case) %>% summarize(costs=sum(damages + adaptcost), sea_level_change=sea_level_change[1]), aes(sea_level_change, costs, group=paste(ssp, case))) +#
-    geom_line(aes(colour=ssp, linetype=case))
-library(nnls)#
-df$sea_level_change2 <- df$sea_level_change^2
-opts <- nrow(unique(df[, c('ssp', 'quantile', 'year')]))#
-allres <- data.frame()#
-for (bs in 1:100) {#
-    print(bs)#
-    rows <- sample(opts, replace=T)#
-    results <- df %>% group_by(adm0) %>% summarize(alpha.damage.noadapt=coef(nnls(cbind(sea_level_change[case == 'noAdaptation'][rows],#
-                                                                                        sea_level_change2[case == 'noAdaptation'][rows]),#
-                                                                                  damages[case == 'noAdaptation'][rows]))[1],#
-                                                   beta.damage.noadapt=coef(nnls(cbind(sea_level_change[case == 'noAdaptation'][rows],#
-                                                                                       sea_level_change2[case == 'noAdaptation'][rows]),#
-                                                                                 damages[case == 'noAdaptation'][rows]))[2],#
-                                                   alpha.damage.optimal=coef(nnls(cbind(sea_level_change[case == 'optimalfixed'][rows],#
-                                                                                        sea_level_change2[case == 'optimalfixed'][rows]),#
-                                                                                  damages[case == 'optimalfixed'][rows]))[1],#
-                                                   beta.damage.optimal=coef(nnls(cbind(sea_level_change[case == 'optimalfixed'][rows],#
-                                                                                       sea_level_change2[case == 'optimalfixed'][rows]),#
-                                                                                 damages[case == 'optimalfixed'][rows]))[2],#
-                                                   alpha.adapts.noadapt=coef(nnls(cbind(sea_level_change[case == 'noAdaptation'][rows],#
-                                                                                        sea_level_change2[case == 'noAdaptation'][rows]),#
-                                                                                  adaptcost[case == 'noAdaptation'][rows]))[1],#
-                                                   beta.adapts.noadapt=coef(nnls(cbind(sea_level_change[case == 'noAdaptation'][rows],#
-                                                                                       sea_level_change2[case == 'noAdaptation'][rows]),#
-                                                                                 adaptcost[case == 'noAdaptation'][rows]))[2],#
-                                                   alpha.adapts.optimal=coef(nnls(cbind(sea_level_change[case == 'optimalfixed'][rows],#
-                                                                                        sea_level_change2[case == 'optimalfixed'][rows]),#
-                                                                                  adaptcost[case == 'optimalfixed'][rows]))[1],#
-                                                   beta.adapts.optimal=coef(nnls(cbind(sea_level_change[case == 'optimalfixed'][rows],#
-                                                                                       sea_level_change2[case == 'optimalfixed'][rows]),#
-                                                                                 adaptcost[case == 'optimalfixed'][rows]))[2])#
-    allres <- rbind(allres, cbind(bs=bs, results))#
-}
-head(allres)
-range(df$sea_level_change)
-write.csv(allres, "../../data/damages/slremul.csv", row.names=F)
+unique(df$costtype)
+df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital', 'stormPopulation', 'wetland')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) %>%#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    scale_y_log10()
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    geom_abline(xintercept=1e10, slope=1) +#
+    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
+?geom_abline
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    geom_abline(intercept=1e10, slope=1) +#
+    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
+df.costs
+ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    geom_line(data=data.frame(year=2005:2100, yy=1e10 + 1e9*(year - 2005)), aes(y=yy), linetype="Linear comparison") +#
+    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case, scales='free_y') +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_grid(ssp ~ case, scales='free') +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_wrap(ssp ~ case, scales='free_y') +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_wrap(ssp ~ case, scales='free_y', rows=4) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_wrap(ssp ~ case, scales='free_y', nrow=2) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
+    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +#
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
+    theme_bw()

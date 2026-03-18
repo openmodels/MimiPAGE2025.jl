@@ -1,9 +1,21 @@
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/slr")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/slr")
 
 library(reshape2)
 library(dplyr)
 
 load("totalcosts.RData")
+
+## Look at costs and benefits by scenario
+df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital', 'stormPopulation', 'wetland')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
+
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +
+    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +
+    theme_bw()
+
+
 
 ## Drop the non-market components: wetland, stormPopulation
 df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
@@ -12,6 +24,8 @@ df.slr <- read.csv("slr-ssp.csv")
 library(ggplot2)
 ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +
     geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
+
+
 
 df.slr$quantiles <- round(df.slr$quantiles, 2)
 df.costs$ssp <- substring(df.costs$ssp, 1, 6)

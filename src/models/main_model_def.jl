@@ -67,7 +67,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
             pretemp_static = addglobaltemperature(m, false, :PreGlobalTemperature_static)
             pretemp_seaice = addglobaltemperature(m, true, :PreGlobalTemperature_seaice)
         end
-        glotemp = addfairgrounds(m, scenario)
+        glotemp = addfairgrounds(m, scenario, isa(use_gains_ghg, Symbol) ? string(use_gains_ghg) : pm25_scenario)
 
         regtemp = addregiontemperature(m)
 
@@ -112,7 +112,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     ch4emit = addch4emissions(m, use_gains_ghg != false, isa(use_gains_ghg, Symbol) ? string(use_gains_ghg) : pm25_scenario)
     ch4cycle = addch4cycle(m, use_permafrost)
     add_comp!(m, ch4forcing)
-    n2oemit = add_comp!(m, n2oemissions)
+    n2oemit = addn2oemissions(m, use_gains_ghg != false, isa(use_gains_ghg, Symbol) ? string(use_gains_ghg) : pm25_scenario)
     add_comp!(m, n2ocycle)
     add_comp!(m, n2oforcing)
     lgemit = add_comp!(m, LGemissions)
@@ -203,6 +203,8 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     pm25damages_productivity = add_pm25_damages(m, "morb_productivity", 0.0377865925613342, :PM25Damage_Productivity)
     pm25damages_disutility = add_pm25_damages(m, "morb_disutility", 0.0349276362478346, :PM25Damage_Disutility)
     pm25damages_mortality = add_pm25_damages(m, "mort_disutility", 0.0386442604132584, :PM25Damage_Mortality)
+
+    addwbregioncorrection(m)
 
     # PM2.5 Market Damages Component
     pmmarket = add_comp!(m, PMMarketDamages)
@@ -466,13 +468,19 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
         connect_param!(m, pm25_damages_compnames => :gdp, finalgdp_pair)
     end
 
+    connect_param!(m, :WBRegionCorrection => :morb_healthcare_old, :PM25Damage_Healthcare => :cost)
+    connect_param!(m, :WBRegionCorrection => :morb_productivity_old, :PM25Damage_Productivity => :cost)
+    connect_param!(m, :WBRegionCorrection => :morb_disutility_old, :PM25Damage_Disutility => :cost)
+    connect_param!(m, :WBRegionCorrection => :mort_disutility_old, :PM25Damage_Mortality => :cost)
+
     # PM Market Damages
     pmmarket[:pm_total] = pm25pollution[:pm_total]
 
     additional[:save_savingsrate] = macroparams[:save_savingsrate]
     additional[:pop_population] = population[:pop_population]
-    connect_param!(m, :AdditionalMarketDamages => :one, :PM25Damage_Healthcare => :cost)
-    connect_param!(m, :AdditionalMarketDamages => :two, :PM25Damage_Productivity => :cost)
+    connect_param!(m, :AdditionalMarketDamages => :one, :WBRegionCorrection => :morb_healthcare_new)
+    connect_param!(m, :AdditionalMarketDamages => :two, :WBRegionCorrection => :morb_productivity_new)
+    connect_param!(m, :AdditionalMarketDamages => :three, :WBRegionCorrection => :mort_productivity_new)
     connect_param!(m, :AdditionalMarketDamages => :gdp_baseline, finalgdp_pair)
     if use_trade
         connect_param!(m, :AdditionalMarketDamages => :rgdp_per_cap_MarketRemainGDP, :Trade => :rgdp_per_cap_TradeRemainGDP)

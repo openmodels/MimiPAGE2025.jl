@@ -1,6 +1,9 @@
 @defcomp n2oemissions begin
     region = Index()
 
+    gains_match = Parameter{Bool}()
+    e_globalN2Oemissions_gains = Parameter(index=[time], unit="Mtonne/year")
+
     e_globalN2Oemissions = Variable(index=[time], unit="Mtonne/year")
     e0_baselineN2Oemissions = Parameter(index=[region], unit="Mtonne/year")
     e_regionalN2Oemissions = Variable(index=[time,region], unit="Mtonne/year")
@@ -25,7 +28,34 @@
             end
         end
 
+        if p.gains_match
+            n2opt = p.e_globalN2Oemissions_gains[t] / sum(v.e_regionalN2Oemissions[t, :])
+            for rr in d.region
+                v.e_regionalN2Oemissions[t, rr] = n2opt * v.e_regionalN2Oemissions[t, rr]
+            end
+        end
+
         # eq. 5 in Hope (2006) - global N2O emissions are sum of regional emissions
         v.e_globalN2Oemissions[t] = sum(v.e_regionalN2Oemissions[t,:])
     end
+end
+
+function addn2oemissions(model::Model, use_gains_n2o::Bool, gains_scenario::String)
+    n2oemit = add_comp!(model, n2oemissions)
+
+    gains_n2o = zeros(dim_count(model, :time))
+
+    if use_gains_n2o
+        emits = load_gains_emissions(model, gains_scenario)
+
+        for tt in 1:dim_count(model, :time)
+            gains_n2o[tt] = get_gains_value(emits, dim_keys(model, :time)[tt], "N2O_kt/yr", 7.205451799 * 1e3) / 1e3 # value from FaIR SSP245
+        end
+    end
+
+    n2oemit[:gains_match] = use_gains_n2o
+    n2oemit[:e_globalN2Oemissions_gains] = gains_n2o
+
+    return n2oemit
+
 end

@@ -50,9 +50,12 @@ function addco2emissions(model::Model, use_gains_co2::Bool, gains_scenario::Stri
         baseline2 = load_pm25pollution_basedata(model, gains_scenario)
 
         for tt in 1:dim_count(model, :time)
-            baseline_page, baseline_page_year = get_pm25pollution_baserows(model, gains_scenario, baseline2, dim_keys(model, :time)[tt])
-
-            gains_co2[tt] = baseline_page."CO2 Mt CO2/yr"[1]
+            if tt == 1
+                gains_co2[tt] = 37.09*1e3 # From 2019 World In Data, https://ourworldindata.org/co2-emissions
+            else
+                baseline_page, baseline_page_year = get_pm25pollution_baserows(model, gains_scenario, baseline2, dim_keys(model, :time)[tt])
+                gains_co2[tt] = baseline_page."CO2 Mt CO2/yr"[1]
+            end
         end
     end
 

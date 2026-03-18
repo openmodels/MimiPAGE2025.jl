@@ -46,7 +46,7 @@ delays_extrap = myloadcsv("data/other/delays-extrapolate.csv")
             if vv.delay[cc] < 0 || is_first(tt)
                 vv.carbonprice[tt, cc] = pp.carbonprice_raw[tt, cc]
             else
-                interpolation = LinearInterpolation(dim_keys(model, :time)[1:tt.t],
+                interpolation = LinearInterpolation(dim_keys(pp.model, :time)[1:tt.t],
                                                     [pp.carbonprice_raw[TimestepIndex(it), cc] for it in 1:tt.t], extrapolation_bc=Flat())
                 vv.carbonprice[tt, cc] = interpolation(gettime(tt) - vv.delay[cc])
             end

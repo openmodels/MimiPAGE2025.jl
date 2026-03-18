@@ -35,3 +35,25 @@ function get_pm25pollution_baserows(model::Model, scenario::String, baseline2::D
 
     return baseline_page, baseline_year
 end
+
+function load_gains_emissions(model::Model, scenario::String)
+    emits = CSV.read(pagedata("climate/gains-emissions.csv"), DataFrame, missingstring="NA")
+    return emits[emits.LABEL_SCEN_REPORT .== scenario, :]
+end
+
+function get_gains_value(df::DataFrame, year::Int64, col::String, val2025::Float64)
+    if year < 2025
+        return val2025
+    elseif year > 2100
+        return get_gains_value(df, 2100, col, val2025)
+    elseif year == 2075
+        val = df[df.IDYEARS .== 2075, col]
+        if length(val) == 0 || ismissing(val[1])
+            return (get_gains_value(df, 2070, col, val2025) + get_gains_value(df, 2080, col, val2025)) / 2
+        else
+            return val[1]
+        end
+    else
+        return df[df.IDYEARS .== year, col][1]
+    end
+end
