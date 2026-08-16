@@ -172,7 +172,7 @@ uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
 version = "1.1.23"
 
 [[Downloads]]
-deps = ["ArgTools", "LibCURL", "NetworkOptions"]
+deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [[Electron]]
@@ -221,6 +221,9 @@ deps = ["Dates", "Mmap", "Printf", "Test", "UUIDs"]
 git-tree-sha1 = "0f5e8d0cb91a6386ba47bd1527b240bd5725fbae"
 uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
 version = "0.9.10"
+
+[[FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
 [[FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays"]
@@ -383,7 +386,7 @@ uuid = "093fc24a-ae57-5d10-9952-331d41423f4d"
 version = "1.3.5"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -397,9 +400,9 @@ uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
 [[MKL_jll]]
 deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "Pkg"]
-git-tree-sha1 = "c253236b0ed414624b083e6b72bfe891fbd2c7af"
+git-tree-sha1 = "5455aef09b40e5020e1520f551fa3135040d4ed0"
 uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
-version = "2021.1.1+1"
+version = "2021.1.1+2"
 
 [[MacroTools]]
 deps = ["Markdown", "Random"]
@@ -437,6 +440,14 @@ deps = ["CSVFiles", "Classes", "DataFrames", "DataStructures", "Dates", "Delimit
 git-tree-sha1 = "265766488a3c7c4e45a2dbeaea0c2de9e02208f8"
 uuid = "e4e893b0-ee5e-52ea-8111-44b3bdec128c"
 version = "1.3.0"
+
+[[MimiFAIRv2]]
+deps = ["CSVFiles", "DataFrames", "Downloads", "Mimi", "Query", "StatsBase"]
+git-tree-sha1 = "f1f597f276fa02cc8e256e366d80708b5f809446"
+repo-rev = "main"
+repo-url = "https://github.com/FrankErrickson/MimiFAIRv2.jl.git"
+uuid = "db6a9ac4-572f-40b4-b774-4040310d200a"
+version = "0.1.0-DEV"
 
 [[Missings]]
 deps = ["DataAPI"]
@@ -494,11 +505,15 @@ git-tree-sha1 = "2bf78c5fd7fa56d2bbf1efbadd45c1b8789e6f57"
 uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
 version = "1.10.2"
 
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
+
 [[OpenSpecFun_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "13652491f6856acfd2db29360e1bbcd4565d04f1"
 uuid = "efe28fd5-8261-553b-a9e1-b2916fc3738e"
-version = "0.5.5+0"
+version = "0.5.5+2"
 
 [[OrderedCollections]]
 git-tree-sha1 = "85f8e6578bf1f9ee0d11e7bb1b1456435479d47c"
@@ -590,7 +605,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Ratios]]
@@ -825,6 +840,10 @@ version = "0.9.3"
 [[Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]

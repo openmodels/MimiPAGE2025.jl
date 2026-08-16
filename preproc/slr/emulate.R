@@ -1,20 +1,36 @@
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/slr")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/slr")
 
 library(reshape2)
 library(dplyr)
 
 load("totalcosts.RData")
 
+## Look at costs and benefits by scenario
+df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital', 'stormPopulation', 'wetland')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
+
+ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%
+       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +
+    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +
+    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +
+    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +
+    theme_bw()
+
+
+
 ## Drop the non-market components: wetland, stormPopulation
 df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
+df.costs$ssp <- substring(df.costs$ssp, 1, 6)
+df.costs$sspnum <- substring(df.costs$ssp, 4, 4)
+
 df.slr <- read.csv("slr-ssp.csv")
 
 library(ggplot2)
 ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +
     geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
 
+
+
 df.slr$quantiles <- round(df.slr$quantiles, 2)
-df.costs$ssp <- substring(df.costs$ssp, 1, 6)
 df <- subset(df.costs, year >= 2010) %>% left_join(df.slr, by=c('quantile'='quantiles', 'ssp', 'year'='years')) %>%
     filter(!is.na(sea_level_change))
 
@@ -28,6 +44,11 @@ sspdata2 <- melt(sspdata, c('SCENARIO', 'REGION'), variable.name='Xyear', value.
 sspdata2$gdp <- sspdata2$gdp * 104.004 / 89.629 # From https://fred.stlouisfed.org/series/GDPDEF#0
 sspdata2$sspnum <- substring(sspdata2$SCENARIO, 4, 4)
 sspdata2$year <- as.numeric(substring(sspdata2$Xyear, 2, 5))
+
+df.costs2 <- df.costs %>% left_join(sspdata2, by=c('sspnum', 'year', 'adm0'='REGION')) %>% filter(quantile == 0.5)
+df.costs2$damages.frac <- df.costs2$damages / (df.costs2$gdp * 1e9)
+library(ggplot2)
+ggplot(subset(df.costs2, adm0 == 'RUS'), aes(year, damages.frac)) + geom_point() + scale_y_log10()
 
 df$sspnum <- substring(df$ssp, 4, 4)
 df2 <- df %>% left_join(sspdata2, by=c('sspnum', 'year', 'adm0'='REGION'))

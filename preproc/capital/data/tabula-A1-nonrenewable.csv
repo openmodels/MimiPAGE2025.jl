@@ -1,0 +1,141 @@
+"",Country,1990,1995,2000,2005,2010,2014
+1,Afghanistan,4,4,3,3,3,3
+2,Albania,13,13,13,13,12,12
+3,Algeria,604,563,516,462,401,354
+4,Argentina,60,56,49,40,31,24
+5,Armenia,NA,NA,NA,NA,3,3
+6,Australia,2041,2006,1963,1912,1857,1808
+7,Austria,4,4,3,2,1,0
+8,Bahrain,7,5,4,3,2,1
+9,Bangladesh,4,4,4,3,3,3
+10,Barbados,0,0,0,0,0,NA
+11,Belgium,NA,NA,NA,NA,0,NA
+12,Belize,NA,NA,NA,NA,0,NA
+13,Benin,NA,NA,NA,NA,NA,NA
+14,Bolivia (Plurinational State of),12,12,11,10,9,7
+15,Botswana,2,2,2,2,1,1
+16,Brazil,554,534,507,469,419,371
+17,Bulgaria,59,56,53,51,48,46
+18,Burundi,NA,NA,NA,NA,NA,NA
+19,Cambodia,NA,NA,NA,NA,NA,NA
+20,Cameroon,12,9,7,5,6,5
+21,Canada,2632,2550,2453,2346,2235,2145
+22,Central African Republic,NA,NA,NA,NA,0,0
+23,Chile,111,107,101,94,86,79
+24,China,4183,4009,3812,3555,3166,2762
+25,Colombia,226,214,195,176,154,130
+26,Congo,42,38,33,28,25,20
+27,Costa Rica,NA,NA,NA,NA,0,NA
+28,Côte d’Ivoire,3,3,3,3,3,2
+29,Croatia,3,4,3,2,2,1
+30,Cuba,15,14,13,12,10,9
+31,Cyprus,NA,NA,NA,NA,0,NA
+32,Czech Republic,81,77,71,66,61,57
+33,Democratic Republic of the Congo,NA,NA,NA,NA,NA,NA
+34,Denmark,45,41,35,25,16,11
+35,Dominican Republic,1,1,1,1,1,1
+36,Ecuador,151,144,135,125,114,104
+37,Egypt,208,186,164,143,121,103
+38,El Salvador,NA,NA,NA,NA,NA,NA
+39,Estonia,NA,NA,NA,NA,0,NA
+40,Fiji,NA,NA,NA,NA,NA,NA
+41,Finland,0,0,0,0,0,NA
+42,France,4,3,2,1,1,1
+43,Gabon,51,45,38,32,27,23
+44,Gambia,NA,NA,NA,NA,NA,NA
+45,Germany,1485,1424,1375,1328,1285,1253
+46,Ghana,4,4,3,3,2,2
+47,Greece,80,74,69,62,57,52
+48,Guatemala,2,2,2,2,1,1
+49,Guyana,2,2,2,2,2,2
+50,Haiti,NA,NA,NA,NA,NA,NA
+51,Honduras,NA,NA,NA,NA,NA,NA
+52,Hungary,43,41,38,37,35,34
+53,Iceland,NA,NA,NA,NA,NA,NA
+54,India,2348,2304,2248,2184,2101,2025
+55,Indonesia,1072,1016,953,892,818,745
+56,Iran (Islamic Republic of),4202,4113,4012,3902,3773,3671
+57,Iraq,1533,1520,1496,1462,1426,1390
+58,Ireland,2,2,1,1,1,0
+59,Israel,10,10,10,10,9,8
+60,Italy,26,22,18,14,11,8
+61,Jamaica,4,4,4,4,4,4
+62,Japan,37,30,24,18,12,8
+63,Jordan,5,5,5,5,5,5
+64,Kazakhstan,918,1003,987,961,925,891
+65,Kenya,NA,NA,NA,NA,NA,NA
+66,Kuwait,1606,1574,1524,1471,1408,1357
+67,Kyrgyzstan,10,10,10,10,10,10
+68,Lao People’s Democratic Republic,1,1,1,1,1,1
+69,Latvia,NA,NA,NA,NA,0,NA
+70,Lesotho,NA,NA,NA,NA,NA,NA
+71,Liberia,NA,NA,NA,NA,NA,NA
+72,Lithuania,0,0,0,0,0,NA
+73,Luxembourg,NA,NA,NA,NA,NA,NA
+74,Malawi,NA,NA,NA,NA,0,0
+75,Malaysia,306,286,259,229,197,172
+76,Maldives,NA,NA,NA,NA,NA,NA
+77,Mali,NA,NA,NA,NA,NA,NA
+78,Malta,NA,NA,NA,NA,NA,NA
+79,Mauritania,5,5,5,4,5,5
+80,Mauritius,NA,NA,NA,NA,NA,NA
+81,Mexico,297,263,225,183,141,109
+82,Mongolia,46,46,45,45,44,42
+83,Morocco,0,0,0,0,0,0
+84,Mozambique,30,30,30,30,147,146
+85,Myanmar,21,21,20,18,15,14
+86,Namibia,NA,NA,NA,NA,3,3
+87,Nepal,0,0,0,0,0,0
+88,Netherlands,122,105,88,72,56,43
+89,New Zealand,145,143,140,138,135,133
+90,Nicaragua,NA,NA,NA,NA,0,NA
+91,Niger,3,3,3,3,3,3
+92,Nigeria,712,669,622,571,518,473
+93,Norway,484,431,353,267,192,142
+94,Pakistan,135,129,123,115,104,96
+95,Panama,NA,NA,NA,NA,NA,NA
+96,Papua New Guinea,16,14,12,11,10,9
+97,Paraguay,NA,NA,NA,NA,0,NA
+98,Peru,91,87,82,76,69,60
+99,Philippines,11,11,11,11,14,12
+100,Poland,496,475,455,438,421,409
+101,Portugal,0,0,0,0,1,0
+102,Qatar,451,442,429,410,383,351
+103,Republic of Korea,21,18,16,14,12,10
+104,Republic of Moldova,NA,NA,NA,NA,NA,NA
+105,Romania,47,38,31,24,18,13
+106,Russian Federation,4322,6384,6131,5835,5493,5201
+107,Rwanda,NA,NA,NA,NA,2,2
+108,Saudi Arabia,4378,4185,3977,3759,3512,3305
+109,Senegal,0,0,0,0,0,0
+110,Serbia,NA,NA,NA,NA,6,3
+111,Sierra Leone,NA,NA,NA,NA,NA,NA
+112,Singapore,NA,NA,NA,NA,0,NA
+113,Slovakia,5,5,5,4,4,3
+114,Slovenia,10,9,9,8,8,8
+115,South Africa,301,278,253,227,200,179
+116,Spain,42,37,34,31,29,28
+117,Sri Lanka,NA,NA,NA,NA,NA,NA
+118,Sudan (former),61,61,61,57,50,45
+119,Swaziland,1,1,1,1,1,1
+120,Sweden,13,13,13,12,12,11
+121,Switzerland,0,0,0,0,0,NA
+122,Syrian Arab Republic,71,62,51,41,33,28
+123,Tajikistan,5,5,5,5,5,5
+124,Thailand,94,89,81,69,54,38
+125,Togo,0,0,0,0,0,0
+126,Trinidad and Tobago,64,60,55,46,34,24
+127,Tunisia,19,17,14,12,10,8
+128,Turkey,269,262,255,249,241,234
+129,Uganda,28,28,28,28,28,28
+130,Ukraine,627,676,664,651,638,627
+131,United Arab Emirates,1344,1296,1247,1195,1136,1085
+132,United Kingdom,337,274,192,120,71,45
+133,United Republic of Tanzania,2,2,2,2,2,2
+134,United States of America,5929,5581,5232,4895,4559,4244
+135,Uruguay,0,NA,NA,NA,0,NA
+136,Venezuela (Bolivarian Republic of),4317,4254,4174,4099,4031,3979
+137,Viet Nam,165,162,157,149,142,133
+138,Yemen,52,48,42,35,52,48
+139,Zambia,9,8,8,7,6,6
+140,Zimbabwe,10,9,9,9,8,8

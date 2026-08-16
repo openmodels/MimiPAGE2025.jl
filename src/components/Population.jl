@@ -1,10 +1,14 @@
 include("../utils/country_tools.jl")
 
+gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv"), DataFrame)
+
 @defcomp Population begin
     region = Index()
     country = Index()
 
     model = Parameter{Model}()
+    pop_match = Parameter(index=[time, country], unit="people")
+    gainsmatch = Parameter{Bool}()
 
     # Parameters
     y_year_0 = Parameter(unit="year")
@@ -34,6 +38,14 @@ include("../utils/country_tools.jl")
             end
         end
 
+        if p.gainsmatch
+            for cc in d.country
+                if p.pop_match[tt, cc] > 0
+                    v.pop_population[tt, cc] = p.pop_match[tt, cc] / 1e6
+                end
+            end
+        end
+
         v.pop_population_region[tt, :] = countrytoregion(p.model, sum, v.pop_population[tt, :])
     end
 end
@@ -41,9 +53,40 @@ end
 # Still need this function in order to set the parameters than depend on
 # readpagedata, which takes model as an input. These cannot be set using
 # the default keyword arg for now.
-function addpopulation(model::Model)
+function addpopulation(model::Model, gainsmatch::Bool, scenario::String)
     populationcomp = add_comp!(model, Population)
     populationcomp[:model] = model
+
+    populationcomp[:gainsmatch] = gainsmatch
+    populationcomp[:pop_match] = zeros(dim_count(model, :time), dim_count(model, :country))
+    if gainsmatch
+        baseline = CSV.read(pagedata("pollution/baseline.csv"), DataFrame, missingstring="NA")
+        mapping = leftjoin(get_countryinfo(), gains_mapping, on=:ISO3)
+        mapping.REGION_4LETTER[ismissing.(mapping.REGION_4LETTER)] .= "Missing"
+
+        pop_match = zeros(dim_count(model, :time), dim_count(model, :country))
+        for reg in unique(mapping.REGION_4LETTER)
+            if reg != "Missing"
+                scaling = mapping.Pop2015[mapping.REGION_4LETTER .== reg] / sum(mapping.Pop2015[mapping.REGION_4LETTER .== reg])
+
+                for tt in 1:dim_count(model, :time)
+                    if dim_keys(model, :time)[tt] < 2025
+                        value = baseline.POPULATION[(baseline.IDYEARS .== 2025) .& (baseline.IDSCENARIOS .== scenario) .& (baseline.REGION_4LETTER .== reg)]
+                    elseif dim_keys(model, :time)[tt] == 2075
+                        value = (baseline.POPULATION[(baseline.IDYEARS .== 2070) .& (baseline.IDSCENARIOS .== scenario) .& (baseline.REGION_4LETTER .== reg)] .+ baseline.POPULATION[(baseline.IDYEARS .== 2080) .& (baseline.IDSCENARIOS .== scenario) .& (baseline.REGION_4LETTER .== reg)]) ./ 2
+                    elseif dim_keys(model, :time)[tt] > 2100
+                        value = baseline.POPULATION[(baseline.IDYEARS .== 2100) .& (baseline.IDSCENARIOS .== scenario) .& (baseline.REGION_4LETTER .== reg)]
+                    else
+                        value = baseline.POPULATION[(baseline.IDYEARS .== dim_keys(model, :time)[tt]) .& (baseline.IDSCENARIOS .== scenario) .& (baseline.REGION_4LETTER .== reg)]
+                    end
+                    if length(value) > 0 && !ismissing(value[1])
+                        pop_match[tt, mapping.REGION_4LETTER .== reg] .= scaling * value[1]
+                    end
+                end
+            end
+        end
+        populationcomp[:pop_match] = pop_match
+    end
 
     return populationcomp
 end

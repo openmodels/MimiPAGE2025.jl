@@ -1,4 +1,5 @@
 module MimiPAGE2020
+using MimiFAIRv2
 
 using Mimi
 using Random
@@ -18,6 +19,8 @@ include("models/mcs_def.jl")
 include("compute_scc.jl")
 
 include("components/RCPSSPScenario.jl")
+include("components/RFFSPScenario.jl")
+include("components/FaIRGrounds.jl")
 include("components/CO2emissions.jl")
 include("components/CO2cycle.jl")
 include("components/CO2forcing.jl")

@@ -26,6 +26,8 @@ macs = myloadcsv("data/macs.csv")
     mac_draw = Parameter{Int64}()
     baselineco2_uniforms = Parameter() #index=[country])
 
+    control_factor = Parameter(default=1.) # > 1 to increase carbon price
+
     ## Parameters set by init to MC values
 
     # Decrease in CO2 for a given tax
@@ -93,9 +95,8 @@ macs = myloadcsv("data/macs.csv")
             baselineemit = vv.e0_baselineCO2emissions_country .* bau_co2emissions_country / 100 # Mt
 
             rawfractargetabated = -rawtonnesabated ./ baselineemit # fraction abated
-            # Regularize so not over 1 and goes to 1 as p -> inf
-            regfractargetabated = rawfractargetabated ./ (exp.(-carbonprice / 500) .+ rawfractargetabated)
-            regfractargetabated[rawfractargetabated .> 1.] .= rawfractargetabated[rawfractargetabated .> 1.]
+            # Regularize so not over 150% and goes to 150% as p -> inf
+            regfractargetabated = rawfractargetabated ./ (exp.(-carbonprice / 500) .+ rawfractargetabated / 1.5)
 
             totregfractargetabated = sum(regfractargetabated .* baselineemit) / sum(baselineemit)
 
@@ -105,10 +106,10 @@ macs = myloadcsv("data/macs.csv")
         if geterdiff(0) < 0 # no-mitigation - emissions < 0 -> emissions > no-mitigation
             vv.carbonprice[tt, :] .= 0.
         elseif geterdiff(3000) > 0 # full-mitigation - emissions > 0 -> emissions < $3000 price
-            vv.carbonprice[tt, :] .= 3000.
+            vv.carbonprice[tt, :] .= 3000. * pp.control_factor
         else
             root = find_zero(geterdiff, (0.0, 3000.0), Bisection())
-            vv.carbonprice[tt, :] .= root
+            vv.carbonprice[tt, :] .= root * pp.control_factor
         end
     end
 end

@@ -5,11 +5,11 @@ include("../utils/trade.jl")
 
     model = Parameter{Model}()
     gdp0_initgdp = Parameter(index=[country], unit="\$M") # GDP in y_year_0
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
 
     pop_population = Parameter(index=[time, country], unit="million person")
-    gdp_baseline = Parameter(index=[time, country], unit="\$M") # before capital effects, if used
-    gdp = Parameter(index=[time, country], unit="\$M") # after capital effects, if used
+    gdp_baseline = Parameter(index=[time, country], unit="million US\$2005/yr") # before capital effects, if used
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr") # after capital effects, if used
     rgdp_percap_impacts = Parameter(index=[time, country], unit="\$/person")
 
     global_loss = Variable(index=[time])
@@ -24,6 +24,11 @@ include("../utils/trade.jl")
     function run_timestep(pp, vv, dd, tt)
         rgdp_impacts = pp.rgdp_percap_impacts[tt, :] .* pp.pop_population[tt, :]
         vv.isat_local_ofgdp[tt, :] = (pp.gdp_baseline[tt, :] .- rgdp_impacts) ./ pp.gdp[tt, :]
+        for cc in dd.country
+            if pp.gdp[tt, cc] == 0
+                vv.isat_local_ofgdp[tt, cc] = 0
+            end
+        end
 
         output = calc_domar_distribute_method(pp.model, Vector{Float64}(-vv.isat_local_ofgdp[tt, :]))
 
@@ -36,18 +41,23 @@ include("../utils/trade.jl")
             vv.logscalebys[tt] = log(domar_loss / vv.global_loss[tt])
         end
 
-        mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[:]]))
+        if !is_first(tt)
+            mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[TimestepIndex(1):TimestepIndex(tt.t)]]))
 
-        if length(residuals(mod)) < 2
-            smoothscaleby = 1.
+            if length(residuals(mod)) < 2
+                smoothscaleby = [1.]
+            else
+                smoothscaleby = exp.(predict(mod)) .* exp(var(residuals(mod)) / 2)
+            end
         else
-            smoothscaleby = exp.(predict(mod)) .* exp(var(residuals(mod)) / 2)
+            smoothscaleby = [1.]
         end
 
         vv.isat_after_ofgdp[tt, :] = smoothscaleby[1] * output.totimpacts2.fracloss_export
+        vv.isat_after_ofgdp[tt, :] = vv.isat_after_ofgdp[tt, :] ./ (1. .+ vv.isat_after_ofgdp[tt, :]) # Asymptotic approach to 1.
         # isat = (GDPbase - RGDP) / GDP => RGDP = GDPbase - isat * GDP
         vv.rgdp_per_cap_TradeRemainGDP[tt, :] = (pp.gdp_baseline[tt, :] .- pp.gdp[tt, :] .* vv.isat_after_ofgdp[tt, :]) ./ pp.pop_population[tt, :]
-        vv.rcons_per_cap_TradeRemainConsumption[tt, :] = vv.rgdp_per_cap_TradeRemainGDP[tt, :] .* (1 - pp.save_savingsrate / 100)
+        vv.rcons_per_cap_TradeRemainConsumption[tt, :] = vv.rgdp_per_cap_TradeRemainGDP[tt, :] .* (1 .- pp.save_savingsrate[:] / 100)
     end
 end
 

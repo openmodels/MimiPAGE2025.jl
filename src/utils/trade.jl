@@ -75,8 +75,6 @@ end
 @memoize get_comtrade(iso) = trade_comtrade[trade_comtrade.reporterISO .== iso .&& trade_comtrade.partnerISO .!= "W00", :]
 @memoize get_comtrade_modelorder(iso, model) = leftjoin(get_comtrade(iso), DataFrame(ISO=dim_keys(model, :country), index=1:dim_count(model, :country)), on=:partnerISO => :ISO)
 
-
-
 function calc_domar_distribute_iso(iso::AbstractString, maxgrow::Float64, model::Model, dimpact::Vector{Float64})
     calcdf = get_comtrade_modelorder(iso, model)
     if nrow(calcdf) == 0

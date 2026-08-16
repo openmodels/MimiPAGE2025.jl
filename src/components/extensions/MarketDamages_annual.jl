@@ -25,7 +25,7 @@
     rgdp_per_cap_SLRRemainGDP = Parameter(index=[time, region], unit="\$/person")
     rgdp_per_cap_SLRRemainGDP_ann = Variable(index=[year, region], unit="\$/person")
 
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     wincf_weightsfactor_market = Parameter(index=[region], unit="unitless")
     W_MarketImpactsatCalibrationTemp = Parameter(unit="%GDP", default=0.6)
     ipow_MarketIncomeFxnExponent = Parameter(default=-0.13333333333333333)
@@ -155,9 +155,9 @@ function calc_marketdamages(p, v, d, t, annual_year, r)
         v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] = v.igdp_ImpactatActualGDPperCap_ann[yr,r]
     else
         v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] = p.isatg_impactfxnsaturation +
-            ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+            ((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) *
             ((v.igdp_ImpactatActualGDPperCap_ann[yr,r] - p.isatg_impactfxnsaturation) /
-            (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+            (((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) +
             (v.igdp_ImpactatActualGDPperCap_ann[yr,r] -
             p.isatg_impactfxnsaturation)))
     end
@@ -172,7 +172,7 @@ function calc_marketdamages(p, v, d, t, annual_year, r)
 
     v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_ann[yr,r] = (v.isat_ImpactinclSaturationandAdaptation_ann[yr,r] / 100) * v.rgdp_per_cap_SLRRemainGDP_ann[yr,r]
     v.rcons_per_cap_MarketRemainConsumption_ann[yr,r] = v.rcons_per_cap_SLRRemainConsumption_ann[yr,r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_ann[yr,r]
-    v.rgdp_per_cap_MarketRemainGDP_ann[yr,r] = v.rcons_per_cap_MarketRemainConsumption_ann[yr,r] / (1 - p.save_savingsrate / 100)
+    v.rgdp_per_cap_MarketRemainGDP_ann[yr,r] = v.rcons_per_cap_MarketRemainConsumption_ann[yr,r] / (1 - mean(p.save_savingsrate) / 100)
 
     if v.rgdp_per_cap_MarketRemainGDP_ann[yr,r] < 0
         v.rgdp_per_cap_MarketRemainGDP_ann[yr,r] = 0

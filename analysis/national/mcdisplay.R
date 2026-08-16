@@ -227,9 +227,9 @@ df <- get.allts.bygdp("MarketDamagesBurke_isat_per_cap_ImpactperCapinclSaturatio
 polydata3 <- polydata2 %>% left_join(subset(df, time == 2100), by=c('code'='country'))
 shp2 <- shp %>% left_join(polydata3[, c('PID', 'mu')])
 ggplot(shp2, aes(X, Y, group=paste(PID, SID))) +
-    geom_polygon(aes(fill=mu)) +
+    geom_polygon(aes(fill=pmax(-quantile(abs(df2$mu.frac), .9), pmin(quantile(abs(df2$mu.frac), .9), mu.frac)))) +
     theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + scale_y_continuous(NULL, expand=c(0, 0)) +
-    scale_fill_distiller("Damages (% Cons.)", type='div', palette="RdYlGn", limits=c(-1, 1)*max(abs(df$mu)), labels=scales::percent)
+    scale_fill_distiller("Damages (% Cons.)", type='div', palette="RdYlGn", limits=c(-1, 1)*quantile(abs(df2$mu.frac), .9), labels=scales::percent)
 ggsave("../../output/figures/d_cons_mkt.png", width=9.5, height=5)
 
 df <- get.allts.bygdp("NonMarketDamages_isat_per_cap_ImpactperCapinclSaturationandAdaptation.csv")

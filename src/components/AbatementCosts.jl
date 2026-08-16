@@ -26,7 +26,7 @@
     # For mix-and-match
     model = Parameter{Model}()
     gdp = Parameter(index=[time, region], unit="\$M")
-    gdp_national = Parameter(index=[time, country], unit="\$M")
+    gdp_national = Parameter(index=[time, country], unit="million US\$2005/yr")
     tc_totalcost_national = Variable(index=[time, country], unit="\$million")
     mac_draw = Parameter{Int64}()
 
@@ -66,7 +66,7 @@ function addabatementcosts(model::Model, class::Symbol)
     if class == :CO2
         setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineCO2emissions.csv"))
     elseif class == :CH4
-        setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineCH4emissions.csv"))
+        ## :e0_baselineemissions set in model
     elseif class == :N2O
         setdistinctparameter(model, componentname, :e0_baselineemissions, readpagedata(model, "data/e0_baselineN2Oemissions.csv"))
     elseif class == :Lin

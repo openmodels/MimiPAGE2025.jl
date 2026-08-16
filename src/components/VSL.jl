@@ -1,0 +1,78 @@
+using Mimi
+
+# Calculate the value of a statistical life
+# follows equations from FUND
+
+@defcomp VSL begin
+
+    country       = Index()
+
+    gdp0_initgdp = Parameter(index=[country], unit="\$M")
+    pop0_initpopulation = Parameter(index=[country], unit="million person")
+
+    gdp         = Parameter(index=[time, country], unit="million US\$2005/yr")
+    population  = Parameter(index=[time, country], unit="million person")
+
+    α             = Parameter(unit = "US\$2005")    # VSL scaling parameter
+    ϵ_space       = Parameter()                     # Income elasticity of the value of a statistical life.
+    ϵ_time        = Parameter()                     # Income elasticity of the value of a statistical life.
+    y₀            = Parameter(unit = "US\$2005")    # Normalization constant.
+    pc_gdp        = Variable(index=[time, country], unit = "US\$2005/yr/person") # Country-level per capita GDP ($/person).
+
+    vsl           = Variable(index=[time, country], unit = "US\$2005/yr") # Value of a statistical life ($).
+
+    function run_timestep(p, v, d, t)
+        if p.ϵ_space == 0 && p.ϵ_time ≠ 0
+            ## Use global growth
+            pc_gdp_0 = sum(p.gdp0_initgdp[:]) / sum(p.pop0_initpopulation[:])
+            pc_gdp_t = sum(p.gdp[t, :]) / sum(p.population[t, :])
+
+            for c in d.country
+                v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
+                v.vsl[t,c] = p.α * (pc_gdp_t / pc_gdp_0) ^ p.ϵ_time
+            end
+        else
+            for c in d.country
+                pc_gdp_0c = (p.gdp0_initgdp[c]) ./ (p.pop0_initpopulation[c])
+                v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
+
+                v.vsl[t,c] = p.α * ((pc_gdp_0c / p.y₀) ^ p.ϵ_space) * (v.pc_gdp[t,c] / pc_gdp_0c) ^ p.ϵ_time
+            end
+        end
+    end
+end
+
+
+function addVSL(m::Model, vsl::Symbol)
+
+    compref = add_comp!(m, VSL, :VSL);
+
+    # --------------------------------------------------------------------------
+    # VSL
+    # --------------------------------------------------------------------------
+
+    if vsl == :oecd_global
+	update_param!(m, :VSL, :α,  2.7e6 * 81.551 / 118.012)
+        update_param!(m, :VSL, :y₀, 1)
+        update_param!(m,  :VSL, :ϵ_space, 0.)
+        update_param!(m,  :VSL, :ϵ_time, 1.)
+    else
+        if vsl==:fund
+	    update_param!(m, :VSL, :α,  4.99252262888626e6 * pricelevel_1995_to_2005)   # convert from FUND USD $1995 to USD $2005
+            update_param!(m, :VSL, :y₀, 24_962.6131444313  * pricelevel_1995_to_2005)   # convert from FUND USD $1995 to USD $2005
+        elseif vsl==:epa
+	    update_param!(m, :VSL, :α,  7.73514707e6)                                   # 2020 EPA VSL in 2005$. See DataExplainer.ipynb for information
+            update_param!(m, :VSL, :y₀, 48_726.60)                                      # 2020 U.S. income per capita in 2005$; See DataExplainer.ipynb for information
+        elseif vsl==:uba
+	    update_param!(m, :VSL, :α,  5_920_000. / pricelevel_2005_to_2020)           # 2020 UBA VSL in 2005$
+            update_param!(m, :VSL, :y₀, 44_646.78)                                      # 2020 German income per capita in 2005$
+        else
+            error("Invalid vsl argument of $vsl.")
+        end
+
+        update_param!(m,  :VSL, :ϵ_space, 1.0)
+        update_param!(m,  :VSL, :ϵ_time, 1.0)
+    end
+
+    compref
+end

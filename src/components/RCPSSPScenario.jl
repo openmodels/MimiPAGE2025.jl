@@ -188,9 +188,24 @@ function addrcpsspscenario(model::Model, scenario::String)
     elseif scenario == "RCP2.6 & SSP1"
         rcpsspscenario[:rcp] = 26
         rcpsspscenario[:ssp] = 1
+    elseif scenario == "RCP1.9 & SSP2"
+        rcpsspscenario[:rcp] = 19
+        rcpsspscenario[:ssp] = 2
+    elseif scenario == "RCP2.6 & SSP2"
+        rcpsspscenario[:rcp] = 26
+        rcpsspscenario[:ssp] = 2
     elseif scenario == "RCP4.5 & SSP2"
         rcpsspscenario[:rcp] = 45
         rcpsspscenario[:ssp] = 2
+    elseif scenario == "RCP1.9 & SSP3"
+        rcpsspscenario[:rcp] = 19
+        rcpsspscenario[:ssp] = 3
+    elseif scenario == "RCP2.6 & SSP3"
+        rcpsspscenario[:rcp] = 26
+        rcpsspscenario[:ssp] = 3
+    elseif scenario == "RCP4.5 & SSP3"
+        rcpsspscenario[:rcp] = 45
+        rcpsspscenario[:ssp] = 3
     elseif scenario == "RCP8.5 & SSP5"
         rcpsspscenario[:rcp] = 85
         rcpsspscenario[:ssp] = 5

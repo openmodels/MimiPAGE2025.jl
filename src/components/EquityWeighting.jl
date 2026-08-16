@@ -169,6 +169,12 @@ include("../utils/welfare.jl")
                 v.wacdt_partiallyweighted_discounted[tt, cc] = v.wact_partiallyweighted[tt, cc] * v.df_utilitydiscountfactor[tt]
 
                 ## Equity weighted impacts (end of page 28, Hope 2009)
+                if p.cons_percap_aftercosts[tt, cc] < 0
+                    println("cons_percap_aftercosts: {dim_keys(pp.model, :country)[cc]} has {p.cons_percap_aftercosts[tt, cc]} in {p.y_year[tt]}")
+                end
+                if p.rcons_percap_dis[tt, cc] < 0
+                    println("rcons_percap_dis: {dim_keys(pp.model, :country)[cc]} has {p.rcons_percap_dis[tt, cc]} in {p.y_year[tt]}")
+                end
                 v.wit_percap_equityweightedimpact[tt, cc] = ((p.cons_percap_consumption_0[v.cc_focus]^v.emuc_utilityconvexity) / (1 - v.emuc_utilityconvexity)) * (p.cons_percap_aftercosts[tt, cc]^(1 - v.emuc_utilityconvexity) - p.rcons_percap_dis[tt, cc]^(1 - v.emuc_utilityconvexity)) * v.subnational_effect[cc]
                 v.wit_equityweightedimpact[tt, cc] = v.wit_percap_equityweightedimpact[tt, cc] * p.pop_population[tt, cc]
                 v.widt_equityweightedimpact_discounted[tt, cc] = v.wit_equityweightedimpact[tt, cc] * v.df_utilitydiscountfactor[tt]

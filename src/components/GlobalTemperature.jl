@@ -110,8 +110,8 @@
     end
 end
 
-function addglobaltemperature(model::Model, use_seaice::Bool)
-    climtemp = add_comp!(model, GlobalTemperature)
+function addglobaltemperature(model::Model, use_seaice::Bool, compname::Symbol=:GlobalTemperature)
+    climtemp = add_comp!(model, GlobalTemperature, compname)
 
     climtemp[:use_seaice] = use_seaice
 

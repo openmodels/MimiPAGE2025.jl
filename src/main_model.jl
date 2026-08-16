@@ -1,6 +1,7 @@
 using Mimi
-using Random
+using MimiFAIRv2
 
+using Random
 import Random
 
 export getpage
@@ -13,7 +14,9 @@ include("compute_scc.jl")
 
 include("components/RCPSSPScenario.jl")
 include("components/RFFSPScenario.jl")
+include("components/FaIRGrounds.jl")
 include("components/CO2emissions.jl")
+include("components/CO2emissionsRCP.jl")
 include("components/extensions/CO2emissions_regional.jl")
 include("components/CO2cycle.jl")
 include("components/CO2forcing.jl")
@@ -32,7 +35,9 @@ include("components/extensions/ClimateTemperature_pageice.jl")
 include("components/GlobalTemperature.jl")
 include("components/RegionTemperature.jl")
 include("components/SeaLevelRise.jl")
+include("components/MacroParameters.jl")
 include("components/GDP.jl")
+include("components/Capital.jl")
 include("components/extensions/MarketDamagesBurke_regional.jl")
 include("components/MarketDamagesBurke.jl")
 include("components/extensions/NonMarketDamages_regional.jl")
@@ -56,6 +61,17 @@ include("components/EquityWeighting.jl")
 include("components/PermafrostSiBCASA.jl")
 include("components/PermafrostJULES.jl")
 include("components/PermafrostTotal.jl")
+include("components/CromarMortalityDamages.jl")
+include("components/VSL.jl")
+include("components/PM25Pollution.jl")
+include("components/PM25Damage.jl")
+include("components/WBRegionCorrection.jl")
+include("components/PMMarketDamages.jl")
+include("components/MarketDamageAQ_Generic.jl")
+include("components/CILDamages.jl")
+include("components/DasguptaLabor.jl")
+include("components/PolicyDelay.jl")
+include("components/AdditionalMarketDamages.jl")
 
 include("models/main_model_def.jl")
 

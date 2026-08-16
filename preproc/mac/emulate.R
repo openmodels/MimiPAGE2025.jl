@@ -1,4 +1,4 @@
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/mac/")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/mac/")
 
 library(readxl)
 library(reshape2)
@@ -138,6 +138,12 @@ for (iso in unique(df$Region)) {
 
     df5 <- df4 %>% group_by(Model, Scenario) %>% mutate(lag.value.co2=lag(value.co2), lag.value.loggdp=lag(value.loggdp))
 
+    ## Visualize relative to baseline
+    ## df6 <- df5 %>% left_join(subset(df5, Year == 2015), by=c('Model', 'Scenario', 'Region'), suffix=c('', '.base')) %>%
+    ##     mutate(value.co2.rel=value.co2 / value.co2.base)
+    ## ggplot(df6, aes(Year, value.co2.rel)) +
+    ##     geom_point()
+
     AA.co2 <- make.AA(df5, df5)
     AA.gdp <- make.AA(df5, df5, lag.col='lag.value.loggdp', swapyear=T)
     valid <- !is.na(rowSums(AA.co2))
@@ -177,15 +183,25 @@ for (iso in unique(df$Region)) {
     }
 }
 
-allpdf$adjusted <- allpdf$abated / (exp(-allpdf$value.carbonprice / 500) + allpdf$abated)
+## Allow going to 110% (enough for RCP 2.6)
+## Equation goes to asymptotic 150% (1.5 * (Y / 1.5) / (C + Y / 1.5))
+allpdf$adjusted <- allpdf$abated / (exp(-allpdf$value.carbonprice / 500) + allpdf$abated / 1.5)
 allpdf2 <- allpdf %>% group_by(iso, value.carbonprice) %>% summarize(ci25=quantile(adjusted, .25), ci75=quantile(adjusted, .75), adjusted=mean(adjusted))
 
 ggplot(allpdf2, aes(value.carbonprice, adjusted, group=iso)) +
     geom_line() + geom_ribbon(aes(ymin=ci25, ymax=ci75), alpha=.1) +
-    coord_cartesian(ylim=c(0, 1)) + theme_bw() +
+    coord_cartesian(ylim=c(0, 1.5)) + theme_bw() +
     scale_x_continuous("Carbon price (US$2010/t CO2)", expand=c(0, 0)) +
     scale_y_continuous("Total abatement (%)", expand=c(0, 0), labels=scales::percent)
 ggsave("macs.pdf", width=6.5, height=5)
+
+ggplot(allpdf, aes(abated, adjusted, colour=factor(value.carbonprice))) +
+    geom_point() + geom_abline(slope=1) +
+    scale_x_log10("Fitted percent abated", limits=c(1e-3, max(allpdf$abated)), labels=scales::percent) +
+    scale_y_log10("Adjusted percent abated", limits=c(1e-3, 1.5), labels=scales::percent) +
+    scale_colour_discrete(name="Carbon Price ($/t)") +
+    theme_bw()
+ggsave("adjusted.pdf", width=6.5, height=5)
 
 write.csv(allfits, "../../data/macs.csv", row.names=F)
 write.csv(allpdf, "allpdf.csv", row.names=F)

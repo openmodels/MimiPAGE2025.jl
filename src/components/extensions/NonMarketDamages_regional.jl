@@ -23,7 +23,7 @@
     i_regionalimpact = Variable(index=[time, region], unit="degreeC")
 
     # impact Parameters
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     wincf_weightsfactor_nonmarket = Parameter(index=[region], unit="")
     w_NonImpactsatCalibrationTemp = Parameter(unit="%GDP", default=0.6333333333333333)
     ipow_NonMarketIncomeFxnExponent = Parameter(unit="unitless", default=0.)
@@ -70,9 +70,9 @@
                 v.isat_ImpactinclSaturationandAdaptation[t,r] = v.igdp_ImpactatActualGDPperCap[t,r]
             else
                 v.isat_ImpactinclSaturationandAdaptation[t,r] = p.isatg_impactfxnsaturation +
-                ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+                ((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) *
                 ((v.igdp_ImpactatActualGDPperCap[t,r] - p.isatg_impactfxnsaturation) /
-                 (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
+                 (((100 - mean(p.save_savingsrate)) - p.isatg_impactfxnsaturation) +
                   (v.igdp_ImpactatActualGDPperCap[t,r] -
                    p.isatg_impactfxnsaturation)))
             end
@@ -87,13 +87,13 @@
 
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r] = (v.isat_ImpactinclSaturationandAdaptation[t,r] / 100) * rgdp_per_cap_MarketRemainGDP_regional[r]
             v.rcons_per_cap_NonMarketRemainConsumption[t,r] = rcons_per_cap_MarketRemainConsumption_regional[r] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t,r]
-            v.rgdp_per_cap_NonMarketRemainGDP[t,r] = v.rcons_per_cap_NonMarketRemainConsumption[t,r] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_NonMarketRemainGDP[t,r] = v.rcons_per_cap_NonMarketRemainConsumption[t,r] / (1 - mean(p.save_savingsrate) / 100)
         end
 
         ## Translate from region to country for mix-and-match
         v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :] = regiontocountry(p.model, v.isat_per_cap_ImpactperCapinclSaturationandAdaptation_regional[t, :])
         v.rcons_per_cap_NonMarketRemainConsumption[t, :] = max.(p.rcons_per_cap_MarketRemainConsumption[t, :] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :], 1.)
-        v.rgdp_per_cap_NonMarketRemainGDP[t, :] = v.rcons_per_cap_NonMarketRemainConsumption[t,:] / (1 - p.save_savingsrate / 100)
+        v.rgdp_per_cap_NonMarketRemainGDP[t, :] = v.rcons_per_cap_NonMarketRemainConsumption[t,:] / (1 - p.save_savingsrate[:] / 100)
     end
 end
 

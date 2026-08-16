@@ -1,0 +1,104 @@
+﻿REGIONGROUP,LABEL_REGIONGROUP,REGION_4LETTER
+CAS,Central Asia,KAZA
+CAS,Central Asia,KYRG
+CAS,Central Asia,TAJI
+CAS,Central Asia,TKME
+CAS,Central Asia,UZBE
+CHI,Centrally Planned Asia,CHIN
+CHI,Centrally Planned Asia,KORN
+CHI,Centrally Planned Asia,MONG
+EAS,South East Asia,CAMB
+EAS,South East Asia,INDO
+EAS,South East Asia,LAOS
+EAS,South East Asia,MALA
+EAS,South East Asia,MYAN
+EAS,South East Asia,PHIL
+EAS,South East Asia,THAI
+EAS,South East Asia,VIET
+EUR,"EU, EFTA, UK",AUST
+EUR,"EU, EFTA, UK",BELG
+EUR,"EU, EFTA, UK",BULG
+EUR,"EU, EFTA, UK",CROA
+EUR,"EU, EFTA, UK",CYPR
+EUR,"EU, EFTA, UK",CZRE
+EUR,"EU, EFTA, UK",DENM
+EUR,"EU, EFTA, UK",ESTO
+EUR,"EU, EFTA, UK",FINL
+EUR,"EU, EFTA, UK",FRAN
+EUR,"EU, EFTA, UK",GERM
+EUR,"EU, EFTA, UK",GREE
+EUR,"EU, EFTA, UK",HUNG
+EUR,"EU, EFTA, UK",ICEL
+EUR,"EU, EFTA, UK",IREL
+EUR,"EU, EFTA, UK",ITAL
+EUR,"EU, EFTA, UK",LATV
+EUR,"EU, EFTA, UK",LITH
+EUR,"EU, EFTA, UK",LUXE
+EUR,"EU, EFTA, UK",MALT
+EUR,"EU, EFTA, UK",NETH
+EUR,"EU, EFTA, UK",NORW
+EUR,"EU, EFTA, UK",POLA
+EUR,"EU, EFTA, UK",PORT
+EUR,"EU, EFTA, UK",ROMA
+EUR,"EU, EFTA, UK",SKRE
+EUR,"EU, EFTA, UK",SLOV
+EUR,"EU, EFTA, UK",SPAI
+EUR,"EU, EFTA, UK",SWED
+EUR,"EU, EFTA, UK",SWIT
+EUR,"EU, EFTA, UK",UNKI
+LAC,Latin America & Caribbean,ARGE
+LAC,Latin America & Caribbean,BOLV
+LAC,Latin America & Caribbean,BRAZ
+LAC,Latin America & Caribbean,CARB
+LAC,Latin America & Caribbean,CEAM
+LAC,Latin America & Caribbean,CHIL
+LAC,Latin America & Caribbean,COLO
+LAC,Latin America & Caribbean,ECUA
+LAC,Latin America & Caribbean,MEXI
+LAC,Latin America & Caribbean,PARA
+LAC,Latin America & Caribbean,PERU
+LAC,Latin America & Caribbean,URUG
+LAC,Latin America & Caribbean,VENE
+MEA,Middle East,ISRA
+MEA,Middle East,MIDE
+MEA,Middle East,SAAR
+NAF,North Africa,EGYP
+NAF,North Africa,IRAN
+NAF,North Africa,NAFR
+NAM,North America,CANA
+NAM,North America,USAM
+OCE,Oceania,AUTR
+OCE,Oceania,BRUN
+OCE,Oceania,JAPA
+OCE,Oceania,KORS
+OCE,Oceania,NZEL
+OCE,Oceania,SING
+OCE,Oceania,TAIW
+RUS,Russian Federation,RUSS
+SAF,Southern Africa,RSAF
+SAF,Southern Africa,SAFR
+SAS,South Asia,AFGH
+SAS,South Asia,BANG
+SAS,South Asia,BHUT
+SAS,South Asia,INDI
+SAS,South Asia,NEPA
+SAS,South Asia,PAKI
+SAS,South Asia,SRIL
+SSA,Sub-Saharan Africa,EAFR
+SSA,Sub-Saharan Africa,KENY
+SSA,Sub-Saharan Africa,NIGE
+SSA,Sub-Saharan Africa,TANZ
+SSA,Sub-Saharan Africa,WAFR
+WAS,Western Asia,ARME
+WAS,Western Asia,AZER
+WAS,Western Asia,BELA
+WAS,Western Asia,GEOR
+WAS,Western Asia,MOLD
+WAS,Western Asia,TURK
+WAS,Western Asia,UKRA
+WBK,West Balkan,ALBA
+WBK,West Balkan,BOHE
+WBK,West Balkan,KOSO
+WBK,West Balkan,MACE
+WBK,West Balkan,MONT
+WBK,West Balkan,SERB

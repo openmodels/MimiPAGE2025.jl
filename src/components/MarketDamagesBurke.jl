@@ -12,11 +12,12 @@ include("../utils/country_tools.jl")
     # incoming parameters from Climate
     rtl_realizedtemperature_absolute = Parameter(index=[time, country], unit="degreeC")
     rtl_0_realizedtemperature_absolute_burke = Parameter(index=[country], unit="degreeC")
+    rtl_0_realizedtemperature_absolute_trueburke = Parameter(index=[country], unit="degreeC")
 
     # tolerability and impact variables from PAGE damages that Burke damages also require
     rcons_per_cap_SLRRemainConsumption = Parameter(index=[time, country], unit="\$/person")
     rgdp_per_cap_SLRRemainGDP = Parameter(index=[time, country], unit="\$/person")
-    save_savingsrate = Parameter(unit="%", default=15.)
+    save_savingsrate = Parameter(index=[country], unit="%")
     ipow_MarketIncomeFxnExponent = Parameter(default=0.0)
     GDP_per_cap_focus_0_FocusRegionEU = Parameter(unit="\$/person", default=34298.93698672955)
 
@@ -24,7 +25,7 @@ include("../utils/country_tools.jl")
     impf_coeff_lin = Parameter(default=-0.00829990966469437) # rescaled coefficients from Burke
     impf_coeff_quadr = Parameter(default=-0.000500003403703578)
     tcal_burke = Parameter(default=21.) # calibration temperature for the impact function
-    nlag_burke = Parameter(default=2.) # Yumashev et al. (2019) allow for one or two lags
+    nlag_burke = Parameter(default=1.) # Yumashev et al. (2019) allow for one or two lags
 
     marginal_offset = Variable(index=[time, country])
     i1log_impactlogchange = Variable(index=[time, country]) # intermediate variable for computation
@@ -33,6 +34,7 @@ include("../utils/country_tools.jl")
     isatg_impactfxnsaturation = Parameter(unit="unitless")
     rcons_per_cap_MarketRemainConsumption = Variable(index=[time, country], unit="\$/person")
     rgdp_per_cap_MarketRemainGDP = Variable(index=[time, country], unit="\$/person")
+    rgdp_per_cap_MarketRemainGDP_region = Variable(index=[time, region], unit="\$/person")
     iref_ImpactatReferenceGDPperCap = Variable(index=[time, country])
     igdp_ImpactatActualGDPperCap = Variable(index=[time, country])
 
@@ -50,7 +52,7 @@ include("../utils/country_tools.jl")
     r1_riskindex_hazard = Parameter(index=[time, country])
     r2_riskindex_vulnerability = Parameter(index=[time, country])
     r3_riskindex_copinglack = Parameter(index=[time, country])
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     pop_population = Parameter(index=[time, country], unit="million person")
 
     function init(pp, vv, dd)
@@ -85,14 +87,16 @@ include("../utils/country_tools.jl")
             delta_temp = v.marginal_offset[t, :]
         end
 
+        trueburke_delta_temp = p.rtl_0_realizedtemperature_absolute_trueburke .- p.rtl_0_realizedtemperature_absolute_burke
+
         for cc in d.country
             # calculate the log change, depending on the number of lags specified
-            v.i1log_impactlogchange[t,cc] = p.nlag_burke * (p.impf_coeff_lin  * (p.rtl_realizedtemperature_absolute[t,cc] - p.rtl_0_realizedtemperature_absolute_burke[cc]) +
-                                                            p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] - p.tcal_burke)^2 -
-                                                                                  (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] - p.tcal_burke)^2))
+            v.i1log_impactlogchange[t,cc] = p.impf_coeff_lin  * (p.rtl_realizedtemperature_absolute[t,cc] - p.rtl_0_realizedtemperature_absolute_burke[cc]) +
+                p.impf_coeff_quadr * ((p.rtl_realizedtemperature_absolute[t,cc] + delta_temp[cc] + trueburke_delta_temp[cc] - p.tcal_burke)^2 -
+                                      (p.rtl_0_realizedtemperature_absolute_burke[cc] + delta_temp[cc] + trueburke_delta_temp[cc] - p.tcal_burke)^2)
 
             # calculate the impact at focus region GDP p.c.
-            v.iref_ImpactatReferenceGDPperCap[t, cc] = 100 * (1 - exp(v.i1log_impactlogchange[t, cc]))
+            v.iref_ImpactatReferenceGDPperCap[t, cc] = 100 * (1 - exp(p.nlag_burke * v.i1log_impactlogchange[t, cc]))
 
             # calculate impacts at actual GDP
             v.igdp_ImpactatActualGDPperCap[t, cc] = v.iref_ImpactatReferenceGDPperCap[t, cc] *
@@ -103,18 +107,18 @@ include("../utils/country_tools.jl")
                 v.isat_ImpactinclSaturationandAdaptation[t, cc] = v.igdp_ImpactatActualGDPperCap[t, cc]
             else
                 v.isat_ImpactinclSaturationandAdaptation[t, cc] = p.isatg_impactfxnsaturation +
-                    ((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) *
+                    ((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) *
                     ((v.igdp_ImpactatActualGDPperCap[t, cc] - p.isatg_impactfxnsaturation) /
-                    (((100 - p.save_savingsrate) - p.isatg_impactfxnsaturation) +
-                    (v.igdp_ImpactatActualGDPperCap[t, cc] -
-                    p.isatg_impactfxnsaturation)))
+                     (((100 - p.save_savingsrate[cc]) - p.isatg_impactfxnsaturation) +
+                      (v.igdp_ImpactatActualGDPperCap[t, cc] - p.isatg_impactfxnsaturation)))
             end
 
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, cc] = (v.isat_ImpactinclSaturationandAdaptation[t, cc] / 100) * p.rgdp_per_cap_SLRRemainGDP[t, cc]
             v.rcons_per_cap_MarketRemainConsumption[t, cc] = p.rcons_per_cap_SLRRemainConsumption[t, cc] - v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, cc]
-            v.rgdp_per_cap_MarketRemainGDP[t, cc] = v.rcons_per_cap_MarketRemainConsumption[t, cc] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_MarketRemainGDP[t, cc] = v.rcons_per_cap_MarketRemainConsumption[t, cc] / (1 - p.save_savingsrate[cc] / 100)
         end
 
+        v.rgdp_per_cap_MarketRemainGDP_region[t, :] = countrytoregion(p.model, weighted_mean, v.rgdp_per_cap_MarketRemainGDP[t, :], p.pop_population[t, :])
     end
 end
 
@@ -153,6 +157,7 @@ function addmarketdamagesburke(model::Model, config_marketdmg::String)
     marketdamagesburke[:burkey_draw] = -1
     marketdamagesburke[:config_marketdmg] = config_marketdmg
     marketdamagesburke[:rtl_0_realizedtemperature_absolute_burke] = (get_countryinfo().Temp1980 + get_countryinfo().Temp2010) / 2
+    marketdamagesburke[:rtl_0_realizedtemperature_absolute_trueburke] = readcountrydata_i_const(model, "climate/ExtendedDataFig1g.csv", :iso, :meantemp)
 
     if config_marketdmg == "none"
         marketdamagesburke[:nlag_burke] = 0.

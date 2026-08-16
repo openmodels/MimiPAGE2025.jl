@@ -52,7 +52,7 @@ get.result.row <- function(df) {
     pardf <- data.frame()
     for (mcii in unique(df4$mc)) {
         df5 <- df4 %>% filter(mc == mcii & country != 'global') %>% left_join(baseline, by=c('country'='ISO3'))
-        if (sum(df5$scc > 0, na.rm=T) < 3) {
+        if (sum(!is.na(df5$scc) & df5$scc > 0) < 3) {
             pardf <- rbind(pardf, data.frame(median=NA, mean=NA, stddev=NA,
                                              alpha1=NA, alpha1.se=NA, betam1=NA,
                                              beta.se=NA, gammam1=NA, gamma.se=NA, rsqr=NA))
@@ -237,7 +237,12 @@ disp.part <- get.displays(c(file.path(outdir, "allscc.csv"), file.path(outdir, "
                           c('Combined', 'Non-market-only', 'SLR-only', 'Market-only')) # 'Discontinuity-only'
 ggsave(file.path(outdir, "figures/sccfig-part.pdf"), width=8, height=2.5)
 
-write.csv(rbind(disp.scen, disp.year, disp.mktd, disp.othd, disp.macu, disp.down, disp.subn, disp.trad, disp.part), "scc-options.csv", row.names=F)
+disp.capx <- get.displays(c("output/allscc.csv", "output/allscc-capital-constant.csv",
+                            "output/allscc-capital-inferred.csv", "output/allscc-capital-full.csv"),
+                          c('Old', 'Constant', 'Inferred', 'Full'))
+ggsave("sccfig-capx.pdf", width=8, height=2)
+
+write.csv(rbind(disp.scen, disp.year, disp.mktd, disp.othd, disp.macu, disp.down, disp.subn, disp.trad, disp.part, disp.capx), "scc-options.csv", row.names=F)
 
 for (filepath in c(file.path(outdir, "allscc.csv"), file.path(outdir, "allscc-2050-v2.csv"), file.path(outdir, "allscc-2100-v2.csv"))) {
     df <- read.csv(filepath)

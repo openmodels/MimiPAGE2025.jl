@@ -7,9 +7,11 @@ include("../utils/country_tools.jl")
     country = Index()
 
     model = Parameter{Model}()
+    gdppc_match = Parameter(index=[time, country], unit="US\$2017/person")
+    gainsmatch = Parameter{Bool}()
 
     # Variables
-    gdp               = Variable(index=[time, country], unit="\$M")
+    gdp               = Variable(index=[time, country], unit="million US\$2005/yr")
     gdp_region        = Variable(index=[time, region], unit="\$M")
     cons_consumption  = Variable(index=[time, country], unit="\$million")
     cons_percap_consumption = Variable(index=[time, country], unit="\$/person")
@@ -25,7 +27,7 @@ include("../utils/country_tools.jl")
     y_year            = Parameter(index=[time], unit="year")
     grw_gdpgrowthrate = Parameter(index=[time, country], unit="%/year") # From p.32 of Hope 2009
     gdp0_initgdp      = Parameter(index=[country], unit="\$M") # GDP in y_year_0
-    save_savingsrate  = Parameter(unit="%", default=15.00) # pp33 PAGE09 documentation, "savings rate".
+    save_savingsrate  = Parameter(index=[country], unit="%")
     pop0_initpopulation = Parameter(index=[country], unit="million person")
     pop0_initpopulation_region = Parameter(index=[region], unit="million person")
     pop_population    = Parameter(index=[time, country], unit="million person")
@@ -41,12 +43,12 @@ include("../utils/country_tools.jl")
             v.gdp0_initgdp_region[rr] = byregion[rr]
         end
 
-        v.isatg_impactfxnsaturation = p.isat0_initialimpactfxnsaturation * (1 - p.save_savingsrate / 100)
+        v.isatg_impactfxnsaturation = p.isat0_initialimpactfxnsaturation * (1 - mean(p.save_savingsrate) / 100)
         for cc in d.country
-            v.cons_percap_consumption_0[cc] = (p.gdp0_initgdp[cc] / p.pop0_initpopulation[cc]) * (1 - p.save_savingsrate / 100)
+            v.cons_percap_consumption_0[cc] = (p.gdp0_initgdp[cc] / p.pop0_initpopulation[cc]) * (1 - p.save_savingsrate[cc] / 100)
         end
         for rr in d.region
-            v.cons_percap_consumption_0_region[rr] = (v.gdp0_initgdp_region[rr] / p.pop0_initpopulation_region[rr]) * (1 - p.save_savingsrate / 100)
+            v.cons_percap_consumption_0_region[rr] = (v.gdp0_initgdp_region[rr] / p.pop0_initpopulation_region[rr]) * (1 - mean(p.save_savingsrate) / 100)
         end
     end
 
@@ -68,28 +70,63 @@ include("../utils/country_tools.jl")
         v.yagg_periodspan[t] = yhi_periodend - ylo_periodstart
 
         for cc in d.country
-            # eq.28 in Hope 2002
-            if is_first(t)
-                v.gdp[t, cc] = p.gdp0_initgdp[cc] * (1 + (p.grw_gdpgrowthrate[t, cc] / 100))^(p.y_year[t] - p.y_year_0)
+            if p.gainsmatch
+                v.gdp[t, cc] = p.gdppc_match[t, cc] * (p.pop_population[t, cc] * 1e6) * (63.23579 / 77.53729) / 1e6
             else
-                v.gdp[t, cc] = v.gdp[t - 1, cc] * (1 + (p.grw_gdpgrowthrate[t, cc] / 100))^(p.y_year[t] - p.y_year[t - 1])
+                # eq.28 in Hope 2002
+                if is_first(t)
+                    v.gdp[t, cc] = p.gdp0_initgdp[cc] * (1 + (p.grw_gdpgrowthrate[t, cc] / 100))^(p.y_year[t] - p.y_year_0)
+                else
+                    v.gdp[t, cc] = v.gdp[t - 1, cc] * (1 + (p.grw_gdpgrowthrate[t, cc] / 100))^(p.y_year[t] - p.y_year[t - 1])
+                end
             end
 
-            v.cons_consumption[t, cc] = v.gdp[t, cc] * (1 - p.save_savingsrate / 100)
+            v.cons_consumption[t, cc] = v.gdp[t, cc] * (1 - p.save_savingsrate[cc] / 100)
             v.cons_percap_consumption[t, cc] = v.cons_consumption[t, cc] / p.pop_population[t, cc]
         end
 
         v.gdp_region[t, :] = countrytoregion(p.model, sum, v.gdp[t, :])
         for r in d.region
-            v.cons_consumption_region[t, r] = v.gdp_region[t, r] * (1 - p.save_savingsrate / 100)
+            v.cons_consumption_region[t, r] = v.gdp_region[t, r] * (1 - mean(p.save_savingsrate) / 100)
             v.cons_percap_consumption_region[t, r] = v.cons_consumption_region[t, r] / p.pop_population_region[t, r]
         end
     end
 end
 
-function addgdp(model::Model)
+function get_baseline_gdppc(baseline2, year, scenario, iso)
+    if year < 2025
+        return get_baseline_gdppc(baseline2, 2025, scenario, iso)
+    elseif year > 2100
+        return get_baseline_gdppc(baseline2, 2100, scenario, iso)
+    elseif year == 2075
+        return (get_baseline_gdppc(baseline2, 2070, scenario, iso) + get_baseline_gdppc(baseline2, 2080, scenario, iso)) / 2
+    end
+
+    values = baseline2.gdppc[(baseline2.IDYEARS .== year) .& (baseline2.IDSCENARIOS .== scenario) .& (baseline2.ISO3 .== iso)]
+    if (length(values) == 0) || ismissing(values[1])
+        return mean(skipmissing(baseline2.gdppc[(baseline2.IDYEARS .== year) .& (baseline2.IDSCENARIOS .== scenario)]))
+    else
+        return values[1]
+    end
+end
+
+function addgdp(model::Model, gainsmatch::Bool, scenario::String)
     gdp = add_comp!(model, GDP)
     gdp[:model] = model
+
+    gdp[:gainsmatch] = gainsmatch
+    gdp[:gdppc_match] = zeros(dim_count(model, :time), dim_count(model, :country))
+
+    if gainsmatch
+        baseline2 = load_pm25pollution_basedata(model, scenario)
+        baseline2.gdppc = 1e9 * 1.1102 * baseline2.GDP_GUSD2017_PPP ./ baseline2.POPULATION # Euro to dollar
+
+        gdppc_match = zeros(dim_count(model, :time), dim_count(model, :country))
+        for cc in 1:dim_count(model, :country)
+            gdppc_match[:, cc] = [get_baseline_gdppc(baseline2, year, scenario, dim_keys(model, :country)[cc]) for year in dim_keys(model, :time)]
+        end
+        gdp[:gdppc_match] = gdppc_match
+    end
 
     return gdp
 end

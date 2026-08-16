@@ -11,7 +11,7 @@
     # incoming parameters from SeaLevelRise
     s_sealevel = Parameter(index=[time], unit="m")
 
-    gdp = Parameter(index=[time, country], unit="\$M")
+    gdp = Parameter(index=[time, country], unit="million US\$2005/yr")
     pop_population = Parameter(index=[time, country], unit="million person")
 
     # incoming parameters to calculate consumption per capita after Costs
@@ -21,7 +21,7 @@
     act_percap_adaptationcosts = Parameter(index=[time, country], unit="\$/person")
 
     # component parameters
-    save_savingsrate = Parameter(unit="%", default=15.00) # pp33 PAGE09 documentation, "savings rate".
+    save_savingsrate = Parameter(index=[country], unit="%") # pp33 PAGE09 documentation, "savings rate".
 
     alpha_noadapt = Variable(index=[country])
     beta_noadapt = Variable(index=[country])
@@ -33,7 +33,7 @@
     cons_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
     gdp_percap_aftercosts = Variable(index=[time, country], unit="\$/person")
 
-    d_slr = Variable(index=[time, country], unit="\$")
+    d_slr = Variable(index=[time, country], unit="") # fraction of GDP
     d_percap_slr = Variable(index=[time, country], unit="\$/person")
 
     rcons_per_cap_SLRRemainConsumption = Variable(index=[time, country], unit="\$/person")
@@ -46,15 +46,15 @@
             vv.alpha_optimal[:] .= 0.
             vv.beta_optimal[:] .= 0.
         elseif pp.sealevelcost_draw == -1
-            vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.noadapt", values -> 0.)
-            vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.noadapt", values -> 0.)
-            vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.optimal", values -> 0.)
-            vv.beta_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.optimal", values -> 0.)
+            vv.alpha_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.beta_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.alpha_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.optimal", mean; allowmissing=true), 0.)
+            vv.beta_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.optimal", mean; allowmissing=true), 0.)
         else
-            vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.noadapt", values -> 0.)
-            vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.noadapt", values -> 0.)
-            vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.optimal", values -> 0.)
-            vv.beta_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.optimal", values -> 0.)
+            vv.alpha_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.beta_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.alpha_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.optimal", mean; allowmissing=true), 0.)
+            vv.beta_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.optimal", mean; allowmissing=true), 0.)
         end
     end
 
@@ -75,13 +75,13 @@
                 v.cons_percap_aftercosts[t, cc] = 0.01 * p.cons_percap_consumption_0[cc]
             end
 
-            v.gdp_percap_aftercosts[t,cc] = v.cons_percap_aftercosts[t, cc] / (1 - p.save_savingsrate / 100)
+            v.gdp_percap_aftercosts[t,cc] = v.cons_percap_aftercosts[t, cc] / (1 - p.save_savingsrate[cc] / 100)
 
             v.rcons_per_cap_SLRRemainConsumption[t,cc] = v.cons_percap_aftercosts[t,cc] - v.d_percap_slr[t, cc]
             if (v.rcons_per_cap_SLRRemainConsumption[t, cc] < 0.01 * p.cons_percap_consumption_0[cc])
                 v.rcons_per_cap_SLRRemainConsumption[t,cc] = 0.01 * p.cons_percap_consumption_0[cc]
             end
-            v.rgdp_per_cap_SLRRemainGDP[t,cc] = v.rcons_per_cap_SLRRemainConsumption[t,cc] / (1 - p.save_savingsrate / 100)
+            v.rgdp_per_cap_SLRRemainGDP[t,cc] = v.rcons_per_cap_SLRRemainConsumption[t,cc] / (1 - p.save_savingsrate[cc] / 100)
         end
     end
 end
