@@ -9,6 +9,7 @@
     one = Parameter(index=[time, country], unit="\$M/yr")
     two = Parameter(index=[time, country], unit="\$M/yr")
     three = Parameter(index=[time, country], unit="\$M/yr")
+    four = Parameter(index=[time, country], unit="\$M/yr")
     pop_population = Parameter(index=[time, country], unit="million person")
 
     rgdp_per_cap_FullMarketRemainGDP = Variable(index=[time, country], unit="\$/person")
@@ -18,7 +19,10 @@
         for cc in d.country
             gdppc = p.gdp_baseline[t, cc] / p.pop_population[t, cc]
             fracloss_old = 1. - p.rgdp_per_cap_MarketRemainGDP[t, cc] / gdppc
-            fracloss_new = (p.one[t, cc] + p.two[t, cc] + p.three[t, cc]) / p.gdp_baseline[t, cc]
+            fracloss_new = (p.one[t, cc] + p.two[t, cc] + p.three[t, cc] + p.four[t, cc]) / p.gdp_baseline[t, cc]
+            if fracloss_new > 0.99
+                fracloss_new = 0.99
+            end
             fracloss_combo = fracloss_old + fracloss_new / (1 + (1 / (1 - fracloss_old)) * fracloss_new) # Assumptotic to 1
 
             v.rgdp_per_cap_FullMarketRemainGDP[t, cc] = gdppc * (1 - fracloss_combo)
@@ -33,6 +37,7 @@ function addadditionalmarketdamages(model::Model)
     additional[:one] = zeros(dim_count(model, :time), dim_count(model, :country))
     additional[:two] = zeros(dim_count(model, :time), dim_count(model, :country))
     additional[:three] = zeros(dim_count(model, :time), dim_count(model, :country))
+    additional[:four] = zeros(dim_count(model, :time), dim_count(model, :country))
 
     return additional
 end

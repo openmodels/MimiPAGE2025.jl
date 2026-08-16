@@ -41,12 +41,16 @@ include("../utils/trade.jl")
             vv.logscalebys[tt] = log(domar_loss / vv.global_loss[tt])
         end
 
-        mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[:]]))
+        if !is_first(tt)
+            mod = lm(@formula(scalebys ~ 1), DataFrame(scalebys=[0.; vv.logscalebys[TimestepIndex(1):TimestepIndex(tt.t)]]))
 
-        if length(residuals(mod)) < 2
-            smoothscaleby = [1.]
+            if length(residuals(mod)) < 2
+                smoothscaleby = [1.]
+            else
+                smoothscaleby = exp.(predict(mod)) .* exp(var(residuals(mod)) / 2)
+            end
         else
-            smoothscaleby = exp.(predict(mod)) .* exp(var(residuals(mod)) / 2)
+            smoothscaleby = [1.]
         end
 
         vv.isat_after_ofgdp[tt, :] = smoothscaleby[1] * output.totimpacts2.fracloss_export

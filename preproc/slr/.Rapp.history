@@ -1,1003 +1,3 @@
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(oo, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }  #
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-    if (!is.na(organisms[oo])) {#
-      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- text[replenish]#
-}
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-fail.loss <- 1.5
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(oo, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }  #
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-    if (!is.na(organisms[oo])) {#
-      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- text[replenish]#
-}
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-fail.loss <- 2
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(oo, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }  #
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-    if (!is.na(organisms[oo])) {#
-      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- text[replenish]#
-}
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-length(organisms)
-fail.loss <- 1.8
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(oo, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }  #
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-    if (!is.na(organisms[oo])) {#
-      organisms[[oo]]$location <- sample(c(leftloc, rightloc), 1)#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- text[replenish]#
-}
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-length(organisms)
-fail.loss
-r
-text <- rep('a', 20)#
-  world <- text
-organism <- list(location=10, energy=5, tick=function(self, env) {#
-    return('a')#
-  })
-library(ggplot2)#
-#
-fail.loss <- 0.75#
-succ.gain <- 1#
-#
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(org, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }#
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == text, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- text[replenish]#
-}#
-#
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-world <- sapply(strsplit("when in the course of human events it becomes necessary", "")[[1]], utf8ToInt)#
-#
-fsm <- list(c(97, 1, 1))#
-organism <- list(location=1, energy=5, fsm=fsm, state=1, tick=function(self, env) {#
-  currstate <- self$fsm[[self$state]]#
-  if (env[2] == currstate[1])#
-    nextstate <- currstate[2]#
-  else#
-    nextstate <- currstate[3]#
-  c(self$fsm[[nextstate]][1], nextstate)#
-})#
-#
-fail.loss <- 0.15#
-succ.gain <- 1.15#
-#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=fsm, state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))
-}#
-#
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-organisms
-length(organisms)
-mutate <- function(fsm) {#
-  ## Choose a random gene#
-  chosen <- sample(length(fsm), 1)#
-  modify <- sample(3, 1)#
-  if (modify == 1) {#
-    fsm[[chosen]][1] <- sample(utf8ToInt('a'):utf8ToInt('z'), 1)#
-  } else {#
-    ## Change it to a random location, possibly a new location#
-    nextstate <- sample(length(fsm) + 1, 1)#
-    fsm[[chosen]][modify] <- nextstate#
-    if (nextstate > length(fsm))#
-      fsm[[nextstate]] <- c(sample(utf8ToInt('a'):utf8ToInt('z'), 1), 1, 1)#
-  }#
-  fsm#
-}#
-#
-testrun <- function(org) {#
-  text <- c()#
-  for (ii in 1:length(world)) {#
-    leftloc <- (ii - 2) %% length(world) + 1#
-    env <- c(world[c(leftloc, ii)])#
-    predstate <- org$tick(org, env)#
-    org$state <- predstate[2]#
-    text <- c(text, predstate[1])#
-  }#
-#
-  text#
-}
-get.entropy.rate <- function(text) {#
-    pp <- table(paste(text[-length(text)], text[-1])) / (length(text) - 1)#
-    -sum(pp * log2(pp))#
-  }
-myorg <- list(fsm=myfsm, state=1, tick=organism$tick)
-bestorg <- organism#
-bestscore <- 0#
-#
-for (ii in 1:1000) {#
-  myfsm <- bestorg$fsm#
-  for (mm in 1:3)#
-    myfsm <- mutate(myfsm)#
-  org <- list(fsm=myfsm, state=1, tick=organism$tick)#
-  text <- testrun(org)#
-  score <- get.entropy.rate(text)#
-  if (score > bestscore) {#
-    print("Improved!")#
-    bestscore <- score#
-    bestorg <- org#
-  }#
-}
-bestorg <- organism#
-bestscore <- sum(rep('a', length(world)) == world)#
-#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      print("B")#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0) {#
-    print("A")#
-    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
-    text <- testrun(org)#
-    score <- sum(text == world)#
-    if (score > bestscore) {#
-      bestorg <- org#
-      bestscore <- score#
-    }#
-    organisms <- list(bestorg)#
-  }#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-}#
-#
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-organisms
-length(organisms)
-fail.loss <- 0.25#
-succ.gain <- 1.25
-bestorg <- organism#
-bestscore <- sum(rep('a', length(world)) == world)#
-#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      print("B")#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0) {#
-    print("A")#
-    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
-    text <- testrun(org)#
-    score <- sum(text == world)#
-    if (score > bestscore) {#
-      bestorg <- org#
-      bestscore <- score#
-    }#
-    organisms <- list(bestorg)#
-  }#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-}#
-#
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-bestorg
-world <- sapply(strsplit("when in the course of human events it becomes necessary", "")[[1]], utf8ToInt)#
-#
-fsm <- list(c(97, 1, 1))#
-organism <- list(location=1, energy=5, fsm=fsm, state=1, tick=function(self, env) {#
-  currstate <- self$fsm[[self$state]]#
-  if (env[2] == currstate[1])#
-    nextstate <- currstate[2]#
-  else#
-    nextstate <- currstate[3]#
-  c(self$fsm[[nextstate]][1], nextstate)#
-})#
-#
-fail.loss <- 0.25#
-succ.gain <- 1.25#
-#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=fsm, state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-}#
-#
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-bestorg <- organism#
-bestscore <- sum(rep('a', length(world)) == world)#
-#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      print("B")#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0) {#
-    print("A")#
-    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
-    text <- testrun(org)#
-    score <- sum(text == world)#
-    if (score > bestscore) {#
-      bestorg <- org#
-      bestscore <- score#
-    }#
-    organisms <- list(bestorg)#
-  }#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-}#
-#
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-organisms
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    organisms[[oo]]$location <- rightloc#
-    predstate <- org$tick(org, env)#
-    organisms[[oo]]$state <- predstate[2]#
-    energychange <- succ.gain / (abs(world[rightloc] - predstate[1]) + 1) - fail.loss#
-    organisms[[oo]]$energy <- org$energy + energychange#
-    if (organisms[[oo]]$energy > 10) {#
-      print("B")#
-      organisms[[length(organisms) + 1]] <- list(location=leftloc,#
-        energy=5, fsm=mutate(fsm), state=1, tick=org$tick)#
-      organisms[[oo]]$energy <- org$energy - 5#
-    } else if (organisms[[oo]]$energy < 0) {#
-      organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0) {#
-    print("A")#
-    org <- list(location=1, energy=5, fsm=mutate(bestorg$fsm), state=1, tick=bestorg$tick)#
-    text <- testrun(org)#
-    score <- sum(text == world)#
-    if (score > bestscore) {#
-      bestorg <- org#
-      bestscore <- score#
-    }#
-    organisms <- list(bestorg)#
-  }#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-}
-ggplot(record.org, aes(loc, time)) +#
-  geom_point(data=record.org, aes(colour=energy))
-organisms
-geography <- rep('a', 20)#
-  world <- geography
-organism <- list(location=10, energy=5, tick=function(self, env) {#
-    return('a')#
-  })
-library(ggplot2)#
-#
-fail.loss <- 0.75#
-succ.gain <- 1#
-#
-record.env <- data.frame()#
-record.org <- data.frame()#
-organisms = list(organism)#
-for (time in 1:1000) {#
-  for (oo in 1:length(organisms)) {#
-    org <- organisms[[oo]]#
-    leftloc <- (org$location - 2) %% length(world) + 1#
-    rightloc <- org$location %% length(world) + 1#
-    env <- c(world[c(leftloc, org$location)])#
-    pred <- org$tick(org, env)#
-    if (world[rightloc] == pred) {#
-      organisms[[oo]]$energy <- org$energy + succ.gain#
-      world[rightloc] <- '#'#
-      if (organisms[[oo]]$energy > 10) {#
-        organisms[[length(organisms) + 1]] <- list(location=sample(c(leftloc, rightloc), 1),#
-          energy=5, tick=org$tick)#
-        organisms[[oo]]$energy <- org$energy - 5#
-      }#
-    } else {#
-      organisms[[oo]]$energy <- org$energy - fail.loss#
-      if (organisms[[oo]]$energy < 0)#
-        organisms[[oo]] <- NA#
-    }#
-  }#
-  organisms <- organisms[!is.na(organisms)]#
-  if (length(organisms) == 0)#
-    organisms <- list(organism)#
-  record.env <- rbind(record.env, data.frame(time, loc=1:length(world), full=world == geography, empty=world == '#'))#
-  record.org <- rbind(record.org, data.frame(time, loc=sapply(organisms, function(org) org$location),#
-                                             energy=sapply(organisms, function(org) org$energy)))#
-  ## Relenish 50% of the cells#
-  replenish <- (1:length(world))[runif(length(world)) < .5]#
-  world[replenish] <- geography[replenish]#
-}#
-#
-ggplot(record.env, aes(loc, time)) +#
-  geom_raster(aes(fill=factor(full - empty))) +#
-  geom_point(data=record.org, aes(colour=energy)) +#
-  scale_fill_manual(breaks=c('-1', '0', '1'), labels=c('Empty', 'Other', 'Full'), values=c('black', 'grey', 'white'))
-str <- "when in the course of human events it becomes necessary"#
-world <- sapply(strsplit(str, "")[[1]], utf8ToInt)
-library(rms)
-install.packages("rms")
-library(rms)
-df = data.frame(xx=c(2020, 2030, 2050, 2100), yy=c(0, 1, 3, 8))
-?spline
-spline(df$xx, df$yy)
-df = data.frame(x=c(2020, 2030, 2050, 2100), y=c(0, 1, 3, 8))
-library(ggplot2)
-ggplot(df, aes(x, y)) + geom_point() + geom_line(data=spline(df$x, df$y))
-class(spline(df$x, df$y))
-as.data.frame(spline(df$x, df$y))
-ggplot(df, aes(x, y)) + geom_point() + geom_line(data=as.data.frame(spline(df$x, df$y)))
-df = data.frame(x=c(2020, 2030, 2050, 2100), y=c(0, 0.5, 2, 8))
-ggplot(df, aes(x, y)) + geom_point() + geom_line(data=as.data.frame(spline(df$x, df$y)))
-as.data.frame(spline(df$x, df$y))
-library(fit.hmm)
-??fit.hmm
-library(depmixS4)
-?depmix
-df = data.frame(aa=runif(100), bb=runif(100), cc=runif(100))
-depmix(list(aa ~ cc, bb ~ cc), data=df, nstates=3)
-depmix(list(aa ~ cc, bb ~ cc), family=list(gaussian(), gaussian()), data=df, nstates=3)
-hmm <- fit(mod)
-mod = depmix(list(aa ~ cc, bb ~ cc), family=list(gaussian(), gaussian()), data=df, nstates=3)
-hmm <- fit(mod)
-hmm
-summary(hmm)
-library(depmixS6)
-??depmix
-ln(1.1) - ln(1)
-log(1.1) - log(1)
-log10(1.1) - log10(1)
-log(1.1) - log(1)
--0.011 * (log(1.1) - log(1))
--0.011 * (log(0.1) - log(0.05))
-\(o) o + 1
-(\(o) o + 1)(3)
-source("~/research/futureloss/loadlib.R", chdir=T)
-gsat2100 <- gsat[gsat$year == 2100,]#
-#
-gsat.likely <- data.frame() # Just scenario and run_id#
-qrange <- .5#
-while (nrow(gsat.likely) < sum(gsat2100$scenario == 'ssp370')) {#
-    print(qrange)#
-    bounds <- quantile(gsat2100$gsat, c(.5 - qrange/2, .5 + qrange/2))#
-    newdraws <- gsat2100 %>% group_by(scenario, run_id) %>% filter(gsat >= bounds[1] & gsat <= bounds[2]) %>%#
-        filter(!(run_id %in% gsat.likely$run_id))#
-    if (nrow(newdraws) > 0) {#
-        newdraws2 <- newdraws %>% group_by(run_id) %>% summarize(chosen=sample(scenario, 1),#
-                                                                 year=2100, gsat=gsat[scenario == chosen],#
-                                                                 model=model[scenario == chosen]) %>%#
-            rename(scenario=chosen)#
-        gsat.likely <- rbind(gsat.likely, newdraws2)#
-    }#
-    qrange <- qrange + (sum(gsat2100$scenario == 'ssp370') - nrow(gsat.likely) + 4) / nrow(gsat2100)#
-}
-gsat.likely <- data.frame() # Just scenario and run_id#
-qrange <- .5#
-while (nrow(gsat.likely) < sum(gsat2100$scenario == 'ssp370')) {#
-    print(qrange)#
-    bounds <- quantile(gsat2100$gsat, c(.5 - qrange/2, .5 + qrange/2))#
-    newdraws <- gsat2100 %>% group_by(scenario, run_id) %>% filter(gsat >= bounds[1] & gsat <= bounds[2]) %>%#
-        filter(!(run_id %in% gsat.likely$run_id))#
-    if (nrow(newdraws) > 0) {#
-        newdraws2 <- newdraws %>% group_by(run_id) %>% dplyr::summarize(chosen=sample(scenario, 1),#
-                                                                 year=2100, gsat=gsat[scenario == chosen],#
-                                                                 model=model[scenario == chosen]) %>%#
-            rename(scenario=chosen)#
-        gsat.likely <- rbind(gsat.likely, newdraws2)#
-    }#
-    qrange <- qrange + (sum(gsat2100$scenario == 'ssp370') - nrow(gsat.likely) + 4) / nrow(gsat2100)#
-}
-c(.5 - qrange/2, .5 + qrange/2)
-library(readr)#
-text = read_file("~/Dropbox/Complex Systems Analysis 2025/week14/catinthehat.txt")#
-text2 <- gsub("[^a-z ]", "", gsub("\n", " ", tolower(text))) # "stopwords"#
-#
-chars = factor(strsplit(text2, split="")[[1]])
-library(tidyverse)#
-library(neuralnet)#
-library(caret)#
-#
-## First, translate into simple numbers#
-chars = utf8ToInt(text2)#
-df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
-                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
-                 lag1=chars[5:(length(chars)-1)], lag0=sapply(chars[6:length(chars)], intToUtf8))#
-#
-train.df <- df[1:5000,]#
-test.df <- df[5001:nrow(df),]#
-#
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE)
-? neuralnet
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE,#
-                  lifesign='minimal')
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE,#
-                  lifesign='full')
-model
-plot(model)
-iris <- iris %>% mutate_if(is.character, as.factor)
-data_rows <- floor(0.80 * nrow(iris))#
-train_indices <- sample(c(1:nrow(iris)), data_rows)#
-train_data <- iris[train_indices,]#
-test_data <- iris[-train_indices,]
-model2 = neuralnet(#
-    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
-data=train_data,#
-hidden=c(4,2),#
-linear.output = FALSE#
-)
-plot(model,rep = "best")
-plot(model2,rep = "best")
-nrow(iris)
-train.df <- df[1:500,]#
-test.df <- df[501:nrow(df),]
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE,#
-                  lifesign='full')
-df <- data.frame(rain=runif(1000) < .2)
-head(df)
-df$sprinkler <- ifelse(df$rain, runif(1000) < 0.01, runif(1000) < .4)
-head(df)
-head(df, 20)
-xdf$grasswet <- ifelse(df$sprinkler & df$rain, runif(1000) < .99,#
-               ifelse(df$sprinkler & !df$rain, runif(1000) < .9,#
-               ifelse(!df$sprinkler & df$rain, runif(1000) < .8, F)))
-df$grasswet <- ifelse(df$sprinkler & df$rain, runif(1000) < .99,#
-               ifelse(df$sprinkler & !df$rain, runif(1000) < .9,#
-               ifelse(!df$sprinkler & df$rain, runif(1000) < .8, F)))
-head(df, 20)
-df$rain <- factor(df$rain)#
-df$sprinkler <- factor(df$sprinkler)#
-df$grasswet <- factor(df$grasswet)
-head(df)
-df$rain[1:10]
-library(bnlearn)
-?bnlearn
-network <- hc(df)
-network
-plot(network)
-library(readr)#
-text = read_file("~/Dropbox/Complex Systems Analysis 2025/week14/catinthehat.txt")
-text
-text2 <- gsub("[^a-z ]", "", gsub("\n", " ", tolower(text))) # "stopwords"
-text2
-chars = factor(strsplit(text2, split="")[[1]])
-chars
-df <- data.frame(lag1=chars[1:(length(chars)-1)], lag0=chars[2:length(chars)])
-head(df)
-network <- hc(df)
-plot(network)
-df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
-                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
-                 lag1=chars[5:(length(chars)-1)], lag0=chars[6:length(chars)])#
-network <- hc(df)#
-plot(network)
-param <- bn.fit(network, data=df)
-param
-samp <- rbn(param, n=20)
-samp
-library(tidyverse)#
-library(neuralnet)
-chars = utf8ToInt(text2)#
-df <- data.frame(lag5=chars[1:(length(chars)-5)], lag4=chars[2:(length(chars)-4)],#
-                 lag3=chars[3:(length(chars)-3)], lag2=chars[4:(length(chars)-2)],#
-                 lag1=chars[5:(length(chars)-1)], lag0=sapply(chars[6:length(chars)], intToUtf8))#
-#
-train.df <- df[1:500,]#
-test.df <- df[501:nrow(df),]
-head(df)
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE,#
-                  lifesign='full')
-train.df <- df[1:5000,]#
-test.df <- df[5001:nrow(df),]#
-#
-model = neuralnet(lag0 ~ lag1 + lag2 + lag3 + lag4 + lag5,#
-                  data=train.df,#
-                  hidden=c(5,5),#
-                  linear.output = FALSE,#
-                  lifesign='full')
-data(iris)
-head(iris)
-iris <- iris %>% mutate_if(is.character, as.factor)#
-data_rows <- floor(0.80 * nrow(iris))#
-train_indices <- sample(c(1:nrow(iris)), data_rows)#
-train_data <- iris[train_indices,]#
-test_data <- iris[-train_indices,]
-model2 = neuralnet(#
-    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
-data=train_data,#
-hidden=c(4,2),#
-linear.output = FALSE#
-)
-plot(model2,rep = "best")
-model2 = neuralnet(#
-    Species~Sepal.Length+Sepal.Width+Petal.Length+Petal.Width,#
-data=train_data,#
-hidden=c(4,2),#
-linear.output = FALSE,#
-lifesign='full'#
-)
-plot(model2,rep = "best")
-library(dplyr)#
-library(ggplot2)#
-#
-airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab6/airports.csv")#
-routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab6/routes.csv")#
-routes2 <- routes %>% group_by(Source.airport, Source.airport.ID, Destination.airport, Destination.airport.ID) %>%#
-    summarize(Airlines=n()) %>% mutate(Source.airport.ID=as.numeric(Source.airport.ID),#
-                                       Destination.airport.ID=as.numeric(Destination.airport.ID)) %>%#
-    filter(!is.na(Source.airport.ID) & !is.na(Destination.airport.ID))#
-#
-hist(routes2$Airlines)#
-#
-ggplot(airports, aes(Longitude, Latitude)) +#
-    geom_point()
-airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab5 - networks/airports.csv")#
-routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/lab5 - networks/routes.csv")
-airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/labs/lab5 - networks/airports.csv")#
-routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/csa-2025/labs/lab5 - networks/routes.csv")
-airports <- read.csv("~/Dropbox/Complex Systems Analysis 2025/labs/lab5 - networks/airports.csv")#
-routes <- read.csv("~/Dropbox/Complex Systems Analysis 2025/labs/lab5 - networks/routes.csv")
-routes2 <- routes %>% group_by(Source.airport, Source.airport.ID, Destination.airport, Destination.airport.ID) %>%#
-    summarize(Airlines=n()) %>% mutate(Source.airport.ID=as.numeric(Source.airport.ID),#
-                                       Destination.airport.ID=as.numeric(Destination.airport.ID)) %>%#
-    filter(!is.na(Source.airport.ID) & !is.na(Destination.airport.ID))#
-#
-hist(routes2$Airlines)#
-#
-ggplot(airports, aes(Longitude, Latitude)) +#
-    geom_point()
-routes3 <- routes2 %>% left_join(airports, by=c('Source.airport.ID'='Airport.ID')) %>%#
-    left_join(airports, by=c('Destination.airport.ID'='Airport.ID'), suffix=c('.src', '.dst')) %>%#
-    mutate(Over.Pacific=abs(Longitude.dst - Longitude.src) > 180)#
-#
-ggplot(filter(routes3, !Over.Pacific), aes(Longitude.src, Latitude.src)) +#
-    geom_segment(aes(xend=Longitude.dst, yend=Latitude.dst, linewidth=Airlines)) +#
-    scale_linewidth_continuous(range=c(.1, 1))
-airports$degree.bydest = NA#
-airports$degree.byairl = NA#
-for (ii in 1:nrow(airports)) {#
-    airports$degree.bydest[ii] <- sum(routes2$Source.airport.ID == airports$Airport.ID[ii], na.rm=T)#
-    airports$degree.byairl[ii] <- sum(routes2$Airlines[routes2$Source.airport.ID == airports$Airport.ID[ii]], na.rm=T)#
-}#
-#
-head(airports[order(airports$degree.bydest, decreasing=T),])#
-head(airports[order(airports$degree.byairl, decreasing=T),])#
-#
-ggplot(airports, aes(degree.byairl)) +#
-    geom_histogram() + scale_x_log10() + scale_y_log10()
-all_shortest_paths <- function(start, iters=Inf) {#
-    dists = rep(Inf, max(airports$Airport.ID, na.rm=T))#
-    dists[start] = 0#
-    queue = c(start)#
-#
-    while (length(queue) > 0 && iters > 0) {#
-        ## Dequeue first item#
-        node = queue[1]#
-        queue = queue[-1]#
-        mydist = dists[node]#
-#
-        ## Consider each neighbor#
-        for (ii in which(routes2$Source.airport.ID == node)) {#
-            if (dists[routes2$Destination.airport.ID[ii]] > mydist + 1) {#
-                dists[routes2$Destination.airport.ID[ii]] = mydist + 1#
-                queue = c(queue, routes2$Destination.airport.ID[ii])#
-            }#
-        }#
-#
-        iters = iters - 1#
-    }#
-#
-    dists#
-}#
-#
-airports$meandist = NA#
-for (ii in 1:nrow(airports)) {#
-    print(ii)#
-    dists = all_shortest_paths(airports$Airport.ID[ii])#
-    airports$meandist[ii] = mean(dists[dists != 0 & dists != Inf])#
-}#
-#
-head(airports[order(airports$meandist),])#
-head(airports[order(airports$meandist, decreasing=T),])#
-#
-airports$meandist[airports$meandist <= 2] <- Inf#
-head(airports[order(airports$meandist),])
-ggplot(airports, aes(degree.byairl)) +#
-    geom_histogram() + scale_x_log10() + scale_y_log10()
-quantile(airports$degree.byairl)
-quantile(airports$degree.bydest)
-qnorm(3, 1.2, 1)
-pnorm(3, 1.2, 1)
-pnorm(3, 0, 1)
-1 - pnorm(3, 0, 1)
-1 - pnorm(3, 1.2, 1)
-1 - pnorm(1.2, 1.2, 1)
-1 - pnorm(0.5, 1.2, 1)
-1 - pnorm(3, 1.6, 1)
-omegas1 <- c(0.47, 0.79, 0.70, 0.77, 0.87, 0.11, 0.47#
-mean(omegas1) # 0.53#
-#
-omegas2 <- c(0.08, 0.21, 0.47, 0.79, 0.11, 0.47)#
-mean(omegas2) # 0.31#
-#
-omegas3 <- c(0.70, 0.77, 0.87)#
-mean(omegas3) # 0.78
-omegas1 <- c(0.47, 0.79, 0.70, 0.77, 0.87, 0.11, 0.47)#
-mean(omegas1) # 0.53#
-#
-omegas2 <- c(0.08, 0.21, 0.47, 0.79, 0.11, 0.47)#
-mean(omegas2) # 0.31#
-#
-omegas3 <- c(0.70, 0.77, 0.87)#
-mean(omegas3) # 0.78
-df <- read.csv("~/projects/ailit/extract-merged.csv")
-head(df)
-table(df$Region)
-df <- subset(df, Region %in% regions)
-regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
-y", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Belt", "
-World", "Worldwide")#
-#
-df <- subset(df, Region %in% regions)
-nrow(df)
-head(df)
-table(df$Scenario)
-df.hist <- subset(df, Scenario %in% histscen)
-histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
-#
-df.hist <- subset(df, Scenario %in% histscen)
-head(df.hist)
-table(df.hist$Relative.to)
-histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")
-df.hist <- subset(df, Relative.to %in% histrel2)
-nrow(df.hist)
-head(df.hist)
-basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")
-df.base <- subset(df, Scenario %in% basescen)
-head(df.base)
-table(df.base$Relative.to)
-baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")
-df.hist <- subset(df, Scenario %in% histscen)
-histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
-#
-df.hist <- subset(df, Scenario %in% histscen)#
-#
-histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")#
-#
-df.hist <- subset(df.hist, Relative.to %in% histrel2)#
-#
-basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")#
-#
-df.base <- subset(df, Scenario %in% basescen)#
-#
-baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")#
-#
-df.base <- subset(df.base, Scenario %in% basescen)
-nrow(df.base)
-nrow(df.hist)
-head(df.hist)
-table(df.hist$Outcome)
-unique(paste(df.base$Outcome, df.base$Units))
-head(df)
-rows <- df$Units %in% c('trillion $', 'Trillion USD')#
-stopifnot(all(is.na(df$SD[rows]) & is.na(df$Low.Value[rows])))#
-df$Value <- df$Value * 1000#
-df$Units <- "billion USD"
-df[rows,]
-df <- read.csv("~/projects/ailit/extract-merged.csv")#
-#
-regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
-y", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Belt", "
-World", "Worldwide")#
-#
-df <- subset(df, Region %in% regions)#
-#
-rows <- df$Units %in% c('trillion $', 'Trillion USD')#
-stopifnot(all(is.na(df$SD[rows]) & is.na(df$Low.Value[rows])))#
-df$Value[rows] <- df$Value[rows] * 1000#
-df$SD[rows] <- df$SD[rows] * 1000#
-df$Low.Value[rows] <- df$Low.Value[rows] * 1000#
-df$High.Value[rows] <- df$High.Value[rows] * 1000#
-df$Units <- "billion USD"
-histscen <- c("1979-2020", "1989-2015 Subsample", "2005", "Current", "Current Climate", "ERA5", "HIST", "Hist Rainfall", "Historical", "Historical (1961-2013)", "Historical (1996-2021)", "Historical Climate", "Historical Data", "Historical period", "Observed", "Present", "Present Day", "Reanalysis", "Today", "Various, 1992-2018")#
-#
-df.hist <- subset(df, Scenario %in% histscen)#
-#
-histrel2 <- c("", "1900", "1950", "1960", "1979", "1979-1983", "1980", "20th Century Norm", "65 years prior", "Average conditions", "Average Conditions", "Baseline", "Baseline rainfall distribution", "Baseline temperature", "Historical period", "No CC", "Pre-1970", "Pre-1979", "Pre-industrial", "Varies by Country")#
-#
-df.hist <- subset(df.hist, Relative.to %in% histrel2)#
-#
-basescen <- c("1900-2020 Trend", "21st Century Projections", "3-5°C warming", "4 ◦C GWL", "4 ◦C warming", "ACCESS SSP3.70", "All Scenarios", "Base case", "Baseline", "BAU", "Central Tendency", "Central", "Climate change", "Climate Change", "CMIP5 Temp", "CMIP6", "DICE-2016", "FrEDI impacts", "Global warming", "Global Warming", "GSAT 4°C", "GWL >3C", "GWL 3°C", "GWL 4°C", "GWL 5°C", "GWL of 3°C", "GWL of 4°C", "GWL of 5°C", "Higher Warming", "RCP 8.5", "RCP 8.5 - SSP5", "RCP 8.5, High V", "RCP 8.5, High Var", "RCP 8.5, m=20", "RCP 8.5, m=30", "RCP 8.5, m=40", "RCP6.0", "RCP6.0/SSP3", "RCP8.5", "RCP8.5-SSP5", "RCP8.5/SSP3", "RCP8.5/SSP5", "RFF-SP", "RFF-SP mean", "RFF-SP scenarios", "RFF-SP, No Adaptation", "RFF-SP, Reactive Adaptation", "SSP3-7.0", "SSP3(70)", "SSP370", "SSP4-6.0", "SSP5-8.5", "SSP5(85)", "SSP585", "SSP8.5", "Unabated warming")#
-#
-df.base <- subset(df, Scenario %in% basescen)#
-#
-baserel2 <- c("1850", "1850-1900", "1900", "1979", "1960-2014 Trends", "1971-2000", "1979-2014", "1985", "1986-2005", "1986–2005 average", "1991-2000", "1995", "1995-2014", "2000", "2000–2019", "2005", "2012 event", "2015", "2015-2019", "Baseline", "Constant Temp", "Current climate", "Extrapolated trends", "Historical", "No CC", "No CC 2015-2019", "No further warming", "Past three or four decades", "Past values", "Pre-1900 levels", "Pre-industrial", "Pre-Industrial", "Pre-industrial variability", "Pre-warming", "Present", "Reference case", "Today")#
-#
-df.base <- subset(df.base, Scenario %in% basescen)#
-#
-unique(paste(df.base$Outcome, df.base$Units))
 df <- read.csv("~/projects/ailit/extract-merged.csv")#
 #
 regions <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio Valle
@@ -1171,111 +171,2427 @@ rbind(data.frame(Outcome="Crop Yield", Units="%", Value=(-5-17-25) / 3, Refs="10
       data.frame(Outcome="Excess Mortality", Units="deaths / year", Value=50000, Refs="10.5194/esd-14-1015-2023"),#
       data.frame(Outcome="Excess Wildfire Mortality", Units="deaths", Value=1100, Refs="10.5194/esd-14-1015-2023"))
 install.packages("rpart.plot")
+list.files
+list.files("~/research/fishnets/ranges/current")
+filename = list.files("~/research/fishnets/ranges/current")[1]
+lines <- readLines(file.path("~/research/fishnets/ranges/current", filename))
+lines
+start <- which(lines == "Species Envelope (HSPEN):")
+start
+start <- which(lines == "Species Envelope (HSPEN):")#
+    read.csv(filepath, skip=start)
+filepath <- file.path("~/research/fishnets/ranges/current", filename)
+start <- which(lines == "Species Envelope (HSPEN):")#
+    read.csv(filepath, skip=start)
+?read.csv
+read.csv(filepath, skip=start, nrows=7)
+species <- gsub("\\.csv", "", gsub("-", " ", filename))
+species
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")
+start
+lines[1]
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+start
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+filename
+alldat <- data.frame()#
+for (filename in list.files("~/research/fishnets/ranges/current")) {#
+    species <- gsub("\\.csv", "", gsub("-", " ", filename))#
+    filepath <- file.path("~/research/fishnets/ranges/current", filename)#
+    lines <- readLines(filepath)#
+    start <- which(lines == "Species Envelope (HSPEN):")#
+    dat <- read.csv(filepath, skip=start, nrows=7)#
+    alldat <- rbind(alldat, cbind(species=species, dat))#
+}
+nrow(alldf)
+nrow(alldat)
+getwd()
+head(alldat)
+write.csv(alldat, "suitabilities.csv", row.names=F)
+getwd()
+write.csv(alldat, "~/people/Sarah Stafford/suitabilities.csv", row.names=F)
+# setwd("~/Dropbox/HMT/online")#
+#
+# Library#
+library(leaflet)#
+library(sf)#
+library(shiny)#
+library(dplyr)#
+library(rlang)#
+library(shinyWidgets)#
+library(ggplot2)#
+library(bslib)#
+library(plotly)#
+#
+source("../lib/adaptation.R")#
+#
+divanames <- read.csv("../regions/divanames.csv")#
+divanames$name[7] <- "Near &Agrave;ird"#
+divanames$name[12] <- "Near Port M&ograve;r"#
+#
+get.value <- function(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df) {#
+    if (!is.na(regcol.spdf)) {#
+        subdf <- df[df$scenario == scenario & df$measure == measure & df$year == year, c(regcol.df, quant)]#
+        joinby <- setNames(regcol.df, regcol.spdf)#
+        subdf2 <- spdf %>% left_join(subdf, by=joinby)#
+        return(subdf2[, quant, drop=T])#
+    } else {#
+        return(df[df$scenario == scenario & df$measure == measure & df$year == year, quant, drop=T])#
+    }#
+}#
+#
+add.polygons <- function(lt, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("add.polygons")#
+    ## Prepare the text for tooltips:#
+    if (namecol.spdf %in% names(spdf)) {#
+        mytext <- paste(#
+            "Region: ", spdf[, namecol.spdf, drop=T], "<br/>",#
+            "Damages: ", round(get.value(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df)), "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    } else {#
+        mytext <- paste(#
+            "Region: ", namecol.spdf, "<br/>",#
+            "Damages: ", round(get.value(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df)), "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    }#
+#
+    if (is.null(group))#
+        group <- paste(quant, measure, scenario, year, sep="_")#
+#
+    lt %>% addPolygons(data=spdf,#
+                       fillColor = ~mypalette(value),#
+                       layerId = ~PID,#
+                       stroke=TRUE,#
+                       fillOpacity = 0.6,#
+                       color="white",#
+                       weight=0.3,#
+                       label = mytext,#
+                       labelOptions = labelOptions(#
+                           style = list("font-weight" = "normal", padding = "2px 5px"),#
+                           textsize = "11px",#
+                           direction = "auto"#
+                       ),#
+                       group=group)#
+}#
+#
+fix.limits <- function(df) {#
+    limits <<- c(quantile(df$ci05, .05), quantile(df$ci95, .95))#
+    print(limits)#
+    if (all(sign(df$ci05) == sign(df$ci95))) {#
+        mypalette <<- colorNumeric(palette="YlOrRd", domain=c(min(limits), max(limits)), na.color="transparent", reverse=F)#
+    } else {#
+        mypalette <<- colorNumeric(palette="Spectral", domain=c(-max(abs(limits)), max(abs(limits))), na.color="transparent", reverse=T)#
+    }#
+}#
+#
+make.map <- function(lt, spdf, channel, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("make.map")#
+    ## Final Map#
+    col <- paste(quant, scenario, year, sep="_")#
+    spdf$value <- pmax(limits[1], pmin(limits[2], get.value(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df)))#
+#
+    lt %>%#
+        add.polygons(spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=group)#
+}#
+#
+## make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "Extreme", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+## m2050mu<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci05<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci05", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci95<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+###########
+datasets <- list(#
+  "Agricultural productivity" = 'agriculture.csv',#
+  "All-source flooding" = 'flooding.csv',#
+  "Heat-related mortality" = 'health.csv',#
+  "Labour productivity" = 'labourprod.csv',#
+  "Labour hours lost" = 'labourhours.csv',#
+  "Local temperatures" = 'temps.csv',#
+  "Catastrophic risk" = 'catastrophic.csv',#
+  "Missing risks" = 'missrisks.csv',#
+  "Trade spill-overs" = 'trade.csv',#
+  "Coastal impacts" = 'coastal.csv',#
+  "Sea-level rise" = 'slr.csv',#
+  "Total costs" = 'total-noadt.csv'#
+)#
+#
+dataset2legend <- list(#
+  "Agricultural productivity" = 'Losses (million GBP)',#
+  "All-source flooding" = 'Losses (million GBP)',#
+  "Heat-related mortality" = 'Excess Deaths (people)',#
+  "Labour productivity" = 'Losses (million GBP)',#
+  "Labour hours lost" = 'Losses (million GBP)',#
+  "Local temperatures" = '(degree C)',#
+  "Catastrophic risk" = 'Losses (% GDP)',#
+  "Missing risks" = 'Losses (% GDP)',#
+  "Trade spill-overs" = 'Losses (% GDP)',#
+  "Coastal impacts" = 'Losses (million GBP)',#
+  "Sea-level rise" = '(mm since 1985-2005)',#
+  "Total costs" = '% GDP'#
+)#
+#
+regions <- list(#
+  "Agricultural productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "All-source flooding" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Heat-related mortality" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour hours lost" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Local temperatures" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Catastrophic risk" = "shapefiles/gadm36_GBR_0.shp",#
+  "Missing risks" = "shapefiles/gadm36_GBR_0.shp",#
+  "Trade spill-overs" = "shapefiles/gadm36_GBR_0.shp",#
+  "Coastal impacts" = "shapefiles/divabuffer-uk.shp",#
+  "Sea-level rise" = "shapefiles/divabuffer-uk.shp",#
+  "Total costs" = "shapefiles/gadm36_GBR_0.shp"#
+)#
+#
+dataset2region <- list( # regcol.spdf, regcol.df, namecol.spdf#
+  "Agricultural productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "All-source flooding" = c('NAME_3', 'county', 'NAME_3'),#
+  "Heat-related mortality" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour hours lost" = c("ISOADM1", "ISOADM1", 'name'),#
+  "Local temperatures" = c("ISOADM1", "Region", 'name'),#
+  "Catastrophic risk" = c(NA, NA, "UK-wide"),#
+  "Missing risks" = c(NA, NA, "UK-wide"),#
+  "Trade spill-overs" = c(NA, NA, "UK-wide"),#
+  "Coastal impacts" = c('locationax', 'segment', 'divaname'),#
+  "Sea-level rise" = c('locationid', 'Region', 'divaname'),#
+  "Total costs" = c(NA, NA, "UK-wide")#
+)#
+risk.options <- list("Hazards"=c("Local temperatures", "Sea-level rise"),#
+                     "Regional Risks"=c("Agricultural productivity", "All-source flooding",#
+                                        "Heat-related mortality", "Labour productivity",#
+                                        "Labour hours lost", "Coastal impacts"),#
+                     "National Risks"=c("Trade spill-overs", "Catastrophic risk", "Missing risks", "Total costs"))#
+#
+adaptation.options <- list("Agricultural productivity"="Proportional to Benefits",#
+                           "Heat-related mortality"=c("Proportional to Benefits", "Air Conditioning", "Shutters"),#
+                           "Labour productivity"=c("Proportional to Benefits", "Heat Alerts", "Air Conditioning", "Increased Ventilation", "Solar Blinds"),#
+                           "All-source flooding"="Proportional to Benefits",#
+                           "Coastal impacts"="Proportional to Benefits")#
+#
+JS.logify <-#
+"#
+// function to logify a sliderInput#
+function logifySlider (sliderId, sci = false) {#
+  if (sci) {#
+    // scientific style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return ('10<sup>'+num+'</sup>'); }#
+    })#
+  } else {#
+    // regular number style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return (Math.round(Math.pow(10, num))); }#
+    })#
+  }#
+}"#
+#
+# call logifySlider for each relevant sliderInput#
+JS.onload <-#
+"#
+// execute upon document loading#
+$(document).ready(function() {#
+  // wait a few ms to allow other scripts to execute#
+  setTimeout(function() {#
+    // include call for each slider#
+    logifySlider('investment', sci = false)#
+  }, 5)})#
+"#
+#
+ui <- page_navbar(#
+    title="PROSPER Adaptation Investment Support",#
+    bg = "#2D89C8",#
+    inverse = TRUE,#
+    nav_panel(title="Climate Risks",#
+              fluidPage(#
+                  tags$style(type = "text/css", "html, body { width:100% }"),#
+                  tags$script(HTML(#
+                           "$(function() { $('#map1').css('max-width', '100%'); });"#
+                       )),#
+                  titlePanel(h1("UK Climate Change Risk Maps", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          style="z-index:500; max-width: 600px", # legend over my map (map z = 400)#
+                          pickerInput(#
+                              inputId = "channel",#
+                              label = "Channel:",#
+                              choices = risk.options,#
+                              selected = "Agricultural productivity",#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "scenario",#
+                              label = "Scenario:",#
+                              choices = c('Most Likely - Expected annual damage', 'High Risk - Expected annual damage',#
+                                          'High Risk - Extreme year'),#
+                              selected = 'High Risk - Expected annual damage',#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          textOutput("channelh3", container=h3),#
+                          plotOutput("timeseries", height=250),#
+                          sliderTextInput("year", "Year",#
+                                          choices=2025:2075,#
+                                          selected = 2050),#
+                          sliderTextInput("quant", "Probability",#
+                                          choices=c('1-in-20 less than', 'Expected', '1-in-20 more than'),#
+                                          selected = 'Expected')#
+                      ),#
+                      mainPanel(#
+                          leafletOutput("map1", width="500px", height="638px"), class="col-sm-8")))),#
+    nav_panel(title="Adaptation Planning",#
+              fluidPage(#
+                  tags$head(tags$script(HTML(JS.logify))),#
+                  tags$head(tags$script(HTML(JS.onload))),#
+                  titlePanel(h1("Adaptation Decision Support", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          pickerInput(#
+                              inputId = "adtchannel",#
+                              label = "Channel:",#
+                              choices = names(adaptation.options),#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "adaptation",#
+                              label = "Adaptation:",#
+                              choices = NULL,#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          sliderInput("investment", "Investment",#
+                                      min=log10(1), max=log10(1e4),#
+                                      value = log10(100), step=.1,#
+                                      pre="£", post="M / yr", sep=",", ticks=F),#
+                          textOutput("investment_text")),#
+                      mainPanel(#
+                          fluidRow(#
+                              column(3, plotlyOutput("adtcosts")),#
+                              column(9, plotlyOutput("adtbenefits"))))))),#
+    nav_spacer(),#
+    nav_menu(title="Links",#
+             align="right",#
+             nav_item(tags$a("ACCREU", "https://www.accreu.eu/")),#
+             nav_item(tags$a("ATTENUATE", "https://www.lse.ac.uk/granthaminstitute/projects/attenuate-creating-the-enabling-conditions-for-uk-climate-adaptation-investment/")))#
+)#
+#
+load.risk.channel <- function(channel, load.map, scenario, measure, quant) {#
+    print("load.risk.channel")#
+    df <<- read.csv(paste0("../Dataset v2/", datasets[[channel]]))#
+    if (channel == 'Local temperatures') {#
+        df$mu <<- df$mu - 273.13#
+        df$ci05 <<- df$ci05 - 273.13#
+        df$ci95 <<- df$ci95 - 273.13#
+    } else if (channel == 'Coastal impacts') {#
+        ## 2015 conversation from https://www.poundsterlinglive.com/history/GBP-USD-2015#
+        df$mu <<- df$mu * 1000 * 1.5283#
+        df$ci05 <<- df$ci05 * 1000 * 1.5283#
+        df$ci95 <<- df$ci95 * 1000 * 1.5283#
+    } else if (channel == "Total costs") {#
+        df$mu <<- df$mu * 100#
+        df$ci05 <<- df$ci05 * 100#
+        df$ci95 <<- df$ci95 * 100#
+    }#
+    timeseries.id(NULL)#
+    fix.limits(df)#
+}#
+#
+load.channel.shapefile <- function(channel) {#
+    print("load.channel.shapefile")#
+#
+    spdf <- st_read(regions[[channel]])#
+    if (!is.na(dataset2region[[channel]][1])) {#
+        if (dataset2region[[channel]][1] == 'ISOADM1')#
+            spdf$ISOADM1 <- gsub("-", "", spdf$adm1_code)#
+        if (dataset2region[[channel]][1] == 'locationax') {#
+            rowparts <- strsplit(spdf$locationna, ' ')#
+            spdf$locationax <- sapply(rowparts, function(parts) paste0(paste(parts[-1], collapse=''), parts[1]))#
+        }#
+    }#
+    if (dataset2region[[channel]][3] == 'divaname')#
+        spdf$divaname <- sapply(spdf$locationid, function(locid) ifelse(locid %in% divanames$locationid, divanames$name[divanames$locationid == locid], ""))#
+    if (!('PID' %in% names(spdf)))#
+        spdf$PID <- 1:nrow(spdf)#
+#
+    spdf#
+}#
+#
+server <- function(input, output, session) {#
+    previous <- 'TEST'#
+    shapefile_data <- reactiveVal(NULL)#
+#
+    session$onSessionEnded(function() {#
+        stopApp()#
+    })#
+#
+    ## reactive filtering data from UI#
+    reactive_data <- reactive({#
+        print("reactive")#
+        scenario <- ifelse(input$scenario == 'Most Likely - Expected annual damage', 'Most Likely', 'High Risk')#
+        measure <- ifelse(input$scenario == 'High Risk - Extreme year', 'Extreme', 'EAD')#
+        quant <- ifelse(input$quant == "1-in-20 less than", 'ci05', ifelse(input$quant == "1-in-20 more than", 'ci95', 'mu'))#
+#
+        if (substring(previous, 1, nchar(input$channel)) != input$channel) {#
+            print(input$channel)#
+            load.map.arg <- F#
+            if (previous != 'TEST')#
+                if (regions[[strsplit(previous, '_')[[1]][1]]] != regions[[input$channel]])#
+                    load.map.arg <- T#
+            load.risk.channel(input$channel, load.map.arg, scenario, measure, quant)#
+        }#
+#
+        list(channel=input$channel, quant=quant, scenario=scenario, measure=measure, year=input$year[1])#
+    })#
+#
+    ## static backround map#
+    output$map1 <- renderLeaflet({#
+        print("renderLeaflet")#
+        leaflet() %>%#
+            addTiles() %>%#
+            setView(lat=54, lng=-3, zoom=6)#
+    })#
+#
+    output$timeseries <- renderPlot({#
+        req(timeseries.id)#
+        lst <- reactive_data()#
+        spdf <- shapefile_data()#
+        if (is.null(timeseries.id())) {#
+            subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>% group_by(year) %>%#
+                summarize(mu=sum(mu), ci05=sum(ci05), ci95=sum(ci95))#
+        } else {#
+            subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure & county == spdf$NAME_3[spdf$PID == timeseries.id()])#
+        }#
+#
+        ggplot(subdf, aes(year, mu)) +#
+            geom_line() + geom_ribbon(aes(ymin=ci05, ymax=ci95), alpha=.5) +#
+            theme_bw(base_size=16) +#
+            xlab(NULL) + ylab(paste(lst$channel, "\n", dataset2legend[[lst$channel]]))#
+    }, height=250)#
+#
+    observeEvent(input$scenario, {#
+        if (input$scenario == 'High Risk - Extreme year') {#
+            updateSliderTextInput(session, "year",#
+                                  choices=c(2030, 2040, 2050), selected=c(2030, 2040, 2050)[which.min(abs(c(2030, 2040, 2050) - input$year))])#
+        } else {#
+            updateSliderTextInput(session, "year",#
+                                  choices=2025:2075, selected=input$year)#
+        }#
+    })#
+#
+    observeEvent(input$map1_shape_click, {#
+        ## Store the click event details#
+        click <- input$map1_shape_click#
+#
+        timeseries.id(click$id)#
+    })#
+#
+    observe({#
+        print("observe")#
+        prev.save <- previous#
+        lst <- reactive_data()#
+#
+        replace.legend <- substring(previous, 1, nchar(lst$channel)) != lst$channel#
+        previous <<- paste(lst$channel, lst$measure, lst$quant, lst$scenario, lst$year, sep='_')#
+        output$channelh3 <- renderText(lst$channel)#
+#
+        spdf <- load.channel.shapefile(lst$channel)#
+        shapefile_data(spdf)#
+        lt <- leafletProxy("map1", session)#
+        if (replace.legend) {#
+            fix.limits(df)#
+            lt <- lt %>% clearControls() %>%#
+                addLegend(pal=mypalette, values=rev(seq(limits[1], limits[2], length.out=20)), opacity=0.5, title = paste(lst$channel, "<br/>", dataset2legend[[lst$channel]]), position = "topright")#
+        }#
+        lt <- lt %>% make.map(spdf, lst$channel, lst$scenario, lst$measure, lst$year, lst$quant, dataset2region[[lst$channel]][1], dataset2region[[lst$channel]][2], dataset2region[[lst$channel]][3], group=previous) %>%#
+            clearGroup(prev.save)#
+    })#
+#
+    ## Adaptation Tab#
+    adt.data <- reactiveValues(adt.input=NULL, risk.input=NULL)#
+#
+    observeEvent(input$adtchannel, {#
+        if (input$adtchannel == "Coastal impacts") {#
+            adt.data$adt.input <- load.slr.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/coastal.csv")#
+        } else if (input$adtchannel == "All-source flooding") {#
+            adt.data$adt.input <- load.flood.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/flooding.csv")#
+        } else if (input$adtchannel == "Agricultural productivity") {#
+            adt.data$adt.input <- load.agric.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/agriculture.csv")#
+        } else if (input$adtchannel == "Labour productivity") {#
+            adt.data$adt.input <- load.labor.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/labour.csv")#
+        } else if (input$adtchannel == "Heat-related mortality") {#
+            adt.data$adt.input <- load.health.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/health.csv")#
+        }#
+#
+        options <- adaptation.options[[input$adtchannel]]#
+        updatePickerInput(session, "adaptation",#
+                          choices = options)#
+    })#
+#
+    output$investment_text <- renderText({#
+        actual_value <- 10^input$investment#
+        paste0("The actual value is: £", actual_value)#
+    })#
+#
+    output$adtcosts <- renderPlotly({#
+        print("Costs")#
+        plot_ly(x="Annual", y=10^input$investment, type = "bar")#
+    })#
+#
+    output$adtbenefits <- renderPlotly({#
+        print("Benefit")#
+        req(adt.data$adt.input)#
+        req(adt.data$risk.input)#
+#
+        if (input$adtchannel == "Coastal impacts") {#
+            pdf <- slr.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- pdf %>% left_join(adt.data$risk.input, by=c('year', 'segment'), suffix=c('', '.adt')) %>% mutate(benefits=mu * (1 - mu.adt)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "All-source flooding") {#
+            pdf <- flood.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Agricultural productivity") {#
+            pdf <- agric.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Labour productivity") {#
+            pdf <- labor.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Heat-related mortality") {#
+            pdf <- health.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        }#
+        pdf2.s1 <- pdf2 %>% filter(scenario == "Most Likely" & measure == 'EAD')#
+        pdf2.s2 <- pdf2 %>% filter(scenario == "High Risk" & measure == 'EAD')#
+#
+        fig <- plot_ly()#
+        fig <- add_lines(fig, x=pdf2.s1$year, y=pdf2.s1$benefits, type = 'scatter', mode = 'lines')#
+        fig <- add_lines(fig, x=pdf2.s1$year, y=pdf2.s1$benefits, type = 'scatter', mode = 'lines')#
+        fig#
+    })#
+#
+}#
+#
+df <- NULL#
+limits <- NULL#
+timeseries.id <- reactiveVal(NULL)#
+load.risk.channel('Agricultural productivity', T, "High Risk", "EAD", "mu")#
+#
+## Create a color palette for the map:#
+mypalette <- colorNumeric( palette="Spectral", domain=limits, na.color="transparent", reverse=T)#
+#
+shinyApp(ui, server)
+round(pi, 1)
+round(pi, 2)
+format_estimate_with_ci <- function(mu, ci05, ci95, digits = 2) {#
+  # Calculate the range#
+  ci_range <- ci95 - ci05#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+  ci_order <- order_of_magnitude(ci_range)#
+  # Determine the number of digits to use#
+  shared_digits <- max(0, ci_order + 1 - order_of_magnitude(abs(ci95 + ci05) / 2))#
+  num_digits <- min(digits, shared_digits)#
+  # Format components#
+  mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+  ci05_formatted <- format(floor(ci05 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  ci95_formatted <- format(ceiling(ci95 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  # Concatenate into a single string#
+  paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+mu <- 1.456#
+ci05 <- 1.234#
+ci95 <- 1.678#
+formatted_output <- format_estimate_with_ci(mu, ci05, ci95)
+format_estimate_with_ci(mu, ci05, ci95)
+ci_range <- ci95 - ci05#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+  ci_order <- order_of_magnitude(ci_range)#
+  # Determine the number of digits to use#
+  shared_digits <- max(0, ci_order + 1 - order_of_magnitude(abs(ci95 + ci05) / 2))#
+  num_digits <- min(digits, shared_digits)#
+  # Format components#
+  mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+  ci05_formatted <- format(floor(ci05 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  ci95_formatted <- format(ceiling(ci95 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  # Concatenate into a single string#
+  paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")
+digits = 2
+ci_range <- ci95 - ci05#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+  ci_order <- order_of_magnitude(ci_range)#
+  # Determine the number of digits to use#
+  shared_digits <- max(0, ci_order + 1 - order_of_magnitude(abs(ci95 + ci05) / 2))#
+  num_digits <- min(digits, shared_digits)#
+  # Format components#
+  mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+  ci05_formatted <- format(floor(ci05 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  ci95_formatted <- format(ceiling(ci95 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  # Concatenate into a single string#
+  paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")
+ci_range
+order_of_magnitude
+ci_order
+shared_digits
+format_estimate_with_ci <- function(mu, ci05, ci95) {#
+  # Calculate the range#
+  ci_range <- ci95 - ci05#
+#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order#
+#
+  # Format components#
+  mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+  ci05_formatted <- format(floor(ci05 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+  ci95_formatted <- format(ceiling(ci95 * 10^num_digits) / 10^num_digits, nsmall = num_digits)#
+#
+  # Concatenate into a single string#
+  paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+format_estimate_with_ci(mu, ci05, ci95)
+format_estimate_with_ci <- function(mu, ci05, ci95) {#
+  # Calculate the range#
+  ci_range <- ci95 - ci05#
+#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order#
+#
+  # Format components#
+  mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+  ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = num_digits-1)#
+  ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = num_digits-1)#
+#
+  # Concatenate into a single string#
+  paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+format_estimate_with_ci(mu, ci05, ci95)
+format_estimate_with_ci(0.35, 0, 1)
+mu = 0.35
+ci05 = 0
+ci95 = 1
+ci_range <- ci95 - ci05#
+#
+  # Determine the suitable number of digits by examining significant figures#
+  order_of_magnitude <- function(x) {#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+  }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order
+num_digits
+round(.35, -1)
+round(.35, 1)
+round(.35, 0)
+format_estimate_with_ci <- function(mu, ci05, ci95) {#
+    ## Calculate the range#
+    ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = num_digits-1)#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = num_digits-1)#
+#
+    ## Concatenate into a single string#
+    paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+format_estimate_with_ci(0.35, 0, 1)
+format_estimate_with_ci(0.035, 0, .1)
+format_estimate_with_ci(0.036, 0, .1)
+format_estimate_with_ci(0.36, 0, 1)
+format_estimate_with_ci(3.6, 0, 10)
+mu = 3.6
+ci05 = 0
+ci95 = 10
+ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1
+num_digits
+mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)
+ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = num_digits-1)
+num_digits-1
+format_estimate_with_ci <- function(mu, ci05, ci95) {#
+    ## Calculate the range#
+    ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+#
+    ## Concatenate into a single string#
+    paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+format_estimate_with_ci(0.036, 0, .1)
+format_estimate_with_ci(3.6, 0, 10)
+format_estimate_with_ci(36, 0, 100)
+mu = 36
+ci95 = 100
+ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1
+num_digits
+mu_formatted <- format(round(mu, num_digits), nsmall = num_digits)#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))
+format_estimate_with_ci <- function(mu, ci05, ci95) {#
+    ## Calculate the range#
+    ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = max(num_digits, 0))#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+#
+    ## Concatenate into a single string#
+    paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+}
+format_estimate_with_ci(36, 0, 100)
+format_estimate_with_ci <- function(mu, ci05, ci95, bold='') {#
+    ## Calculate the range#
+    ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = max(num_digits, 0))#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+#
+    ## Concatenate into a single string#
+    if (bold == 'mu') {#
+        paste0('<b>', mu_formatted, "</b> [", ci05_formatted, " - ", ci95_formatted, "]")#
+    } else if (bold == 'ci05') {#
+        paste0(mu_formatted, " [<b>", ci05_formatted, "</b> - ", ci95_formatted, "]")#
+    } else if (bold == 'ci95') {#
+        paste0(mu_formatted, " [", ci05_formatted, " - <b>", ci95_formatted, "</b>]")#
+    } else {#
+        paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+    }#
+}
+:
+# setwd("~/Dropbox/HMT/online")#
+#
+# Library#
+library(leaflet)#
+library(sf)#
+library(shiny)#
+library(dplyr)#
+library(rlang)#
+library(shinyWidgets)#
+library(ggplot2)#
+library(bslib)#
+library(plotly)#
+library(Hmisc)#
+#
+source("../lib/adaptation.R")#
+#
+divanames <- read.csv("../regions/divanames.csv")#
+divanames$name[7] <- "Near &Agrave;ird"#
+divanames$name[12] <- "Near Port M&ograve;r"#
+#
+format_estimate_with_ci <- function(mu, ci05, ci95, bold='') {#
+    ## Calculate the range#
+    ci_range <- ci95 - ci05#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    order_of_magnitude <- function(x) {#
+        if (x == 0) return(0)#
+        floor(log10(abs(x)))#
+    }#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = max(num_digits, 0))#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+#
+    ## Concatenate into a single string#
+    if (bold == 'mu') {#
+        paste0('<b>', mu_formatted, "</b> [", ci05_formatted, " - ", ci95_formatted, "]")#
+    } else if (bold == 'ci05') {#
+        paste0(mu_formatted, " [<b>", ci05_formatted, "</b> - ", ci95_formatted, "]")#
+    } else if (bold == 'ci95') {#
+        paste0(mu_formatted, " [", ci05_formatted, " - <b>", ci95_formatted, "</b>]")#
+    } else {#
+        paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+    }#
+}#
+#
+get.value <- function(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df) {#
+    if (!is.na(regcol.spdf)) {#
+        subdf <- df[df$scenario == scenario & df$measure == measure & df$year == year, c(regcol.df, quant)]#
+        joinby <- setNames(regcol.df, regcol.spdf)#
+        subdf2 <- spdf %>% left_join(subdf, by=joinby)#
+        if (quant == 'all') {#
+            return(subdf2)#
+        } else {#
+            return(subdf2[, quant, drop=T])#
+        }#
+    } else {#
+        if (quant == 'all') {#
+            return(df[df$scenario == scenario & df$measure == measure & df$year == year, ])#
+        } else {#
+            return(df[df$scenario == scenario & df$measure == measure & df$year == year, quant, drop=T])#
+        }#
+    }#
+}#
+#
+add.polygons <- function(lt, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("add.polygons")#
+    ## Prepare the text for tooltips:#
+    allvals <- get.value(df, spdf, scenario, measure, year, 'all', regcol.spdf, regcol.df)#
+    alltxts <- sapply(1:nrow(allvals), function(ii) format_estimate_with_ci(allvals$mu[ii], allvals$ci05[ii], allvals$ci95[ii], quant))#
+    if (namecol.spdf %in% names(spdf)) {#
+        mytext <- paste(#
+            "Region: ", spdf[, namecol.spdf, drop=T], "<br/>",#
+            "Damages: ", alltxts, "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    } else {#
+        mytext <- paste(#
+            "Region: ", namecol.spdf, "<br/>",#
+            "Damages: ", alltxts, "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    }#
+#
+    if (is.null(group))#
+        group <- paste(quant, measure, scenario, year, sep="_")#
+#
+    lt %>% addPolygons(data=spdf,#
+                       fillColor = ~mypalette(value),#
+                       layerId = ~PID,#
+                       stroke=TRUE,#
+                       fillOpacity = 0.6,#
+                       color="white",#
+                       weight=0.3,#
+                       label = mytext,#
+                       labelOptions = labelOptions(#
+                           style = list("font-weight" = "normal", padding = "2px 5px"),#
+                           textsize = "11px",#
+                           direction = "auto"#
+                       ),#
+                       group=group)#
+}#
+#
+fix.limits <- function(df) {#
+    limits <<- c(quantile(df$ci05, .05), quantile(df$ci95, .95))#
+    print(limits)#
+    if (all(sign(df$ci05) == sign(df$ci95))) {#
+        mypalette <<- colorNumeric(palette="YlOrRd", domain=c(min(limits), max(limits)), na.color="transparent", reverse=F)#
+    } else {#
+        mypalette <<- colorNumeric(palette="Spectral", domain=c(-max(abs(limits)), max(abs(limits))), na.color="transparent", reverse=T)#
+    }#
+}#
+#
+make.map <- function(lt, spdf, channel, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("make.map")#
+    ## Final Map#
+    col <- paste(quant, scenario, year, sep="_")#
+    spdf$value <- pmax(limits[1], pmin(limits[2], get.value(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df)))#
+#
+    lt %>%#
+        add.polygons(spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=group)#
+}#
+#
+## make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "Extreme", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+## m2050mu<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci05<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci05", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci95<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+###########
+datasets <- list(#
+  "Agricultural productivity" = 'agriculture.csv',#
+  "All-source flooding" = 'flooding.csv',#
+  "Heat-related mortality" = 'health.csv',#
+  "Labour productivity" = 'labourprod.csv',#
+  "Labour hours lost" = 'labourhours.csv',#
+  "Local temperatures" = 'temps.csv',#
+  "Catastrophic risk" = 'catastrophic.csv',#
+  "Missing risks" = 'missrisks.csv',#
+  "Trade spill-overs" = 'trade.csv',#
+  "Coastal impacts" = 'coastal.csv',#
+  "Sea-level rise" = 'slr.csv',#
+  "Total costs" = 'total-noadt.csv'#
+)#
+#
+dataset2legend <- list(#
+  "Agricultural productivity" = 'Losses (million GBP)',#
+  "All-source flooding" = 'Losses (million GBP)',#
+  "Heat-related mortality" = 'Excess Deaths (people)',#
+  "Labour productivity" = 'Losses (million GBP)',#
+  "Labour hours lost" = '(hours/person)',#
+  "Local temperatures" = '(degree C)',#
+  "Catastrophic risk" = 'Losses (% GDP)',#
+  "Missing risks" = 'Losses (% GDP)',#
+  "Trade spill-overs" = 'Losses (% GDP)',#
+  "Coastal impacts" = 'Losses (million GBP)',#
+  "Sea-level rise" = '(mm since 1985-2005)',#
+  "Total costs" = '% GDP'#
+)#
+#
+regions <- list(#
+  "Agricultural productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "All-source flooding" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Heat-related mortality" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour hours lost" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Local temperatures" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Catastrophic risk" = "shapefiles/gadm36_GBR_0.shp",#
+  "Missing risks" = "shapefiles/gadm36_GBR_0.shp",#
+  "Trade spill-overs" = "shapefiles/gadm36_GBR_0.shp",#
+  "Coastal impacts" = "shapefiles/divabuffer-uk.shp",#
+  "Sea-level rise" = "shapefiles/divabuffer-uk.shp",#
+  "Total costs" = "shapefiles/gadm36_GBR_0.shp"#
+)#
+#
+dataset2region <- list( # regcol.spdf, regcol.df, namecol.spdf#
+  "Agricultural productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "All-source flooding" = c('NAME_3', 'county', 'NAME_3'),#
+  "Heat-related mortality" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour hours lost" = c("ISOADM1", "ISOADM1", 'name'),#
+  "Local temperatures" = c("ISOADM1", "Region", 'name'),#
+  "Catastrophic risk" = c(NA, NA, "UK-wide"),#
+  "Missing risks" = c(NA, NA, "UK-wide"),#
+  "Trade spill-overs" = c(NA, NA, "UK-wide"),#
+  "Coastal impacts" = c('locationax', 'segment', 'divaname'),#
+  "Sea-level rise" = c('locationid', 'Region', 'divaname'),#
+  "Total costs" = c(NA, NA, "UK-wide")#
+)#
+risk.options <- list("Hazards"=c("Local temperatures", "Sea-level rise"),#
+                     "Regional Risks"=c("Agricultural productivity", "All-source flooding",#
+                                        "Heat-related mortality", "Labour productivity",#
+                                        "Labour hours lost", "Coastal impacts"),#
+                     "National Risks"=c("Trade spill-overs", "Catastrophic risk", "Missing risks", "Total costs"))#
+#
+adaptation.options <- list("Agricultural productivity"="Proportional to Benefits",#
+                           "Heat-related mortality"=c("Proportional to Benefits", "Air Conditioning", "Shutters"),#
+                           "Labour productivity"=c("Proportional to Benefits", "Heat Alerts", "Air Conditioning", "Increased Ventilation", "Solar Blinds"),#
+                           "All-source flooding"="Proportional to Benefits",#
+                           "Coastal impacts"="Proportional to Benefits")#
+#
+JS.logify <-#
+"#
+// function to logify a sliderInput#
+function logifySlider (sliderId, sci = false) {#
+  if (sci) {#
+    // scientific style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return ('10<sup>'+num+'</sup>'); }#
+    })#
+  } else {#
+    // regular number style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return (Math.round(Math.pow(10, num))); }#
+    })#
+  }#
+}"#
+#
+# call logifySlider for each relevant sliderInput#
+JS.onload <-#
+"#
+// execute upon document loading#
+$(document).ready(function() {#
+  // wait a few ms to allow other scripts to execute#
+  setTimeout(function() {#
+    // include call for each slider#
+    logifySlider('investment', sci = false)#
+  }, 5)})#
+"#
+#
+ui <- page_navbar(#
+    title="PROSPER Adaptation Investment Support",#
+    bg = "#2D89C8",#
+    inverse = TRUE,#
+    nav_panel(title="Climate Risks",#
+              fluidPage(#
+                  tags$style(type = "text/css", "html, body { width:100% }"),#
+                  tags$script(HTML(#
+                           "$(function() { $('#map1').css('max-width', '100%'); });"#
+                       )),#
+                  titlePanel(h1("UK Climate Change Risk Maps", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          style="z-index:500; max-width: 600px", # legend over my map (map z = 400)#
+                          pickerInput(#
+                              inputId = "channel",#
+                              label = "Channel:",#
+                              choices = risk.options,#
+                              selected = "Agricultural productivity",#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "scenario",#
+                              label = "Scenario:",#
+                              choices = c('Most Likely - Expected annual damage', 'High Risk - Expected annual damage',#
+                                          'High Risk - Extreme year'),#
+                              selected = 'High Risk - Expected annual damage',#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          textOutput("channelh3", container=h3),#
+                          plotOutput("timeseries", height=250),#
+                          sliderTextInput("year", "Year",#
+                                          choices=2025:2075,#
+                                          selected = 2050),#
+                          sliderTextInput("quant", "Probability",#
+                                          choices=c('1-in-20 less than', 'Expected', '1-in-20 more than'),#
+                                          selected = 'Expected')#
+                      ),#
+                      mainPanel(#
+                          leafletOutput("map1", width="500px", height="638px"), class="col-sm-8")))),#
+    nav_panel(title="Adaptation Planning",#
+              fluidPage(#
+                  tags$head(tags$script(HTML(JS.logify))),#
+                  tags$head(tags$script(HTML(JS.onload))),#
+                  titlePanel(h1("Adaptation Decision Support", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          pickerInput(#
+                              inputId = "adtchannel",#
+                              label = "Channel:",#
+                              choices = names(adaptation.options),#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "adaptation",#
+                              label = "Adaptation:",#
+                              choices = NULL,#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          sliderInput("investment", "Investment",#
+                                      min=log10(1), max=log10(1e4),#
+                                      value = log10(100), step=.1,#
+                                      pre="£", post="M / yr", sep=",", ticks=F),#
+                          textOutput("investment_text")),#
+                      mainPanel(#
+                          fluidRow(#
+                              column(3, plotlyOutput("adtcosts")),#
+                              column(9, plotlyOutput("adtbenefits"))))))),#
+    nav_spacer(),#
+    nav_menu(title="Links",#
+             align="right",#
+             nav_item(tags$a("ACCREU", "https://www.accreu.eu/")),#
+             nav_item(tags$a("ATTENUATE", "https://www.lse.ac.uk/granthaminstitute/projects/attenuate-creating-the-enabling-conditions-for-uk-climate-adaptation-investment/")))#
+)#
+#
+load.risk.channel <- function(channel, load.map, scenario, measure, quant) {#
+    print("load.risk.channel")#
+    df <<- read.csv(paste0("../Dataset v2/", datasets[[channel]]))#
+    if (channel == 'Local temperatures') {#
+        df$mu <<- df$mu - 273.13#
+        df$ci05 <<- df$ci05 - 273.13#
+        df$ci95 <<- df$ci95 - 273.13#
+    } else if (channel == 'Coastal impacts') {#
+        ## 2015 conversation from https://www.poundsterlinglive.com/history/GBP-USD-2015#
+        df$mu <<- df$mu * 1000 * 1.5283#
+        df$ci05 <<- df$ci05 * 1000 * 1.5283#
+        df$ci95 <<- df$ci95 * 1000 * 1.5283#
+    } else if (channel == "Total costs") {#
+        df$mu <<- df$mu * 100#
+        df$ci05 <<- df$ci05 * 100#
+        df$ci95 <<- df$ci95 * 100#
+    }#
+    timeseries.id(NULL)#
+    fix.limits(df)#
+}#
+#
+load.channel.shapefile <- function(channel) {#
+    print("load.channel.shapefile")#
+#
+    spdf <- st_read(regions[[channel]])#
+    if (!is.na(dataset2region[[channel]][1])) {#
+        if (dataset2region[[channel]][1] == 'ISOADM1')#
+            spdf$ISOADM1 <- gsub("-", "", spdf$adm1_code)#
+        if (dataset2region[[channel]][1] == 'locationax') {#
+            rowparts <- strsplit(spdf$locationna, ' ')#
+            spdf$locationax <- sapply(rowparts, function(parts) paste0(paste(parts[-1], collapse=''), parts[1]))#
+        }#
+    }#
+    if (dataset2region[[channel]][3] == 'divaname')#
+        spdf$divaname <- sapply(spdf$locationid, function(locid) ifelse(locid %in% divanames$locationid, divanames$name[divanames$locationid == locid], ""))#
+    if (!('PID' %in% names(spdf)))#
+        spdf$PID <- 1:nrow(spdf)#
+#
+    spdf#
+}#
+#
+server <- function(input, output, session) {#
+    previous <- 'TEST'#
+    shapefile_data <- reactiveVal(NULL)#
+#
+    session$onSessionEnded(function() {#
+        stopApp()#
+    })#
+#
+    ## reactive filtering data from UI#
+    reactive_data <- reactive({#
+        print("reactive")#
+        scenario <- ifelse(input$scenario == 'Most Likely - Expected annual damage', 'Most Likely', 'High Risk')#
+        measure <- ifelse(input$scenario == 'High Risk - Extreme year', 'Extreme', 'EAD')#
+        quant <- ifelse(input$quant == "1-in-20 less than", 'ci05', ifelse(input$quant == "1-in-20 more than", 'ci95', 'mu'))#
+#
+        if (substring(previous, 1, nchar(input$channel)) != input$channel) {#
+            print(input$channel)#
+            load.map.arg <- F#
+            if (previous != 'TEST')#
+                if (regions[[strsplit(previous, '_')[[1]][1]]] != regions[[input$channel]])#
+                    load.map.arg <- T#
+            load.risk.channel(input$channel, load.map.arg, scenario, measure, quant)#
+        }#
+#
+        list(channel=input$channel, quant=quant, scenario=scenario, measure=measure, year=input$year[1])#
+    })#
+#
+    ## static backround map#
+    output$map1 <- renderLeaflet({#
+        print("renderLeaflet")#
+        leaflet() %>%#
+            addTiles() %>%#
+            setView(lat=54, lng=-3, zoom=6)#
+    })#
+#
+    output$timeseries <- renderPlot({#
+        req(timeseries.id)#
+        lst <- reactive_data()#
+        spdf <- shapefile_data()#
+        if (is.null(timeseries.id())) {#
+            if (dataset2legend[[lst$channel]] == "(hours/person)") {#
+                polydata <- read.csv("shapefiles/ne_10m_admin_1_states_provinces.shp.csv")#
+                polydata$ISOADM1 <- paste0(polydata$adm0_a3, polydata$diss_me)#
+#
+                subdf <- df %>% left_join(polydata[, c('ISOADM1', 'popsum')], by='ISOADM1') %>%#
+                    group_by(scenario, year, measure) %>%#
+                    dplyr::summarize(mu=wtd.mean(mu, popsum),#
+                                     ci05=wtd.mean(ci05, popsum),#
+                                     ci95=wtd.mean(ci95, popsum))#
+            } else if (dataset2legend[[lst$channel]] == "(mm since 1985-2005)") {#
+                subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>% group_by(year) %>%#
+                    summarize(mu=mean(mu), ci05=mean(ci05), ci95=mean(ci95))#
+            } else {#
+                subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>% group_by(year) %>%#
+                    summarize(mu=sum(mu), ci05=sum(ci05), ci95=sum(ci95))#
+            }#
+        } else {#
+            subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure & county == spdf$NAME_3[spdf$PID == timeseries.id()])#
+        }#
+#
+        ggplot(subdf, aes(year, mu)) +#
+            geom_line() + geom_ribbon(aes(ymin=ci05, ymax=ci95), alpha=.5) +#
+            theme_bw(base_size=16) +#
+            xlab(NULL) + ylab(paste(lst$channel, "\n", dataset2legend[[lst$channel]]))#
+    }, height=250)#
+#
+    observeEvent(input$scenario, {#
+        if (input$scenario == 'High Risk - Extreme year') {#
+            updateSliderTextInput(session, "year",#
+                                  choices=c(2030, 2040, 2050), selected=c(2030, 2040, 2050)[which.min(abs(c(2030, 2040, 2050) - input$year))])#
+        } else {#
+            updateSliderTextInput(session, "year",#
+                                  choices=2025:2075, selected=input$year)#
+        }#
+    })#
+#
+    observeEvent(input$map1_shape_click, {#
+        ## Store the click event details#
+        click <- input$map1_shape_click#
+#
+        timeseries.id(click$id)#
+    })#
+#
+    observe({#
+        print("observe")#
+        prev.save <- previous#
+        lst <- reactive_data()#
+#
+        replace.legend <- substring(previous, 1, nchar(lst$channel)) != lst$channel#
+        previous <<- paste(lst$channel, lst$measure, lst$quant, lst$scenario, lst$year, sep='_')#
+        output$channelh3 <- renderText(lst$channel)#
+#
+        spdf <- load.channel.shapefile(lst$channel)#
+        shapefile_data(spdf)#
+        lt <- leafletProxy("map1", session)#
+        if (replace.legend) {#
+            fix.limits(df)#
+            lt <- lt %>% clearControls() %>%#
+                addLegend(pal=mypalette, values=rev(seq(limits[1], limits[2], length.out=20)), opacity=0.5, title = paste(lst$channel, "<br/>", dataset2legend[[lst$channel]]), position = "topright")#
+        }#
+        lt <- lt %>% make.map(spdf, lst$channel, lst$scenario, lst$measure, lst$year, lst$quant, dataset2region[[lst$channel]][1], dataset2region[[lst$channel]][2], dataset2region[[lst$channel]][3], group=previous) %>%#
+            clearGroup(prev.save)#
+    })#
+#
+    ## Adaptation Tab#
+    adt.data <- reactiveValues(adt.input=NULL, risk.input=NULL)#
+#
+    observeEvent(input$adtchannel, {#
+        if (input$adtchannel == "Coastal impacts") {#
+            adt.data$adt.input <- load.slr.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/coastal.csv")#
+        } else if (input$adtchannel == "All-source flooding") {#
+            adt.data$adt.input <- load.flood.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/flooding.csv")#
+        } else if (input$adtchannel == "Agricultural productivity") {#
+            adt.data$adt.input <- load.agric.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/agriculture.csv")#
+        } else if (input$adtchannel == "Labour productivity") {#
+            adt.data$adt.input <- load.labor.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/labour.csv")#
+        } else if (input$adtchannel == "Heat-related mortality") {#
+            adt.data$adt.input <- load.health.adapt()#
+            adt.data$risk.input <- read.csv("../Dataset v2/health.csv")#
+        }#
+#
+        options <- adaptation.options[[input$adtchannel]]#
+        updatePickerInput(session, "adaptation",#
+                          choices = options)#
+    })#
+#
+    output$investment_text <- renderText({#
+        actual_value <- 10^input$investment#
+        paste0("The actual value is: £", actual_value)#
+    })#
+#
+    output$adtcosts <- renderPlotly({#
+        print("Costs")#
+        plot_ly(x="Annual", y=10^input$investment, type = "bar")#
+    })#
+#
+    output$adtbenefits <- renderPlotly({#
+        print("Benefit")#
+        req(adt.data$adt.input)#
+        req(adt.data$risk.input)#
+#
+        if (input$adtchannel == "Coastal impacts") {#
+            pdf <- slr.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- pdf %>% left_join(adt.data$risk.input, by=c('year', 'segment'), suffix=c('', '.adt')) %>% mutate(benefits=mu * (1 - mu.adt)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "All-source flooding") {#
+            pdf <- flood.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Agricultural productivity") {#
+            pdf <- agric.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Labour productivity") {#
+            pdf <- labor.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        } else if (input$adtchannel == "Heat-related mortality") {#
+            pdf <- health.adapt.prop(10^input$investment, adt.data$adt.input)#
+            pdf2 <- adt.data$risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+                group_by(year, scenario, measure) %>% summarize(benefits=sum(benefits))#
+        }#
+        pdf2.s1 <- pdf2 %>% filter(scenario == "Most Likely" & measure == 'EAD')#
+        pdf2.s2 <- pdf2 %>% filter(scenario == "High Risk" & measure == 'EAD')#
+#
+        fig <- plot_ly()#
+        fig <- add_lines(fig, x=pdf2.s1$year, y=pdf2.s1$benefits, type = 'scatter', mode = 'lines')#
+        fig <- add_lines(fig, x=pdf2.s1$year, y=pdf2.s1$benefits, type = 'scatter', mode = 'lines')#
+        fig#
+    })#
+#
+}#
+#
+df <- NULL#
+limits <- NULL#
+timeseries.id <- reactiveVal(NULL)#
+load.risk.channel('Agricultural productivity', T, "High Risk", "EAD", "mu")#
+#
+## Create a color palette for the map:#
+mypalette <- colorNumeric( palette="Spectral", domain=limits, na.color="transparent", reverse=T)#
+#
+shinyApp(ui, server)
+# setwd("~/Dropbox/HMT/online")#
+#
+# Library#
+library(leaflet)#
+library(sf)#
+library(shiny)#
+library(shinyjs)#
+library(dplyr)#
+library(rlang)#
+library(shinyWidgets)#
+library(ggplot2)#
+library(bslib)#
+library(plotly)#
+library(Hmisc)#
+library(RColorBrewer)#
+#
+source("../lib/adaptation.R")#
+source("../lib/synthesis.R")#
+#
+gdp.2025.usd <- 3958780000000 # Nominal USD. https://www.worldometers.info/gdp/gdp-by-country/#
+gbp.usd.2025 <- 1.3193#
+#
+divanames <- read.csv("../regions/divanames.csv")#
+divanames$name[7] <- "Near &Agrave;ird"#
+divanames$name[12] <- "Near Port M&ograve;r"#
+#
+order_of_magnitude <- function(x) {#
+    if (is.na(x)) return(NA)#
+    if (x == 0) return(0)#
+    floor(log10(abs(x)))#
+}#
+#
+format_estimate_with_ci <- function(mu, ci05, ci95, bold='') {#
+    if (is.na(mu))#
+        return(NA)#
+    ## Calculate the range#
+    ci_range <- ifelse(mu > ci05, ifelse(mu < ci95, ci95 - ci05, mu - ci05), ci95 - mu)#
+#
+    ## Determine the suitable number of digits by examining significant figures#
+    ci_order <- order_of_magnitude(ci_range)#
+    num_digits <- -ci_order + 1#
+#
+    ## Format components#
+    mu_formatted <- format(round(mu, num_digits), nsmall = max(num_digits, 0))#
+    ci05_formatted <- format(floor(ci05 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+    ci95_formatted <- format(ceiling(ci95 * 10^(num_digits-1)) / 10^(num_digits-1), nsmall = max(0, num_digits-1))#
+#
+    ## Concatenate into a single string#
+    if (bold == 'mu') {#
+        paste0('<b>', mu_formatted, "</b> [", ci05_formatted, " - ", ci95_formatted, "]")#
+    } else if (bold == 'ci05') {#
+        paste0(mu_formatted, " [<b>", ci05_formatted, "</b> - ", ci95_formatted, "]")#
+    } else if (bold == 'ci95') {#
+        paste0(mu_formatted, " [", ci05_formatted, " - <b>", ci95_formatted, "</b>]")#
+    } else {#
+        paste0(mu_formatted, " [", ci05_formatted, " - ", ci95_formatted, "]")#
+    }#
+}#
+#
+get.value <- function(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df) {#
+    print(quant)#
+    if (!is.na(regcol.spdf)) {#
+        if (quant == 'all') {#
+            subdf <- df[df$scenario == scenario & df$measure == measure & df$year == year, ]#
+            joinby <- setNames(regcol.df, regcol.spdf)#
+            subdf2 <- spdf %>% left_join(subdf, by=joinby)#
+            return(subdf2)#
+        } else {#
+            subdf <- df[df$scenario == scenario & df$measure == measure & df$year == year, c(regcol.df, quant)]#
+            joinby <- setNames(regcol.df, regcol.spdf)#
+            subdf2 <- spdf %>% left_join(subdf, by=joinby)#
+            return(subdf2[, quant, drop=T])#
+        }#
+    } else {#
+        if (quant == 'all') {#
+            return(df[df$scenario == scenario & df$measure == measure & df$year == year, ])#
+        } else {#
+            return(df[df$scenario == scenario & df$measure == measure & df$year == year, quant, drop=T])#
+        }#
+    }#
+}#
+#
+add.polygons <- function(lt, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("add.polygons")#
+    ## Prepare the text for tooltips:#
+    allvals <- get.value(df, spdf, scenario, measure, year, 'all', regcol.spdf, regcol.df)#
+    alltxts <- sapply(1:nrow(allvals), function(ii) format_estimate_with_ci(allvals$mu[ii], allvals$ci05[ii], allvals$ci95[ii], quant))#
+    if (namecol.spdf %in% names(spdf)) {#
+        mytext <- paste(#
+            "Region: ", spdf[, namecol.spdf, drop=T], "<br/>",#
+            "Damages: ", alltxts, "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    } else {#
+        mytext <- paste(#
+            "Region: ", namecol.spdf, "<br/>",#
+            "Damages: ", alltxts, "<br/>",#
+            sep="") %>%#
+            lapply(htmltools::HTML)#
+    }#
+#
+    if (is.null(group))#
+        group <- paste(quant, measure, scenario, year, sep="_")#
+#
+    lt %>% addPolygons(data=spdf,#
+                       fillColor = ~mypalette(value),#
+                       layerId = ~PID,#
+                       stroke=TRUE,#
+                       fillOpacity = 0.6,#
+                       color="white",#
+                       weight=0.3,#
+                       label = mytext,#
+                       labelOptions = labelOptions(#
+                           style = list("font-weight" = "normal", padding = "2px 5px"),#
+                           textsize = "11px",#
+                           direction = "auto"#
+                       ),#
+                       group=group)#
+}#
+#
+fix.limits <- function(df) {#
+    limits <<- c(quantile(df$ci05, .05), quantile(df$ci95, .95))#
+    print(limits)#
+    if (all(sign(df$ci05) == sign(df$ci95))) {#
+        mypalette <<- colorNumeric(palette="YlOrRd", domain=c(min(limits), max(limits)), na.color="transparent", reverse=F)#
+    } else {#
+        mypalette <<- colorNumeric(palette="Spectral", domain=c(-max(abs(limits)), max(abs(limits))), na.color="transparent", reverse=T)#
+    }#
+}#
+#
+make.map <- function(lt, spdf, channel, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=NULL) {#
+    print("make.map")#
+    ## Final Map#
+    col <- paste(quant, scenario, year, sep="_")#
+    spdf$value <- pmax(limits[1], pmin(limits[2], get.value(df, spdf, scenario, measure, year, quant, regcol.spdf, regcol.df)))#
+#
+    lt %>%#
+        add.polygons(spdf, scenario, measure, year, quant, regcol.spdf, regcol.df, namecol.spdf, group=group)#
+}#
+#
+## make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## make.map(spdf, "Agricultural productivity", "High Risk", "Extreme", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+## m2050mu<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "mu", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci05<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci05", 'NAME_3', 'county', 'NAME_3')#
+## m2050ci95<-make.map(spdf, "Agricultural productivity", "Most Likely", "EAD", 2050, "ci95", 'NAME_3', 'county', 'NAME_3')#
+#
+###########
+datasets <- list(#
+  "Agricultural productivity" = 'agriculture.csv',#
+  "All-source flooding" = 'flooding.csv',#
+  "Heat-related mortality" = 'health.csv',#
+  "Labour productivity" = 'labourprod.csv',#
+  "Labour hours lost" = 'labourhours.csv',#
+  "Local temperatures" = 'temps.csv',#
+  "Catastrophic risk" = 'catastrophic.csv',#
+  "Missing risks" = 'missrisks.csv',#
+  "Trade spill-overs" = 'trade.csv',#
+  "Coastal impacts" = 'coastal.csv',#
+  "Sea-level rise" = 'slr.csv',#
+  "Total costs" = 'total-noadt.csv'#
+)#
+#
+dataset2legend <- list(#
+  "Agricultural productivity" = 'Losses (million GBP)',#
+  "All-source flooding" = 'Losses (million GBP)',#
+  "Heat-related mortality" = 'Excess Deaths (people)',#
+  "Labour productivity" = 'Losses (million GBP)',#
+  "Labour hours lost" = '(hours/person)',#
+  "Local temperatures" = '(degree C)',#
+  "Catastrophic risk" = 'Losses (% GDP)',#
+  "Missing risks" = 'Losses (% GDP)',#
+  "Trade spill-overs" = 'Losses (% GDP)',#
+  "Coastal impacts" = 'Losses (million GBP)',#
+  "Sea-level rise" = '(mm since 1985-2005)',#
+  "Total costs" = '% GDP'#
+)#
+#
+regions <- list(#
+  "Agricultural productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "All-source flooding" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Heat-related mortality" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour productivity" = "shapefiles/gadm36_GBR_3-withattr.shp",#
+  "Labour hours lost" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Local temperatures" = "shapefiles/ne_10m_admin_1_states_provinces.shp",#
+  "Catastrophic risk" = "shapefiles/gadm36_GBR_0.shp",#
+  "Missing risks" = "shapefiles/gadm36_GBR_0.shp",#
+  "Trade spill-overs" = "shapefiles/gadm36_GBR_0.shp",#
+  "Coastal impacts" = "shapefiles/divabuffer-uk.shp",#
+  "Sea-level rise" = "shapefiles/divabuffer-uk.shp",#
+  "Total costs" = "shapefiles/gadm36_GBR_0.shp"#
+)#
+#
+dataset2region <- list( # regcol.spdf, regcol.df, namecol.spdf#
+  "Agricultural productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "All-source flooding" = c('NAME_3', 'county', 'NAME_3'),#
+  "Heat-related mortality" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour productivity" = c('NAME_3', 'county', 'NAME_3'),#
+  "Labour hours lost" = c("ISOADM1", "ISOADM1", 'name'),#
+  "Local temperatures" = c("ISOADM1", "Region", 'name'),#
+  "Catastrophic risk" = c(NA, NA, "UK-wide"),#
+  "Missing risks" = c(NA, NA, "UK-wide"),#
+  "Trade spill-overs" = c(NA, NA, "UK-wide"),#
+  "Coastal impacts" = c('locationax', 'segment', 'divaname'),#
+  "Sea-level rise" = c('locationid', 'Region', 'divaname'),#
+  "Total costs" = c(NA, NA, "UK-wide")#
+)#
+risk.options <- list("Hazards"=c("Local temperatures", "Sea-level rise"),#
+                     "Regional Risks"=c("Agricultural productivity", "All-source flooding",#
+                                        "Heat-related mortality", "Labour productivity",#
+                                        "Labour hours lost", "Coastal impacts"),#
+                     "National Risks"=c("Trade spill-overs", "Catastrophic risk", "Missing risks", "Total costs"))#
+#
+adaptation.options <- list("Agricultural productivity"="Proportional to Benefits",#
+                           "Heat-related mortality"=c("Proportional to Benefits", "Air Conditioning", "Shutters"),#
+                           "Labour productivity & supply"="Proportional to Benefits",#
+                           "All-source flooding"="Proportional to Benefits",#
+                           "Coastal impacts"="Proportional to Benefits")#
+#
+JS.logify <-#
+"#
+// function to logify a sliderInput#
+function logifySlider (sliderId, sci = false) {#
+  if (sci) {#
+    // scientific style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return ('10<sup>'+num+'</sup>'); }#
+    })#
+  } else {#
+    // regular number style#
+    $('#'+sliderId).data('ionRangeSlider').update({#
+      'prettify': function (num) { return (+(Math.pow(10, num).toPrecision(2))); }#
+    })#
+  }#
+}"#
+#
+## Math.round(Math.pow(10, num))#
+#
+# call logifySlider for each relevant sliderInput#
+JS.onload <-#
+"#
+// execute upon document loading#
+$(document).ready(function() {#
+  // wait a few ms to allow other scripts to execute#
+  setTimeout(function() {#
+    // include call for each slider#
+    logifySlider('investment', sci = false)#
+  }, 5)})#
+"#
+#
+ui <- page_navbar(#
+    title="PROSPER Adaptation Investment Support",#
+    bg = "#2D89C8",#
+    inverse = TRUE,#
+    nav_panel(title="Climate Risks",#
+              fluidPage(#
+                  tags$style(type = "text/css", "#
+html, body { width:100% }#
+            .invest-table {#
+                width: 100%;#
+                border-collapse: collapse;#
+            }#
+            .invest-table th, .invest-table td {#
+                border: 1px solid #ddd;#
+                padding: 8px;#
+                text-align: left;#
+            }#
+            .invest-table th {#
+                background-color: #f2f2f2;#
+            }#
+            .invest-table tr:nth-child(even) {#
+                background-color: #f9f9f9;#
+            }#
+            .legend-circle {#
+                width: 20px;#
+                height: 20px;#
+                border-radius: 50%;#
+                display: inline-block;#
+            }#
+"),#
+                  tags$script(HTML(#
+                           "$(function() { $('#map1').css('max-width', '100%'); });"#
+                       )),#
+                  titlePanel(h1("UK Climate Change Risk Maps", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          style="z-index:500; max-width: 600px", # legend over my map (map z = 400)#
+                          pickerInput(#
+                              inputId = "channel",#
+                              label = "Channel:",#
+                              choices = risk.options,#
+                              selected = "Agricultural productivity",#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "scenario",#
+                              label = "Scenario:",#
+                              choices = c('Most Likely - Expected annual damage', 'High Risk - Expected annual damage',#
+                                          'High Risk - Extreme year'),#
+                              selected = 'High Risk - Expected annual damage',#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          textOutput("channelh3", container=h3),#
+                          plotOutput("timeseries", height=250)#
+                      ),#
+                      mainPanel(#
+                          fluidRow(#
+                              column(4,#
+                                     sliderTextInput("year", "Year",#
+                                                     choices=2025:2075,#
+                                                     selected = 2050)),#
+                              column(4,#
+                                     sliderTextInput("quant", "Probability",#
+                                                     choices=c('1-in-20 less than', 'Expected', '1-in-20 more than'),#
+                                                     selected = 'Expected'))),#
+                          fluidRow(#
+                              column(8,#
+                                     leafletOutput("map1", width="100%", height="500px"), class="col-sm-8")))))),#
+    nav_panel(title="Adaptation Planning",#
+              fluidPage(#
+                  tags$head(tags$script(HTML(JS.logify))),#
+                  tags$head(tags$script(HTML(JS.onload))),#
+                  titlePanel(h1("Adaptation Decision Support", style='text-align: center')),#
+                  sidebarLayout(#
+                      sidebarPanel(#
+                          pickerInput(#
+                              inputId = "adtchannel",#
+                              label = "Channel:",#
+                              choices = names(adaptation.options),#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          pickerInput(#
+                              inputId = "adaptation",#
+                              label = "Adaptation:",#
+                              choices = NULL,#
+                              options = list(#
+                                  `actions-box` = TRUE,#
+                                  size = 10,#
+                                  `selected-text-format` = "count > 3"#
+                              ),#
+                              multiple = F#
+                          ),#
+                          sliderInput("investment", "Investment",#
+                                      min=log10(1), max=log10(1e4),#
+                                      value = log10(100), step=.1,#
+                                      pre="£", post="M / yr", sep=",", ticks=F)),#
+                      mainPanel(#
+                          fluidRow(#
+                              column(12, plotlyOutput("adtgraph"))),#
+                          uiOutput("investTable"),#
+                          hidden(actionButton("saveButton", "Save Investuration")),#
+                          hidden(actionButton("loadButton", "Load Selected Investuration")))))),#
+    nav_spacer(),#
+    nav_menu(title="Links",#
+             align="right",#
+             nav_item(tags$a("ACCREU", "https://www.accreu.eu/")),#
+             nav_item(tags$a("ATTENUATE", "https://www.lse.ac.uk/granthaminstitute/projects/attenuate-creating-the-enabling-conditions-for-uk-climate-adaptation-investment/")))#
+)#
+#
+getNextColor <- function(n.prev.rows) {#
+    if (n.prev.rows < 2) {#
+        colors <- brewer.pal(3, "Set3")#
+        colors[n.prev.rows + 1]#
+    } else {#
+        colors <- brewer.pal(min(n.prev.rows + 1, 12), "Set3")#
+        tail(colors, 1)#
+    }#
+}#
+#
+makeInvestRow <- function(channel, adaptation, investment, color) {#
+    tibble(Channel=channel, Adaptation=adaptation, Investment=paste0("£", signif(10^investment, 2), "M / yr"),#
+           Legend=paste0('<span class="legend-circle" style="background-color: ', color, ';">'))#
+}#
+#
+constructTableHTML <- function(rows) {#
+    if (!is.null(rows)) {#
+        investRows <- apply(rows, 1, function(row) {#
+            paste0("<tr>",#
+                   paste(sapply(row, function(cell) {#
+                       paste0("<td>", cell, "</td>")#
+                   }), collapse=""),#
+                   "</tr>")#
+        })#
+        tableHeader <- paste0("<tr>",#
+                              paste(sapply(colnames(rows), function(col) {#
+                                  paste0("<th>", col, "</th>")#
+                              }), collapse=""),#
+                              "</tr>")#
+        tableHTML <- paste0("<table class='invest-table'>",#
+                            tableHeader,#
+                            paste(investRows, collapse=""),#
+                            "</table>")#
+#
+        HTML(tableHTML)#
+    }#
+}#
+#
+load.risk.channel <- function(channel, load.map, scenario, measure, quant) {#
+    print("load.risk.channel")#
+    df <<- read.csv(paste0("../Dataset v2/", datasets[[channel]]))#
+    if (channel == 'Local temperatures') {#
+        df$mu <<- df$mu - 273.13#
+        df$ci05 <<- df$ci05 - 273.13#
+        df$ci95 <<- df$ci95 - 273.13#
+    } else if (channel == 'Coastal impacts') {#
+        ## 2015 conversation from https://www.poundsterlinglive.com/history/GBP-USD-2015#
+        df$mu <<- df$mu * 1000 * 1.5283#
+        df$ci05 <<- df$ci05 * 1000 * 1.5283#
+        df$ci95 <<- df$ci95 * 1000 * 1.5283#
+    } else if (channel == "Total costs") {#
+        df$mu <<- df$mu * 100#
+        df$ci05 <<- df$ci05 * 100#
+        df$ci95 <<- df$ci95 * 100#
+    }#
+    timeseries.id(NULL)#
+    fix.limits(df)#
+}#
+#
+load.channel.shapefile <- function(channel) {#
+    print("load.channel.shapefile")#
+#
+    spdf <- st_read(regions[[channel]])#
+    if (!is.na(dataset2region[[channel]][1])) {#
+        if (dataset2region[[channel]][1] == 'ISOADM1')#
+            spdf$ISOADM1 <- gsub("-", "", spdf$adm1_code)#
+        if (dataset2region[[channel]][1] == 'locationax') {#
+            rowparts <- strsplit(spdf$locationna, ' ')#
+            spdf$locationax <- sapply(rowparts, function(parts) paste0(paste(parts[-1], collapse=''), parts[1]))#
+        }#
+    }#
+    if (dataset2region[[channel]][3] == 'divaname')#
+        spdf$divaname <- sapply(spdf$locationid, function(locid) ifelse(locid %in% divanames$locationid, divanames$name[divanames$locationid == locid], ""))#
+    if (!('PID' %in% names(spdf)))#
+        spdf$PID <- 1:nrow(spdf)#
+#
+    spdf#
+}#
+#
+get.adaptgraph.with.prev <- function(adtchannel, adaptation, investment, risk.input, adt.input, savedInvestsPdf) {#
+    label <- adtchannel#
+    if (!(label %in% savedInvestsPdf$label)) {#
+        return(get.adaptgraph(adtchannel, adaptation, investment, risk.input, adt.input))#
+    }#
+#
+    adaptgraph.prev <- savedInvestsPdf[savedInvestsPdf$label == label, -1:-2]#
+#
+    pdf4 <- get.adaptgraph(adtchannel, adaptation, log10(10^investment - sum(adaptgraph.prev$benefits[adaptgraph.prev$measure == 'Invest' & adaptgraph.prev$scenario == 'Most Likely'])),#
+                           risk.input, adt.input)#
+#
+    pdf5 <- rbind(cbind(call='curr', pdf4), cbind(call='prev', adaptgraph.prev))#
+    pdf5 %>% group_by(year, scenario, measure) %>% dplyr::summarize(benefits=benefits[call == 'curr'] - sum(benefits[call == 'prev']))#
+}#
+#
+get.adaptgraph <- function(adtchannel, adaptation, investment, risk.input, adt.input) {#
+    ## Calculate (mu - baseline) * (1 - mu.adt)#
+    if (adtchannel == "Coastal impacts") {#
+        pdf <- slr.adapt.prop(10^investment, adt.input)#
+        pdf2 <- pdf %>% left_join(risk.input, by=c('year', 'segment'), suffix=c('.adt', '')) %>% mutate(benefits=mu * (1 - mu.adt)) %>%#
+            group_by(year, scenario, measure) %>% dplyr::summarize(benefits=sum(benefits))#
+    } else if (adtchannel == "All-source flooding") {#
+        pdf <- flood.adapt.prop(10^investment, adt.input)#
+        pdf2 <- risk.input %>% mutate(benefits=mu * (1 - pdf$mu)) %>%#
+            group_by(year, scenario, measure) %>% dplyr::summarize(benefits=sum(benefits))#
+    } else if (adtchannel == "Agricultural productivity") {#
+        pdf <- agric.adapt.prop(10^investment, adt.input)#
+        pdf2 <- risk.input %>%#
+            left_join(pdf, by=c('scenario', 'year', 'measure', 'county'), suffix=c('', '.adt')) %>%#
+            mutate(benefits=mu * (1 - mu.adt)) %>%#
+            group_by(year, scenario, measure) %>% dplyr::summarize(benefits=sum(benefits))#
+    } else if (adtchannel == "Labour productivity & supply") {#
+        pdf <- labor.adapt.prop(10^investment, adt.input)#
+        pdf2 <- risk.input %>%#
+            left_join(pdf, by=c('scenario', 'year', 'measure')) %>%#
+            mutate(benefits=ifelse(group == 'Effort', mu * (1 - mu.effort),#
+                                   mu * (1 - mu.hours))) %>%#
+            group_by(year, scenario, measure) %>% dplyr::summarize(benefits=sum(benefits))#
+    } else if (adtchannel == "Heat-related mortality") {#
+        adapt.func <- list("Proportional to Benefits"=health.adapt.prop, "Air Conditioning"=health.adapt.aircon, "Shutters"=health.adapt.shutters)[[adaptation]]#
+        pdf <- adapt.func(10^investment, adt.input)#
+        pdf2 <- risk.input %>%#
+            left_join(pdf, by=c('scenario', 'year', 'measure'), suffix=c('', '.adt')) %>%#
+            mutate(benefits=mu * (1 - mu.adt)) %>%#
+            group_by(year, scenario, measure) %>% dplyr::summarize(benefits=sum(benefits))#
+    }#
+#
+    pdf3 <- pdf2 %>% left_join(subset(pdf2, year == 2025), by='scenario', suffix=c('', '.2025')) %>%#
+        mutate(benefits=ifelse(benefits.2025 < 0, benefits - benefits.2025, benefits))#
+#
+    rbind(data.frame(year=2025, scenario=c("High Risk", "Most Likely"),#
+                     measure="Invest", benefits=-10^investment),#
+          pdf3[, c('year', 'scenario', 'measure', 'benefits')])#
+}#
+#
+server <- function(input, output, session) {#
+    previous <- 'TEST'#
+    shapefile_data <- reactiveVal(NULL)#
+#
+    session$onSessionEnded(function() {#
+        stopApp()#
+    })#
+#
+    ## reactive filtering data from UI#
+    reactive_data <- reactive({#
+        print("reactive")#
+        scenario <- ifelse(input$scenario == 'Most Likely - Expected annual damage', 'Most Likely', 'High Risk')#
+        measure <- ifelse(input$scenario == 'High Risk - Extreme year', 'Extreme', 'EAD')#
+        quant <- ifelse(input$quant == "1-in-20 less than", 'ci05', ifelse(input$quant == "1-in-20 more than", 'ci95', 'mu'))#
+#
+        if (substring(previous, 1, nchar(input$channel)) != input$channel) {#
+            print(input$channel)#
+            load.map.arg <- F#
+            if (previous != 'TEST')#
+                if (regions[[strsplit(previous, '_')[[1]][1]]] != regions[[input$channel]])#
+                    load.map.arg <- T#
+            load.risk.channel(input$channel, load.map.arg, scenario, measure, quant)#
+        }#
+#
+        list(channel=input$channel, quant=quant, scenario=scenario, measure=measure, year=input$year[1])#
+    })#
+#
+    ## static backround map#
+    output$map1 <- renderLeaflet({#
+        print("renderLeaflet")#
+        leaflet() %>%#
+            addTiles() %>%#
+            setView(lat=54, lng=-3, zoom=6)#
+    })#
+#
+    output$timeseries <- renderPlot({#
+        req(timeseries.id)#
+        lst <- reactive_data()#
+        spdf <- shapefile_data()#
+        if (is.null(timeseries.id())) {#
+            if (dataset2legend[[lst$channel]] == "(hours/person)") {#
+                polydata <- read.csv("shapefiles/ne_10m_admin_1_states_provinces.shp.csv")#
+                polydata$ISOADM1 <- paste0(polydata$adm0_a3, polydata$diss_me)#
+#
+                subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>%#
+                    left_join(polydata[, c('ISOADM1', 'popsum')], by='ISOADM1') %>% group_by(year) %>%#
+                    dplyr::summarize(mu=wtd.mean(mu, popsum),#
+                                     ci05=wtd.mean(ci05, popsum),#
+                                     ci95=wtd.mean(ci95, popsum))#
+            } else if (dataset2legend[[lst$channel]] == "(mm since 1985-2005)") {#
+                subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>% group_by(year) %>%#
+                    dplyr::summarize(mu=mean(mu), ci05=mean(ci05), ci95=mean(ci95))#
+            } else {#
+                subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure) %>% group_by(year) %>%#
+                    dplyr::summarize(mu=sum(mu), ci05=sum(ci05), ci95=sum(ci95))#
+            }#
+        } else {#
+            subdf <- df %>% filter(scenario == lst$scenario & measure == lst$measure & county == spdf$NAME_3[spdf$PID == timeseries.id()])#
+        }#
+#
+        ggplot(subdf, aes(year, mu)) +#
+            geom_line() + geom_ribbon(aes(ymin=ci05, ymax=ci95), alpha=.5) +#
+            theme_bw(base_size=16) +#
+            xlab(NULL) + ylab(paste(lst$channel, "\n", dataset2legend[[lst$channel]]))#
+    }, height=250)#
+#
+    observeEvent(input$scenario, {#
+        if (input$scenario == 'High Risk - Extreme year') {#
+            updateSliderTextInput(session, "year",#
+                                  choices=c(2030, 2040, 2050), selected=c(2030, 2040, 2050)[which.min(abs(c(2030, 2040, 2050) - input$year))])#
+        } else {#
+            updateSliderTextInput(session, "year",#
+                                  choices=2025:2075, selected=input$year)#
+        }#
+    })#
+#
+    observeEvent(input$map1_shape_click, {#
+        ## Store the click event details#
+        click <- input$map1_shape_click#
+#
+        timeseries.id(click$id)#
+    })#
+#
+    observe({#
+        print("observe")#
+        prev.save <- previous#
+        lst <- reactive_data()#
+#
+        replace.legend <- substring(previous, 1, nchar(lst$channel)) != lst$channel#
+        previous <<- paste(lst$channel, lst$measure, lst$quant, lst$scenario, lst$year, sep='_')#
+        output$channelh3 <- renderText(lst$channel)#
+#
+        spdf <- load.channel.shapefile(lst$channel)#
+        shapefile_data(spdf)#
+        lt <- leafletProxy("map1", session)#
+        if (replace.legend) {#
+            fix.limits(df)#
+            lt <- lt %>% clearControls() %>%#
+                addLegend(pal=mypalette, values=rev(seq(limits[1], limits[2], length.out=20)), opacity=0.5, title = paste(lst$channel, "<br/>", dataset2legend[[lst$channel]]), position = "topright")#
+        }#
+        lt <- lt %>% make.map(spdf, lst$channel, lst$scenario, lst$measure, lst$year, lst$quant, dataset2region[[lst$channel]][1], dataset2region[[lst$channel]][2], dataset2region[[lst$channel]][3], group=previous) %>%#
+            clearGroup(prev.save)#
+    })#
+#
+    ## Adaptation Tab#
+    adt.data <- reactiveValues(adt.input=NULL, risk.input=NULL)#
+#
+    observeEvent(input$adtchannel, {#
+        if (input$adtchannel == "Coastal impacts") {#
+            adt.data$adt.input <- load.slr.adapt()#
+            adt.data$risk.input <- to.gdpprop(read.csv("../Dataset v2/coastal.csv"),#
+                                              synthesis.channels[[input$adtchannel]][3])#
+        } else if (input$adtchannel == "All-source flooding") {#
+            adt.data$adt.input <- load.flood.adapt()#
+            adt.data$risk.input <- to.gdpprop(read.csv("../Dataset v2/flooding.csv"),#
+                                              synthesis.channels[[input$adtchannel]][3])#
+        } else if (input$adtchannel == "Agricultural productivity") {#
+            adt.data$adt.input <- load.agric.adapt()#
+            adt.data$risk.input <- to.gdpprop(read.csv("../Dataset v2/agriculture.csv"),#
+                                              synthesis.channels[[input$adtchannel]][3])#
+        } else if (input$adtchannel == "Labour productivity & supply") {#
+            adt.data$adt.input <- load.labor.adapt()#
+            adt.data$risk.input <- rbind(cbind(group="Effort",#
+                                               to.gdpprop(read.csv("../Dataset v2/labourprod.csv"),#
+                                                          synthesis.channels[["Labour productivity"]][3])),#
+                                         cbind(group="Hours",#
+                                               to.gdpprop(read.csv("../Dataset v2/labourhours.csv") %>% dplyr::select(!c(hours1.mu, hours1.ci05, hours1.ci95)) %>% rename(county=ISOADM1),#
+                                                          synthesis.channels[["Labour supply"]][3])))#
+        } else if (input$adtchannel == "Heat-related mortality") {#
+            adt.data$adt.input <- load.health.adapt()#
+            adt.data$risk.input <- to.gdpprop(read.csv("../Dataset v2/health.csv"),#
+                                              synthesis.channels[[input$adtchannel]][3])#
+        }#
+#
+        options <- adaptation.options[[input$adtchannel]]#
+        updatePickerInput(session, "adaptation",#
+                          choices = options)#
+    })#
+#
+    output$adtgraph <- renderPlotly({#
+        print("Benefit")#
+        req(adt.data$adt.input)#
+        req(adt.data$risk.input)#
+#
+        print("A") # DELAY AFTER THIS?#
+        pdf3 <- get.adaptgraph.with.prev(input$adtchannel, input$adaptation, input$investment, adt.data$risk.input, adt.data$adt.input,#
+                                             savedInvests$pdf)#
+#
+        print("B")#
+        pdf4 <- rbind(cbind(UID="Current", channel=input$adtchannel, pdf3), savedInvests$pdf)#
+        pdf5 <- pdf4 # %>% group_by(channel, scenario, measure, year) %>% mutate(label=ifelse(rep(n(), n()) == 1, label, paste(label, n():1)))#
+#
+        print("C") # DELAY AFTER THIS?#
+        pdf5.s0 <- pdf5 %>% filter(scenario == "Most Likely" & measure == 'Invest')#
+        pdf5.s1 <- pdf5 %>% filter(scenario == "Most Likely" & measure == 'EAD') %>%#
+            group_by(year) %>% mutate(benefits=cumsum(benefits))#
+        pdf5.s2 <- pdf5 %>% filter(scenario == "High Risk" & measure == 'EAD') %>%#
+            group_by(year) %>% mutate(benefits=cumsum(benefits))#
+        print("D") # DELAY AFTER THIS#
+#
+        uid.colors <- setNames(c(sapply(names(savedInvests$legend), function(nn) savedInvests$legend[[nn]]), "Current"),#
+                               c(names(savedInvests$legend), getNextColor(length(savedInvests$legend))))#
+#
+        ## Subplot titles#
+        title1 <- list(#
+            text = "Most Likely Scenario",#
+            xref = "paper",#
+            yref = "paper",#
+            yanchor = "bottom",#
+            xanchor = "center",#
+            align = "center",#
+            x = 0.5,#
+            y = 1,#
+            showarrow = FALSE#
+        )#
+#
+        title2 <- list(#
+            text = "High Risk Scenario",#
+            xref = "paper",#
+            yref = "paper",#
+            yanchor = "bottom",#
+            xanchor = "center",#
+            align = "center",#
+            x = 0.5,#
+            y = 1,#
+            showarrow = FALSE#
+        )#
+#
+        plotly::subplot(plot_ly() %>%#
+                        add_lines(x=pdf5.s1$year, y=pdf5.s1$benefits, type='scatter', mode='lines',#
+                                  name=pdf5.s1$UID) %>% #, line=list(color=uid.colors[pdf5.s1$UID])) %>%#
+                        add_lines(x=c(2025, 2075), y=-sum(pdf5.s0$benefits) * 1e6 * gbp.usd.2025 / gdp.2025.usd, name="Investment", line=list(dash='dash', color='grey')) %>%#
+                        add_bars(x=2025, y=-pdf5.s0$benefits * 1e6 * gbp.usd.2025 / gdp.2025.usd, name=pdf5.s0$UID) %>%#
+                      # , marker=list(color=uid.colors[pdf5.s0$UID])) %>%#
+                        layout(#
+                            yaxis=list(#
+                                tickformat="%",    # Format y-axis as percentages#
+                                title="Costs and Benefits (% GDP)" # Optionally add a title to the y-axis#
+                            ), barmode='stack', annotations=title1),#
+                        plot_ly() %>%#
+                        add_lines(x=pdf5.s2$year, y=pdf5.s2$benefits, type='scatter', mode='lines',#
+                                  name=pdf5.s2$UID) %>% #, line=list(color=uid.colors[pdf5.s2$UID])) %>%#
+                        add_lines(x=c(2025, 2075), y=-sum(pdf5.s0$benefits) * 1e6 * gbp.usd.2025 / gdp.2025.usd, name="Investment", line=list(dash='dash', color='grey')) %>%#
+                        add_bars(x=2025, y=-pdf5.s0$benefits * 1e6 * gbp.usd.2025 / gdp.2025.usd, name=pdf5.s0$UID) %>% #, marker=list(color=uid.colors[pdf5.s0$UID])) %>%#
+                        layout(#
+                            yaxis=list(#
+                                tickformat="%",    # Format y-axis as percentages#
+                                title="Costs and Benefits (% GDP)" # Optionally add a title to the y-axis#
+                            ), barmode='stack', annotations=title2),#
+                        shareY=T, nrows=1, margin=0.01) %>% hide_legend()#
+    })#
+#
+    ## Define a reactiveValues object to store saved investurations#
+    savedInvests <- reactiveValues(rows=data.frame(), pdf=data.frame(), legend=list())#
+#
+    ## Table to display saved investurations#
+    output$investTable <- renderUI({#
+        constructTableHTML(rbind(cbind(makeInvestRow(input$adtchannel, input$adaptation, input$investment, getNextColor(length(savedInvests$legend))),#
+                                       action=paste0('<button class="btn btn-success" onclick="$(\'#saveButton\').click(); return false;">Save</button>')),#
+                                 savedInvests$rows[, -1]))#
+    })#
+#
+    ## Save investuration on button click#
+    observeEvent(input$saveButton, {#
+        uid <- Sys.time()#
+#
+        print("OK") # DELAY AFTER THIS?#
+        print(length(savedInvests$legend))#
+        print(savedInvests$legend)#
+        print("HUH")#
+        savedInvests$legend[[uid]] <- getNextColor(length(savedInvests$legend))#
+        print("OO")#
+        newEntry <- makeInvestRow(input$adtchannel, input$adaptation, input$investment, savedInvests$legend[[uid]])#
+#
+        print("KO")#
+        newRow <- cbind(UID=uid, newEntry,#
+                        action=paste0('<button class="btn btn-success" onclick="Shiny.onInputChange(\'deleteButton\', this.parentElement.parentElement.rowIndex - 1);">Delete</button>'))#
+#
+        print("KK")#
+        savedInvests$rows <- rbind(newRow, savedInvests$rows)#
+#
+        pdf3 <- get.adaptgraph.with.prev(input$adtchannel, input$adaptation, input$investment, adt.data$risk.input, adt.data$adt.input,#
+                                         savedInvests$pdf)#
+        savedInvests$pdf <- rbind(savedInvests$pdf, cbind(UID=uid, channel=input$adtchannel, pdf3))#
+    })#
+#
+    ## Load investuration on button click#
+    observeEvent(input$deleteButton, {#
+        selectedRow <- as.numeric(input$deleteButton)#
+        if (selectedRow <= nrow(savedInvests$rows)) {#
+            uid <- savedInvests$rows$UID[selectedRow]#
+            savedInvests$rows <- savedInvests$rows[-selectedRow,]#
+            savedInvests$pdf <- subset(savedInvests$pdf, UID != uid)#
+        }#
+    })#
+}#
+#
+df <- NULL#
+limits <- NULL#
+timeseries.id <- reactiveVal(NULL)#
+load.risk.channel('Agricultural productivity', T, "High Risk", "EAD", "mu")#
+#
+## Create a color palette for the map:#
+mypalette <- colorNumeric( palette="Spectral", domain=limits, na.color="transparent", reverse=T)#
+#
+shinyApp(ui, server)
+library(ggplot2)#
+library(dplyr)#
+#
+df <- data.frame(stddev=c(0, rep(0.01, 3), rep(0.05, 3), rep(0.1, 3)), rr=rnorm(10, 0, 1), KK=rnorm(10, 0, 1))#
+#
+ggplot(df %>% group_by(stddev) %>% summarize(mu=mean(rr), lo=min(rr), hi=max(rr))#
+       aes(stddev, mu)) +#
+    geom_line() +#
+    geom_ribbon(aes(ymin=lo, ymax=hi), alpha=.5) +#
+    theme_bw()
+ggplot(df %>% group_by(stddev) %>% summarize(mu=mean(rr), lo=min(rr), hi=max(rr)),#
+       aes(stddev, mu)) +#
+    geom_line() +#
+    geom_ribbon(aes(ymin=lo, ymax=hi), alpha=.5) +#
+    theme_bw()
+library(ggplot2)#
+library(dplyr)#
+#
+df <- data.frame(stddev=c(0, rep(0.01, 3), rep(0.05, 3), rep(0.1, 3)),#
+                 rr=c(0, -1, 0, 1, -2, 0, 2, -3, 0, 3))#
+#
+ggplot(df %>% group_by(stddev) %>% summarize(mu=mean(rr), lo=min(rr), hi=max(rr)),#
+       aes(stddev, mu)) +#
+    geom_line() +#
+    geom_ribbon(aes(ymin=lo, ymax=hi), alpha=.5) +#
+    theme_bw()
+compare = 'climate-only'
+if (compare == 'slcp-only') {#
+    pdf2 <- scen.diff.fracgdp.mean("IntegratedAction", "LTCAction")#
+} else if (compare == 'total') {#
+    pdf2 <- scen.diff.fracgdp.mean("IntegratedAction", "Baseline")#
+} else {#
+    pdf2 <- scen.diff.fracgdp.mean("LTCAction", "Baseline")#
+}
+pdf3 <- pdf2 %>% filter(panel == 'Aggregate') %>%#
+    mutate(label=ifelse(label %in% c("Costs", "Feedback"), label, "Damages")) %>%#
+    group_by(name, channel, label, time) %>% summarize(diff=sum(diff)) %>%#
+    group_by(name, channel, label) %>% arrange(time) %>%#
+    reframe(year=seq(2025, 2100, by=5), diff=splinefun(c(2025, time), c(0, diff), method='monoH.FC')(year)) %>%#
+    mutate(fulllabel=ifelse(label == 'Costs', label,#
+                     ifelse(channel == 'climate', "Climate damages",#
+                     ifelse(channel == 'pollution', "Pollution damages", "other"))))#
+pdf3$fulllabel <- factor(pdf3$fulllabel, levels=c('Climate damages', 'Pollution damages', 'Costs'))
+install.packages("digitize")
+install.packages("metaDigitise")
+library(metaDigitise)
+? metaDigitise
+metaDigitise
+process_new_files
+install.packages("juicr")
+library("juicr")
+?juicr
+remove.packers
+remove.packages
+remove.packages("juicr")
+library(metaDigitise)#
+df = metaDigitise("~/Dropbox/Coupling 2026/homeworks/ps4/xplgraph.png")
+df = metaDigitise("~/Dropbox/Coupling 2026/homeworks/ps4/")
+df = metaDigitise("~/Dropbox/Coupling 2026/homeworks/ps4/metadig")
+df = metaDigitise("~/Dropbox/Couplings 2026/homeworks/ps4/metadig")
+df = metaDigitise("~/Dropbox/Couplings 2026/homework/ps4/metadig")
+df
+df = metaDigitise("~/Dropbox/Couplings 2026/homework/ps4/metadig", summary=R)
+df
+df = metaDigitise("~/Dropbox/Couplings 2026/homework/ps4/metadig", summary=F)
+df
+library(ggplot2)#
+    ggplot(df, aes(x, y)) + geom_point() +#
+      xlab("Normalized Stock Biomass") + ylab("Normalized Recruitment")
+df = metaDigitise("~/Dropbox/Couplings 2026/homework/ps4/metadig", summary=F)
+df <- read.csv("~/projects/ailit/extract-merged-harmonized.csv")
+head(df)
+table(df$Region)
+table(df$Outcome)
+unique(df$Region)
+df <- read.csv("~/projects/ailit/extract-merged-harmonized.csv")
+regions.bad <- c("West Africa", "Mexico", "St. Lucia", "China")#
+regions.good <- c("152 countries", "35 countries", "45 countries", "A Zone", "A Zone, USA", "Alaska", "Albany, New York", "All Regions", "America", "America/Mexico", "Americas", "Arid", "BIRNM", "Buck Island", "Buck Island Reef", "California", "Connecticut", "Conterminous U.S.", "Conterminous U.S. Coastline", "Contiguous US", "CONUS", "CONUS MSAs", "Desert regions", "Downey", "Earth", "EBS & Chukchi", "Flood Zone", "Forested biomes worldwide", "Full sample", "Global", "Global (3820 cities)", "Global (over land)", "Global Coastal", "Global Coastlines", "Global Coasts", "Global ice-free land", "Global Nearshore", "Global Offshore", "Globe", "Gulf of Alaska", "Harvard Forest", "Harvard Forest, USA", "High GDP Countries", "High Pollution Regions", "High-income", "High-income countries", "High-Income Countries", "High-Income Nations", "High-Income Regions", "Hot region", "Hot Regions", "Local", "Low Pollution Regions", "MA, USA", "Mid-latitudes", "Miami-Dade County, FL", "Midwest and Ohio Valley", "Midwest/Ohio
+Valley", "Midwest/Pacific NW/Utah", "Mississippi River basin", "Mississippi River Basin", "National", "Multiple States", "Nearshore Regions", "New York City", "New York", "New Jersey", "NJ/NY/CT Coast", "North America", "North America and Europe", "Northeast", "North America incl. Mexico", "Northeastern America", "Northern Hemisphere", "Northern mid to high latitudes", "OECD", "PNW, CA, Great Lakes", "Pacific Coast", "Rich nations", "Southeast", "Southeast/Texas/Southwest", "Southern Great Plains", "Southern North America", "Southwest", "Southern United States", "Temperate Zones", "Temperate Climates", "Temperate", "Terrestrial Areas", "Texas", "Top income decile", "Tri-State Area", "U.S.", "U.S. Coastal MSAs", "U.S. Coastlines", "U.S. EEZ", "U.S. Southern Half", "United States", "United States and Mexico", "Upper-middle/High income", "Urban Areas", "US East and Gulf Coasts", "US Counties", "US Coast", "US", "US East/Gulf", "USA", "V Zone", "V Zone, USA", "Whole country", "Western USA", "Western US Corn Bel
+t", "World", "Worldwide")#
+#
+df <- subset(df, !(Region %in% regions.bad))
+rows <- df$Units %in% c('trillion $', 'Trillion USD')#
+df$Value[rows] <- df$Value[rows] * 1000#
+df$SD[rows] <- df$SD[rows] * 1000#
+df$Low.Value[rows] <- df$Low.Value[rows] * 1000#
+df$High.Value[rows] <- df$High.Value[rows] * 1000#
+df$Units[rows] <- "billion USD"
+table(df$Scenario)
+sort(table(df$Scenario))
+head(df)
+sort(table(df$Relative.to))
+sort(table(df$Outcome))
+head(df)
+unique(df$Outcome)
+grep("GDP", unique(df$Outcome))
+unique(df$Outcome)[grep("GDP", unique(df$Outcome))]
+unique(df$Outcome)[grep("Gross", unique(df$Outcome))]
+outcome.gdp <- c("GDP", "GDP per capita", "GDP Loss", "GDPpc", "Gross Domestic Product (GDP)", "Decrease in GDP")#
+df.gdp <- subset(df, Outcome %in% outcome.gdp)
+df.gdp
+nrow(df.gdp)
+head(df.gdp)
+df$sourcematerial
+nrow(df.gdp)
+head(df.gdp)
+table(df.gdp$Region)
+region.gdp <- c("U.S.", "United States", "US") #c("Bottom income decile", "Global", "High-income regions", "Low-income regions", "Lowest income decile regions", "Top income decile", "Top income decile regions")
+df.gdp <- subset(df, Outcome %in% outcome.gdp & Region %in% region.gdp)
+df.gdp
+head(df.gdp)
+nrow(df.gdp)
+df.gdp$Scenario
+scen.gdp <- c("RFF-SP baseline", "BAU")
+df.gdp <- subset(df, Outcome %in% outcome.gdp & Region %in% region.gdp & Scenario %in% scen.gdp)
+df.gdp
+df$sourcematerial[1]
+df.gdp$sourcematerial[1]
+cc = seq(1000, 10000, by=1000)
+mm = 1 / (cc^-1.45)
+plot(cc, mm)
+mm = (cc^-1.45)
+plot(cc, mm)
+grades <- c(83.75, 66.5, 76.625, 95.25, 67.125, 76.25, 86.5, 79, 75.25, 82.5, 62, 76.625, 85, 68.875, 56.25, 91.5)#
+#
+library(ggplot2)#
+#
+ggplot(data.frame(xx=grades), aes(xx)) +#
+    geom_histogram(binwidth=5, position="identity") +#
+    geom_histogram(aes(xx + 16.5), position="identity", fill=NA, binwidth=5, colour="#FF0000") +#
+    theme_bw() + xlab("Grade")
+grades1 <- c(49.8, 72.6, 54.2, 70.8, 34.1, 72.3, 54.7, 39.0, 47.8, 55.5, 76.6, 64.3, 73.3, 41.9, 51.2, 78.2, 46.9, 58.1)#
+grades2 <- c(76.3, 95.2, 78.7, 91.0, 62.9, 92.7, 80.2, 69.1, 74.4, 82.6, 97.1, 88.1, 94.3, 71.6, 77.7, 95.8, 78.0, 83.2)#
+#
+library(ggplot2)#
+#
+ggplot(data.frame(xx=grades1), aes(xx)) +#
+    geom_histogram(binwidth=5, position="identity") +#
+    geom_histogram(data.frame(xx=grades2), aes(xx), position="identity", fill=NA, binwidth=5, colour="#FF0000") +#
+    theme_bw() + xlab("Grade")
+ggplot(data.frame(xx=grades1), aes(xx)) +#
+    geom_histogram(binwidth=5, position="identity") +#
+    geom_histogram(data=data.frame(xx=grades2), aes(xx), position="identity", fill=NA, binwidth=5, colour="#FF0000") +#
+    theme_bw() + xlab("Grade")
+ggplot(data.frame(xx=grades1), aes(xx)) +#
+    geom_histogram(binwidth=5, position="identity") +#
+    geom_histogram(data=data.frame(xx=grades2), aes(xx), position="identity", fill=NA, binwidth=5, colour="#FF0000", linewidth=2) +#
+    theme_bw() + xlab("Grade")
+rlnorm(5, 0, 1)
+rlnorm(5, 0, 1/2)
+rlnorm(5, 0, 1/10)
+df <- read.csv("~/Dropbox/Country-Level PAGE/BurkeHsiangMiguel2015_Replication/data/input/GrowthClimateDataset.csv")
+head(df)
+library(lfe)#
+#
+summary(felm(log(gdpCAP_wdi) ~ UDel_temp_popweight + UDel_precip_popweight | iso + factor(year), data=df))
+df$loggdpCAP_wdi <- log(df$gdpCAP_wdi)#
+summary(felm(loggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight | iso + factor(year), data=df))
+df$loggdpCAP_wdi <- log(df$gdpCAP_wdi)#
+summary(felm(loggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight + iso : year | iso + factor(year), data=df))
+nrow(df)
+df2 <- df %>% arrange(year)
+library(dplyr)
+df2 <- df %>% arrange(year)
+head(df)
+df2 <- df %>% arrange(year) %>% group_by(iso) %>% mutate(fdloggdpCAP_wdi=c(NA, diff(loggdpCAP_wdi)))
+summary(felm(fdloggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight + iso : year | iso + factor(year), data=df))
+summary(felm(fdloggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight + iso : year | iso + factor(year), data=df2))
+summary(felm(fdloggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight | iso + factor(year), data=df2))
+summary(felm(loggdpCAP_wdi ~ UDel_temp_popweight + UDel_precip_popweight + iso : year | iso + factor(year), data=df))
 setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/slr")#
 #
 library(reshape2)#
 library(dplyr)#
 #
 load("totalcosts.RData")
-df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))#
-df.slr <- read.csv("slr-ssp.csv")
-library(ggplot2)#
-ggplot(df.costs %>% group_by(year) %>% summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
-head(df.costs)
+ls()
 head(df)
-unique(df$costtype)
-df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital', 'stormPopulation', 'wetland')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) %>%#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs"))
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    scale_y_log10()
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    geom_abline(xintercept=1e10, slope=1) +#
-    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
-?geom_abline
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    geom_abline(intercept=1e10, slope=1) +#
-    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)")
-df.costs
-ggplot(df.costs %>% filter(quantile == .5) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    geom_line(data=data.frame(year=2005:2100, yy=1e10 + 1e9*(year - 2005)), aes(y=yy), linetype="Linear comparison") +#
-    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs (log scale)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    scale_y_log10() + xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case, scales='free_y') +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_grid(ssp ~ case, scales='free') +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_wrap(ssp ~ case, scales='free_y') +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_wrap(ssp ~ case, scales='free_y', rows=4) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_wrap(ssp ~ case, scales='free_y', nrow=2) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
-ggplot(df.costs %>% filter(quantile == .5 & year > 2015) %>% group_by(ssp, case, year) %>%#
-       summarize(damages=sum(damages), adaptcost=sum(adaptcost)), aes(year)) +#
-    facet_wrap(ssp ~ case, scales='free_y', nrow=4) +#
-    geom_line(aes(y=damages, linetype="Damages")) + geom_line(aes(y=adaptcost, linetype="Adaptation Costs")) +#
-    xlab(NULL) + ylab("Global Damages and Protection Costs ($2019 USD)") +#
-    theme_bw()
+unique(df$adm0)
+subset(df, adm0 == 'RUS')
+head(subset(df, adm0 == 'RUS'))
+df.costs <- df %>% group_by(adm0, ssp, case, quantile, year) %>% summarize(damages=sum(costs[costtype %in% c('inundation', 'stormCapital')]), adaptcost=sum(costs[costtype %in% c('relocation', 'protection')]))
+head(subset(df, adm0 == 'RUS'))
+subset(df.costs, adm0 == 'RUS')
+sspdata <- subset(read.csv("gdp.csv"), MODEL == "OECD Env-Growth") # billion US$2005/yr vs. $2019 USD for pyCIAM; chose OECD because more countries#
+sspdata <- sspdata[, c(2, 3, 9:ncol(sspdata))]#
+sspdata2 <- melt(sspdata, c('SCENARIO', 'REGION'), variable.name='Xyear', value.name='gdp')#
+sspdata2$gdp <- sspdata2$gdp * 104.004 / 89.629 # From https://fred.stlouisfed.org/series/GDPDEF#0#
+sspdata2$sspnum <- substring(sspdata2$SCENARIO, 4, 4)#
+sspdata2$year <- as.numeric(substring(sspdata2$Xyear, 2, 5))
+head(sspdata2)
+df.costs$ssp <- substring(df.costs$ssp, 1, 6)
+df.costs2 <- df.costs %>% left_join(sspdata2, by=c('sspnum', 'year', 'adm0'='REGION'))
+head(df.costs)
+head(sspdata2)
+head(df)
+df.costs$sspnum <- substring(df.costs$ssp, 4, 4)
+df.costs2 <- df.costs %>% left_join(sspdata2, by=c('sspnum', 'year', 'adm0'='REGION'))
+head(df.costs2)
+df.costs2 <- df.costs %>% left_join(sspdata2, by=c('sspnum', 'year', 'adm0'='REGION')) %>% filter(quantile == 0.5)
+head(df.costs)
+head(df.costs2)
+df.costs2$damages.frac <- df.costs2$damages / (df.costs2$gdp * 1e9)
+head(df.costs2)
+subset(df.costs2, adm0 == 'RUS')
+ggplot(subset(df.costs2, adm0 == 'RUS'), aes(year, damages.frac)) + geom_point()
+library(ggplot2)#
+ggplot(subset(df.costs2, adm0 == 'RUS'), aes(year, damages.frac)) + geom_point()
+ggplot(subset(df.costs2, adm0 == 'RUS'), aes(year, damages.frac)) + geom_point() + scale_y_log10()
+1e-4 * 100

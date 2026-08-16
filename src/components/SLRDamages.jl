@@ -46,15 +46,15 @@
             vv.alpha_optimal[:] .= 0.
             vv.beta_optimal[:] .= 0.
         elseif pp.sealevelcost_draw == -1
-            vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.noadapt", mean)
-            vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.noadapt", mean)
-            vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.optimal", mean)
-            vv.beta_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.optimal", mean)
+            vv.alpha_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.beta_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.alpha_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "alpha.damage.optimal", mean; allowmissing=true), 0.)
+            vv.beta_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, nothing, "beta.damage.optimal", mean; allowmissing=true), 0.)
         else
-            vv.alpha_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.noadapt", mean)
-            vv.beta_noadapt[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.noadapt", mean)
-            vv.alpha_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.optimal", mean)
-            vv.beta_optimal[:] = readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.optimal", mean)
+            vv.alpha_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.beta_noadapt[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.noadapt", mean; allowmissing=true), 0.)
+            vv.alpha_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "alpha.damage.optimal", mean; allowmissing=true), 0.)
+            vv.beta_optimal[:] = coalesce.(readcountrydata_im(pp.model, "data/damages/slremul.csv", "adm0", :bs, pp.sealevelcost_draw, "beta.damage.optimal", mean; allowmissing=true), 0.)
         end
     end
 

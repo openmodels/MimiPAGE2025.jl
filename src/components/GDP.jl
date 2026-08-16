@@ -71,7 +71,7 @@ include("../utils/country_tools.jl")
 
         for cc in d.country
             if p.gainsmatch
-                v.gdp[t, cc] = p.gdppc_match[t, cc] * (p.pop_population[t, cc] * 1e6) * (77.53729 / 63.23579) / 1e6
+                v.gdp[t, cc] = p.gdppc_match[t, cc] * (p.pop_population[t, cc] * 1e6) * (63.23579 / 77.53729) / 1e6
             else
                 # eq.28 in Hope 2002
                 if is_first(t)

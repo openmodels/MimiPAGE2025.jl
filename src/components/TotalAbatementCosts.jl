@@ -1,4 +1,4 @@
-
+totalabatementcosts_gains_match_file = "climate/climatecosts-netnodal.csv"
 
 @defcomp TotalAbatementCosts begin
     region = Index()
@@ -30,11 +30,11 @@
             v.tct_totalcosts[t, cc] = p.tc_totalcosts_co2[t, cc] + tct_percap_totalcostspercap_partial[cc] * p.pop_population[t, cc] # $million
         end
 
-        # tct_saved = v.tct_totalcosts[t, :]
+        ## match_weights1 = v.tct_totalcosts[t, :] ./ sum(skipmissing(v.tct_totalcosts[t, :]))
+        match_weights = p.gdp[t, :] ./ sum(p.gdp[t, :])
         for cc in d.country
             if p.gainsmatch
-                # v.tct_totalcosts[t, cc] = (p.tct_totalcosts_match[t] * 1000 * 63.23579 / 69.49899) * tct_saved[cc] / sum(skipmissing(tct_saved))
-                v.tct_totalcosts[t, cc] = (p.tct_totalcosts_match[t] * 1000 * 63.23579 / 69.49899) * p.gdp[t, cc] / sum(p.gdp[t, :])
+                v.tct_totalcosts[t, cc] = p.tct_totalcosts_match[t] * 1000 * (63.23579 / 69.49899) * match_weights[cc]
             end
 
             v.tct_percap_totalcostspercap[t, cc] = v.tct_totalcosts[t, cc] / p.pop_population[t, cc] # $/person
@@ -63,7 +63,7 @@ function addtotalabatementcosts(model::Model, gainsmatch::Bool, scenario::String
     totalabatementcosts[:gainsmatch] = gainsmatch
     totalabatementcosts[:tct_totalcosts_match] = zeros(dim_count(model, :time))
     if gainsmatch
-        climatecosts = CSV.read(pagedata("climate/climatecosts.csv"), DataFrame)
+        climatecosts = CSV.read(pagedata(totalabatementcosts_gains_match_file), DataFrame)
 
         if scenario == "Baseline"
             totalabatementcosts[:tct_totalcosts_match] = [get_climatecosts_value(climatecosts.Baseline, climatecosts, year) for year in dim_keys(model, :time)]

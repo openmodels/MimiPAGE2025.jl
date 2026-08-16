@@ -1,3 +1,5 @@
+using Interpolations
+
 page_years = [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300]
 page_year_0 = 2015
 
@@ -35,24 +37,13 @@ function undiscount_scc(m::Model, year::Int, cc_focus::Int)
     consfocus0 = m[:GDP, :cons_percap_consumption_0][cc_focus]
     consfocus = m[:GDP, :cons_percap_consumption][:, cc_focus]
     emuc = m[:EquityWeighting, :emuc_utilityconvexity]
-    sccii = getpageindexfromyear(year)
-
-    return df[sccii] * ((consfocus[sccii] / consfocus0)^-emuc)
-end
-
-@defcomp ExtraEmissions begin
-    e_globalCO2emissions = Parameter(index=[time], unit="Mtonne/year")
-    pulse_size = Parameter(unit="Mtonne CO2")
-    pulse_year = Parameter()
-    e_globalCO2emissions_adjusted = Variable(index=[time], unit="Mtonne/year")
-
-    function run_timestep(p, v, d, t)
-        if gettime(t) == p.pulse_year
-            # pulse is applied to the years around this year, as a triangular distribution
-            v.e_globalCO2emissions_adjusted[t] = p.e_globalCO2emissions[t] + p.pulse_size / getperiodlength(p.pulse_year)
-        else
-            v.e_globalCO2emissions_adjusted[t] = p.e_globalCO2emissions[t]
-        end
+    if year in page_years
+        sccii = getpageindexfromyear(year)
+        return df[sccii] * ((consfocus[sccii] / consfocus0)^-emuc)
+    else
+        itp_consfocus = Interpolations.interpolate((Float64.(page_years),), consfocus, Gridded(Linear()))
+        itp_df = Interpolations.interpolate((Float64.(page_years),), df, Gridded(Linear()))
+        return itp_df(year) * ((itp_consfocus(year) / consfocus0)^-emuc)
     end
 end
 
@@ -97,13 +88,13 @@ function compute_scc(
         prefrange::Bool=true,
         equity_weighting::Bool=true,
         pulse_size=75000.,
+        pulse_gas="co2",
         n::Union{Int,Nothing}=nothing,
         trials_output_filename::Union{String,Nothing}=nothing,
         seed::Union{Int,Nothing}=nothing
         )
 
     year === nothing ? error("Must specify an emission year. Try `compute_scc(m, year=2020)`.") : nothing
-    !(year in page_years) ? error("Cannot compute the scc for year $year, year must be within the model's time index $page_years.") : nothing
 
     if !equity_weighting
         try
@@ -114,11 +105,11 @@ function compute_scc(
     end
 
     run(m)
-    cc_focus = argmin(abs.(m[:GDP, :cons_percap_consumption_0] .- median(m[:GDP, :cons_percap_consumption_0])))
+    cc_focus = argmin(abs.(m[:GDP, :cons_percap_consumption_0] .- 25000.)) #median(m[:GDP, :cons_percap_consumption_0])))
 
     # note here that we use `pulse_size` as the `delta` keyword argument for
     # the marginal model so we can normalize to $ per ton
-    mm = get_marginal_model(m, year=year, pulse_size=pulse_size)   # Returns a marginal model that has already been run
+    mm = get_marginal_model(m, year=year, pulse_size=pulse_size, pulse_gas=pulse_gas)   # Returns a marginal model that has already been run
 
     if n === nothing
         # Run the "best guess" social cost calculation
@@ -132,7 +123,7 @@ function compute_scc(
     else
         # Run a Monte Carlo simulation
 
-        simdef = getsim(m)   # get the default simulation, need to remove :emuc_utilityconvexity and :ptp_timepreference RVs if user specified values for these
+        simdef = getsim(m, n)   # get the default simulation, need to remove :emuc_utilityconvexity and :ptp_timepreference RVs if user specified values for these
         if !prefrange
             Mimi.delete_transform!(simdef, :pref_draw)
         end
@@ -182,20 +173,16 @@ Note that the returned MarginalModel has already been run. The `pulse_size` defa
 to 100_000 metric megatonnes of CO2 (Mtonne CO2), and is spread over all years within the
 period following `year`.
 """
-function get_marginal_model(m::Model=get_model(); year::Union{Int,Nothing}=nothing, pulse_size=75000.)
+function get_marginal_model(m::Model=get_model(); year::Union{Int,Nothing}=nothing, pulse_size::Float64=75000., pulse_gas="co2")
     year === nothing ? error("Must specify an emission year. Try `get_marginal_model(m, year=2020)`.") : nothing
-    !(year in page_years) ? error("Cannot add marginal emissions in $year, year must be within the model's time index $page_years.") : nothing
 
     # note here that we use `pulse_size` as the `delta` keyword argument for
     # the marginal model so we can normalize to $ per ton
     mm = create_marginal_model(m, pulse_size)
 
-    add_comp!(mm.modified, ExtraEmissions, :extra_emissions; after=:co2emissions)
-    connect_param!(mm.modified, :extra_emissions => :e_globalCO2emissions, :co2emissions => :e_globalCO2emissions)
-    set_param!(mm.modified, :extra_emissions, :pulse_size, pulse_size)
-    set_param!(mm.modified, :extra_emissions, :pulse_year, year)
-
-    connect_param!(mm.modified, :CO2Cycle => :e_globalCO2emissions, :extra_emissions => :e_globalCO2emissions_adjusted)
+    set_param!(mm.modified, :FaIRGrounds, :pulse_gas, pulse_gas)
+    set_param!(mm.modified, :FaIRGrounds, :pulse_size, pulse_size)
+    set_param!(mm.modified, :FaIRGrounds, :pulse_year, year)
 
     run(mm)
     return mm

@@ -165,8 +165,8 @@ function readcountrydata_it_dist(model::Model, filepath, isocol, yearcol, ptestc
     readcountrydata_it_const(model, df, isocol, yearcol, "__value__", aggregator)
 end
 
-function readcountrydata_im(model::Model, filepath::String, isocol, mccol, mc, valuecol::String, aggregator=mean)
-    readcountrydata_im(model, myloadcsv(filepath), isocol, mccol, mc, valuecol, aggregator)
+function readcountrydata_im(model::Model, filepath::String, isocol, mccol, mc, valuecol::String, aggregator=mean; allowmissing=false)
+    readcountrydata_im(model, myloadcsv(filepath), isocol, mccol, mc, valuecol, aggregator; allowmissing=allowmissing)
 end
 
 function im_to_i(df::DataFrame, isocol, mccol, mc)

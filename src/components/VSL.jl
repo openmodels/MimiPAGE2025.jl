@@ -22,11 +22,22 @@ using Mimi
     vsl           = Variable(index=[time, country], unit = "US\$2005/yr") # Value of a statistical life ($).
 
     function run_timestep(p, v, d, t)
-        for c in d.country
-            pc_gdp_0c = (p.gdp0_initgdp[c]) ./ (p.pop0_initpopulation[c])
-            v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
+        if p.ϵ_space == 0 && p.ϵ_time ≠ 0
+            ## Use global growth
+            pc_gdp_0 = sum(p.gdp0_initgdp[:]) / sum(p.pop0_initpopulation[:])
+            pc_gdp_t = sum(p.gdp[t, :]) / sum(p.population[t, :])
 
-            v.vsl[t,c] = p.α * ((pc_gdp_0c / p.y₀) ^ p.ϵ_space) * (v.pc_gdp[t,c] / pc_gdp_0c) ^ p.ϵ_time
+            for c in d.country
+                v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
+                v.vsl[t,c] = p.α * (pc_gdp_t / pc_gdp_0) ^ p.ϵ_time
+            end
+        else
+            for c in d.country
+                pc_gdp_0c = (p.gdp0_initgdp[c]) ./ (p.pop0_initpopulation[c])
+                v.pc_gdp[t, c] = (p.gdp[t, c]) ./ (p.population[t, c])
+
+                v.vsl[t,c] = p.α * ((pc_gdp_0c / p.y₀) ^ p.ϵ_space) * (v.pc_gdp[t,c] / pc_gdp_0c) ^ p.ϵ_time
+            end
         end
     end
 end

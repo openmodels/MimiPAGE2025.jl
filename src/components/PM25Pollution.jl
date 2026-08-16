@@ -168,6 +168,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             v.β_self_ch4xyear = 0.
             v.β_self_loggdp0 = 0.
             v.β_self_logcost = 0.
+            v.β_self_loggdppc = 0.
             v.β_self_logcostxloggdppc = 0.
             v.β_self_laglogpm0 = 0.
 
@@ -177,6 +178,7 @@ gains_mapping = CSV.read(pagedata("pollution/GAINS_4letter_regions_mapping.csv")
             v.β_export_ch4xyear = 0.
             v.β_export_loggdp0 = 0.
             v.β_export_logcost = 0.
+            v.β_export_loggdppc = 0.
             v.β_export_logcostxloggdppc = 0.
             v.β_export_laglogpm0 = 0.
         end

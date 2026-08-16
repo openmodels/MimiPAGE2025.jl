@@ -228,6 +228,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
 
     # Add CIL Damage components
     cillabor = addcildamages(m, :LaborProductivity, "damages/cil-labor.csv")
+    dasguptalabor = adddasguptalabor(m)
 
     # Market damages from methane
     addMarketDamageAQ_Generic(m, :MarketDamageAQ_AsthmaERVisits, "data/MarketDamageAQ/Methane_AsthmaERVisits.csv",
@@ -472,6 +473,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :WBRegionCorrection => :morb_productivity_old, :PM25Damage_Productivity => :cost)
     connect_param!(m, :WBRegionCorrection => :morb_disutility_old, :PM25Damage_Disutility => :cost)
     connect_param!(m, :WBRegionCorrection => :mort_disutility_old, :PM25Damage_Mortality => :cost)
+    connect_param!(m, :WBRegionCorrection => :e_countryCO2emissions, :co2emissions => :e_countryCO2emissions)
 
     # PM Market Damages
     pmmarket[:pm_total] = pm25pollution[:pm_total]
@@ -481,6 +483,7 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :AdditionalMarketDamages => :one, :WBRegionCorrection => :morb_healthcare_new)
     connect_param!(m, :AdditionalMarketDamages => :two, :WBRegionCorrection => :morb_productivity_new)
     connect_param!(m, :AdditionalMarketDamages => :three, :WBRegionCorrection => :mort_productivity_new)
+    connect_param!(m, :AdditionalMarketDamages => :four, :WBRegionCorrection => :infrastructure_cost)
     connect_param!(m, :AdditionalMarketDamages => :gdp_baseline, finalgdp_pair)
     if use_trade
         connect_param!(m, :AdditionalMarketDamages => :rgdp_per_cap_MarketRemainGDP, :Trade => :rgdp_per_cap_TradeRemainGDP)
@@ -517,6 +520,11 @@ function buildpage(m::Model, scenario::String; use_fair::Bool=true,
     connect_param!(m, :LaborProductivity => :rt_g_globaltemperature, glotemp_comp => :rt_g_globaltemperature)
     connect_param!(m, :LaborProductivity => :gdp, finalgdp_pair)
     connect_param!(m, :LaborProductivity => :pop_population, :Population => :pop_population)
+
+    dasguptalabor[:rtl_realizedtemperature_absolute] = regtemp[:rtl_realizedtemperature_absolute]
+    dasguptalabor[:rt_g_globaltemperature] = glotemp[:rt_g_globaltemperature]
+    dasguptalabor[:gdp] = finalgdp_ref
+    connect_param!(m, :DasguptaLabor => :pop_population, :Population => :pop_population)
 
     connect_param!(m, :MarketDamageAQ_AsthmaERVisits => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
     connect_param!(m, :MarketDamageAQ_CropLoss => :global_ch4_emissions, :ch4emissions => :e_globalCH4emissions)
@@ -577,6 +585,7 @@ function getpage(scenario::String="RCP4.5 & SSP2", use_fair::Bool=true; use_seai
     model = Model()
     set_dimension!(model, :time, [2020, 2030, 2040, 2050, 2075, 2100, 2150, 2200, 2250, 2300])
     set_dimension!(model, :region, ["EU", "USA", "OECD","USSR","China","SEAsia","Africa","LatAmerica"])
+    set_dimension!(model, :dasguptaregion, ["Global", "Africa", "Asia", "Americas", "Europe"])
     set_dimension!(model, :country, get_countryinfo().ISO3)
 
     buildpage(model, scenario; use_fair=use_fair, use_permafrost=use_permafrost, use_seaice=use_seaice,

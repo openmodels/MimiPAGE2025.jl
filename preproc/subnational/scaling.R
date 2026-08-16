@@ -1,4 +1,4 @@
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/subnational")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/subnational")
 
 library(readxl)
 library(MASS)
@@ -84,7 +84,9 @@ results2[order(results2$mu),]
 
 write.csv(results, "../../data/damages/subnational.csv", row.names=F)
 
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/subnational")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/subnational")
+
+library(ggplot2)
 
 results <- read.csv("../../data/damages/subnational.csv")
 
@@ -93,3 +95,43 @@ source("../../analysis/map.R", chdir=T)
 make.map(results %>% group_by(iso) %>% summarize(mu=mean(effect)), 'iso', 'mu',
          "Sub-national equity coefficient", trans='identity')
 ggsave("subnational-scaling.png", width=10, height=5.5)
+
+## Underestimates by (new - old) / new
+results2 <- results %>% group_by(iso) %>% summarize(mu=1 - mean(1 / effect))
+
+polydata3 <- polydata2 %>% left_join(results2, by=c('code'='iso'))
+polydata3$value <- polydata3$mu
+shp2 <- shp %>% left_join(polydata3[, c('PID', 'value')])
+
+centroids$show <- F
+for (PID in order(polydata$POP_EST, decreasing=T)) {
+    dists <- gcd.slc(centroids$X[PID] / 2, centroids$Y[PID], centroids$X[centroids$show] / 2, centroids$Y[centroids$show])
+    if (all(dists > 1000))
+        centroids$show[PID] <- T
+}
+centroids$show[centroids$X < -176] <- F
+centroids$show[centroids$X > 176] <- F
+centroids$show[centroids$Y < -50] <- F
+centroids$show[centroids$Y > 65] <- F
+## Only show largest for each aggregate
+aggtokeep <- polydata2 %>% filter(!is.na(Aggregate)) %>% group_by(Aggregate) %>% summarize(PID=PID[which.max(POP_EST)])
+centroids$show[!is.na(polydata2$Aggregate) & !(polydata2$PID %in% aggtokeep$PID)] <- F
+
+centroids2 <- centroids %>% left_join(polydata3[, c('PID', 'value')])
+
+gp <- ggplot(shp2, aes(X, Y)) +
+    coord_sf(crs="+proj=robin", default_crs=4326, ylim=c(-57, 75)) +
+    geom_polygon(aes(fill=value, group=paste(PID, SID))) +
+    geom_label(data=subset(centroids2, show & !is.na(value)),
+               aes(label=paste0(round(value * 100), '%')), size=3.5, label.padding=unit(0.1, "lines")) +
+    theme_bw() + scale_x_continuous(NULL, expand=c(0, 0)) + scale_y_continuous(NULL, expand=c(0, 0)) +
+    scale_fill_distiller("Underestimate:  ", palette='YlOrRd', limits=c(0, max(shp2$value)), direction=1, labels=scales::percent) +
+    theme(legend.position = c(0.6, 0.05),
+          legend.direction = "horizontal",
+          axis.text=element_blank(),      # Remove axis numbers
+          panel.border=element_blank(),   # Remove the box around the plot
+          axis.ticks=element_blank(),     # Optionally, remove axis ticks as well
+          panel.background=element_blank()) # Make the background transparent
+ggsave("subnational-underest.pdf", width=8, height=3.5)
+
+ggsave("subnational-underest.png", width=8, height=4)

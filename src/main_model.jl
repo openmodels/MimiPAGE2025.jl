@@ -69,6 +69,7 @@ include("components/WBRegionCorrection.jl")
 include("components/PMMarketDamages.jl")
 include("components/MarketDamageAQ_Generic.jl")
 include("components/CILDamages.jl")
+include("components/DasguptaLabor.jl")
 include("components/PolicyDelay.jl")
 include("components/AdditionalMarketDamages.jl")
 

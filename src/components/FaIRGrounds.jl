@@ -10,6 +10,10 @@ include("../utils/gains.jl")
     prepare_instance = Parameter{Function}()
     fair_draw = Parameter{Int64}()
 
+    pulse_gas = Parameter{String}()
+    pulse_year = Parameter{Int64}()
+    pulse_size = Parameter() # given in Mt for all gases
+
     clock = Variable{Any}()
 
     y_year = Parameter(index=[time], unit="year")
@@ -100,20 +104,20 @@ include("../utils/gains.jl")
             fair_aerosols = pp.fairmi[:aerosol_plus_cycles, :E_aerosol_plus]
 
             for ii in findfirst(fairtime .== (is_first(tt) ? pp.y_year_0 : pp.y_year[tt-1]))+1:findfirst(fairtime .== pp.y_year[tt])
-                fair_co2[ii] = E_co2
-                fair_ch4[ii] = E_ch4
-                fair_n2o[ii] = E_n2o
+                fair_co2[ii] = E_co2 + (pp.pulse_gas == "co2" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0) / 1000 / 3.67
+                fair_ch4[ii] = E_ch4 + (pp.pulse_gas == "ch4" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_n2o[ii] = E_n2o + (pp.pulse_gas == "n2o" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 for gg in 1:dim_count(pp.fairmi, :flourinated_gases)
-                    fair_flourinated[ii, gg] = pp.e_flourinated_ratio[tt] * fair_flourinated[ii, gg]
+                    fair_flourinated[ii, gg] = pp.e_flourinated_ratio[tt] * fair_flourinated[ii, gg] + (gg == 1 && pp.pulse_gas == "fgas" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 end
-                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "nh3"] .= pp.e_globalNH3emissions[tt-1]
+                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "nh3"] .= pp.e_globalNH3emissions[tt-1] + (pp.pulse_gas == "nh3" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 for gg in findall(dim_keys(pp.fairmi, :aerosol_plus_gases) ∈ ["nox", "nox_avi"])
-                    fair_aerosols[ii, gg] = pp.e_nox_ratio[tt] * fair_aerosols[ii, gg]
+                    fair_aerosols[ii, gg] = pp.e_nox_ratio[tt] * fair_aerosols[ii, gg] + (dim_keys(pp.fairmi, :aerosol_plus_gases)[gg] == "nox" && pp.pulse_gas == "nox" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 end
-                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "bc"] .= pp.e_globalBCemissions[tt-1]
-                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "so2"] .= pp.e_globalSO2emissions[tt-1]
+                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "bc"] .= pp.e_globalBCemissions[tt-1] + (pp.pulse_gas == "bc" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, dim_keys(pp.fairmi, :aerosol_plus_gases) .== "so2"] .= pp.e_globalSO2emissions[tt-1] + (pp.pulse_gas == "so2" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 for gg in findall(dim_keys(pp.fairmi, :aerosol_plus_gases) ∈ ["nmvoc"])
-                    fair_aerosols[ii, gg] = pp.e_voc_ratio[tt] * fair_aerosols[ii, gg]
+                    fair_aerosols[ii, gg] = pp.e_voc_ratio[tt] * fair_aerosols[ii, gg] + (dim_keys(pp.fairmi, :aerosol_plus_gases)[gg] == "nmvoc" && pp.pulse_gas == "nmvoc" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 end
             end
 
@@ -183,6 +187,10 @@ function addfairgrounds(model::Model, scenario::String, gains_scenario::String)
     else
         fairgrounds[:tempscaling_2030] = 0.9
     end
+
+    fairgrounds[:pulse_gas] = "none"
+    fairgrounds[:pulse_year] = 2025
+    fairgrounds[:pulse_size] = 1.
 
     return fairgrounds
 end

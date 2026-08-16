@@ -51,7 +51,7 @@ include("../utils/country_tools.jl")
             v.isat_ImpactinclSaturationandAdaptation[t, :] .= 0.
             v.isat_per_cap_ImpactperCapinclSaturationandAdaptation[t, :] .= 0.
             v.rcons_per_cap_NonMarketRemainConsumption[t, :] .= p.rcons_per_cap_MarketRemainConsumption[t, :]
-            v.rgdp_per_cap_NonMarketRemainGDP[t, :] .= v.rcons_per_cap_NonMarketRemainConsumption[t, :] / (1 - p.save_savingsrate[:] / 100)
+            v.rgdp_per_cap_NonMarketRemainGDP[t, :] .= v.rcons_per_cap_NonMarketRemainConsumption[t, :] ./ (1 .- p.save_savingsrate[:] / 100)
         else
             impmax_maxtempriseforadaptpolicyNM_country = regiontocountry(p.model, p.impmax_maxtempriseforadaptpolicyNM)
             atl_adjustedtolerableleveloftemprise_country = regiontocountry(p.model, p.atl_adjustedtolerableleveloftemprise[t, :])
