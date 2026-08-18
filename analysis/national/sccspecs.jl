@@ -1,6 +1,6 @@
 include("../../src/main_model.jl")
 
-mcnum = 10000
+mcnum = 1000
 
 model = getpage(use_rffsp=true)
 run(model)
@@ -8,18 +8,26 @@ run(model)
 ## Main specification
 if !isfile("allscc.csv")
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
+
+## Experiment: Different pulse years
+pulseyears = [2030] #2050, 2100]
+for pulseyear in pulseyears
+    outs = compute_scc(model, year=pulseyear, seed=20240528, n=mcnum);
+    CSV.write("allscc-$(pulseyear)-v2.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
+end
+
 
 ## Experiment: Alternative preferences
 outs = compute_scc(model, year=2020, prefrange=false, seed=20240528, n=mcnum);
-CSV.write("allscc-nodrupp.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+CSV.write("allscc-nodrupp.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 
 ## Experiment: Different pulse years
 pulseyears = [2050, 2100]
 for pulseyear in pulseyears
     outs = compute_scc(model, year=pulseyear, seed=20240528, n=mcnum);
-    CSV.write("allscc-$(pulseyear)-v2.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-$(pulseyear)-v2.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Different scenarios
@@ -30,7 +38,7 @@ for key in keys(scenarios)
     model = getpage(scenarios[key])
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-$(key).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-$(key).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Market damages
@@ -39,7 +47,7 @@ for damagespec in damagespecs
     model = getpage(; use_rffsp=true, config_marketdmg=damagespec)
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-marketdmg-$(damagespec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-marketdmg-$(damagespec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Other damage types
@@ -49,7 +57,7 @@ for otherspec in otherspecs
                     config_slrdmg=(otherspec == "pinonmarket" || otherspec == "pinational" ? "national" : "pageice"))
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-otherdmg-$(otherspec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-otherdmg-$(otherspec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Abatement costs
@@ -58,7 +66,7 @@ for macspec in macspecs
     model = getpage(use_rffsp=true, config_abatement=macspec)
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-mac-$(macspec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-mac-$(macspec).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Downscaling method
@@ -67,20 +75,20 @@ for dsmethod in dsmethods
     model = getpage(use_rffsp=true, config_downscaling=dsmethod)
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-downscale-$(dsmethod).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-downscale-$(dsmethod).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Experiment: Drop subnational scaling
 model = getpage(use_rffsp=true, use_subnational=false)
 run(model)
 outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-CSV.write("allscc-nosubnational.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+CSV.write("allscc-nosubnational.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 
 ## Experiment: Drop trade
 model = getpage(use_rffsp=true, use_trade=false)
 run(model)
 outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-CSV.write("allscc-notrade.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+CSV.write("allscc-notrade.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 
 ## Only subsets of damages
 for onlydamage in ["nonmarket", "slr", "discont"] # "market",
@@ -95,7 +103,7 @@ for onlydamage in ["nonmarket", "slr", "discont"] # "market",
     end
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-onlydmg-$(onlydamage).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-onlydmg-$(onlydamage).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end
 
 ## Different capital models
@@ -104,5 +112,5 @@ for capital in capitals
     model = getpage(use_rffsp=true, config_capital=capital)
     run(model)
     outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc-capital-$(capital).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc)))
+    CSV.write("allscc-capital-$(capital).csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 end

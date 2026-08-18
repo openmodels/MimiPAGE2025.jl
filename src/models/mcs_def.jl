@@ -97,15 +97,6 @@ function getsim(model::Model, samplesize::Int)
         Discontinuity.ipow_incomeexponent = TriangularDist(-.3, 0, -.1)
         Discontinuity.distau_discontinuityexponent = TriangularDist(10, 30, 20)
 
-        # PM2.5 Emulator
-        PM25Pollution_pm25_draw = DiscreteUniform(1, 1000)
-
-        # PM2.5 Damages
-        ## PM25Damage_Healthcare_pm25_dmg_draw = DiscreteUniform(1, 1000)
-        ## PM25Damage_Productivity_pm25_dmg_draw = DiscreteUniform(1, 1000)
-        ## PM25Damage_Disutility_pm25_dmg_draw = DiscreteUniform(1, 1000)
-        ## PM25Damage_Mortality_pm25_dmg_draw = DiscreteUniform(1, 1000)
-
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
         CountryLevelNPV_pref_draw = pref_draw
@@ -291,6 +282,21 @@ function getsim(model::Model, samplesize::Int)
         add_transform!(mcs, :Capital_capital_draw, :(=), :capital_draw)
     else
         add_RV!(mcs, :capital_draw, DiscreteUniform(1, 1000))
+    end
+
+    if has_comp(model, :PM25Pollution)
+        # PM2.5 Emulator
+        ## PM25Pollution_pm25_draw = DiscreteUniform(1, 1000)
+        add_RV!(mcs, :pm25_draw, DiscreteUniform(1, 1000))
+        add_transform!(mcs, :PM25Pollution_pm25_draw, :(=), :pm25_draw)
+
+        # PM2.5 Damages
+        ## PM25Damage_Healthcare_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        ## PM25Damage_Productivity_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        ## PM25Damage_Disutility_pm25_dmg_draw = DiscreteUniform(1, 1000)
+        ## PM25Damage_Mortality_pm25_dmg_draw = DiscreteUniform(1, 1000)
+    else
+        add_RV!(mcs, :pm25_draw, DiscreteUniform(1, 1000))
     end
 
     # for (ii, country) in enumerate(get_countryinfo().ISO3)

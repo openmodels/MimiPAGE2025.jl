@@ -118,6 +118,8 @@ function compute_scc(
         tds = getdataframe(mm, :CountryLevelNPV, :td_totaldiscountedimpacts)
         tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
         scc_disaggregated = tds
+        prtps = mm.base[:EquityWeighting, :ptp_timepreference]
+        emucs = mm.base[:EquityWeighting, :emuc_utilityconvexity]
     elseif n < 1
         error("Invalid `n` value, only values >=1 allowed.")
     else
@@ -132,14 +134,20 @@ function compute_scc(
 
         # Setup of location of final results
         scc_results = zeros(n)
+        prtps = zeros(n)
+        emucs = zeros(n)
         scc_disaggregated_results = []
 
         function mc_scc_calculation(sim_inst::SimulationInstance, trialnum::Int, ntimesteps::Int, ignore::Nothing)
             marginal = sim_inst.models[1]
             marg_damages = marginal[:EquityWeighting, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
             scc_results[trialnum] = marg_damages
+            prtps[trialnum] = mm.base[:EquityWeighting, :ptp_timepreference]
+            emucs[trialnum] = mm.base[:EquityWeighting, :emuc_utilityconvexity]
             tds = getdataframe(marginal, :CountryLevelNPV, :td_totaldiscountedimpacts)
             tds[!, :scc] = tds[!, :td_totaldiscountedimpacts] / undiscount_scc(mm.base, year, cc_focus)
+            tds[!, :prtp] .= mm.base[:EquityWeighting, :ptp_timepreference]
+            tds[!, :emuc] .= mm.base[:EquityWeighting, :emuc_utilityconvexity]
             push!(scc_disaggregated_results, tds)
         end
 
@@ -148,7 +156,7 @@ function compute_scc(
         scc_disaggregated = vcat(scc_disaggregated_results...)
     end
 
-    return (scc=scc, scc_disaggregated=scc_disaggregated, mm=mm)
+    return (scc=scc, scc_disaggregated=scc_disaggregated, prtps=prtps, emucs=emucs, mm=mm)
 end
 
 # # Helper function for removing a random variable by its parameter name in the model.
