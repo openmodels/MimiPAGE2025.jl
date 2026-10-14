@@ -130,6 +130,13 @@ function compute_scc(
             Mimi.delete_transform!(simdef, :pref_draw)
         end
 
+        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(n; end_year=maximum(dim_keys(m, :time)),
+                                                            delete_downloaded_data=false)
+        disconnect_param!(mm.base, :FaIRGrounds, :prepare_instance)
+        update_param!(mm.base, :FaIRGrounds, :prepare_instance, prepare_instance)
+        disconnect_param!(mm.modified, :FaIRGrounds, :prepare_instance)
+        update_param!(mm.modified, :FaIRGrounds, :prepare_instance, prepare_instance)
+
         seed !== nothing ? Random.seed!(seed) : nothing
 
         # Setup of location of final results

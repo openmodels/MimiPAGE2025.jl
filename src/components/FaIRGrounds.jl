@@ -9,6 +9,11 @@ include("../utils/gains.jl")
     fairmi = Parameter{ModelInstance}()
     prepare_instance = Parameter{Function}()
     fair_draw = Parameter{Int64}()
+    E_co2_init = Parameter{Vector{Float64}}()   # Annual carbon dioxide emissions (GtC yr⁻¹).
+    E_ch4_init = Parameter{Vector{Float64}}()   # Annual methane emissions (TgCH₄ yr⁻¹).
+    E_n2o_init = Parameter{Vector{Float64}}()   # Annual nitrous oxide emissions (TgN yr⁻¹).
+    E_flourinated_init = Parameter{Matrix{Float64}}()    # Annual flourinated gas emissions (Tg yr⁻¹).
+    E_aerosol_plus_init = Parameter{Matrix{Float64}}()   # Annual Aerosol+ emissions (Tg yr⁻¹).
 
     pulse_gas = Parameter{String}()
     pulse_year = Parameter{Int64}()
@@ -48,6 +53,11 @@ include("../utils/gains.jl")
         if pp.fair_draw != 0
             pp.prepare_instance(pp.fairmi, pp.fair_draw)
         end
+        update_param!(pp.fairmi, :co2_cycle, :E_co2, copy(pp.E_co2_init))
+        update_param!(pp.fairmi, :ch4_cycle, :E_ch4, copy(pp.E_ch4_init))
+        update_param!(pp.fairmi, :n2o_cycle, :E_n2o, copy(pp.E_n2o_init))
+        update_param!(pp.fairmi, :flourinated_cycles, :E_flourinated, copy(pp.E_flourinated_init))
+        update_param!(pp.fairmi, :aerosol_plus_cycles, :E_aerosol_plus, copy(pp.E_aerosol_plus_init))
 
         # Based on Base.run(mi::ModelInstance, ...)
         time_keys::Vector{Int} = dim_keys(pp.fairmi.md, :time)
@@ -71,6 +81,13 @@ include("../utils/gains.jl")
 
     function run_timestep(pp, vv, dd, tt)
         fairtime = dim_keys(pp.fairmi, :time)
+
+        fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
+        fair_ch4 = pp.fairmi[:ch4_cycle, :E_ch4]
+        fair_n2o = pp.fairmi[:n2o_cycle, :E_n2o]
+        fair_flourinated = pp.fairmi[:flourinated_cycles, :E_flourinated]
+        fair_aerosols = pp.fairmi[:aerosol_plus_cycles, :E_aerosol_plus]
+
         if !is_first(tt)
             ## Apply correction based on linear approximation
             if pp.y_year[tt-1] > 2020
@@ -97,13 +114,7 @@ include("../utils/gains.jl")
             end
             E_n2o = (pp.e_globalN2Oemissions[tt-1] + correctperyr_n2o) * 0.6367 # TgN yr⁻¹ (2 * 14.01 / 44.01)
 
-            fair_co2 = pp.fairmi[:co2_cycle, :E_co2]
-            fair_ch4 = pp.fairmi[:ch4_cycle, :E_ch4]
-            fair_n2o = pp.fairmi[:n2o_cycle, :E_n2o]
-            fair_flourinated = pp.fairmi[:flourinated_cycles, :E_flourinated]
-            fair_aerosols = pp.fairmi[:aerosol_plus_cycles, :E_aerosol_plus]
-
-            for ii in findfirst(fairtime .== (is_first(tt) ? pp.y_year_0 : pp.y_year[tt-1]))+1:findfirst(fairtime .== pp.y_year[tt])
+            for ii in findfirst(fairtime .== pp.y_year[tt-1])+1:findfirst(fairtime .== pp.y_year[tt])
                 fair_co2[ii] = E_co2 + (pp.pulse_gas == "co2" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0) / 1000 / 3.67
                 fair_ch4[ii] = E_ch4 + (pp.pulse_gas == "ch4" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 fair_n2o[ii] = E_n2o + (pp.pulse_gas == "n2o" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
@@ -120,13 +131,25 @@ include("../utils/gains.jl")
                     fair_aerosols[ii, gg] = pp.e_voc_ratio[tt] * fair_aerosols[ii, gg] + (dim_keys(pp.fairmi, :aerosol_plus_gases)[gg] == "nmvoc" && pp.pulse_gas == "nmvoc" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
                 end
             end
-
-            update_param!(pp.fairmi, :co2_cycle, :E_co2, fair_co2)
-            update_param!(pp.fairmi, :ch4_cycle, :E_ch4, fair_ch4)
-            update_param!(pp.fairmi, :n2o_cycle, :E_n2o, fair_n2o)
-            update_param!(pp.fairmi, :flourinated_cycles, :E_flourinated, fair_flourinated)
-            update_param!(pp.fairmi, :aerosol_plus_cycles, :E_aerosol_plus, fair_aerosols)
+        else
+            for ii in findfirst(fairtime .== pp.y_year_0)+1:findfirst(fairtime .== pp.y_year[tt])
+                fair_co2[ii] += (pp.pulse_gas == "co2" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0) / 1000 / 3.67
+                fair_ch4[ii] += (pp.pulse_gas == "ch4" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_n2o[ii] += (pp.pulse_gas == "n2o" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_flourinated[ii, 1] += (pp.pulse_gas == "fgas" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, findfirst(dim_keys(pp.fairmi, :aerosol_plus_gases) .== "nh3")] += (pp.pulse_gas == "nh3" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, findfirst(dim_keys(pp.fairmi, :aerosol_plus_gases) .== "nox")] += (pp.pulse_gas == "nox" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, findfirst(dim_keys(pp.fairmi, :aerosol_plus_gases) .== "bc")] += (pp.pulse_gas == "bc" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, findfirst(dim_keys(pp.fairmi, :aerosol_plus_gases) .== "so2")] += (pp.pulse_gas == "so2" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+                fair_aerosols[ii, findfirst(dim_keys(pp.fairmi, :aerosol_plus_gases) .== "nmvoc")] += (pp.pulse_gas == "nmvoc" && fairtime[ii] == pp.pulse_year ? pp.pulse_size : 0)
+            end
         end
+
+        update_param!(pp.fairmi, :co2_cycle, :E_co2, fair_co2)
+        update_param!(pp.fairmi, :ch4_cycle, :E_ch4, fair_ch4)
+        update_param!(pp.fairmi, :n2o_cycle, :E_n2o, fair_n2o)
+        update_param!(pp.fairmi, :flourinated_cycles, :E_flourinated, fair_flourinated)
+        update_param!(pp.fairmi, :aerosol_plus_cycles, :E_aerosol_plus, fair_aerosols)
 
         dim_val_named_tuple = NamedTuple(name => (name == :time ? timesteps(vv.clock) : collect(values(dim))) for (name, dim) in dim_dict(pp.fairmi.md))
         while gettime(vv.clock) <= pp.y_year[tt]
@@ -149,9 +172,14 @@ function addfairgrounds(model::Model, scenario::String, gains_scenario::String)
                    "NDCs"=>"ssp245", "NDCs Partial"=>"ssp245", "RCP4.5 & SSP2"=>"ssp245", "BAU"=>"ssp370", "RCP8.5 & SSP5"=>"ssp585", "RCP8.5 & SSP2"=>"ssp585", "RCP2.6 & SSP2"=>"ssp126", "RCP4.5 & SSP3"=> "ssp245", "RCP2.6 & SSP3"=>"ssp126", "RCP1.9 & SSP2"=>"ssp119", "RCP1.9 & SSP3"=>"ssp119")
 
     fairmodel = MimiFAIRv2.get_model(end_year=2300, emissions_forcing_scenario=mapping[scenario])
-    fairgrounds[:fairmi] = build(fairmodel)
+    fairgrounds[:fairmi] = fairbuilt = build(fairmodel)
     fairgrounds[:fair_draw] = 0
     fairgrounds[:prepare_instance] = (mi, ii) -> nothing
+    fairgrounds[:E_co2_init] = copy(fairbuilt[:co2_cycle, :E_co2])
+    fairgrounds[:E_ch4_init] = copy(fairbuilt[:ch4_cycle, :E_ch4])
+    fairgrounds[:E_n2o_init] = copy(fairbuilt[:n2o_cycle, :E_n2o])
+    fairgrounds[:E_flourinated_init] = copy(fairbuilt[:flourinated_cycles, :E_flourinated])
+    fairgrounds[:E_aerosol_plus_init] = copy(fairbuilt[:aerosol_plus_cycles, :E_aerosol_plus])
 
     fairgrounds[:rt_g_globaltemperature_pre_static] = zeros(dim_count(model, :time))
     fairgrounds[:rt_g_globaltemperature_pre_seaice] = zeros(dim_count(model, :time))

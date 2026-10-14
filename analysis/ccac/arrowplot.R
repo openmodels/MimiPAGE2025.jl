@@ -109,7 +109,10 @@ ggplot(subset(df4, segment == 'Integrated Action'), aes(colour=LABEL_REGIONGROUP
     #coord_cartesian(ylim=c(.1, 50)) +
     geom_segment(aes(x=x, xend=xend, y=y.co2, yend=yend.co2), arrow.fill='white',
                  arrow=arrow(length=unit(0.2, "cm"), type="closed"), linewidth=1) +
-    scale_colour_discrete(name="Region:") +
+    scale_colour_manual(name="Region:",
+                        breaks=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA, UK', 'West Balkan', 'Russian Federation', 'North America', 'Latin America & Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        labels=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA and United Kingdom', 'West Balkan', 'Russian Federation', 'North America', 'Latin America and the Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        values=c('#EBB79F', '#D9825A', '#A84621', '#F0B6CE', '#DC7FA6', '#C04B7C', '#8E2B54', '#BFB3E3', '#8B7BC7', '#574A97', '#8FD4C4', '#3FA189', '#F2CE72', '#C2900F', '#0B5F80')) +
     scale_x_log10("GDP per capita (PPP, $2017 USD)") + scale_y_log10("CO2 Emissions per capita (t / person year)") + theme_bw()
 myggsave("arrowplot-co2-simple", width=8.5, height=6)
 
@@ -127,7 +130,10 @@ ggsave("arrowplot-pm.pdf", width=8.5, height=6)
 ggplot(subset(df4, segment == 'Integrated Action'), aes(colour=LABEL_REGIONGROUP)) +
     geom_segment(aes(x=x, xend=xend, y=y.pm, yend=yend.pm), arrow.fill='white',
                  arrow=arrow(length=unit(0.2, "cm"), type="closed"), linewidth=1) +
-    scale_colour_discrete(name="Region:") +
+    scale_colour_manual(name="Region:",
+                        breaks=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA, UK', 'West Balkan', 'Russian Federation', 'North America', 'Latin America & Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        labels=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA and United Kingdom', 'West Balkan', 'Russian Federation', 'North America', 'Latin America and the Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        values=c('#EBB79F', '#D9825A', '#A84621', '#F0B6CE', '#DC7FA6', '#C04B7C', '#8E2B54', '#BFB3E3', '#8B7BC7', '#574A97', '#8FD4C4', '#3FA189', '#F2CE72', '#C2900F', '#0B5F80')) +
     scale_x_log10("GDP per capita (PPP, $2017 USD)") + scale_y_log10("Anthropogenic PM2.5 concentrations") + theme_bw()
 myggsave("arrowplot-pm-simple", width=8.5, height=6)
 
@@ -213,7 +219,10 @@ ggplot(df4, aes(GDP_USD2025_PPP_PERCAP.post, pmax(.103, eco2pc), colour=LABEL_RE
     coord_cartesian(ylim=c(.2, 15)) +
     geom_line(linewidth=1) +
     geom_point(data=subset(df4, IDYEARS %in% c(2035, 2050, 2100)), aes(shape=factor(IDYEARS)), colour='black') +
-    scale_colour_discrete(name="Region:") +
+    scale_colour_manual(name="Region:",
+                        breaks=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA, UK', 'West Balkan', 'Russian Federation', 'North America', 'Latin America & Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        labels=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA and United Kingdom', 'West Balkan', 'Russian Federation', 'North America', 'Latin America and the Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        values=c('#EBB79F', '#D9825A', '#A84621', '#F0B6CE', '#DC7FA6', '#C04B7C', '#8E2B54', '#BFB3E3', '#8B7BC7', '#574A97', '#8FD4C4', '#3FA189', '#F2CE72', '#C2900F', '#0B5F80')) +
     scale_shape_manual(name="Year:", breaks=factor(c(2035, 2050, 2100)), values=c(1, 2, 3)) +
     scale_x_log10("GDP per capita (PPP, $2025 USD)") + scale_y_log10("CO2 Emissions per capita (t / person year)", expand=c(0, 0)) + theme_bw()
 myggsave("arrowplot-co2-v2-pair", width=8.5, height=6)
@@ -222,7 +231,10 @@ ggplot(df4, aes(GDP_USD2025_PPP_PERCAP.post, PM25_ANTHROP, colour=LABEL_REGIONGR
     facet_wrap(~ panel) +
     geom_line(linewidth=1) +
     geom_point(data=subset(df4, IDYEARS %in% c(2035, 2050, 2100)), aes(shape=factor(IDYEARS)), colour='black') +
-    scale_colour_discrete(name="Region:") +
+    scale_colour_manual(name="Region:",
+                        breaks=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA, UK', 'West Balkan', 'Russian Federation', 'North America', 'Latin America & Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        labels=c('North Africa', 'Southern Africa', 'Sub-Saharan Africa', 'Central Asia', 'Centrally Planned Asia', 'South Asia', 'South East Asia', 'EU, EFTA and United Kingdom', 'West Balkan', 'Russian Federation', 'North America', 'Latin America and the Caribbean', 'Middle East', 'Western Asia', 'Oceania'),
+                        values=c('#EBB79F', '#D9825A', '#A84621', '#F0B6CE', '#DC7FA6', '#C04B7C', '#8E2B54', '#BFB3E3', '#8B7BC7', '#574A97', '#8FD4C4', '#3FA189', '#F2CE72', '#C2900F', '#0B5F80')) +
     scale_shape_manual(name="Year:", breaks=factor(c(2035, 2050, 2100)), values=c(1, 2, 3)) +
     scale_x_log10("GDP per capita (PPP, $2017 USD)") + scale_y_log10("Anthropogenic PM2.5 concentrations") + theme_bw()
 myggsave("arrowplot-pm-v2-pair", width=8.5, height=6)

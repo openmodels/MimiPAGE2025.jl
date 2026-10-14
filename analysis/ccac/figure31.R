@@ -28,17 +28,17 @@ pdf4 <- pdf3 %>% left_join(sspgdp[, c('YEAR', 'value2025')], by=c('year'='YEAR')
 
 ggplot(pdf4, aes(year, mu / 1e3)) +
     geom_line(data=pdf4 %>% filter(name == 'Baseline' & metric == 'Before'),
-              aes(linetype="Before Costs", colour="Before Costs")) +
+              aes(linetype="Before costs", colour="Before costs")) +
     geom_line(data=pdf4 %>% filter(metric == 'After'), aes(colour=name, linetype=name)) +
     ## geom_ribbon(data=pdf4 %>% filter(metric == 'After'), aes(ymin=ci05 / 1e3, ymax=ci95 / 1e3, group=name), alpha=.5) +
     theme_bw() +
-    scale_linetype_manual(name="Scenario:", breaks=c("Before Costs", "Baseline", "IntegratedAction"),
-                          labels=c("Before Costs", "Baseline", "Integrated Action"),
+    scale_linetype_manual(name="Scenario:", breaks=c("Before costs", "Baseline", "IntegratedAction"),
+                          labels=c("Before costs", "Baseline", "Integrated action"),
                           values=c('dashed', 'solid', 'solid')) +
-    scale_colour_discrete(name="Scenario:", breaks=c("Before Costs", "Baseline", "IntegratedAction"),
-                          labels=c("Before Costs", "Baseline", "Integrated Action")) +
+    scale_colour_discrete(name="Scenario:", breaks=c("Before costs", "Baseline", "IntegratedAction"),
+                          labels=c("Before costs", "Baseline", "Integrated action")) +
     scale_x_continuous(NULL, expand=c(0, 0)) +
-    ylab("Global GDP, PPP (trillion 2025 USD)")
+    ylab("PPP 2025 US$ (trillion)")
 myggsave("Figure ‎3.24 Global GDP to 2100", width=6.5, height=4)
 
 

@@ -1,5 +1,7 @@
 import Mimi.add_RV!, Mimi.add_transform!, Mimi.has_comp, Mimi.add_save!
 
+## NOTE: prepare_instance must be set on FaIRGrounds
+
 function getsim(model::Model, samplesize::Int)
     mcs = @defsim begin
 
@@ -10,6 +12,10 @@ function getsim(model::Model, samplesize::Int)
         ############################################################################
         # Define random variables (RVs) - for UNSHARED parameters
         ############################################################################
+
+        ## DIAG 1: 0.45013805154885894, 0.0
+
+        ## DIAG 3: -26400.97212331024, 0.19
 
         MacroParameters.save_constant = TriangularDist(10, 20, 15)
 
@@ -74,20 +80,35 @@ function getsim(model::Model, samplesize::Int)
         # GDP
         GDP.isat0_initialimpactfxnsaturation = TriangularDist(15, 25, 20)
 
+        ## END DIAG 3
+
+        ## DIAG 4: -1521.7125281684305, 0.06
+        ## ALSO INCLUDES AdaptiveCostsSeaLevel_sealevelcost_draw
+
+        ## DIAG 6: 0.594227013759485, 0.0
+
+        ## DIAG 7: -683.3093300237757, 0.17
+
         # MarketDamagesBurke
-        rv(burkey_draw) = DiscreteUniform(1, 4000)
-        MarketDamagesBurke_burkey_draw = burkey_draw
+
+        ## DIAG 9:
+        # rv(burkey_draw) = DiscreteUniform(1, 4000)
+        # MarketDamagesBurke_burkey_draw = burkey_draw
+        ## END DIAG 9
         MarketDamagesBurke.impf_coeff_lin = TriangularDist(-0.0139791885347898, -0.0026206307945989, -0.00829990966469437)
         MarketDamagesBurke.impf_coeff_quadr = TriangularDist(-0.000599999506482576, -0.000400007300924579, -0.000500003403703578)
+
+        ## END DIAG 7
+        ## DIAG 8: -505.5808882496337, 0.1
 
         # NonMarketDamages
         NonMarketDamages.iben_NonMarketInitialBenefit = TriangularDist(0, .2, .05)
         NonMarketDamages.w_NonImpactsatCalibrationTemp = Normal(0.487 * 1.25 * 3*3, 0.182 * 1.25 * 3*3)
         NonMarketDamages.ipow_NonMarketIncomeFxnExponent = TriangularDist(-.2, .2, 0)
 
-        # SLRDamages
-        rv(RV_sealevelcost_draw) = DiscreteUniform(1, 100)
-        SLRDamages_sealevelcost_draw = RV_sealevelcost_draw
+        ## END DIAG 8
+
+        ## END DIAG 6
 
         # Discontinuity
         Discontinuity.rand_discontinuity = Uniform(0, 1)
@@ -97,6 +118,10 @@ function getsim(model::Model, samplesize::Int)
         Discontinuity.ipow_incomeexponent = TriangularDist(-.3, 0, -.1)
         Discontinuity.distau_discontinuityexponent = TriangularDist(10, 30, 20)
 
+        # SLRDamages
+        rv(RV_sealevelcost_draw) = DiscreteUniform(1, 100)
+        SLRDamages_sealevelcost_draw = RV_sealevelcost_draw
+
         # CountryLevelNPV
         rv(pref_draw) = DiscreteUniform(1, 181)
         CountryLevelNPV_pref_draw = pref_draw
@@ -105,9 +130,14 @@ function getsim(model::Model, samplesize::Int)
         EquityWeighting.civvalue_civilizationvalue = TriangularDist(1e10, 1e11, 5e10)
         EquityWeighting_pref_draw = pref_draw
 
+        ## END DIAG 4
+
         ############################################################################
         # Define random variables (RVs) - for SHARED parameters
         ############################################################################
+
+        ## DIAG 3+5: -293080.86371412204, 0.05
+        ## DIAG 5: -156.95127670344561, 0.1
 
         # shared parameter linked to components: SLRDamages, Discontinuity (weights
         # for market and nonmarket are non-stochastic and uniformly 1)
@@ -209,6 +239,10 @@ function getsim(model::Model, samplesize::Int)
         CarbonPriceInfer_mac_draw = RV_mac_draw
         CarbonPriceInfer_baselineco2_uniforms = Uniform(0, 1) # <-- Added after @defsim
 
+        ## END DIAG 5
+
+        ## END DIAG 1
+
         ############################################################################
         # Indicate which parameters to save for each model run
         ############################################################################
@@ -233,6 +267,8 @@ function getsim(model::Model, samplesize::Int)
              Discontinuity.rgdp_per_cap_NonMarketRemainGDP)
 
     end # de
+
+    ## DIAG 2: -53451.7959917126, 0.32
 
     if has_comp(model, :RFFSPScenario)
         # RFFSPScenario
@@ -299,6 +335,8 @@ function getsim(model::Model, samplesize::Int)
         add_RV!(mcs, :pm25_draw, DiscreteUniform(1, 1000))
     end
 
+    ## END DIAG 2
+
     # for (ii, country) in enumerate(get_countryinfo().ISO3)
     #     rv_name1 = Symbol("rateuniforms_$country")
     #     add_RV!(mcs, rv_name1, Uniform(0,1))
@@ -307,13 +345,6 @@ function getsim(model::Model, samplesize::Int)
     #     add_RV!(mcs, rv_name2, Uniform(0,1))
     #     add_transform!(mcs, :AbatementCostsCO2, :baselineco2_uniforms, :(=), rv_name2, [country])
     # end
-
-    if has_comp(model, :FaIRGrounds)
-        prepare_instance = MimiFAIRv2.load_fair_monte_carlo(samplesize; end_year=maximum(dim_keys(model, :time)),
-                                                            delete_downloaded_data=false)
-        disconnect_param!(model, :FaIRGrounds, :prepare_instance)
-        update_param!(model, :FaIRGrounds, :prepare_instance, prepare_instance)
-    end
 
     return mcs
 end

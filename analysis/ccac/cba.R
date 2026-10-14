@@ -2,16 +2,26 @@ setwd("~/research/iamup2/MimiPAGE2025.jl/analysis/ccac")
 
 library(clipr)
 library(EnvStats)
+library(dplyr)
 
-do.global <- T
-source("loader-mc.R")
+do.load <- F
 
-gdps2 <- subset(gdps, name == "Baseline") %>% group_by(time, trialnum) %>% summarize(gdp=sum(gdp))
+if (do.load) {
+    do.global <- T
+    source("loader-mc.R")
+
+    gdps2 <- subset(gdps, name == "Baseline") %>% group_by(time, trialnum) %>% summarize(gdp=sum(gdp))
+    pdf2s <- list("LTCAction"=scen.diff.fracgdp("LTCAction", "Baseline"),
+                  "IntegratedAction"=scen.diff.fracgdp("IntegratedAction", "Baseline"))
+    save(gdps2, pdf2s, file="cba-global.RData")
+} else {
+    load("cba-global.RData")
+}
 
 results <- data.frame()
 for (pert in c("LTCAction", "IntegratedAction")) {
     for (costtype in c('Market', 'Welfare')) {
-        pdf2 <- scen.diff.fracgdp(pert, "Baseline")
+        pdf2 <- pdf2s[[pert]]
         if (costtype == 'Market') {
             pdf2 <- pdf2 %>% filter(label != "Aggregate Non-Market Damages")
         }

@@ -1,4 +1,4 @@
-setwd("~/research/iamup2/MimiPAGE2020.jl/preproc/capital/")
+setwd("~/research/iamup2/MimiPAGE2025.jl/preproc/capital/")
 
 source("utils2.R")
 load.solowdata()
@@ -28,14 +28,16 @@ library(ggplot2)
 library(reshape2)
 
 mdf <- melt(sumres[, c('ISO', 'procap0', 'saverate', 'deprrate', 'capshare')])
-mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 Produced Capital (USD)",
-                                                        'saverate'="Savings Rate (portion)",
-                                                        'deprrate'="Depreciation Rate (portion)",
-                                                        'capshare'="Capital Share (unitless)")[[col]])
+mdf$variable <- sapply(mdf$variable, function(col) list('procap0'="2015 produced capital (USD)",
+                                                        'saverate'="Savings rate (portion)",
+                                                        'deprrate'="Depreciation rate (portion)",
+                                                        'capshare'="Capital share (unitless)")[[col]])
 
 ggplot(mdf, aes(value)) +
     facet_wrap(~ variable, scales='free') +
-    geom_histogram() + scale_x_log10() + theme_bw()
+    geom_histogram() + scale_x_log10() + theme_bw() +
+    theme(plot.margin = margin(t = 0.05, r = 0.5, b = 0.05, l = 0.05, unit = "cm"))
+ggsave("extract.png", width=6.5, height=5)
 
 outres <- subset(allres, mc <= 1000)
 outres$procap0 <- round(outres$procap0 / 1e6)

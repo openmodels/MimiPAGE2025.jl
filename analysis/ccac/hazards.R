@@ -52,11 +52,13 @@ myggsave("Figure 3.6 a GSAT - 95ci", width=6.5, height=4)
 cmip6 <- data.frame(scenario=c("SSP1-1.9", "SSP1-2.6", "SSP2-4.5", "SSP3-7.0"),
                     med=c(1.4, 1.8, 2.7, 3.6),
                     ci05=c(1.0, 1.3, 2.1, 2.8), ci95=c(1.8, 2.4, 3.5, 4.6),
-                    panel="CMIP6 Scenarios") # 2081 - 2100
+                    panel="CMIP6 scenario") # 2081 - 2100
 
 ggplot(df %>% filter(year > 2080) %>% group_by(scenario) %>%
        summarize(med=statag(med), ci05=statag(ci05), ci95=statag(ci95)) %>%
-       mutate(panel="This Report"),
+       mutate(panel="This report", scenario=factor(ifelse(scenario == "Long-term Climate Action", "Long-term climate action",
+                                                   ifelse(scenario == "Integrated Action", "Integrated action", as.character(scenario))),
+                                                   levels=c("Baseline", "Long-term climate action", "Integrated action"))),
        aes(med, scenario)) +
     facet_wrap(~ panel, ncol=1, scales='free_y', space='free_y') +
     geom_errorbar(aes(xmin=ci05, xmax=ci95)) +
@@ -65,7 +67,7 @@ ggplot(df %>% filter(year > 2080) %>% group_by(scenario) %>%
     geom_point(data=cmip6) +
     ylab(NULL) +
     theme_bw() +
-    xlab("Global surface air temperature\n(2081 - 2100 change from pre-industrial, °C)")
+    xlab("Global surface air temperature\n(2081–2100 change from pre-industrial, °C)")
 myggsave("Figure 3.6 a GSAT - annex", width=6.5, height=3)
 
 ## Save for table
@@ -135,11 +137,13 @@ myggsave("Figure 3.6 b SLR", width=6.5, height=4)
 cmip6 <- data.frame(scenario=c("SSP1-1.9", "SSP1-2.6", "SSP2-4.5", "SSP3-7.0"),
                     med=c(0.38, 0.44, 0.56, 0.68) + 0.158,
                     ci17=c(0.28, 0.32, 0.44, 0.55) + 0.158, ci83=c(0.55, 0.62, 0.76, 0.90) + 0.158,
-                    panel="CMIP6 Scenarios")
+                    panel="CMIP6 scenario")
 
 ggplot(dfb %>% filter(year > 2080) %>% group_by(scenario) %>%
        summarize(med=statag(med), ci17=statag(ci17), ci83=statag(ci83), bias=statag(bias)) %>%
-       mutate(panel="This Report"),
+       mutate(panel="This report", scenario=factor(ifelse(scenario == "Long-term Climate Action", "Long-term climate action",
+                                                   ifelse(scenario == "Integrated Action", "Integrated action", as.character(scenario))),
+                                                   levels=c("Baseline", "Long-term climate action", "Integrated action"))),
        aes(med, scenario)) +
     facet_wrap(~ panel, ncol=1, scales='free_y', space='free_y') +
     geom_errorbar(aes(xmin=ci17 - bias, xmax=ci83 - bias)) +
@@ -148,7 +152,7 @@ ggplot(dfb %>% filter(year > 2080) %>% group_by(scenario) %>%
     geom_point(data=cmip6) +
     ylab(NULL) +
     theme_bw() +
-    xlab("Sea level rise (2081 - 2100 change from 1995 - 2014, m)")
+    xlab("Sea level rise (2081–2100 change from 1995–2014, m)")
 myggsave("Figure 3.6 b SLR - annex", width=6.5, height=3)
 
 ## Save for table

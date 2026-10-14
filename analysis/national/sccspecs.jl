@@ -2,14 +2,19 @@ include("../../src/main_model.jl")
 
 mcnum = 1000
 
-model = getpage(use_rffsp=true)
-run(model)
+if true
+    model = getpage(use_rffsp=true)
+    run(model)
+
+    outs = compute_scc(model, year=2020, seed=20240528, n=100);
+
+    vals = [minimum(filter(!isnan, outs.scc_disaggregated.scc[outs.scc_disaggregated.country .== "USA"])), mean(filter(!isnan, outs.scc_disaggregated.scc[outs.scc_disaggregated.country .== "USA"] .< 0.))]
+    println("$(vals[1]), $(vals[2])")
+end
 
 ## Main specification
-if !isfile("allscc.csv")
-    outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
-    CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
-end
+outs = compute_scc(model, year=2020, seed=20240528, n=mcnum);
+CSV.write("allscc.csv", vcat(outs.scc_disaggregated, DataFrame(country="global", td_totaldiscountedimpacts=missing, scc=outs.scc, prtp=outs.prtps, emuc=outs.emucs)))
 
 ## Experiment: Different pulse years
 pulseyears = [2030] #2050, 2100]
